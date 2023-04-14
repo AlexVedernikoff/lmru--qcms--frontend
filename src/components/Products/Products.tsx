@@ -1,6 +1,6 @@
 import {Grid, Typography} from 'fronton-react';
 import ProductsFilter from './ProductsFilter/ProductsFilter';
-import ProductsTable from './ProductsTable';
+import ProductsTable from './ProductsTable/ProductsTable';
 // import styles from './Products.module.css';
 
 const Products: React.FC = () => {

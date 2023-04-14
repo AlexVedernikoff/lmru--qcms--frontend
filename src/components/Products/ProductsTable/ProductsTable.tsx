@@ -2,9 +2,10 @@ import {useMemo} from 'react';
 import {Table} from 'antd';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {ITableItem} from './models';
+import {IProductTableItem} from '../../../common/models';
+import {PRODUCT_TABLE_ITEMS} from '../../../common/mocks';
 
-interface IDataType extends ITableItem {
+interface IDataType extends IProductTableItem {
     key: React.Key;
 }
 
@@ -37,29 +38,7 @@ const columns: ColumnsType<IDataType> = [
 ];
 
 const ProductsTable: React.FC = () => {
-    const data = useMemo<IDataType[]>(
-        () => [
-            {
-                key: '1',
-                providerStatus: 'Дистрибьютор',
-                productCode: 87334230,
-                productName: 'WEBER.TON MICRO V 0000 25 KG',
-                providerCode: 1000771901,
-                providerName: 'ООО "ХимТоргПроект"',
-                qualityStatus: 'Леруа Мерлен Россия: Предполагаемое соответствие',
-            },
-            {
-                key: '2',
-                providerStatus: 'Дистрибьютор',
-                productCode: 87334230,
-                productName: 'WEBER.TON MICRO V 0000 25 KG',
-                providerCode: 1000771901,
-                providerName: 'ООО "ХимТоргПроект"',
-                qualityStatus: 'Леруа Мерлен Россия: Предполагаемое соответствие',
-            },
-        ],
-        []
-    );
+    const data = useMemo<IDataType[]>(() => PRODUCT_TABLE_ITEMS, []);
 
     const rowSelection = useMemo<TableRowSelection<IDataType>>(
         () => ({

@@ -1,6 +1,6 @@
-import {ITableItem} from './models';
+import {IProductTableItem} from '../../common/models';
 
-type TKey = keyof ITableItem;
+type TKey = keyof IProductTableItem;
 
 interface ITableFields {
     field: TKey;

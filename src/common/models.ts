@@ -1,4 +1,4 @@
-export interface ITableItem {
+export interface IProductTableItem {
     providerStatus: string;
     productCode: number;
     productName: string;

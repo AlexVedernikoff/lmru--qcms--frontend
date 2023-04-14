@@ -7,7 +7,7 @@ import Sidebar from './Layout/Sidebar/Sidebar';
 import Products from './Products/Products';
 
 const App: React.FC = () => (
-    <Grid areas={['header header header', 'aside main main', 'footer footer footer']} columnGap="space-100">
+    <Grid areas={['header header', 'aside main']} columnGap={16} columns="1fr 11fr">
         <GridItem area="header">
             <Header />
         </GridItem>
@@ -27,8 +27,6 @@ const App: React.FC = () => (
                 <Route path={APP_ROUTES.settings} element={<Empty />} />
             </Routes>
         </GridItem>
-
-        <GridItem area="footer"></GridItem>
     </Grid>
 );
 
