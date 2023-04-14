@@ -15,7 +15,7 @@ spec:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
-        rollme: {{ randAlphaNum 5 | quote }}
+        rollme: "{{ randAlphaNum 5 }}"
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
