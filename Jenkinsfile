@@ -102,7 +102,7 @@ node ("lmru-dockerhost") {
                 buildAndPush()
                 deployToK8S()
             }
-            if (env.BRANCH_NAME == "develop" || env.BRANCH_NAME == "feature/test-pipe") {
+            if (env.BRANCH_NAME == "develop") {
                 jobVars = getEnvironmentParameters("develop")
                 getSecretsFromVault()
                 buildAndPush()
