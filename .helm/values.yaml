@@ -12,7 +12,8 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
-podAnnotations: {}
+podAnnotations: 
+  app: front
 
 service:
   type: ClusterIP
