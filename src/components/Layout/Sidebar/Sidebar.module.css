@@ -1,0 +1,8 @@
+.sidebar {
+    width: 300px;
+    padding: 0;
+}
+
+.selected {
+    background: #e3f1e0;
+}

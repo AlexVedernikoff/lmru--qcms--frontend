@@ -1,0 +1,38 @@
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: var(--space-50) var(--space-200);
+
+    background: #ffffff;
+}
+
+.items {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 16px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.columnItemPrimary {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.columnItem {
+    font-size: 12px;
+}
