@@ -187,7 +187,7 @@ void deployToK8S() {
                 sh """
                     chmod 400 /root/.kube/config
                     helm3 upgrade --install ${GlobalVars.appName} .helm -n ${jobVars.k8sNamespace} --create-namespace \
-                    --atomic --timeout 5m
+                    --atomic --timeout 5m --dry-run --debug
                 """
                     // --dry-run --debug
  
