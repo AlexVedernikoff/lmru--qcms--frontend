@@ -1,12 +1,20 @@
 import {Avatar, BaseButton} from 'fronton-react';
 import {BellIcon, SignOutIcon, QuestionIcon} from '@fronton/icons-react';
+import {useNavigate} from 'react-router-dom';
+import {APP_ROUTES} from '../../../common/consts';
 import Logo from '../Logo';
 import styles from './Header.module.css';
 
 const Header: React.FC = () => {
+    const navigate = useNavigate();
+
+    const handleLogoClick = () => {
+        navigate(APP_ROUTES.dashboard);
+    };
+
     return (
         <header className={styles.header}>
-            <BaseButton onClick={() => {}}>
+            <BaseButton onClick={handleLogoClick}>
                 <Logo />
             </BaseButton>
 

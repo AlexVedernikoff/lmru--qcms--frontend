@@ -5,7 +5,7 @@ import ProductsTable from './ProductsTable/ProductsTable';
 
 const Products: React.FC = () => {
     return (
-        <Grid className="1fr" rowGap={16}>
+        <Grid rowGap={16}>
             <Typography variant="h2">Товары</Typography>
             <ProductsFilter />
             <ProductsTable />

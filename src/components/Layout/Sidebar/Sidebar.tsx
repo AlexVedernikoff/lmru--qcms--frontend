@@ -1,45 +1,73 @@
 import {useCallback} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {List, ListItem} from 'fronton-react';
-import {HouseSimpleIcon, TruckIcon, BoundingBoxIcon, CubeIcon, FileIcon, GearIcon} from '@fronton/icons-react';
-import {Icon} from 'fronton-react/list/list-item/types';
-import {APP_ROUTES} from '../../../common/consts';
+import {
+    HouseSimpleIcon,
+    TruckIcon,
+    BoundingBoxIcon,
+    CubeIcon,
+    FileIcon,
+    GearIcon,
+    ChevronDownIcon,
+    ChevronRightIcon,
+    IconComponent,
+} from '@fronton/icons-react';
+import {APP_ROUTES, PRODUCTS_ROUTES} from '../../../common/consts';
 import styles from './Sidebar.module.css';
 
 interface IItem {
-    icon: Icon;
     text: string;
     value: string;
+    icon?: IconComponent;
+    children?: IItem[];
 }
 
 const items: IItem[] = [
     {
-        icon: <HouseSimpleIcon />,
+        icon: HouseSimpleIcon,
         text: 'Dashboard',
         value: APP_ROUTES.dashboard,
     },
     {
-        icon: <TruckIcon />,
+        icon: TruckIcon,
         text: 'Поставщики',
         value: APP_ROUTES.providers,
     },
     {
-        icon: <CubeIcon />,
+        icon: CubeIcon,
         text: 'Товары',
         value: APP_ROUTES.products,
+        children: [
+            {
+                text: 'С моделью качества',
+                value: PRODUCTS_ROUTES.withModels,
+            },
+            {
+                text: 'Без модели качества',
+                value: PRODUCTS_ROUTES.withoutModels,
+            },
+            {
+                text: 'Управление трансфером',
+                value: PRODUCTS_ROUTES.transfer,
+            },
+            {
+                text: 'Документы',
+                value: PRODUCTS_ROUTES.documents,
+            },
+        ],
     },
     {
-        icon: <FileIcon />,
+        icon: FileIcon,
         text: 'Задачи',
         value: APP_ROUTES.tasks,
     },
     {
-        icon: <BoundingBoxIcon />,
+        icon: BoundingBoxIcon,
         text: 'Модели',
         value: APP_ROUTES.models,
     },
     {
-        icon: <GearIcon />,
+        icon: GearIcon,
         text: 'Настройки',
         value: APP_ROUTES.settings,
     },
@@ -59,16 +87,37 @@ const Sidebar: React.FC = () => {
     return (
         <div className={styles.sidebar}>
             <List>
-                {items.map((item, index) => (
-                    <ListItem
-                        key={index}
-                        iconLeft={item.icon}
-                        text={item.text}
-                        value={item.value}
-                        onClick={handleItemClick}
-                        className={item.value === location.pathname ? styles.selected : ''}
-                    />
-                ))}
+                {items.map((item, index) => {
+                    const isSectionOpened: boolean =
+                        (location.pathname.includes(item.value) && item.value.length > 1) ||
+                        (item.value === APP_ROUTES.dashboard && location.pathname === item.value);
+
+                    return (
+                        <ListItem
+                            key={index}
+                            iconLeft={
+                                item.icon ? <item.icon color={isSectionOpened ? '#5AB030' : undefined} /> : undefined
+                            }
+                            text={item.text}
+                            value={item.value}
+                            onClick={handleItemClick}
+                            iconRight={isSectionOpened ? <ChevronDownIcon /> : <ChevronRightIcon />}
+                        >
+                            {isSectionOpened
+                                ? item.children?.map((c, i) => (
+                                      <ListItem
+                                          key={`sub-${i}`}
+                                          className={c.value === location.pathname ? styles.selected : ''}
+                                          iconLeft={<></>}
+                                          text={c.text}
+                                          value={c.value}
+                                          onClick={handleItemClick}
+                                      />
+                                  ))
+                                : undefined}
+                        </ListItem>
+                    );
+                })}
             </List>
         </div>
     );
