@@ -1,8 +1,17 @@
+import {useState} from 'react';
 import {Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react';
+import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
 import styles from './ProductsFilter.module.css';
 import {TableFields} from '../consts';
+import ProductsAdditionalFilter from './ProductsAdditionalFilter';
 
 const ProductsFilter: React.FC = () => {
+    const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
+
+    const handleShowMoreFiltersClick = () => {
+        setIsMoreFiltersActive(prevState => !prevState);
+    };
+
     const handleProductCodeChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
 
     const handleSelect = (value: string | null) => {};
@@ -85,21 +94,35 @@ const ProductsFilter: React.FC = () => {
                 </Dropdown>
             </Grid>
 
-            <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline">
+            {isMoreFiltersActive && (
+                <Grid columnGap={16} columns="1fr" alignItems="center">
+                    <ProductsAdditionalFilter />
+                </Grid>
+            )}
+
+            <Grid columnGap={16} columns="repeat(6, 1fr)" alignItems="baseline">
                 <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton onClick={() => {}} size="l" variant="secondary">
-                        Больше
+                    <RegularButton
+                        onClick={handleShowMoreFiltersClick}
+                        size="m"
+                        variant="pseudo"
+                        iconLeft={isMoreFiltersActive ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                    >
+                        {isMoreFiltersActive ? 'Меньше' : 'Больше'}
                     </RegularButton>
                 </Grid>
 
                 <span />
+                <span />
+                <span />
+                <span />
 
                 <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton onClick={() => {}} size="l" variant="secondary">
+                    <RegularButton onClick={() => {}} size="m" variant="secondary">
                         Очистить
                     </RegularButton>
 
-                    <RegularButton onClick={() => {}} size="l" variant="primary">
+                    <RegularButton onClick={() => {}} size="m" variant="primary">
                         Поиск
                     </RegularButton>
                 </Grid>
