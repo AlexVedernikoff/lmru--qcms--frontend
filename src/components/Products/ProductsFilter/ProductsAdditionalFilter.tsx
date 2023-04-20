@@ -1,5 +1,4 @@
 import {Checkbox, Dropdown, DropdownItem, Grid, Input, Typography} from 'fronton-react';
-// import styles from './ProductsAdditionalFilter.module.css';
 
 const ProductsAdditionalFilter: React.FC = () => {
     const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};

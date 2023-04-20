@@ -1,0 +1,9 @@
+.section {
+    background: white;
+    padding: 16px;
+}
+
+.sectionItem {
+    border: 1px solid #e8e9eb;
+    padding: 16px;
+}

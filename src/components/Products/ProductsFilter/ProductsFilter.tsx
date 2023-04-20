@@ -118,7 +118,7 @@ const ProductsFilter: React.FC = () => {
                 <span />
 
                 <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton onClick={() => {}} size="m" variant="secondary">
+                    <RegularButton onClick={() => {}} size="m" variant="outline">
                         Очистить
                     </RegularButton>
 

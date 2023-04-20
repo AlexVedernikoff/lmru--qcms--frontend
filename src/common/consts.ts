@@ -12,4 +12,5 @@ export const PRODUCTS_ROUTES = {
     withoutModels: `${APP_ROUTES.products}/without-models`,
     transfer: `${APP_ROUTES.products}/transfer`,
     documents: `${APP_ROUTES.products}/documents`,
+    details: `${APP_ROUTES.products}/:id`,
 };
