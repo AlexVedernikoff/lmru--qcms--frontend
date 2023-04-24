@@ -4,7 +4,6 @@ import {List, ListItem} from 'fronton-react';
 import {
     HouseSimpleIcon,
     TruckIcon,
-    BoundingBoxIcon,
     CubeIcon,
     FileIcon,
     GearIcon,
@@ -14,11 +13,12 @@ import {
 } from '@fronton/icons-react';
 import {APP_ROUTES, PRODUCTS_ROUTES} from '../../../common/consts';
 import styles from './Sidebar.module.css';
+import Models from '../../Icons/Models';
 
 interface IItem {
     text: string;
     value: string;
-    icon?: IconComponent;
+    icon?: IconComponent | React.FC;
     children?: IItem[];
 }
 
@@ -62,7 +62,7 @@ const items: IItem[] = [
         value: APP_ROUTES.tasks,
     },
     {
-        icon: BoundingBoxIcon,
+        icon: Models,
         text: 'Модели',
         value: APP_ROUTES.models,
     },

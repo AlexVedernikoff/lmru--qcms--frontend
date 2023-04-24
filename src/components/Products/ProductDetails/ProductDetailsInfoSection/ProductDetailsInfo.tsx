@@ -1,7 +1,7 @@
 import {Grid, Typography} from 'fronton-react';
-import styles from '../ProductsDetails.module.css';
+import styles from '../ProductDetails.module.css';
 
-const ProductsDetailsInfo: React.FC = () => (
+const ProductDetailsInfo: React.FC = () => (
     <Grid className={styles.sectionItem} rowGap={16} columnGap={16} columns="1fr" rows="36px">
         <Typography variant="h3">{'Подробная информация'}</Typography>
 
@@ -17,4 +17,4 @@ const ProductsDetailsInfo: React.FC = () => (
     </Grid>
 );
 
-export default ProductsDetailsInfo;
+export default ProductDetailsInfo;

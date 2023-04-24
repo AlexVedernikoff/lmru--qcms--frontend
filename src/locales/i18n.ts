@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
-import products_ru from './locales/ru/products.json';
+import products_ru from './ru/products.json';
 
 declare module 'i18next' {
     interface CustomTypeOptions {

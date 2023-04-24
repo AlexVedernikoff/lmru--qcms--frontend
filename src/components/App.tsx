@@ -5,7 +5,7 @@ import {APP_ROUTES, PRODUCTS_ROUTES} from '../common/consts';
 import Header from './Layout/Header/Header';
 import Sidebar from './Layout/Sidebar/Sidebar';
 import Products from './Products/Products';
-import ProductsDetails from './Products/ProductsDetails/ProductsDetails';
+import ProductDetails from './Products/ProductDetails/ProductDetails';
 
 const App: React.FC = () => (
     <Grid areas={['header header', 'aside main']} columnGap={16} columns="1fr 11fr">
@@ -28,7 +28,7 @@ const App: React.FC = () => (
                     <Route path={PRODUCTS_ROUTES.transfer} element={<Empty />} />
                     <Route path={PRODUCTS_ROUTES.documents} element={<Empty />} />
 
-                    <Route path={PRODUCTS_ROUTES.details} element={<ProductsDetails />} />
+                    <Route path={PRODUCTS_ROUTES.details} element={<ProductDetails />} />
 
                     <Route path={APP_ROUTES.products} element={<Navigate to={PRODUCTS_ROUTES.withModels} />} />
                 </Route>

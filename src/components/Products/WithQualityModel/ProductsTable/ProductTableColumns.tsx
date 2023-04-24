@@ -1,6 +1,6 @@
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {IProductTableItem} from '../../../common/models';
+import {IProductTableItem} from '../../../../common/models';
 
 export interface IDataType extends IProductTableItem {
     key: React.Key;

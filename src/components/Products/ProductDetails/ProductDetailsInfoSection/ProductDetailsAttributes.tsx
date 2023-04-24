@@ -3,7 +3,7 @@ import {BackofficeStatus, Grid, RegularButton, Typography} from 'fronton-react';
 import {Table} from 'antd';
 import {ColumnsType} from 'antd/es/table';
 import HistoryBack from '../../../Icons/HistoryBack';
-import styles from '../ProductsDetails.module.css';
+import styles from '../ProductDetails.module.css';
 
 interface IAttributes {
     id: string;
@@ -25,7 +25,7 @@ interface IDataType extends IAttributes {
     key: React.Key;
 }
 
-const ProductsDetailsAttributes: React.FC = () => {
+const ProductDetailsAttributes: React.FC = () => {
     const attr_columns = useMemo<ColumnsType<IDataType>>(
         () => [
             {
@@ -78,4 +78,4 @@ const ProductsDetailsAttributes: React.FC = () => {
     );
 };
 
-export default ProductsDetailsAttributes;
+export default ProductDetailsAttributes;

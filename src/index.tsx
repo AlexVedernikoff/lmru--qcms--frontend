@@ -7,8 +7,8 @@ import {store} from './store';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/reset.css';
+import './locales/i18n';
 import './index.css';
-import './i18n';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);

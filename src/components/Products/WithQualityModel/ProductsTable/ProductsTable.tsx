@@ -6,8 +6,8 @@ import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {Table} from 'antd';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {PRODUCT_TABLE_ITEMS} from '../../../common/mocks';
-import {PRODUCTS_ROUTES} from '../../../common/consts';
+import {PRODUCT_TABLE_ITEMS} from '../../../../common/mocks';
+import {PRODUCTS_ROUTES} from '../../../../common/consts';
 import {IDataType, getProductTableColumns} from './ProductTableColumns';
 
 const ProductsTable: React.FC = () => {

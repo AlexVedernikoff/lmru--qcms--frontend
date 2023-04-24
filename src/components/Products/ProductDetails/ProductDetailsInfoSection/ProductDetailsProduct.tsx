@@ -1,7 +1,7 @@
 import {Checkbox, Grid, Typography} from 'fronton-react';
-import styles from '../ProductsDetails.module.css';
+import styles from '../ProductDetails.module.css';
 
-const ProductsDetailsProduct: React.FC = () => (
+const ProductDetailsProduct: React.FC = () => (
     <Grid className={styles.sectionItem} rowGap={24} columnGap={24}>
         <Typography variant="h3">{'Продукт'}</Typography>
 
@@ -87,4 +87,4 @@ const ProductsDetailsProduct: React.FC = () => (
     </Grid>
 );
 
-export default ProductsDetailsProduct;
+export default ProductDetailsProduct;

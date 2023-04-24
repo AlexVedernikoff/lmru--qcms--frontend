@@ -1,8 +1,8 @@
 import {BackofficeStatus, Grid, Textarea, Typography} from 'fronton-react';
 import {Table} from 'antd';
-import styles from '../ProductsDetails.module.css';
+import styles from '../ProductDetails.module.css';
 
-const ProductsDetailsQualityStatusSection: React.FC = () => {
+const ProductDetailsQualityStatusSection: React.FC = () => {
     return (
         <Grid className={styles.section} rowGap={16} columnGap={16}>
             <Grid rowGap={16} columnGap={16} columns="1fr">
@@ -24,4 +24,4 @@ const ProductsDetailsQualityStatusSection: React.FC = () => {
     );
 };
 
-export default ProductsDetailsQualityStatusSection;
+export default ProductDetailsQualityStatusSection;
