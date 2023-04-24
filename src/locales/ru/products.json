@@ -1,0 +1,40 @@
+{
+    "WithModels": {
+        "Table": {
+            "Columns": {
+                "providerStatus": "Статус поставщика",
+                "productCode": "Код товара",
+                "productName": "Наименование товара",
+                "providerCode": "Код поставщика",
+                "providerName": "Наименование поставщика",
+                "qualityStatus": "Статус качества",
+
+                "QE": "QE",
+                "qualityModel": "Модель качества",
+                "EAN": "EAN",
+                "lastProductStatusDate": "Дата последнего статуса товара",
+                "qualityModelNumber": "Номер модели качества",
+                "qualityModelManager": "Менеджер по качеству товара",
+                "productDataCompleteness": "Полнота данных по товару",
+                "productTopAVS": "Топ-AVS товара",
+                "productCreationDate": "Дата создания товара",
+                "productActionsBy": "Выполнение действия по товару",
+                "departmentCode": "Код отдела",
+                "subDepartmentCode": "Код подотдела",
+                "TN_VED_Code": "Код ТН ВЭД",
+                "departmentName": "Наименование отдела",
+                "nomenclature": "Номенклатура"
+            }
+        }
+    },
+    "WithoutModels": {
+        "Table": {
+            "Columns": {
+                "providerCodeNumber": "Кодовый номер поставщика",
+                "productCode": "Код товара",
+                "productName": "Наименование",
+                "params": "Параметры"
+            }
+        }
+    }
+}

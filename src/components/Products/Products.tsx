@@ -6,9 +6,13 @@ import ProductsTable from './ProductsTable/ProductsTable';
 const Products: React.FC = () => {
     return (
         <Grid rowGap={16}>
-            <Typography variant="h2">Товары</Typography>
-            <ProductsFilter />
-            <ProductsTable />
+            <Grid rowGap={16}>
+                <Typography variant="h2">Товары</Typography>
+                <ProductsFilter />
+            </Grid>
+            <Grid rowGap={16}>
+                <ProductsTable />
+            </Grid>
         </Grid>
     );
 };

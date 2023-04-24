@@ -11,7 +11,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                 <Typography variant="h3">Товар</Typography>
 
                 <Dropdown
-                    size="l"
+                    size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={'BU'}
@@ -24,7 +24,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                 </Dropdown>
 
                 <Dropdown
-                    size="l"
+                    size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={'Менеджер по качеству'}
@@ -37,7 +37,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                 </Dropdown>
 
                 <Input
-                    inputSize="l"
+                    inputSize="m"
                     autoComplete="off"
                     label={'Характеристика'}
                     name={'characteristics'}
@@ -47,7 +47,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                 />
 
                 <Input
-                    inputSize="l"
+                    inputSize="m"
                     autoComplete="off"
                     label={'Значение'}
                     name={'value'}
@@ -57,7 +57,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                 />
 
                 <Input
-                    inputSize="l"
+                    inputSize="m"
                     autoComplete="off"
                     label={'Гамма'}
                     name={'gamma'}
@@ -151,7 +151,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                 </Grid>
 
                 <Dropdown
-                    size="l"
+                    size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={'Тип проекта'}
@@ -164,7 +164,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                 </Dropdown>
 
                 <Dropdown
-                    size="l"
+                    size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={'Блокировка'}
@@ -187,7 +187,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                 </Grid>
 
                 <Dropdown
-                    size="l"
+                    size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={'Содержит соединение'}
@@ -204,7 +204,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                 <Typography variant="h3">Подробная информация</Typography>
 
                 <Dropdown
-                    size="l"
+                    size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={'Поиск по дате'}
@@ -217,7 +217,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                 </Dropdown>
 
                 <Dropdown
-                    size="l"
+                    size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={'Дата'}
@@ -230,7 +230,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                 </Dropdown>
 
                 <Dropdown
-                    size="l"
+                    size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={'С документом, срок действия которого истекает через:'}

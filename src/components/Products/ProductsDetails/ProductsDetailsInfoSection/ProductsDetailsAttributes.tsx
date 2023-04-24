@@ -72,7 +72,7 @@ const ProductsDetailsAttributes: React.FC = () => {
             </Grid>
 
             <Grid rowGap={4} columns="1fr">
-                <Table columns={attr_columns} dataSource={attr_data} pagination={false} />
+                <Table columns={attr_columns} dataSource={attr_data} pagination={false} size="small" />
             </Grid>
         </Grid>
     );

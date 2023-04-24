@@ -1,11 +1,12 @@
 import {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react';
 import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
 import styles from './ProductsFilter.module.css';
-import {TableFields} from '../consts';
 import ProductsAdditionalFilter from './ProductsAdditionalFilter';
 
 const ProductsFilter: React.FC = () => {
+    const {t} = useTranslation('products');
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
 
     const handleShowMoreFiltersClick = () => {
@@ -20,17 +21,17 @@ const ProductsFilter: React.FC = () => {
         <Grid rowGap={16} alignItems="center" className={styles.filterPanel}>
             <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline">
                 <Input
-                    inputSize="l"
+                    inputSize="m"
                     autoComplete="off"
-                    label={TableFields.productCode.label}
-                    name={TableFields.productCode.field}
-                    placeholder={TableFields.productCode.label}
+                    label={t('WithModels.Table.Columns.productCode')}
+                    name={'productCode'}
+                    placeholder={t('WithModels.Table.Columns.productCode')}
                     value={undefined}
                     onChange={handleProductCodeChange}
                 />
 
                 <Dropdown
-                    size="l"
+                    size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={'Номенклатура'}
@@ -43,7 +44,7 @@ const ProductsFilter: React.FC = () => {
                 </Dropdown>
 
                 <Dropdown
-                    size="l"
+                    size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={'Статус качества'}
@@ -58,17 +59,17 @@ const ProductsFilter: React.FC = () => {
 
             <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline">
                 <Input
-                    inputSize="l"
+                    inputSize="m"
                     autoComplete="off"
-                    label={TableFields.providerName.label}
-                    name={TableFields.providerName.field}
+                    label={t('WithModels.Table.Columns.providerName')}
+                    name={'providerName'}
                     placeholder=""
                     value={undefined}
                     onChange={handleProductCodeChange}
                 />
 
                 <Dropdown
-                    size="l"
+                    size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={'Модель качества'}
@@ -81,7 +82,7 @@ const ProductsFilter: React.FC = () => {
                 </Dropdown>
 
                 <Dropdown
-                    size="l"
+                    size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={'Статус поставщика'}
