@@ -1,13 +1,14 @@
 import {BackofficeStatus, Grid, Textarea, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import {Table} from 'antd';
+import commonStyles from '../../Products.module.css';
 import styles from '../ProductDetails.module.css';
 
 const ProductDetailsQualityStatusSection: React.FC = () => {
     const {t} = useTranslation('products');
 
     return (
-        <Grid className={styles.section} rowGap={16} columnGap={16}>
+        <Grid className={commonStyles.panel} rowGap={16} columnGap={16}>
             <Grid rowGap={16} columnGap={16} columns="1fr">
                 <Grid className={styles.sectionItem} rowGap={16} columnGap={16} columns="1fr" rows="36px">
                     <Typography variant="h3">{t('ProductDetails.QualityStatusSection.Title')}</Typography>

@@ -4,11 +4,12 @@ import {Routes, Route, Navigate} from 'react-router-dom';
 import {APP_ROUTES, PRODUCTS_ROUTES} from '../common/consts';
 import Header from './Layout/Header/Header';
 import Sidebar from './Layout/Sidebar/Sidebar';
-import Products from './Products/Products';
+import ProductsWithQualityModel from './Products/WithQualityModel';
+import ProductsWithoutQualityModel from './Products/WithoutQualityModel';
 import ProductDetails from './Products/ProductDetails/ProductDetails';
 
 const App: React.FC = () => (
-    <Grid areas={['header header', 'aside main']} columnGap={16} columns="1fr 11fr">
+    <Grid areas={['header header header', 'aside main spacer']} columnGap={16} columns="1fr 10fr 12px">
         <GridItem area="header">
             <Header />
         </GridItem>
@@ -23,8 +24,8 @@ const App: React.FC = () => (
                 <Route path={APP_ROUTES.dashboard} element={<Empty />} />
                 <Route path={APP_ROUTES.providers} element={<Empty />} />
                 <Route path={APP_ROUTES.products} element={null}>
-                    <Route path={PRODUCTS_ROUTES.withModels} element={<Products />} />
-                    <Route path={PRODUCTS_ROUTES.withoutModels} element={<Empty />} />
+                    <Route path={PRODUCTS_ROUTES.withModels} element={<ProductsWithQualityModel />} />
+                    <Route path={PRODUCTS_ROUTES.withoutModels} element={<ProductsWithoutQualityModel />} />
                     <Route path={PRODUCTS_ROUTES.transfer} element={<Empty />} />
                     <Route path={PRODUCTS_ROUTES.documents} element={<Empty />} />
 
@@ -38,6 +39,10 @@ const App: React.FC = () => (
 
                 <Route path="*" element={<Navigate to={APP_ROUTES.dashboard} />} />
             </Routes>
+        </GridItem>
+
+        <GridItem area="spacer">
+            <span />
         </GridItem>
     </Grid>
 );

@@ -1,8 +1,15 @@
 {
     "Title": "Товары",
+    "Buttons": {
+        "Apply": "Применить",
+        "Search": "Поиск",
+        "Clear": "Очистить",
+        "AddModel": "Добавить модель"
+    },
     "Common": {
         "Yes": "Да",
-        "No": "Нет"
+        "No": "Нет",
+        "Select": "Выберите"
     },
     "ProductDetails": {
         "Info": {
@@ -67,6 +74,15 @@
         }
     },
     "WithModels": {
+        "Filters": {
+            "productCode": "Код товара",
+            "nomenclature": "Номенклатура",
+            "qualityStatus": "Статус качества",
+            "qualityModel": "Модель качества",
+            "providerName": "Наименование поставщика",
+            "providerStatus": "Статус поставщика",
+            "filter": "Фильтр"
+        },
         "Table": {
             "Columns": {
                 "providerStatus": "Статус поставщика",
@@ -95,7 +111,16 @@
         }
     },
     "WithoutModels": {
+        "Filters": {
+            "nomenclature": "Номенклатура",
+            "QE": "QE",
+            "filter": "Фильтр",
+            "providerName": "Наименование поставщика",
+            "regulatoryStatus": "Регуляторный статус",
+            "fromProject": "Из проекта"
+        },
         "Table": {
+            "SelectModel": "Пожалуйста, выберите соответствующую модель качества",
             "Columns": {
                 "providerCodeNumber": "Кодовый номер поставщика",
                 "productCode": "Код товара",

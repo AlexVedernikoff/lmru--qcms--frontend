@@ -1,4 +1,4 @@
-export interface IProductTableItem {
+export interface IProductTableWithModelsItem {
     providerStatus: string;
     productCode: number;
     productName: string;
@@ -21,4 +21,11 @@ export interface IProductTableItem {
     TN_VED_Code: string;
     departmentName: string;
     nomenclature: string;
+}
+
+export interface IProductTableWithoutModelsItem {
+    providerCodeNumber: number;
+    productCode: number;
+    productName: string;
+    params: string;
 }

@@ -1,0 +1,6 @@
+.panel {
+    box-shadow: var(--box-shadow-l);
+    border-radius: var(--rounding-l);
+    background: var(--background-primary);
+    padding: 36px 24px 12px;
+}

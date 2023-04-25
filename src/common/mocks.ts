@@ -1,6 +1,6 @@
-import {IProductTableItem} from './models';
+import {IProductTableWithModelsItem, IProductTableWithoutModelsItem} from './models';
 
-export const PRODUCT_TABLE_ITEMS: (IProductTableItem & {key: React.Key})[] = [
+export const PRODUCT_TABLE_WITH_MODELS_ITEMS: (IProductTableWithModelsItem & {key: React.Key})[] = [
     {
         key: 1,
         providerStatus: 'Дистрибьютор',
@@ -50,5 +50,20 @@ export const PRODUCT_TABLE_ITEMS: (IProductTableItem & {key: React.Key})[] = [
         departmentName: 'СТРОЙМАТЕРИАЛЫ',
         nomenclature:
             '202903 - 11_Краски 202998 - Фасадная краска 203686 - Штукатурка и широкая облицовка фасада 202114 - Декоративная штукатурка для наружных работ',
+    },
+];
+
+export const PRODUCT_TABLE_WITHOUT_MODELS_ITEMS: (IProductTableWithoutModelsItem & {key: React.Key})[] = [
+    {
+        key: '1',
+        providerCodeNumber: 1002345,
+        productCode: 10042132,
+        productName: 'ШПАТЛ.ФИНИШ.СУПЕРМЕЛК.15КГ.ETS2 SEMIN',
+        params: `
+            Эко маркировка товаров-Не применимо 
+            Минимальный процент содержания вторичного сырья в продукте (%)-0 
+            Перечень веществ, опасных в концентрации более 0,1% по массе-Не определено
+            Минимальная доля вторичного материала в упаковке (в %)-0
+        `,
     },
 ];

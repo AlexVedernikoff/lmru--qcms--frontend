@@ -6,13 +6,13 @@ import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {Table} from 'antd';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {PRODUCT_TABLE_WITH_MODELS_ITEMS} from '../../../../common/mocks';
+import {PRODUCT_TABLE_WITHOUT_MODELS_ITEMS} from '../../../../common/mocks';
 import {PRODUCTS_ROUTES} from '../../../../common/consts';
 import {IDataType, getProductTableColumns} from './ProductTableColumns';
 
 const ProductsTable: React.FC = () => {
-    const navigate = useNavigate();
     const {t} = useTranslation('products');
+    const navigate = useNavigate();
 
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [containerSize, setContainerSize] = useState(500);
@@ -67,7 +67,7 @@ const ProductsTable: React.FC = () => {
         [handleViewProductDetails, t]
     );
 
-    const data = useMemo<IDataType[]>(() => PRODUCT_TABLE_WITH_MODELS_ITEMS, []);
+    const data = useMemo<IDataType[]>(() => PRODUCT_TABLE_WITHOUT_MODELS_ITEMS, []);
 
     const rowSelection = useMemo<TableRowSelection<IDataType>>(
         () => ({
@@ -90,7 +90,7 @@ const ProductsTable: React.FC = () => {
                 rowSelection={rowSelection}
                 columns={columns}
                 dataSource={data}
-                scroll={{x: 400}}
+                scroll={{x: true}}
                 tableLayout="fixed"
                 size="small"
                 bordered

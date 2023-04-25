@@ -1,9 +1,5 @@
-.section {
-    background: white;
-    padding: 16px;
-}
-
 .sectionItem {
-    border: 1px solid #e8e9eb;
+    border: 1px solid var(--background-secondary);
+    border-radius: var(--rounding-l);
     padding: 16px;
 }
