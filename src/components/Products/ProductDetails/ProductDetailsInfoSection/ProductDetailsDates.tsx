@@ -1,26 +1,31 @@
 import {Checkbox, Grid, Typography} from 'fronton-react';
+import {useTranslation} from 'react-i18next';
 import styles from '../ProductDetails.module.css';
 
-const ProductDetailsDates: React.FC = () => (
-    <Grid className={styles.sectionItem} rowGap={16} columnGap={16} columns="1fr" rows="36px">
-        <Typography variant="h3">{'Даты'}</Typography>
+const ProductDetailsDates: React.FC = () => {
+    const {t} = useTranslation('products');
 
-        <Grid rowGap={4} columns="1fr 1fr">
-            <div>
-                <Typography variant="s" size="body_long" color="text-minor">
-                    {'Дата создания'}
-                </Typography>
-                <br />
-                <Typography variant="s" size="body_short">
-                    {'13/03/2023'}
-                </Typography>
-            </div>
+    return (
+        <Grid className={styles.sectionItem} rowGap={16} columnGap={16} columns="1fr" rows="36px">
+            <Typography variant="h3">{t('ProductDetails.Info.Dates.Title')}</Typography>
 
-            <div>
-                <Checkbox checked={false} label={'AVS'} />
-            </div>
+            <Grid rowGap={4} columns="1fr 1fr">
+                <div>
+                    <Typography variant="s" size="body_long" color="text-minor">
+                        {t('ProductDetails.Info.Dates.Field.creationDate')}
+                    </Typography>
+                    <br />
+                    <Typography variant="s" size="body_short">
+                        {'13/03/2023'}
+                    </Typography>
+                </div>
+
+                <div>
+                    <Checkbox checked={false} label={t('ProductDetails.Info.Dates.Field.AVS')} />
+                </div>
+            </Grid>
         </Grid>
-    </Grid>
-);
+    );
+};
 
 export default ProductDetailsDates;

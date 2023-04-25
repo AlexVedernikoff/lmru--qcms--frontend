@@ -1,5 +1,71 @@
 {
     "Title": "Товары",
+    "Common": {
+        "Yes": "Да",
+        "No": "Нет"
+    },
+    "ProductDetails": {
+        "Info": {
+            "Attributes": {
+                "Title": "Атрибуты",
+                "Table": {
+                    "Columns": {
+                        "characteristics": "Характеристики",
+                        "available": "Наличие",
+                        "type": "Тип"
+                    }
+                }
+            },
+            "Dates": {
+                "Title": "Даты",
+                "Field": {
+                    "creationDate": "Дата создания",
+                    "AVS": "AVS"
+                }
+            },
+            "InfoDetails": {
+                "Title": "Подробная информация",
+                "Field": {
+                    "gamma": "Гамма",
+                    "link": "Предварительная ссылка"
+                }
+            },
+            "Provider": {
+                "Title": "Поставщик",
+                "Field": {
+                    "providerName": "Наименование поставщика",
+                    "providerStatus": "Статус поставщика",
+                    "distributor": "Дистрибьютор"
+                }
+            },
+            "Product": {
+                "Title": "Продукт",
+                "Field": {
+                    "productCode": "Код товара",
+                    "EAN": "EAN",
+                    "TN_VED_Code": "Код ТН ВЭД",
+                    "risk": "Риск",
+                    "qualityModel": "Модель качества",
+                    "productModel": "Товарная модель",
+                    "isChemical": "Относится к категории химии",
+                    "STM": "СТМ",
+                    "intImport": "Международный импорт",
+                    "fromProject": "Из проекта"
+                },
+                "RiskOptions": {
+                    "minor": "Не очень важный"
+                }
+            }
+        },
+        "QualityStatusSection": {
+            "Title": "Статус качества",
+            "Table": {
+                "Empty": "Контактные данные поставщика отсутствуют",
+                "Columns": {}
+            },
+            "Comments": "Публичные комментарии"
+        }
+    },
     "WithModels": {
         "Table": {
             "Columns": {

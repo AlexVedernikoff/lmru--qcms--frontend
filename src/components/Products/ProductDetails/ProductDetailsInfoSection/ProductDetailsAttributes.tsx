@@ -4,6 +4,7 @@ import {Table} from 'antd';
 import {ColumnsType} from 'antd/es/table';
 import HistoryBack from '../../../Icons/HistoryBack';
 import styles from '../ProductDetails.module.css';
+import {useTranslation} from 'react-i18next';
 
 interface IAttributes {
     id: string;
@@ -26,24 +27,26 @@ interface IDataType extends IAttributes {
 }
 
 const ProductDetailsAttributes: React.FC = () => {
+    const {t} = useTranslation('products');
+
     const attr_columns = useMemo<ColumnsType<IDataType>>(
         () => [
             {
-                title: 'Характеристики',
+                title: t('ProductDetails.Info.Attributes.Table.Columns.characteristics'),
                 dataIndex: 'characteristics',
             },
             {
-                title: 'Наличие',
+                title: t('ProductDetails.Info.Attributes.Table.Columns.available'),
                 dataIndex: 'available',
                 render: (isAvailable: boolean) => (
                     <div>
                         <BackofficeStatus align="left" text="" variant={isAvailable ? 'success' : 'alert'} />
-                        {isAvailable ? 'Да' : 'Нет'}
+                        {isAvailable ? t('Common.Yes') : t('Common.No')}
                     </div>
                 ),
             },
             {
-                title: 'Тип',
+                title: t('ProductDetails.Info.Attributes.Table.Columns.type'),
                 dataIndex: 'type',
                 render: (text: string) => (
                     <div style={{background: '#FFBDBD', width: '100%', height: '100%', padding: 8}}>{text}</div>
@@ -60,7 +63,7 @@ const ProductDetailsAttributes: React.FC = () => {
                 ),
             },
         ],
-        []
+        [t]
     );
 
     const attr_data = useMemo<IDataType[]>(() => ATTRIBUTES.map(d => ({...d, key: d.id})), []);
@@ -68,7 +71,7 @@ const ProductDetailsAttributes: React.FC = () => {
     return (
         <Grid className={styles.sectionItem} rowGap={16} columnGap={16}>
             <Grid rowGap={4} columns="1fr">
-                <Typography variant="h3">{'Атрибуты'}</Typography>
+                <Typography variant="h3">{t('ProductDetails.Info.Attributes.Title')}</Typography>
             </Grid>
 
             <Grid rowGap={4} columns="1fr">
