@@ -65,7 +65,7 @@ const ProductsFilter: React.FC = () => {
                     </Grid>
                 </Grid>
 
-                <Grid columnGap={16} columns="2fr" alignItems="baseline" rowGap="12px">
+                <Grid columnGap={16} columns="2fr" alignItems="baseline" rowGap="20px">
                     <Dropdown
                         size="m"
                         closeOnSelect

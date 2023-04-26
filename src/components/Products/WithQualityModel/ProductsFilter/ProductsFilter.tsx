@@ -20,7 +20,7 @@ const ProductsFilter: React.FC = () => {
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
             <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline" rowGap="48px">
-                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="24px">
+                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
                     <Dropdown
                         size="m"
                         closeOnSelect
@@ -42,7 +42,7 @@ const ProductsFilter: React.FC = () => {
                     />
                 </Grid>
 
-                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="24px">
+                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
                     <Dropdown
                         size="m"
                         closeOnSelect
@@ -67,7 +67,7 @@ const ProductsFilter: React.FC = () => {
                     />
                 </Grid>
 
-                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="12px">
+                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="14px">
                     <Dropdown
                         size="m"
                         closeOnSelect
