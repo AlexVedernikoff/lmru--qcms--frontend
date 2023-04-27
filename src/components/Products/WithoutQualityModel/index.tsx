@@ -1,21 +1,18 @@
 import {Grid, Typography, RadioGroup, Radio} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import ProductsFilter from './ProductsFilter/ProductsFilter';
-import ProductsTable from './ProductsTable/ProductsTable';
-import styles from '../Products.module.css';
 import Models from '../../Icons/Models';
+import productsStyles from '../Products.module.css';
+import ProductsFilter from './ProductsFilter';
+import ProductsTable from './ProductsTable';
 
 const ProductsWithoutQualityModel: React.FC = () => {
     const {t} = useTranslation('products');
 
     return (
         <Grid rowGap={16}>
-            <Grid rowGap={16}>
-                <Typography variant="h2">{t('Title')}</Typography>
-                <ProductsFilter />
-            </Grid>
+            <ProductsFilter />
 
-            <Grid rowGap={16} className={styles.panel}>
+            <Grid rowGap={16} className={productsStyles.panel}>
                 <Typography variant="h3">
                     {'11_Краски Подготовка основания Грунтовка стен и аксессуары Шпаклевка'}
                 </Typography>

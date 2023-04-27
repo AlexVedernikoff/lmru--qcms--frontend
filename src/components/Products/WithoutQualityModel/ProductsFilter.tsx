@@ -1,6 +1,6 @@
 import {useTranslation} from 'react-i18next';
 import {Checkbox, Dropdown, DropdownItem, Grid, Input, RegularButton, Typography} from 'fronton-react';
-import styles from '../../Products.module.css';
+import productsStyles from '../Products.module.css';
 
 const ProductsFilter: React.FC = () => {
     const {t} = useTranslation('products');
@@ -10,7 +10,7 @@ const ProductsFilter: React.FC = () => {
     const handleSelect = (value: string | null) => {};
 
     return (
-        <Grid rowGap={16} alignItems="center" className={styles.panel}>
+        <Grid rowGap={16} alignItems="center" className={productsStyles.panel}>
             <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline" rowGap="48px">
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="12px">
                     <Dropdown

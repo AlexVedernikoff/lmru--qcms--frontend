@@ -1,6 +1,6 @@
 import {Checkbox, Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import styles from '../ProductDetails.module.css';
+import styles from '../../Products.module.css';
 
 const ProductDetailsDates: React.FC = () => {
     const {t} = useTranslation('products');

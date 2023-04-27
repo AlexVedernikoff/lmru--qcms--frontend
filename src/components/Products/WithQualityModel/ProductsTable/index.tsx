@@ -1,35 +1,18 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {useCallback, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {RegularButton} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
-import {Table} from 'antd';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {PRODUCT_TABLE_WITHOUT_MODELS_ITEMS} from '../../../../common/mocks';
+import {PRODUCT_TABLE_WITH_MODELS_ITEMS} from '../../../../common/mocks';
 import {PRODUCTS_ROUTES} from '../../../../common/consts';
 import {IDataType, getProductTableColumns} from './ProductTableColumns';
+import AutoWidthTable from '../../../Common/AutoWidthTable';
 
 const ProductsTable: React.FC = () => {
-    const {t} = useTranslation('products');
     const navigate = useNavigate();
-
-    const containerRef = useRef<HTMLDivElement | null>(null);
-    const [containerSize, setContainerSize] = useState(500);
-
-    const updateContainerSize = () => {
-        if (containerRef.current) {
-            setContainerSize(containerRef.current.clientWidth);
-        }
-    };
-
-    useEffect(() => {
-        window.addEventListener('resize', updateContainerSize);
-        updateContainerSize();
-        return () => {
-            window.removeEventListener('resize', updateContainerSize);
-        };
-    }, []);
+    const {t} = useTranslation('products');
 
     const handleViewProductDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
         e => {
@@ -67,7 +50,7 @@ const ProductsTable: React.FC = () => {
         [handleViewProductDetails, t]
     );
 
-    const data = useMemo<IDataType[]>(() => PRODUCT_TABLE_WITHOUT_MODELS_ITEMS, []);
+    const data = useMemo<IDataType[]>(() => PRODUCT_TABLE_WITH_MODELS_ITEMS, []);
 
     const rowSelection = useMemo<TableRowSelection<IDataType>>(
         () => ({
@@ -85,18 +68,15 @@ const ProductsTable: React.FC = () => {
     );
 
     return (
-        <div ref={ref => (containerRef.current = ref)}>
-            <Table
-                rowSelection={rowSelection}
-                columns={columns}
-                dataSource={data}
-                scroll={{x: true}}
-                tableLayout="fixed"
-                size="small"
-                bordered
-                style={{width: containerSize}}
-            />
-        </div>
+        <AutoWidthTable
+            rowSelection={rowSelection}
+            columns={columns}
+            dataSource={data}
+            scroll={{x: 400}}
+            tableLayout="fixed"
+            size="small"
+            bordered
+        />
     );
 };
 

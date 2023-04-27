@@ -1,10 +1,10 @@
 import {useMemo} from 'react';
 import {BackofficeStatus, Grid, RegularButton, Typography} from 'fronton-react';
+import {useTranslation} from 'react-i18next';
 import {Table} from 'antd';
 import {ColumnsType} from 'antd/es/table';
 import HistoryBack from '../../../Icons/HistoryBack';
-import styles from '../ProductDetails.module.css';
-import {useTranslation} from 'react-i18next';
+import styles from '../../Products.module.css';
 
 interface IAttributes {
     id: string;

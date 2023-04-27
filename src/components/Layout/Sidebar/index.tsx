@@ -101,7 +101,15 @@ const Sidebar: React.FC = () => {
                             text={item.text}
                             value={item.value}
                             onClick={handleItemClick}
-                            iconRight={isSectionOpened ? <ChevronDownIcon /> : <ChevronRightIcon />}
+                            iconRight={
+                                !!item.children?.length ? (
+                                    isSectionOpened ? (
+                                        <ChevronDownIcon />
+                                    ) : (
+                                        <ChevronRightIcon />
+                                    )
+                                ) : undefined
+                            }
                         >
                             {isSectionOpened
                                 ? item.children?.map((c, i) => (

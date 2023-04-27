@@ -1,6 +1,6 @@
 import {Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import styles from '../ProductDetails.module.css';
+import styles from '../../Products.module.css';
 
 const ProductDetailsInfo: React.FC = () => {
     const {t} = useTranslation('products');

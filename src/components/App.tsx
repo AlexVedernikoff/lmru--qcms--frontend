@@ -2,11 +2,12 @@ import {Empty} from 'antd';
 import {Grid, GridItem} from 'fronton-react';
 import {Routes, Route, Navigate} from 'react-router-dom';
 import {APP_ROUTES, PRODUCTS_ROUTES} from '../common/consts';
-import Header from './Layout/Header/Header';
-import Sidebar from './Layout/Sidebar/Sidebar';
+import Header from './Layout/Header';
+import Sidebar from './Layout/Sidebar';
 import ProductsWithQualityModel from './Products/WithQualityModel';
 import ProductsWithoutQualityModel from './Products/WithoutQualityModel';
 import ProductDetails from './Products/ProductDetails/ProductDetails';
+import Products from './Products';
 
 const App: React.FC = () => (
     <Grid areas={['header header header', 'aside main spacer']} columnGap={16} columns="1fr 10fr 12px">
@@ -23,7 +24,7 @@ const App: React.FC = () => (
             <Routes>
                 <Route path={APP_ROUTES.dashboard} element={<Empty />} />
                 <Route path={APP_ROUTES.providers} element={<Empty />} />
-                <Route path={APP_ROUTES.products} element={null}>
+                <Route path={APP_ROUTES.products} element={<Products />}>
                     <Route path={PRODUCTS_ROUTES.withModels} element={<ProductsWithQualityModel />} />
                     <Route path={PRODUCTS_ROUTES.withoutModels} element={<ProductsWithoutQualityModel />} />
                     <Route path={PRODUCTS_ROUTES.transfer} element={<Empty />} />
