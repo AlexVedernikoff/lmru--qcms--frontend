@@ -1,7 +1,7 @@
 import {Empty} from 'antd';
 import {Grid, GridItem} from 'fronton-react';
 import {Routes, Route, Navigate} from 'react-router-dom';
-import {APP_ROUTES, PRODUCTS_ROUTES} from '../common/consts';
+import {APP_ROUTES, MODELS_ROUTES, PRODUCTS_ROUTES} from '../common/consts';
 import Header from './Layout/Header';
 import Sidebar from './Layout/Sidebar';
 import ProductsWithQualityModel from './Products/WithQualityModel';
@@ -37,7 +37,7 @@ const App: React.FC = () => (
                 </Route>
                 <Route path={APP_ROUTES.tasks} element={<Empty />} />
                 <Route path={APP_ROUTES.models} element={<Models />}>
-                    <Route path={PRODUCTS_ROUTES.details} element={<ProductDetails />} />
+                    <Route path={MODELS_ROUTES.details} element={<ProductDetails />} />
                 </Route>
                 <Route path={APP_ROUTES.settings} element={<Empty />} />
 

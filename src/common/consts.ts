@@ -14,3 +14,7 @@ export const PRODUCTS_ROUTES = {
     documents: `${APP_ROUTES.products}/documents`,
     details: `${APP_ROUTES.products}/:id`,
 };
+
+export const MODELS_ROUTES = {
+    details: `${APP_ROUTES.models}/:id`,
+};
