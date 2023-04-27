@@ -13,7 +13,7 @@ import {
 } from '@fronton/icons-react';
 import {APP_ROUTES, PRODUCTS_ROUTES} from '../../../common/consts';
 import styles from './Sidebar.module.css';
-import Models from '../../Icons/Models';
+import ModelsIcon from '../../Icons/ModelsIcon';
 
 interface IItem {
     text: string;
@@ -62,7 +62,7 @@ const items: IItem[] = [
         value: APP_ROUTES.tasks,
     },
     {
-        icon: Models,
+        icon: ModelsIcon,
         text: 'Модели',
         value: APP_ROUTES.models,
     },

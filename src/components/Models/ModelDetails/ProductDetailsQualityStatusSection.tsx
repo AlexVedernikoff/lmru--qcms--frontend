@@ -1,7 +1,7 @@
 import {BackofficeStatus, Grid, Textarea, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import {Table} from 'antd';
-import styles from '../../Common.module.css';
+import styles from '../Common.module.css';
 
 const ProductDetailsQualityStatusSection: React.FC = () => {
     const {t} = useTranslation('products');

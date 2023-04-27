@@ -1,9 +1,17 @@
+import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Checkbox, Dropdown, DropdownItem, Grid, Input, RegularButton, Typography} from 'fronton-react';
+import {Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react';
+import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
+import ProductsAdditionalFilter from './ProductsAdditionalFilter';
 import styles from '../../Common.module.css';
 
 const ProductsFilter: React.FC = () => {
     const {t} = useTranslation('products');
+    const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
+
+    const handleShowMoreFiltersClick = () => {
+        setIsMoreFiltersActive(prevState => !prevState);
+    };
 
     const handleProductCodeChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
 
@@ -12,65 +20,34 @@ const ProductsFilter: React.FC = () => {
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
             <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline" rowGap="48px">
-                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="12px">
+                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
                     <Dropdown
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
-                        label={t('WithoutModels.Filters.nomenclature')}
+                        label={t('WithModels.Filters.filter')}
                         value={undefined}
                         onSelect={handleSelect}
                     >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text={t('WithModels.Filters.productCode')} value={'productCode'} />
+                        <DropdownItem text={t('WithModels.Filters.providerName')} value={'providerName'} />
                     </Dropdown>
 
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={t('WithoutModels.Filters.regulatoryStatus')}
+                    <Input
+                        inputSize="m"
+                        autoComplete="off"
+                        name={'filter'}
                         value={undefined}
-                        onSelect={handleSelect}
-                    >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                    </Dropdown>
+                        onChange={handleProductCodeChange}
+                    />
                 </Grid>
 
-                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="32px">
+                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
                     <Dropdown
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
-                        label={t('WithoutModels.Filters.QE')}
-                        value={undefined}
-                        onSelect={handleSelect}
-                    >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                    </Dropdown>
-
-                    <Grid columnGap={16} columns="120px 1fr" alignItems="baseline" alignContent="baseline">
-                        <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="baseline" alignContent="baseline">
-                            <Checkbox checked={false} label={t('Common.Yes')} />
-                            <Checkbox checked={false} label={t('Common.No')} />
-                        </Grid>
-                        <Typography variant="s" size="body_short">
-                            {t('WithoutModels.Filters.fromProject')}
-                        </Typography>
-                    </Grid>
-                </Grid>
-
-                <Grid columnGap={16} columns="2fr" alignItems="baseline" rowGap="20px">
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder="Выберите"
-                        label={t('WithoutModels.Filters.filter')}
+                        label={t('WithModels.Filters.nomenclature')}
                         value={undefined}
                         onSelect={handleSelect}
                     >
@@ -82,15 +59,61 @@ const ProductsFilter: React.FC = () => {
                     <Input
                         inputSize="m"
                         autoComplete="off"
-                        name={'filter'}
+                        label={t('WithModels.Filters.qualityModel')}
+                        name={'qualityModel'}
+                        placeholder=""
                         value={undefined}
                         onChange={handleProductCodeChange}
                     />
                 </Grid>
+
+                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="14px">
+                    <Dropdown
+                        size="m"
+                        closeOnSelect
+                        placeholder={t('Common.Select')}
+                        label={'Статус качества'}
+                        value={undefined}
+                        onSelect={handleSelect}
+                    >
+                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text="test" value={'test'} />
+                    </Dropdown>
+
+                    <Dropdown
+                        size="m"
+                        closeOnSelect
+                        placeholder={t('Common.Select')}
+                        label={'Статус поставщика'}
+                        value={undefined}
+                        onSelect={handleSelect}
+                    >
+                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text="test" value={'test'} />
+                    </Dropdown>
+                </Grid>
             </Grid>
 
+            {isMoreFiltersActive && (
+                <Grid columnGap={16} columns="1fr" alignItems="center">
+                    <ProductsAdditionalFilter />
+                </Grid>
+            )}
+
             <Grid columnGap={16} columns="repeat(6, 1fr)" alignItems="baseline">
-                <span />
+                <Grid columnGap={16} columns="repeat(2, 1fr)">
+                    <RegularButton
+                        onClick={handleShowMoreFiltersClick}
+                        size="m"
+                        variant="pseudo"
+                        iconLeft={isMoreFiltersActive ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                    >
+                        {isMoreFiltersActive ? 'Меньше' : 'Больше'}
+                    </RegularButton>
+                </Grid>
+
                 <span />
                 <span />
                 <span />

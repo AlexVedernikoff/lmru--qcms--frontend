@@ -1,0 +1,132 @@
+{
+    "Title": "Модели качества",
+    "Buttons": {
+        "Apply": "Применить",
+        "Search": "Поиск",
+        "Clear": "Очистить",
+        "AddModel": "Добавить модель"
+    },
+    "Common": {
+        "Yes": "Да",
+        "No": "Нет",
+        "Select": "Выберите"
+    },
+    "ProductDetails": {
+        "Info": {
+            "Attributes": {
+                "Title": "Атрибуты",
+                "Table": {
+                    "Columns": {
+                        "characteristics": "Характеристики",
+                        "available": "Наличие",
+                        "type": "Тип"
+                    }
+                }
+            },
+            "Dates": {
+                "Title": "Даты",
+                "Field": {
+                    "creationDate": "Дата создания",
+                    "AVS": "AVS"
+                }
+            },
+            "InfoDetails": {
+                "Title": "Подробная информация",
+                "Field": {
+                    "gamma": "Гамма",
+                    "link": "Предварительная ссылка"
+                }
+            },
+            "Provider": {
+                "Title": "Поставщик",
+                "Field": {
+                    "providerName": "Наименование поставщика",
+                    "providerStatus": "Статус поставщика",
+                    "distributor": "Дистрибьютор"
+                }
+            },
+            "Product": {
+                "Title": "Продукт",
+                "Field": {
+                    "productCode": "Код товара",
+                    "EAN": "EAN",
+                    "TN_VED_Code": "Код ТН ВЭД",
+                    "risk": "Риск",
+                    "qualityModel": "Модель качества",
+                    "productModel": "Товарная модель",
+                    "isChemical": "Относится к категории химии",
+                    "STM": "СТМ",
+                    "intImport": "Международный импорт",
+                    "fromProject": "Из проекта"
+                },
+                "RiskOptions": {
+                    "minor": "Не очень важный"
+                }
+            }
+        },
+        "QualityStatusSection": {
+            "Title": "Статус качества",
+            "Table": {
+                "Empty": "Контактные данные поставщика отсутствуют",
+                "Columns": {}
+            },
+            "Comments": "Публичные комментарии"
+        }
+    },
+    "WithModels": {
+        "Filters": {
+            "productCode": "Код товара",
+            "nomenclature": "Номенклатура",
+            "qualityStatus": "Статус качества",
+            "qualityModel": "Модель качества",
+            "providerName": "Наименование поставщика",
+            "providerStatus": "Статус поставщика",
+            "filter": "Фильтр"
+        },
+        "Table": {
+            "Columns": {
+                "providerStatus": "Статус поставщика",
+                "productCode": "Код товара",
+                "productName": "Наименование товара",
+                "providerCode": "Код поставщика",
+                "providerName": "Наименование поставщика",
+                "qualityStatus": "Статус качества",
+
+                "QE": "QE",
+                "qualityModel": "Модель качества",
+                "EAN": "EAN",
+                "lastProductStatusDate": "Дата последнего статуса товара",
+                "qualityModelNumber": "Номер модели качества",
+                "qualityModelManager": "Менеджер по качеству товара",
+                "productDataCompleteness": "Полнота данных по товару",
+                "productTopAVS": "Топ-AVS товара",
+                "productCreationDate": "Дата создания товара",
+                "productActionsBy": "Выполнение действия по товару",
+                "departmentCode": "Код отдела",
+                "subDepartmentCode": "Код подотдела",
+                "TN_VED_Code": "Код ТН ВЭД",
+                "departmentName": "Наименование отдела",
+                "nomenclature": "Номенклатура"
+            }
+        }
+    },
+    "WithoutModels": {
+        "Filters": {
+            "nomenclature": "Номенклатура",
+            "QE": "QE",
+            "filter": "Фильтр",
+            "providerName": "Наименование поставщика",
+            "regulatoryStatus": "Регуляторный статус",
+            "fromProject": "Из проекта"
+        },
+        "Table": {
+            "SelectModel": "Пожалуйста, выберите соответствующую модель качества",
+            "Columns": {
+                "providerCodeNumber": "Кодовый номер поставщика",
+                "productCode": "Код товара",
+                "productName": "Наименование",
+                "params": "Параметры"
+            }
+        }
+    }
+}

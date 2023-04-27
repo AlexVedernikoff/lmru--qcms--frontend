@@ -4,7 +4,7 @@ import ProductDetailsDates from './ProductDetailsDates';
 import ProductDetailsInfo from './ProductDetailsInfo';
 import ProductDetailsProduct from './ProductDetailsProduct';
 import ProductDetailsProvider from './ProductDetailsProvider';
-import styles from '../../../Common.module.css';
+import styles from '../../Common.module.css';
 
 const ProductDetailsInfoSection: React.FC = () => {
     return (

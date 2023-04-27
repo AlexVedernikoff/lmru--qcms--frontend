@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {Table} from 'antd';
 import {ColumnsType} from 'antd/es/table';
 import HistoryBackIcon from '../../../Icons/HistoryBackIcon';
-import styles from '../../../Common.module.css';
+import styles from '../../Common.module.css';
 
 interface IAttributes {
     id: string;

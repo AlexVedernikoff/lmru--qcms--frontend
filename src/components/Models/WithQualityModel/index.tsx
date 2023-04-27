@@ -1,7 +1,7 @@
 import {Grid} from 'fronton-react';
 import ProductsFilter from './ProductsFilter';
 import ProductsTable from './ProductsTable';
-import styles from '../../Common.module.css';
+import styles from '../Common.module.css';
 
 const ProductsWithQualityModel: React.FC = () => {
     return (

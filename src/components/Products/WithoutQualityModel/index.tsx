@@ -1,7 +1,7 @@
 import {Grid, Typography, RadioGroup, Radio} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import Models from '../../Icons/Models';
-import productsStyles from '../Products.module.css';
+import ModelsIcon from '../../Icons/ModelsIcon';
+import styles from '../../Common.module.css';
 import ProductsFilter from './ProductsFilter';
 import ProductsTable from './ProductsTable';
 
@@ -12,14 +12,14 @@ const ProductsWithoutQualityModel: React.FC = () => {
         <Grid rowGap={16}>
             <ProductsFilter />
 
-            <Grid rowGap={16} className={productsStyles.panel}>
+            <Grid rowGap={16} className={styles.panel}>
                 <Typography variant="h3">
                     {'11_Краски Подготовка основания Грунтовка стен и аксессуары Шпаклевка'}
                 </Typography>
 
                 <Grid rowGap={4}>
                     <Grid columns="24px 1fr" columnGap="12px">
-                        <Models color="black" />
+                        <ModelsIcon color="black" />
 
                         <Typography variant="l" size="body_long">
                             {t('WithoutModels.Table.SelectModel')}
