@@ -9,6 +9,7 @@ import ProductsWithoutQualityModel from './Products/WithoutQualityModel';
 import ProductDetails from './Products/ProductDetails/ProductDetails';
 import Products from './Products';
 import Models from './Models';
+// import ModelDetails from './Models/ModelDetails';
 
 const App: React.FC = () => (
     <Grid areas={['header header header', 'aside main spacer']} columnGap={16} columns="1fr 10fr 12px">
@@ -37,7 +38,7 @@ const App: React.FC = () => (
                 </Route>
                 <Route path={APP_ROUTES.tasks} element={<Empty />} />
                 <Route path={APP_ROUTES.models} element={<Models />}>
-                    <Route path={MODELS_ROUTES.details} element={<ProductDetails />} />
+                    <Route path={MODELS_ROUTES.details} element={<Empty />} />
                 </Route>
                 <Route path={APP_ROUTES.settings} element={<Empty />} />
 

@@ -1,3 +1,19 @@
+export interface IModelTableItem {
+    modelStatus: string;
+    modelCode: string;
+    qualityModel: string;
+    QE: {
+        fullName: string;
+        type: 'QE' | 'SCM';
+    }[];
+    nomenclature: {
+        code: string;
+        description: string;
+    }[];
+    latestChange: string;
+    changeDate: string;
+}
+
 export interface IProductTableWithModelsItem {
     providerStatus: string;
     productCode: number;

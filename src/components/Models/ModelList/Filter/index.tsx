@@ -2,18 +2,18 @@ import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react';
 import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
-import ProductsAdditionalFilter from './ProductsAdditionalFilter';
-import styles from '../../Common.module.css';
+import AdditionalFilter from './AdditionalFilter';
+import styles from '../../../Common.module.css';
 
-const ProductsFilter: React.FC = () => {
-    const {t} = useTranslation('products');
+const ModelsFilter: React.FC = () => {
+    const {t} = useTranslation('models');
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
 
     const handleShowMoreFiltersClick = () => {
         setIsMoreFiltersActive(prevState => !prevState);
     };
 
-    const handleProductCodeChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
+    const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
 
     const handleSelect = (value: string | null) => {};
 
@@ -21,24 +21,24 @@ const ProductsFilter: React.FC = () => {
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
             <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline" rowGap="48px">
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={t('WithModels.Filters.filter')}
+                    <Input
+                        inputSize="m"
+                        autoComplete="off"
+                        label={t('ModelList.Filters.qualityModel')}
+                        name={'qualityModel'}
+                        placeholder=""
                         value={undefined}
-                        onSelect={handleSelect}
-                    >
-                        <DropdownItem text={t('WithModels.Filters.productCode')} value={'productCode'} />
-                        <DropdownItem text={t('WithModels.Filters.providerName')} value={'providerName'} />
-                    </Dropdown>
+                        onChange={handleInputChange}
+                    />
 
                     <Input
                         inputSize="m"
                         autoComplete="off"
-                        name={'filter'}
+                        label={t('ModelList.Filters.modelNameOrCode')}
+                        name={'modelNameOrCode'}
+                        placeholder=""
                         value={undefined}
-                        onChange={handleProductCodeChange}
+                        onChange={handleInputChange}
                     />
                 </Grid>
 
@@ -47,7 +47,7 @@ const ProductsFilter: React.FC = () => {
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
-                        label={t('WithModels.Filters.nomenclature')}
+                        label={t('ModelList.Filters.QE')}
                         value={undefined}
                         onSelect={handleSelect}
                     >
@@ -55,50 +55,24 @@ const ProductsFilter: React.FC = () => {
                         <DropdownItem text="test" value={'test'} />
                         <DropdownItem text="test" value={'test'} />
                     </Dropdown>
-
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('WithModels.Filters.qualityModel')}
-                        name={'qualityModel'}
-                        placeholder=""
-                        value={undefined}
-                        onChange={handleProductCodeChange}
-                    />
                 </Grid>
 
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="14px">
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={'Статус качества'}
+                    <Input
+                        inputSize="m"
+                        autoComplete="off"
+                        label={t('ModelList.Filters.productModel')}
+                        name={'productModel'}
+                        placeholder=""
                         value={undefined}
-                        onSelect={handleSelect}
-                    >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                    </Dropdown>
-
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={'Статус поставщика'}
-                        value={undefined}
-                        onSelect={handleSelect}
-                    >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                    </Dropdown>
+                        onChange={handleInputChange}
+                    />
                 </Grid>
             </Grid>
 
             {isMoreFiltersActive && (
                 <Grid columnGap={16} columns="1fr" alignItems="center">
-                    <ProductsAdditionalFilter />
+                    <AdditionalFilter />
                 </Grid>
             )}
 
@@ -110,7 +84,7 @@ const ProductsFilter: React.FC = () => {
                         variant="pseudo"
                         iconLeft={isMoreFiltersActive ? <ChevronUpIcon /> : <ChevronDownIcon />}
                     >
-                        {isMoreFiltersActive ? 'Меньше' : 'Больше'}
+                        {isMoreFiltersActive ? t('Buttons.Less') : t('Buttons.More')}
                     </RegularButton>
                 </Grid>
 
@@ -121,11 +95,11 @@ const ProductsFilter: React.FC = () => {
 
                 <Grid columnGap={16} columns="repeat(2, 1fr)">
                     <RegularButton onClick={() => {}} size="m" variant="outline">
-                        Очистить
+                        {t('Buttons.Clear')}
                     </RegularButton>
 
                     <RegularButton onClick={() => {}} size="m" variant="primary">
-                        Поиск
+                        {t('Buttons.Search')}
                     </RegularButton>
                 </Grid>
             </Grid>
@@ -133,4 +107,4 @@ const ProductsFilter: React.FC = () => {
     );
 };
 
-export default ProductsFilter;
+export default ModelsFilter;

@@ -5,20 +5,20 @@ import {RegularButton} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {PRODUCT_TABLE_WITH_MODELS_ITEMS} from '../../../../common/mocks';
-import {PRODUCTS_ROUTES} from '../../../../common/consts';
-import {IDataType, getProductTableColumns} from './ProductTableColumns';
+import {MODEL_TABLE_ITEMS} from '../../../../common/mocks';
+import {MODELS_ROUTES} from '../../../../common/consts';
+import {IDataType, getTableColumns} from './TableColumns';
 import AutoWidthTable from '../../../Common/AutoWidthTable';
 
-const ProductsTable: React.FC = () => {
+const ModelsTable: React.FC = () => {
     const navigate = useNavigate();
-    const {t} = useTranslation('products');
+    const {t} = useTranslation('models');
 
-    const handleViewProductDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
+    const handleDetailsOpen: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
         e => {
             const {id} = e.currentTarget.dataset;
             if (id) {
-                navigate(PRODUCTS_ROUTES.details.replace(':id', id));
+                navigate(MODELS_ROUTES.details.replace(':id', id));
             }
         },
         [navigate]
@@ -32,8 +32,8 @@ const ProductsTable: React.FC = () => {
                 width: 64,
                 render: (_value: string, record: IDataType) => (
                     <RegularButton
-                        data-id={record.productCode.toString()}
-                        onClick={handleViewProductDetails}
+                        data-id={record.modelCode}
+                        onClick={handleDetailsOpen}
                         href=""
                         rel=""
                         aria-label=""
@@ -45,12 +45,12 @@ const ProductsTable: React.FC = () => {
                 ),
                 fixed: 'left',
             },
-            ...getProductTableColumns(t),
+            ...getTableColumns(t),
         ],
-        [handleViewProductDetails, t]
+        [handleDetailsOpen, t]
     );
 
-    const data = useMemo<IDataType[]>(() => PRODUCT_TABLE_WITH_MODELS_ITEMS, []);
+    const data = useMemo<IDataType[]>(() => MODEL_TABLE_ITEMS, []);
 
     const rowSelection = useMemo<TableRowSelection<IDataType>>(
         () => ({
@@ -80,4 +80,4 @@ const ProductsTable: React.FC = () => {
     );
 };
 
-export default ProductsTable;
+export default ModelsTable;

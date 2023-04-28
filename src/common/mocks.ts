@@ -1,4 +1,27 @@
-import {IProductTableWithModelsItem, IProductTableWithoutModelsItem} from './models';
+import {IProductTableWithModelsItem, IProductTableWithoutModelsItem, IModelTableItem} from './models';
+
+export const MODEL_TABLE_ITEMS: (IModelTableItem & {key: React.Key})[] = [
+    {
+        key: '1',
+        modelStatus: 'Драфт',
+        modelCode: 'Q170308',
+        qualityModel: 'Метеостанции',
+        QE: [
+            {
+                fullName: 'Воронцов Алексей',
+                type: 'QE',
+            },
+        ],
+        nomenclature: [
+            {
+                code: '202895 - 03',
+                description: 'Электротовары',
+            },
+        ],
+        latestChange: 'MOREL JONATHAN',
+        changeDate: '06.02.2023 18:48',
+    },
+];
 
 export const PRODUCT_TABLE_WITH_MODELS_ITEMS: (IProductTableWithModelsItem & {key: React.Key})[] = [
     {

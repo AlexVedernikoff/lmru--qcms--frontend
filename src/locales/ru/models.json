@@ -4,6 +4,8 @@
         "Apply": "Применить",
         "Search": "Поиск",
         "Clear": "Очистить",
+        "More": "Больше",
+        "Less": "Меньше",
         "AddModel": "Добавить модель"
     },
     "Common": {
@@ -11,7 +13,7 @@
         "No": "Нет",
         "Select": "Выберите"
     },
-    "ProductDetails": {
+    "ModelDetails": {
         "Info": {
             "Attributes": {
                 "Title": "Атрибуты",
@@ -73,59 +75,35 @@
             "Comments": "Публичные комментарии"
         }
     },
-    "WithModels": {
+    "ModelList": {
         "Filters": {
-            "productCode": "Код товара",
-            "nomenclature": "Номенклатура",
-            "qualityStatus": "Статус качества",
+            "productModel": "Товарная модель",
+            "modelNameOrCode": "Наименование/код модели качества",
             "qualityModel": "Модель качества",
-            "providerName": "Наименование поставщика",
-            "providerStatus": "Статус поставщика",
+            "QE": "QE",
+            "withoutPlan": "Без утвержденного мастерплана",
+            "riskByProductUsageNegative": "Риск нанесения ущерба здоровью потребителя при неадекватном использовании товара",
+            "riskByProductUsagePositive": "Риск нанесения ущерба здоровью потребителя при адекватном использовании товара",
+            "riskEnvironment": "Риск нанесения ущерба окружающей среде",
+            "riskProperty": "Риск нанесения ущерба для имущества",
+            "riskLegal": "Законодательный риск",
+            "riskHealth": "Риск для здоровья потребителя",
+            "risk": "Риск",
+            "latestChanges": "Изменено за последние (дней)",
+            "isVerificationRequired": "Требуется проверка",
+            "isChemical": "Относится к категории химии",
+            "hasManyProducts": "Не менее одного товара",
             "filter": "Фильтр"
         },
         "Table": {
             "Columns": {
-                "providerStatus": "Статус поставщика",
-                "productCode": "Код товара",
-                "productName": "Наименование товара",
-                "providerCode": "Код поставщика",
-                "providerName": "Наименование поставщика",
-                "qualityStatus": "Статус качества",
-
-                "QE": "QE",
+                "modelStatus": "Статус",
+                "modelCode": "Код модели",
                 "qualityModel": "Модель качества",
-                "EAN": "EAN",
-                "lastProductStatusDate": "Дата последнего статуса товара",
-                "qualityModelNumber": "Номер модели качества",
-                "qualityModelManager": "Менеджер по качеству товара",
-                "productDataCompleteness": "Полнота данных по товару",
-                "productTopAVS": "Топ-AVS товара",
-                "productCreationDate": "Дата создания товара",
-                "productActionsBy": "Выполнение действия по товару",
-                "departmentCode": "Код отдела",
-                "subDepartmentCode": "Код подотдела",
-                "TN_VED_Code": "Код ТН ВЭД",
-                "departmentName": "Наименование отдела",
-                "nomenclature": "Номенклатура"
-            }
-        }
-    },
-    "WithoutModels": {
-        "Filters": {
-            "nomenclature": "Номенклатура",
-            "QE": "QE",
-            "filter": "Фильтр",
-            "providerName": "Наименование поставщика",
-            "regulatoryStatus": "Регуляторный статус",
-            "fromProject": "Из проекта"
-        },
-        "Table": {
-            "SelectModel": "Пожалуйста, выберите соответствующую модель качества",
-            "Columns": {
-                "providerCodeNumber": "Кодовый номер поставщика",
-                "productCode": "Код товара",
-                "productName": "Наименование",
-                "params": "Параметры"
+                "QE": "Связана с QE",
+                "nomenclature": "Номенклатура товарной модели",
+                "latestChange": "Последнее изменение",
+                "changeDate": "Дата изменения"
             }
         }
     }

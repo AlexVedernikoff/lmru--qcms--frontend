@@ -98,11 +98,11 @@ const ProductsFilter: React.FC = () => {
 
                 <Grid columnGap={16} columns="repeat(2, 1fr)">
                     <RegularButton onClick={() => {}} size="m" variant="outline">
-                        Очистить
+                        {t('Buttons.Clear')}
                     </RegularButton>
 
                     <RegularButton onClick={() => {}} size="m" variant="primary">
-                        Поиск
+                        {t('Buttons.Search')}
                     </RegularButton>
                 </Grid>
             </Grid>
