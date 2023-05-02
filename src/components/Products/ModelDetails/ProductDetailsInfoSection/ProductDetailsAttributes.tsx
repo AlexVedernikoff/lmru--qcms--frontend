@@ -1,10 +1,10 @@
 import {useMemo} from 'react';
 import {BackofficeStatus, Grid, RegularButton, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import {Table} from 'antd';
 import {ColumnsType} from 'antd/es/table';
 import HistoryBackIcon from '../../../Icons/HistoryBackIcon';
 import styles from '../../../Common.module.css';
+import CustomTable from '../../../Common/CustomTable';
 
 interface IAttributes {
     id: string;
@@ -75,7 +75,7 @@ const ProductDetailsAttributes: React.FC = () => {
             </Grid>
 
             <Grid rowGap={4} columns="1fr">
-                <Table columns={attr_columns} dataSource={attr_data} pagination={false} size="small" />
+                <CustomTable columns={attr_columns} dataSource={attr_data} pagination={false} size="small" />
             </Grid>
         </Grid>
     );

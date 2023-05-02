@@ -8,7 +8,7 @@ import {TableRowSelection} from 'antd/es/table/interface';
 import {PRODUCT_TABLE_WITH_MODELS_ITEMS} from '../../../../common/mocks';
 import {PRODUCTS_ROUTES} from '../../../../common/consts';
 import {IDataType, getProductTableColumns} from './ProductTableColumns';
-import AutoWidthTable from '../../../Common/AutoWidthTable';
+import CustomTable from '../../../Common/CustomTable';
 
 const ProductsTable: React.FC = () => {
     const navigate = useNavigate();
@@ -68,7 +68,7 @@ const ProductsTable: React.FC = () => {
     );
 
     return (
-        <AutoWidthTable
+        <CustomTable
             rowSelection={rowSelection}
             columns={columns}
             dataSource={data}
@@ -76,6 +76,7 @@ const ProductsTable: React.FC = () => {
             tableLayout="fixed"
             size="small"
             bordered
+            pagination={{}}
         />
     );
 };

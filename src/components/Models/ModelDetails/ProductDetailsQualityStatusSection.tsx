@@ -1,7 +1,7 @@
 import {BackofficeStatus, Grid, Textarea, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import {Table} from 'antd';
 import styles from '../../Common.module.css';
+import CustomTable from '../../Common/CustomTable';
 
 const ProductDetailsQualityStatusSection: React.FC = () => {
     const {t} = useTranslation('products');
@@ -17,7 +17,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                         {t('ProductDetails.QualityStatusSection.Table.Empty')}
                     </Typography>
 
-                    <Table columns={[]} dataSource={[]} pagination={false} size="small" />
+                    <CustomTable columns={[]} dataSource={[]} pagination={false} size="small" />
                 </Grid>
             </Grid>
 
