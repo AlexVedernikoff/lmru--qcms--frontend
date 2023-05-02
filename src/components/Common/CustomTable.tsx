@@ -53,26 +53,29 @@ function CustomTable<T extends object>(props: TableProps<T>) {
                 <Grid columns="1fr 1fr 1fr">
                     <Counter onChange={handleChangeListSize} value={size.toString()} />
                     <span />
-                    <Pagination
-                        currentPage={page}
-                        item={item => (
-                            <PaginationItem onClick={handleChangePage} data-item={item}>
-                                {item}
-                            </PaginationItem>
-                        )}
-                        itemsCount={100}
-                        itemsPerPage={size}
-                        itemPrev={item => (
-                            <PaginationItem wrap onClick={handleChangePage} data-item={item}>
-                                <ChevronLeftIcon />
-                            </PaginationItem>
-                        )}
-                        itemNext={item => (
-                            <PaginationItem wrap onClick={handleChangePage} data-item={item}>
-                                <ChevronRightIcon />
-                            </PaginationItem>
-                        )}
-                    />
+                    <Grid columns="1fr 1fr">
+                        <span />
+                        <Pagination
+                            currentPage={page}
+                            item={item => (
+                                <PaginationItem onClick={handleChangePage} data-item={item}>
+                                    {item}
+                                </PaginationItem>
+                            )}
+                            itemsCount={100}
+                            itemsPerPage={size}
+                            itemPrev={item => (
+                                <PaginationItem wrap onClick={handleChangePage} data-item={item}>
+                                    <ChevronLeftIcon />
+                                </PaginationItem>
+                            )}
+                            itemNext={item => (
+                                <PaginationItem wrap onClick={handleChangePage} data-item={item}>
+                                    <ChevronRightIcon />
+                                </PaginationItem>
+                            )}
+                        />
+                    </Grid>
                 </Grid>
             )}
         </Grid>
