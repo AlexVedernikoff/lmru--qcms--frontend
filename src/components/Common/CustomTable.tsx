@@ -1,8 +1,8 @@
 import {useRef, useState, useEffect} from 'react';
 import {Table, TableProps} from 'antd';
-import './Table.css';
 import {Counter, Grid, Pagination, PaginationItem} from 'fronton-react';
 import {ChevronLeftIcon, ChevronRightIcon} from '@fronton/icons-react';
+import './Table.css';
 
 function CustomTable<T extends object>(props: TableProps<T>) {
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -25,10 +25,19 @@ function CustomTable<T extends object>(props: TableProps<T>) {
         };
     }, []);
 
-    const handleReduceSize = (_e: React.ChangeEvent<HTMLInputElement>, value: string) => {
+    const handleChangeListSize = (_e: React.ChangeEvent<HTMLInputElement>, value: string) => {
         const v = parseInt(value, 10);
         if (v && v !== size) {
             setSize(v);
+        }
+    };
+
+    const handleChangePage: React.MouseEventHandler<HTMLAnchorElement> = e => {
+        const {item} = e.currentTarget.dataset;
+        const newPage = item ? parseInt(item, 10) : undefined;
+
+        if (newPage && newPage !== page) {
+            setPage(newPage);
         }
     };
 
@@ -42,25 +51,27 @@ function CustomTable<T extends object>(props: TableProps<T>) {
 
             {!!props.pagination && (
                 <Grid columns="1fr 1fr 1fr">
-                    <Counter onChange={handleReduceSize} value={size.toString()} />
+                    <Counter onChange={handleChangeListSize} value={size.toString()} />
                     <span />
                     <Pagination
                         currentPage={page}
-                        item={item => <PaginationItem onClick={() => setPage(item)}>{item}</PaginationItem>}
+                        item={item => (
+                            <PaginationItem onClick={handleChangePage} data-item={item}>
+                                {item}
+                            </PaginationItem>
+                        )}
                         itemsCount={100}
                         itemsPerPage={size}
                         itemPrev={item => (
-                            <PaginationItem wrap onClick={() => setPage(item)}>
+                            <PaginationItem wrap onClick={handleChangePage} data-item={item}>
                                 <ChevronLeftIcon />
                             </PaginationItem>
                         )}
                         itemNext={item => (
-                            <PaginationItem wrap onClick={() => setPage(item)}>
+                            <PaginationItem wrap onClick={handleChangePage} data-item={item}>
                                 <ChevronRightIcon />
                             </PaginationItem>
                         )}
-                        // hidePrev={false}
-                        // hideNext={false}
                     />
                 </Grid>
             )}
