@@ -14,65 +14,54 @@
         "Select": "Выберите"
     },
     "ModelDetails": {
-        "Info": {
-            "Attributes": {
-                "Title": "Атрибуты",
-                "Table": {
-                    "Columns": {
-                        "characteristics": "Характеристики",
-                        "available": "Наличие",
-                        "type": "Тип"
-                    }
-                }
-            },
-            "Dates": {
-                "Title": "Даты",
-                "Field": {
-                    "creationDate": "Дата создания",
-                    "AVS": "AVS"
-                }
-            },
-            "InfoDetails": {
-                "Title": "Подробная информация",
-                "Field": {
-                    "gamma": "Гамма",
-                    "link": "Предварительная ссылка"
-                }
-            },
-            "Provider": {
-                "Title": "Поставщик",
-                "Field": {
-                    "providerName": "Наименование поставщика",
-                    "providerStatus": "Статус поставщика",
-                    "distributor": "Дистрибьютор"
-                }
-            },
-            "Product": {
-                "Title": "Продукт",
-                "Field": {
-                    "productCode": "Код товара",
-                    "EAN": "EAN",
-                    "TN_VED_Code": "Код ТН ВЭД",
-                    "risk": "Риск",
-                    "qualityModel": "Модель качества",
-                    "productModel": "Товарная модель",
-                    "isChemical": "Относится к категории химии",
-                    "STM": "СТМ",
-                    "intImport": "Международный импорт",
-                    "fromProject": "Из проекта"
+        "MainData": {
+            "Title": "Основное",
+            "Field": {
+                "nomenclature": "Номенклатура товарной модели"
+            }
+        },
+        "QualityManager": {
+            "Title": "Менеджер по качеству",
+            "Field": {
+                "BU": "BU",
+                "QE": "Ответственный QE",
+                "SCM": "Ответственный SQM"
+            }
+        },
+        "Characteristics": {
+            "Title": "Потенциальные характеристики",
+            "Field": {
+                "percent": "Минимальный процент содержания вторичного сырья в продукте (%)",
+                "eco": "Эко маркировка товара"
+            }
+        },
+        "RiskLevel": {
+            "Title": "Уровень риска",
+            "Field": {
+                "unurgent": "Не очень важный"
+            }
+        },
+        "Description": {
+            "Title": "Описание",
+            "Field": {}
+        },
+        "MasterPlan": {
+            "Title": "Мастер план и регулирующие положения",
+            "Section": {
+                "Developer": {
+                    "Title": "Статус поставщика: Производитель"
                 },
-                "RiskOptions": {
-                    "minor": "Не очень важный"
+                "Importer": {
+                    "Title": "Статус поставщика: Импортер"
+                },
+                "Exporter": {
+                    "Title": "Статус поставщика: Дистрибьютер"
                 }
             }
         },
-        "QualityStatusSection": {
-            "Title": "Статус качества",
-            "Table": {
-                "Empty": "Контактные данные поставщика отсутствуют",
-                "Columns": {}
-            },
-            "Comments": "Публичные комментарии"
+        "RiskMap": {
+            "Title": "Карта рисков",
+            "Field": {}
         }
     },
     "ModelList": {

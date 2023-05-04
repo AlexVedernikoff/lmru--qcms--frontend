@@ -1,7 +1,8 @@
+import {Grid, Label, Typography} from 'fronton-react';
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
 import {IModelTableItem} from '../../../../common/models';
-import {Caption, Grid, Label, Typography} from 'fronton-react';
+import NomenclatureRow from '../../Common/NomenclatureRow';
 
 export interface IDataType extends IModelTableItem {
     key: React.Key;
@@ -46,19 +47,8 @@ export const getTableColumns = (t: TFunction<'models', undefined, 'models'>): Co
     {
         title: t('ModelList.Table.Columns.nomenclature'),
         dataIndex: 'nomenclature',
-        render: (data: IDataType['nomenclature']) => (
-            <Grid columns={`repeat(1fr, ${data.length})`} columnGap="12px">
-                {data.map((d, i) => (
-                    <Grid key={i} columns="1fr">
-                        <Typography variant="s" size="body_long">
-                            {d.code}
-                        </Typography>
-                        <Caption message={d.description} />
-                    </Grid>
-                ))}
-            </Grid>
-        ),
-        width: 246,
+        render: (data: IDataType['nomenclature']) => <NomenclatureRow data={data} />,
+        width: 500,
     },
     {
         title: t('ModelList.Table.Columns.latestChange'),

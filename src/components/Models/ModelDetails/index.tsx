@@ -1,18 +1,26 @@
 import {useParams} from 'react-router-dom';
 import {Grid, Typography} from 'fronton-react';
-import ProductDetailsInfoSection from './ProductDetailsInfoSection';
-import ProductDetailsQualityStatusSection from './ProductDetailsQualityStatusSection';
+import styles from '../../Common.module.css';
+import ModelDetailsMainData from './ModelDetailsMainData';
+import ModelDetailsQualityManager from './ModelDetailsQualityManager';
 
 const ModelDetails: React.FC = () => {
     const {id} = useParams();
 
-    const title = `WEBER.TON MICRO V 0000 25 KG - ${id} - Леруа Мерлен Россия`;
+    const title = `Колоранты для колеровочных машин - ${id}`;
 
     return (
         <Grid rowGap={16}>
             <Typography variant="h2">{title}</Typography>
-            <ProductDetailsInfoSection />
-            <ProductDetailsQualityStatusSection />
+
+            <Grid className={styles.panel} rowGap={16} columnGap={16}>
+                <Grid rowGap={16} columnGap={16} columns="570px 1fr">
+                    <ModelDetailsMainData />
+                    <ModelDetailsQualityManager />
+                </Grid>
+
+                <Grid rowGap={16} columnGap={16} columns="500px 1fr"></Grid>
+            </Grid>
         </Grid>
     );
 };

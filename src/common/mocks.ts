@@ -17,6 +17,18 @@ export const MODEL_TABLE_ITEMS: (IModelTableItem & {key: React.Key})[] = [
                 code: '202895 - 03',
                 description: 'Электротовары',
             },
+            {
+                code: '202895 - 03',
+                description: 'Электротовары',
+            },
+            {
+                code: '202895 - 03',
+                description: 'Электротовары',
+            },
+            {
+                code: '202895 - 03',
+                description: 'Электротовары',
+            },
         ],
         latestChange: 'MOREL JONATHAN',
         changeDate: '06.02.2023 18:48',
