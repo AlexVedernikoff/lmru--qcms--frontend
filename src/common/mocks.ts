@@ -1,4 +1,32 @@
-import {IProductTableWithModelsItem, IProductTableWithoutModelsItem, IProviderContactsTableItem, IModelTableItem, IProviderTableItem, IProviderCommandTableItem, IProviderProductsTableItem} from './models';
+import {
+    IProductTableWithModelsItem,
+    IProductTableWithoutModelsItem,
+    IProviderContactsTableItem,
+    IModelTableItem,
+    IMasterPlanRequirementTableItem,
+    IProviderTableItem,
+    IProviderCommandTableItem,
+    IProviderProductsTableItem,
+} from './models';
+
+export const PLAN_REQUIREMENT_TABLE_ITEMS: (IMasterPlanRequirementTableItem & {key: React.Key})[] = [
+    {
+        key: '1',
+        category: 'Квалификация - Сбор документов',
+        type: 'Тестирование',
+        legal: 'Federal_Law_No_2300_I_1992 (Law on Consumer Rights Protection)  Россия',
+        documents: 'Документы из регулирующих положений',
+        origin: 'QUALIF_CERTIF_COLLECT_TEST_ALL MODEL_RPL_n°2',
+        process: 'Автоматический',
+        responsiblePerson: 'Подрядчик',
+        approvingPerson: {
+            type: 'QE',
+            place: 'Платформа Россия',
+        },
+        documentTemplate: '',
+        taskRequirement: false,
+    },
+];
 
 export const MODEL_TABLE_ITEMS: (IModelTableItem & {key: React.Key})[] = [
     {
@@ -147,7 +175,7 @@ export const PROVIDER_CONTACTS_TABLE_ITEMS: (IProviderContactsTableItem & {key: 
         email: 'info@Leroy.ru',
         telephone: '8 (495) 1234567',
         mobile: '8 900 000 00 00',
-        type: 'Логистика'
+        type: 'Логистика',
     },
     {
         key: 2,
@@ -156,7 +184,7 @@ export const PROVIDER_CONTACTS_TABLE_ITEMS: (IProviderContactsTableItem & {key: 
         email: 'info@Leroy.ru1',
         telephone: '8 (495) 1234567',
         mobile: '8 900 450 00 00',
-        type: 'Логистика'
+        type: 'Логистика',
     },
 ];
 
@@ -168,11 +196,11 @@ export const PROVIDER_PRODUCTS_TABLE_ITEMS: (IProviderProductsTableItem & {key: 
         SupplierBindingStatus: 'Активный',
         SupplierLink: 'PE18-32',
         EAN: 123456,
-    ComplianceStatusBU: `Леруа Мерлен 
+        ComplianceStatusBU: `Леруа Мерлен 
         Леруа Мерлен 
         Леруа Мерлен 
         Леруа Мерлен 
-        Леруа Мерлен`
+        Леруа Мерлен`,
     },
     {
         key: 2,
@@ -185,6 +213,6 @@ export const PROVIDER_PRODUCTS_TABLE_ITEMS: (IProviderProductsTableItem & {key: 
         Леруа Мерлен 
         Леруа Мерлен 
         Леруа Мерлен 
-        Леруа Мерлен`
+        Леруа Мерлен`,
     },
 ];

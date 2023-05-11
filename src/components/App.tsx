@@ -14,7 +14,7 @@ import ModelDetails from './Models/ModelDetails';
 import ProviderDetails from './Providers/ProviderDetails/ProductDetails';
 
 const App: React.FC = () => (
-    <Grid areas={['header header header', 'aside main spacer']} columnGap={16} columns="1fr 10fr 12px">
+    <Grid areas={['header header header', 'aside main spacer']} columnGap={16} columns="auto 1fr 12px">
         <GridItem area="header">
             <Header />
         </GridItem>

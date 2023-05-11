@@ -1,0 +1,30 @@
+.chip {
+    max-height: 36px;
+    margin-top: 2px;
+}
+
+.unurgentChip {
+    composes: chip;
+    background: var(--accent-primary);
+}
+
+.successChip {
+    composes: chip;
+    background: var(--success-primary);
+}
+
+.flexRow {
+    display: flex;
+    flex-direction: row;
+    column-gap: 24px;
+}
+
+.description {
+    background: var(--background-primary);
+}
+
+.requirementOption > p:not(:first-of-type) {
+    color: var(--attention-primary);
+    white-space: pre;
+    line-height: 24px;
+}
