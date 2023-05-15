@@ -1,7 +1,7 @@
 import {Checkbox, Dropdown, DropdownItem, Grid, Typography, Input, DatePicker} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import styles from './styles.module.css';
 import { useState } from 'react';
+import { CustomSwitch } from '../../../Common/Switch/CustomSwitch';
 
 const AdditionalFilter: React.FC = () => {
     const {t} = useTranslation('providers');
@@ -202,10 +202,7 @@ const AdditionalFilter: React.FC = () => {
                     dateMask={"ДД/ММ/ГГГГ -ДД/ММ/ГГГГ"}
                 />
 
-                <label htmlFor="switch" className={styles.switch }>
-                    <input type="checkbox" onChange={handleChange} checked={checked} role="switch" id="switch" />
-                    {t('ProvidersList.DetailFilters.PendingСreation')}
-                </label>
+                <CustomSwitch handleChange={handleChange} checked={checked} name={t('ProvidersList.DetailFilters.PendingСreation')} />
             </Grid>
         </Grid>
     );
