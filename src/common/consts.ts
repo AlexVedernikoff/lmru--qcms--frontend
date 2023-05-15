@@ -18,3 +18,7 @@ export const PRODUCTS_ROUTES = {
 export const MODELS_ROUTES = {
     details: `${APP_ROUTES.models}/:id`,
 };
+
+export const PROVIDER_ROUTES = {
+    details: `${APP_ROUTES.providers}/:id`,
+};

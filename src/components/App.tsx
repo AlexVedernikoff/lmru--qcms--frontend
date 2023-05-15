@@ -1,15 +1,17 @@
 import {Empty} from 'antd';
 import {Grid, GridItem} from 'fronton-react';
 import {Routes, Route, Navigate} from 'react-router-dom';
-import {APP_ROUTES, MODELS_ROUTES, PRODUCTS_ROUTES} from '../common/consts';
+import {APP_ROUTES, MODELS_ROUTES, PRODUCTS_ROUTES, PROVIDER_ROUTES} from '../common/consts';
 import Header from './Layout/Header';
 import Sidebar from './Layout/Sidebar';
 import ProductsWithQualityModel from './Products/WithQualityModel';
 import ProductsWithoutQualityModel from './Products/WithoutQualityModel';
 import ProductDetails from './Products/ProductDetails/ProductDetails';
+import Providers from './Providers';
 import Products from './Products';
 import Models from './Models';
 import ModelDetails from './Models/ModelDetails';
+import ProviderDetails from './Providers/ProviderDetails/ProductDetails';
 
 const App: React.FC = () => (
     <Grid areas={['header header header', 'aside main spacer']} columnGap={16} columns="1fr 10fr 12px">
@@ -25,7 +27,8 @@ const App: React.FC = () => (
             <br />
             <Routes>
                 <Route path={APP_ROUTES.dashboard} element={<Empty />} />
-                <Route path={APP_ROUTES.providers} element={<Empty />} />
+                <Route path={APP_ROUTES.providers} element={<Providers />} />
+                <Route path={PROVIDER_ROUTES.details} element={<ProviderDetails />} />
                 <Route path={APP_ROUTES.products} element={<Products />}>
                     <Route path={PRODUCTS_ROUTES.withModels} element={<ProductsWithQualityModel />} />
                     <Route path={PRODUCTS_ROUTES.withoutModels} element={<ProductsWithoutQualityModel />} />

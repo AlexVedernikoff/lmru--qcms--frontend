@@ -1,0 +1,10 @@
+.AvailabilitySTMProduct {
+  background-color: #488C26;
+  border-radius: 0 7px 7px 7px;
+  color: white;
+  padding: 4px 8px;
+}
+
+.layoutCheckbox {
+  align-items: center;
+}

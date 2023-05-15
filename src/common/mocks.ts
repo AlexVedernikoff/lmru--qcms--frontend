@@ -1,4 +1,4 @@
-import {IProductTableWithModelsItem, IProductTableWithoutModelsItem, IModelTableItem} from './models';
+import {IProductTableWithModelsItem, IProductTableWithoutModelsItem, IProviderContactsTableItem, IModelTableItem, IProviderTableItem, IProviderCommandTableItem, IProviderProductsTableItem} from './models';
 
 export const MODEL_TABLE_ITEMS: (IModelTableItem & {key: React.Key})[] = [
     {
@@ -100,5 +100,91 @@ export const PRODUCT_TABLE_WITHOUT_MODELS_ITEMS: (IProductTableWithoutModelsItem
             Перечень веществ, опасных в концентрации более 0,1% по массе-Не определено
             Минимальная доля вторичного материала в упаковке (в %)-0
         `,
+    },
+];
+
+export const PROVIDER_TABLE_ITEMS: (IProviderTableItem & {key: React.Key})[] = [
+    {
+        key: 1,
+        providerName: 'EUR - KRINS LAKRA',
+        providerCode: 87334233333,
+        providerCertified: 'Нет',
+        providerWoodProducts: 'Нет',
+    },
+    {
+        key: 2,
+        providerName: 'EUR - KRINS LAKRA',
+        providerCode: 456663332,
+        providerCertified: 'Нет',
+        providerWoodProducts: 'Нет',
+    },
+];
+
+export const PROVIDER_COMMAND_TABLE_ITEMS: (IProviderCommandTableItem & {key: React.Key})[] = [
+    {
+        key: 1,
+        userServiceNumber: 1003009004,
+        surname: 'Константинопольский',
+        name: 'Константин',
+        email: 'info@Leroy.ru',
+        activityTypeCode: 3458923746,
+    },
+    {
+        key: 2,
+        userServiceNumber: 209004,
+        surname: 'Петров',
+        name: 'Сергей',
+        email: 'info@Leroy1.ru',
+        activityTypeCode: 56658900046,
+    },
+];
+
+export const PROVIDER_CONTACTS_TABLE_ITEMS: (IProviderContactsTableItem & {key: React.Key})[] = [
+    {
+        key: 1,
+        surname: 'Сергеев',
+        name: 'Константин',
+        email: 'info@Leroy.ru',
+        telephone: '8 (495) 1234567',
+        mobile: '8 900 000 00 00',
+        type: 'Логистика'
+    },
+    {
+        key: 2,
+        surname: 'Константинопольский',
+        name: 'Константин',
+        email: 'info@Leroy.ru1',
+        telephone: '8 (495) 1234567',
+        mobile: '8 900 450 00 00',
+        type: 'Логистика'
+    },
+];
+
+export const PROVIDER_PRODUCTS_TABLE_ITEMS: (IProviderProductsTableItem & {key: React.Key})[] = [
+    {
+        key: 1,
+        name: 'AXTON PRIMER',
+        code: 123456,
+        SupplierBindingStatus: 'Активный',
+        SupplierLink: 'PE18-32',
+        EAN: 123456,
+    ComplianceStatusBU: `Леруа Мерлен 
+        Леруа Мерлен 
+        Леруа Мерлен 
+        Леруа Мерлен 
+        Леруа Мерлен`
+    },
+    {
+        key: 2,
+        name: 'AXTON PRIMER',
+        code: 123456,
+        SupplierBindingStatus: 'Активный',
+        SupplierLink: 'PE18-32',
+        EAN: 123456,
+        ComplianceStatusBU: `Леруа Мерлен 
+        Леруа Мерлен 
+        Леруа Мерлен 
+        Леруа Мерлен 
+        Леруа Мерлен`
     },
 ];
