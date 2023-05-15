@@ -45,3 +45,36 @@ export interface IProductTableWithoutModelsItem {
     productName: string;
     params: string;
 }
+
+export interface IProviderTableItem {
+    providerName: string;
+    providerCode: number;
+    providerCertified: string;
+    providerWoodProducts: string;
+}
+
+export interface IProviderCommandTableItem {
+    userServiceNumber: number;
+    surname: string;
+    name: string;
+    email: string;
+    activityTypeCode: number;
+}
+
+export interface IProviderContactsTableItem {
+    surname: string;
+    name: string;
+    email: string;
+    telephone: string;
+    mobile: string;
+    type: string;
+}
+
+export interface IProviderProductsTableItem {
+    name: string;
+    code: number;
+    SupplierBindingStatus: string;
+    SupplierLink: string;
+    EAN: number;
+    ComplianceStatusBU: string;
+}
