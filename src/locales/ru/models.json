@@ -47,6 +47,21 @@
         },
         "MasterPlan": {
             "Title": "Мастер план и регулирующие положения",
+            "Requirement": {
+                "Type": {
+                    "Required": "Обязательное требование",
+                    "Optional": "Опциональное требование"
+                },
+                "Option": {
+                    "SecurityPassport": "Паспорт безопасности",
+                    "StateRegistrationCertificate": "Свидетельство о государственной регистрации",
+                    "Empty": "Без атрибута",
+                    "POPDeclaration": "Декларация поставщика POP",
+                    "TraceabilitySheet": "Лист прослеживаемости",
+                    "TestReport": "Rapport de test substances pour les articles",
+                    "PackingInformation": "Информация об упаковке"
+                }
+            },
             "Section": {
                 "Developer": {
                     "Title": "Статус поставщика: Производитель"
@@ -57,11 +72,35 @@
                 "Exporter": {
                     "Title": "Статус поставщика: Дистрибьютер"
                 }
+            },
+            "Table": {
+                "Columns": {
+                    "category": "Категория",
+                    "type": "Тип",
+                    "legal": "Cвязанные законодательные требования",
+                    "documents": "Документы",
+                    "origin": "Происхождение",
+                    "process": "Процесс",
+                    "responsiblePerson": "Ответственное лицо",
+                    "approvingPerson": "Утверждающее лицо",
+                    "documentTemplate": "Шаблон документа",
+                    "taskRequirement": "Обязательность задачи"
+                }
             }
         },
         "RiskMap": {
             "Title": "Карта рисков",
-            "Field": {}
+            "Group": {
+                "Title": "Риск группы",
+                "Field": {
+                    "riskByProductUsageNegative": "Риск для людей при неправильном использовании",
+                    "riskByProductUsagePositive": "Риск для людей при правильном использовании",
+                    "riskEnvironment": "Риск нанесения ущерба окружающей среде",
+                    "riskProperty": "Риск для имущества",
+                    "riskLegal": "Законодательный риск",
+                    "riskHealth": "Риск для здоровья"
+                }
+            }
         }
     },
     "ModelList": {

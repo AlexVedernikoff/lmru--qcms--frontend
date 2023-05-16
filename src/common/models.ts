@@ -1,3 +1,16 @@
+export interface IMasterPlanRequirementTableItem {
+    category: string;
+    type: string;
+    legal: string;
+    documents: string;
+    origin: string;
+    process: string;
+    responsiblePerson: string;
+    approvingPerson: {type: string; place: string};
+    documentTemplate: string;
+    taskRequirement: boolean;
+}
+
 export interface IModelTableItem {
     modelStatus: string;
     modelCode: string;
