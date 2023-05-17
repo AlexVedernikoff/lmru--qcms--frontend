@@ -50,10 +50,10 @@ const items: IItem[] = [
             //     text: 'Управление трансфером',
             //     value: PRODUCTS_ROUTES.transfer,
             // },
-            // {
-            //     text: 'Документы',
-            //     value: PRODUCTS_ROUTES.documents,
-            // },
+            {
+                text: 'Документы',
+                value: PRODUCTS_ROUTES.documents,
+            },
         ],
     },
     {

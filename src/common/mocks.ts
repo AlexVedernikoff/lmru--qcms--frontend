@@ -7,7 +7,7 @@ import {
     IProviderTableItem,
     IProviderCommandTableItem,
     IProviderProductsTableItem,
-} from './models';
+    IProviderTableWithDocuments} from './models';
 
 export const PLAN_REQUIREMENT_TABLE_ITEMS: (IMasterPlanRequirementTableItem & {key: React.Key})[] = [
     {
@@ -214,5 +214,50 @@ export const PROVIDER_PRODUCTS_TABLE_ITEMS: (IProviderProductsTableItem & {key: 
         Леруа Мерлен 
         Леруа Мерлен 
         Леруа Мерлен`,
+    },
+];
+
+export const PRODUCT_TABLE_WITH_DOCUMENTS: (IProviderTableWithDocuments & {key: React.Key})[] = [
+    {
+        key: 1,
+        documentNumber: '00-0101-ДР Богема_200420.pdf',
+        type: 'Информация об упаковке',
+        productCode: 82600573,
+        EAN: 82600573,
+        TNVED: 123456,
+        name: 'П/С ВОД.НЖ БОГЕМА 1800Х600',
+        releaseDate: '29.04.2020',
+        endDate: '29.04.2020',
+        status: 'Активный',
+        confirmationStatus: 'Согласован',
+        uploadDate: '29.04.2020',
+        nameSupplier: 'ООО "Кварта"',
+        supplieroCodeRMS: 474574574345,
+        INN: 87976734,
+        businessLicenseNumber: 125645745745745,
+        SSMCode: 2342,
+        role: 'Поставщик',
+        downloadCompleted: 'Чекаев Алексей'
+    },
+    {
+        key: 2,
+        documentNumber: '00-0101-ДР Богема_200420.pdf',
+        type: 'Информация об упаковке',
+        productCode: 82600573,
+        EAN: 82600573,
+        TNVED: 123456,
+        name: 'П/С ВОД.НЖ БОГЕМА 1800Х600',
+        releaseDate: '29.04.2020',
+        endDate: '29.04.2020',
+        status: 'Активный',
+        confirmationStatus: 'Согласован',
+        uploadDate: '29.04.2020',
+        nameSupplier: 'ООО "Кварта"',
+        supplieroCodeRMS: 474574574345,
+        INN: 87976734,
+        businessLicenseNumber: 125645745745745,
+        SSMCode: 2342,
+        role: 'Поставщик',
+        downloadCompleted: 'Чекаев Алексей'
     },
 ];

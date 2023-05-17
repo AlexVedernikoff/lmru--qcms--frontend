@@ -91,3 +91,24 @@ export interface IProviderProductsTableItem {
     EAN: number;
     ComplianceStatusBU: string;
 }
+
+export interface IProviderTableWithDocuments {
+    documentNumber: string;
+    type: string;
+    productCode: number;
+    EAN: number;
+    TNVED: number;
+    name: string;
+    releaseDate: string;
+    endDate: string;
+    status: string;
+    confirmationStatus: string;
+    uploadDate: string;
+    nameSupplier: string;
+    supplieroCodeRMS: number;
+    INN: number;
+    businessLicenseNumber: number;
+    SSMCode: number;
+    role: string;
+    downloadCompleted: string;
+}
