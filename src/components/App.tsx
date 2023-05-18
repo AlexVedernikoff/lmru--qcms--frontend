@@ -6,6 +6,7 @@ import Header from './Layout/Header';
 import Sidebar from './Layout/Sidebar';
 import ProductsWithQualityModel from './Products/WithQualityModel';
 import ProductsWithoutQualityModel from './Products/WithoutQualityModel';
+import ProductsWithDocuments from './Products/WithDocuments';
 import ProductDetails from './Products/ProductDetails/ProductDetails';
 import Providers from './Providers';
 import Products from './Products';
@@ -33,7 +34,7 @@ const App: React.FC = () => (
                     <Route path={PRODUCTS_ROUTES.withModels} element={<ProductsWithQualityModel />} />
                     <Route path={PRODUCTS_ROUTES.withoutModels} element={<ProductsWithoutQualityModel />} />
                     <Route path={PRODUCTS_ROUTES.transfer} element={<Empty />} />
-                    <Route path={PRODUCTS_ROUTES.documents} element={<Empty />} />
+                    <Route path={PRODUCTS_ROUTES.documents} element={<ProductsWithDocuments />} />
 
                     <Route path={PRODUCTS_ROUTES.details} element={<ProductDetails />} />
 

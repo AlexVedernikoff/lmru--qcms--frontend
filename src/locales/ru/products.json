@@ -6,12 +6,15 @@
         "Clear": "Очистить",
         "More": "Больше",
         "Less": "Меньше",
-        "AddModel": "Добавить модель"
+        "AddModel": "Добавить модель",
+        "Make": "Выполнить"
     },
     "Common": {
         "Yes": "Да",
         "No": "Нет",
-        "Select": "Выберите"
+        "Select": "Выберите",
+        "Input": "Ввод",
+        "Actions": "Действия"
     },
     "ProductDetails": {
         "Info": {
@@ -129,6 +132,48 @@
                 "productName": "Наименование",
                 "params": "Параметры"
             }
+        }
+    },
+    "WithDocuments": {
+        "Filters": {
+            "productCode": "Код товара",
+            "providerName": "Наименование поставщика",
+            "filter": "Фильтр",
+            "RegulatoryStatus": "Регуляторный статус",
+            "DocumentType": "Тип документа",
+            "FileName": "Имя файла",
+            "DocumentStatus": "Статус документа",
+            "ComplianceStatus": "Статус соответствия",
+            "DateSearch": "Поиск по дате",
+            "Dates": "Даты"
+        },
+        "DetailFilters": {
+            "QE": "QE",
+            "Country": "Страна",
+            "QualityModel": "Модель качества",
+            "ProductModelNomenclature": "Номенклатура товарной модели",
+            "ManagementNomenclature": "Управленческая номенклатура",
+            "IncludingOutdatedDocuments": "Включая устаревшие документы"
+        },
+        "Table": {
+            "DocumentNumber": "Номер документа",
+            "Type": "Тип",
+            "ProductCode": "Код товара",
+            "EAN": "EAN",
+            "TNVED": "TНВЭД",
+            "Name": "Наименование",
+            "ReleaseDate": "Дата выпуска",
+            "EndDate": "Дата окончания",
+            "Status": "Статус",
+            "ConfirmationStatus": "Статус подтверждения",
+            "UploadDate": "Дата загрузки",
+            "NameSupplier": "Наименование поставщика",
+            "SupplierCodeRMS": "Код поставщика из RMS",
+            "INN": "ИНН",
+            "BusinessLicenseNumber": "Номер бизнес лицензии",
+            "SSMCode": "Код SSM",
+            "Role": "Загрузка выполнена (роль)",
+            "DownloadCompleted": "Загрузка выполнена"
         }
     }
 }
