@@ -22,3 +22,7 @@ export const MODELS_ROUTES = {
 export const PROVIDER_ROUTES = {
     details: `${APP_ROUTES.providers}/:id`,
 };
+
+export const TASKS_ROUTES = {
+    details: `${APP_ROUTES.tasks}/:id`,
+};
