@@ -1,7 +1,7 @@
 import {Empty} from 'antd';
 import {Grid, GridItem} from 'fronton-react';
 import {Routes, Route, Navigate} from 'react-router-dom';
-import {APP_ROUTES, MODELS_ROUTES, PRODUCTS_ROUTES, PROVIDER_ROUTES} from '../common/consts';
+import {APP_ROUTES, MODELS_ROUTES, PRODUCTS_ROUTES, PROVIDER_ROUTES, TASKS_ROUTES} from '../common/consts';
 import Header from './Layout/Header';
 import Sidebar from './Layout/Sidebar';
 import ProductsWithQualityModel from './Products/WithQualityModel';
@@ -13,6 +13,7 @@ import Products from './Products';
 import Models from './Models';
 import ModelDetails from './Models/ModelDetails';
 import ProviderDetails from './Providers/ProviderDetails/ProductDetails';
+import TaskDetails from './Tasks/TaskDetails/TaskDetails';
 
 const App: React.FC = () => (
     <Grid areas={['header header header', 'aside main spacer']} columnGap={16} columns="auto 1fr 12px">
@@ -40,7 +41,9 @@ const App: React.FC = () => (
 
                     <Route path={APP_ROUTES.products} element={<Navigate to={PRODUCTS_ROUTES.withModels} />} />
                 </Route>
-                <Route path={APP_ROUTES.tasks} element={<Empty />} />
+                <Route path={APP_ROUTES.tasks} element={<Empty />}>
+                    <Route path={TASKS_ROUTES.details} element={<TaskDetails />} />
+                </Route>
                 <Route path={APP_ROUTES.models} element={<Models />}>
                     <Route path={MODELS_ROUTES.details} element={<ModelDetails />} />
                 </Route>

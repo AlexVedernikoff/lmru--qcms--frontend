@@ -1,0 +1,46 @@
+{
+    "TaskDetails": {
+        "Buttons": {
+            "Edit": "Редактировать",
+            "SubmitReview": "Отправить на проверку"
+        },
+        "DetailsProvider": {
+            "Provider": "Поставщик",
+            "ProviderStatus": "Статус поставщика",
+            "TargetBU": "Целевые BU"
+        },
+        "DetailsProduct": {
+            "Product": "Товар",
+            "ProductCodeAdeo": "Код товара Adeo",
+            "EAN": "EAN",
+            "QualityModel": "Модель качества",
+            "QualityStatus": "Статус качества",
+            "ADEORisk": "ADEO risk"
+        },
+        "DetailsQE": {
+            "QE": "QE",
+            "SQM": "SQM",
+            "Contractor": "Подрядчик",
+            "TypeApprover": "Тип утверждающего лица",
+            "ApproverPlatform": "Платформа утверждающего",
+            "TaskStatus": "Статус задачи"
+        },
+        "DetailsDates": {
+            "DateCreation": "Дата создания",
+            "DateChange": "Дата изменения",
+            "ExpectedCompletionDate": "Ожидаемая дата завершения"
+        },
+        "DetailsComments": {
+            "PublicComments": "Публичные комментарии",
+            "Comments": "Комментарии"
+        }
+    },
+    "TaskTabs": {
+        "Documents": {
+            "Title": "Документы"
+        },
+        "Notifications": {
+            "Title": "Уведомления"
+        }
+    }
+}
