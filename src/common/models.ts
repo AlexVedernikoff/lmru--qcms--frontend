@@ -1,3 +1,5 @@
+export type TWithReactKey<P = unknown> = P & {key: React.Key};
+
 export interface IMasterPlanRequirementTableItem {
     category: string;
     type: string;
@@ -57,6 +59,14 @@ export interface IProductTableWithoutModelsItem {
     productCode: number;
     productName: string;
     params: string;
+}
+
+export interface IProductTableTransferItem {
+    creationDate: string;
+    productCodeAdeo: string;
+    productCode: string;
+    productName: string;
+    providerName: string;
 }
 
 export interface IProviderTableItem {

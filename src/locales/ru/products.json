@@ -7,6 +7,8 @@
         "More": "Больше",
         "Less": "Меньше",
         "AddModel": "Добавить модель",
+        "SelectAll": "Выбрать все",
+        "SelectDocumentsWithoutTransfer": "Начать сбор документов без переноса",
         "Make": "Выполнить"
     },
     "Common": {
@@ -131,6 +133,43 @@
                 "productCode": "Код товара",
                 "productName": "Наименование",
                 "params": "Параметры"
+            }
+        }
+    },
+    "Transfer": {
+        "Title": "Управление трансфером",
+        "Filters": {
+            "providerStatus": "Статус поставщика",
+            "QE": "QE",
+            "activeProducts": "Активные товары",
+            "productCode": "Код товара",
+            "productName": "Наименование товара",
+            "providerCode": "Код поставщика",
+            "providerName": "Наименование поставщика",
+            "qualityStatus": "Статус качества",
+            "filter": "Фильтр"
+        },
+        "Info": {
+            "Title": "Сводная информация",
+            "WithActiveProvider": "С активной связью с поставщиком: ",
+            "WithoutTransfer": "Без перенесенных продуктов: ",
+            "QE": "QE: ",
+            "QEData": "Подключенный инженер по контролю качества"
+        },
+        "Table": {
+            "Header": {
+                "providerName": "Поставщик",
+                "storeCode": "Код магазина",
+                "EAN": "EAN",
+                "providerStatus": "Статус поставщика",
+                "creationDate": "Дата создания"
+            },
+            "Columns": {
+                "creationDate": "Дата создания",
+                "productCodeAdeo": "Код товара Adeo",
+                "productCode": "Код товара",
+                "productName": "Наименование",
+                "providerName": "Поставщик"
             }
         }
     },

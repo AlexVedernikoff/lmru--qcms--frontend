@@ -46,10 +46,10 @@ const items: IItem[] = [
                 text: 'Без модели качества',
                 value: PRODUCTS_ROUTES.withoutModels,
             },
-            // {
-            //     text: 'Управление трансфером',
-            //     value: PRODUCTS_ROUTES.transfer,
-            // },
+            {
+                text: 'Управление трансфером',
+                value: PRODUCTS_ROUTES.transfer,
+            },
             {
                 text: 'Документы',
                 value: PRODUCTS_ROUTES.documents,

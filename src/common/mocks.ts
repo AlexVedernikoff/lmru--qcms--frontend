@@ -7,9 +7,12 @@ import {
     IProviderTableItem,
     IProviderCommandTableItem,
     IProviderProductsTableItem,
-    IProviderTableWithDocuments} from './models';
+    IProductTableTransferItem,
+    TWithReactKey,
+    IProviderTableWithDocuments,
+} from './models';
 
-export const PLAN_REQUIREMENT_TABLE_ITEMS: (IMasterPlanRequirementTableItem & {key: React.Key})[] = [
+export const PLAN_REQUIREMENT_TABLE_ITEMS: TWithReactKey<IMasterPlanRequirementTableItem>[] = [
     {
         key: '1',
         category: 'Квалификация - Сбор документов',
@@ -28,7 +31,7 @@ export const PLAN_REQUIREMENT_TABLE_ITEMS: (IMasterPlanRequirementTableItem & {k
     },
 ];
 
-export const MODEL_TABLE_ITEMS: (IModelTableItem & {key: React.Key})[] = [
+export const MODEL_TABLE_ITEMS: TWithReactKey<IModelTableItem>[] = [
     {
         key: '1',
         modelStatus: 'Драфт',
@@ -63,7 +66,18 @@ export const MODEL_TABLE_ITEMS: (IModelTableItem & {key: React.Key})[] = [
     },
 ];
 
-export const PRODUCT_TABLE_WITH_MODELS_ITEMS: (IProductTableWithModelsItem & {key: React.Key})[] = [
+export const PRODUCT_TRANSFER_ITEMS: TWithReactKey<IProductTableTransferItem>[] = [
+    {
+        key: '1',
+        creationDate: '17.02.2021',
+        productCodeAdeo: '1088035001',
+        productCode: '12150145',
+        productName: 'ГРУНТ. ГЛУБ.ПРОНИКНОВАНИЯ ЮНИС 10Л',
+        providerName: '1004544006 - ООО "ЮНИС-МСК"',
+    },
+];
+
+export const PRODUCT_TABLE_WITH_MODELS_ITEMS: TWithReactKey<IProductTableWithModelsItem>[] = [
     {
         key: 1,
         providerStatus: 'Дистрибьютор',
@@ -116,7 +130,7 @@ export const PRODUCT_TABLE_WITH_MODELS_ITEMS: (IProductTableWithModelsItem & {ke
     },
 ];
 
-export const PRODUCT_TABLE_WITHOUT_MODELS_ITEMS: (IProductTableWithoutModelsItem & {key: React.Key})[] = [
+export const PRODUCT_TABLE_WITHOUT_MODELS_ITEMS: TWithReactKey<IProductTableWithoutModelsItem>[] = [
     {
         key: '1',
         providerCodeNumber: 1002345,
@@ -131,7 +145,7 @@ export const PRODUCT_TABLE_WITHOUT_MODELS_ITEMS: (IProductTableWithoutModelsItem
     },
 ];
 
-export const PROVIDER_TABLE_ITEMS: (IProviderTableItem & {key: React.Key})[] = [
+export const PROVIDER_TABLE_ITEMS: TWithReactKey<IProviderTableItem>[] = [
     {
         key: 1,
         providerName: 'EUR - KRINS LAKRA',
@@ -148,7 +162,7 @@ export const PROVIDER_TABLE_ITEMS: (IProviderTableItem & {key: React.Key})[] = [
     },
 ];
 
-export const PROVIDER_COMMAND_TABLE_ITEMS: (IProviderCommandTableItem & {key: React.Key})[] = [
+export const PROVIDER_COMMAND_TABLE_ITEMS: TWithReactKey<IProviderCommandTableItem>[] = [
     {
         key: 1,
         userServiceNumber: 1003009004,
@@ -167,7 +181,7 @@ export const PROVIDER_COMMAND_TABLE_ITEMS: (IProviderCommandTableItem & {key: Re
     },
 ];
 
-export const PROVIDER_CONTACTS_TABLE_ITEMS: (IProviderContactsTableItem & {key: React.Key})[] = [
+export const PROVIDER_CONTACTS_TABLE_ITEMS: TWithReactKey<IProviderContactsTableItem>[] = [
     {
         key: 1,
         surname: 'Сергеев',
@@ -188,7 +202,7 @@ export const PROVIDER_CONTACTS_TABLE_ITEMS: (IProviderContactsTableItem & {key: 
     },
 ];
 
-export const PROVIDER_PRODUCTS_TABLE_ITEMS: (IProviderProductsTableItem & {key: React.Key})[] = [
+export const PROVIDER_PRODUCTS_TABLE_ITEMS: TWithReactKey<IProviderProductsTableItem>[] = [
     {
         key: 1,
         name: 'AXTON PRIMER',
@@ -237,7 +251,7 @@ export const PRODUCT_TABLE_WITH_DOCUMENTS: (IProviderTableWithDocuments & {key: 
         businessLicenseNumber: 125645745745745,
         SSMCode: 2342,
         role: 'Поставщик',
-        downloadCompleted: 'Чекаев Алексей'
+        downloadCompleted: 'Чекаев Алексей',
     },
     {
         key: 2,
@@ -258,6 +272,6 @@ export const PRODUCT_TABLE_WITH_DOCUMENTS: (IProviderTableWithDocuments & {key: 
         businessLicenseNumber: 125645745745745,
         SSMCode: 2342,
         role: 'Поставщик',
-        downloadCompleted: 'Чекаев Алексей'
+        downloadCompleted: 'Чекаев Алексей',
     },
 ];
