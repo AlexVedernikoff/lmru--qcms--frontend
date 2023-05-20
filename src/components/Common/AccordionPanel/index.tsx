@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {CheckCircleIcon, ChevronDownIcon, ChevronRightIcon} from '@fronton/icons-react';
-import styles from './AccordionPanel.module.css';
+import styles from './styles.module.css';
 
 interface IProps {
     header: string | undefined;

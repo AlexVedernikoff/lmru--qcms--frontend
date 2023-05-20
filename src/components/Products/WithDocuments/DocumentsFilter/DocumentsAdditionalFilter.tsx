@@ -1,13 +1,13 @@
-import {Dropdown, DropdownItem, Grid, Input, Typography} from 'fronton-react';
-import { useTranslation } from 'react-i18next';
-import { CustomSwitch } from '../../../Common/Switch/CustomSwitch';
-import { useState } from 'react';
+import {useState} from 'react';
+import {Dropdown, DropdownItem, Grid, Input} from 'fronton-react';
+import {useTranslation} from 'react-i18next';
+import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
 
 const ProductsAdditionalFilter: React.FC = () => {
     const {t} = useTranslation('products');
 
     const [checked, setChecked] = useState(false);
-    const handleChange = () => setChecked(!checked)
+    const handleChange = () => setChecked(!checked);
     const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
 
     const handleSelect = (value: string | null) => {};
@@ -15,7 +15,6 @@ const ProductsAdditionalFilter: React.FC = () => {
     return (
         <Grid columnGap={16} columns="repeat(2, 1fr)" alignItems="baseline">
             <Grid rowGap={16} columns="1fr" alignItems="baseline">
-
                 <Dropdown
                     size="m"
                     closeOnSelect
@@ -57,7 +56,6 @@ const ProductsAdditionalFilter: React.FC = () => {
             </Grid>
 
             <Grid rowGap={16} columns="1fr" alignItems="baseline">
-
                 <Input
                     inputSize="m"
                     autoComplete="off"
@@ -76,8 +74,12 @@ const ProductsAdditionalFilter: React.FC = () => {
                     onChange={handleInputChange}
                 />
 
-                <Grid columns='0.5fr 0.3fr'>
-                    <CustomSwitch handleChange={handleChange} name={t('WithDocuments.DetailFilters.IncludingOutdatedDocuments')} checked={checked} />
+                <Grid columns="0.5fr 0.3fr">
+                    <CustomSwitch
+                        handleChange={handleChange}
+                        name={t('WithDocuments.DetailFilters.IncludingOutdatedDocuments')}
+                        checked={checked}
+                    />
                 </Grid>
             </Grid>
         </Grid>

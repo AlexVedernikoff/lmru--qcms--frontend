@@ -10,3 +10,7 @@
     border-radius: var(--rounding-l);
     padding: 16px;
 }
+
+.justifyItemsStart {
+    justify-items: start;
+}

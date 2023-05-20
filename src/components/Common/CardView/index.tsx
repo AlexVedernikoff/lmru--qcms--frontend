@@ -1,6 +1,6 @@
 import {IconButton, Tooltip, Typography} from 'fronton-react';
 import {InfoIcon, XIcon} from '@fronton/icons-react';
-import styles from './CardView.module.css';
+import styles from './styles.module.css';
 
 interface IProps {
     header: string | undefined;
