@@ -1,0 +1,103 @@
+.switch {
+  --track-size: calc(var(--thumb-size) * 2);
+  --track-padding: 2px;
+
+  --track-inactive: hsl(80 0% 80%);
+  --track-active: hsl(80 60% 45%);
+
+  --track-color-inactive: var(--track-inactive);
+  --track-color-active: var(--track-active);
+
+  @media (prefers-color-scheme: dark) {
+    --track-inactive: hsl(80 0% 35%);
+    --track-active: hsl(80 60% 60%);
+  }
+}
+
+.switch {
+  --thumb-size: 2rem;
+  --thumb: hsl(0 0% 100%);
+  --thumb-highlight: hsl(0 0% 0% / 25%);
+
+  --thumb-color: var(--thumb);
+  --thumb-color-highlight: var(--thumb-highlight);
+
+  @media (prefers-color-scheme: dark) {
+    --thumb: hsl(0 0% 5%);
+    --thumb-highlight: hsl(0 0% 100% / 25%);
+  }
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 2ch;
+  justify-content: space-between;
+}
+
+.switch>input {
+  appearance: none;
+
+  inline-size: var(--track-size);
+  block-size: var(--thumb-size);
+  padding: var(--track-padding);
+
+  flex-shrink: 0;
+  display: grid;
+  align-items: center;
+  grid: [track] 1fr / [track] 1fr;
+}
+
+.switch>input::before {
+  content: "";
+  grid-area: track;
+  inline-size: var(--thumb-size);
+  block-size: var(--thumb-size);
+}
+
+.switch>input {
+  appearance: none;
+  border: none;
+  outline-offset: 5px;
+  box-sizing: content-box;
+
+  padding: var(--track-padding);
+  background: var(--track-color-inactive);
+  inline-size: var(--track-size);
+  block-size: var(--thumb-size);
+  border-radius: var(--track-size);
+}
+
+.switch>input::before {
+  background: var(--thumb-color);
+  border-radius: 50%;
+}
+
+.switch>input::before {
+  box-shadow: 0 0 0 var(--highlight-size) var(--thumb-color-highlight);
+
+  @media (--motionOK) {
+    & {
+      transition:
+        transform var(--thumb-transition-duration) ease,
+        box-shadow .25s ease;
+    }
+  }
+}
+
+.switch>input {
+  --thumb-position: 0%;
+}
+
+.switch>input::before {
+  transform: translateX(var(--thumb-position));
+}
+
+.switch>input:checked {
+  --thumb-position: calc(var(--track-size) - 100%);
+  background-color: green
+}
+
+.switch>input:indeterminate {
+  --thumb-position: calc((var(--track-size) / 2) - (var(--thumb-size) / 2));
+}

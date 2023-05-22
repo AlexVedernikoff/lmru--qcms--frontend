@@ -1,0 +1,42 @@
+.flexRow {
+    display: flex;
+    flex-direction: row;
+}
+
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    composes: flexColumn;
+    justify-content: space-between;
+
+    box-shadow: var(--box-shadow-l);
+    border-radius: var(--rounding-l);
+    background: var(--background-primary);
+
+    padding: 24px;
+
+    gap: 12px;
+}
+
+.header {
+    composes: flexRow;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    composes: flexRow;
+    align-items: center;
+    column-gap: 8px;
+    justify-content: space-between;
+}
+
+.body {
+    composes: flexColumn;
+    row-gap: 8px;
+    margin-left: 28px;
+    word-wrap: normal;
+}

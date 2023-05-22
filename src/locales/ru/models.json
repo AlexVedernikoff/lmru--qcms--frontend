@@ -1,0 +1,138 @@
+{
+    "Title": "Модели качества",
+    "Buttons": {
+        "Apply": "Применить",
+        "Search": "Поиск",
+        "Clear": "Очистить",
+        "More": "Больше",
+        "Less": "Меньше",
+        "AddModel": "Добавить модель"
+    },
+    "Common": {
+        "Yes": "Да",
+        "No": "Нет",
+        "Select": "Выберите"
+    },
+    "ModelDetails": {
+        "MainData": {
+            "Title": "Основное",
+            "Field": {
+                "nomenclature": "Номенклатура товарной модели"
+            }
+        },
+        "QualityManager": {
+            "Title": "Менеджер по качеству",
+            "Field": {
+                "BU": "BU",
+                "QE": "Ответственный QE",
+                "SCM": "Ответственный SQM"
+            }
+        },
+        "Characteristics": {
+            "Title": "Потенциальные характеристики",
+            "Field": {
+                "percent": "Минимальный процент содержания вторичного сырья в продукте (%)",
+                "eco": "Эко маркировка товара"
+            }
+        },
+        "RiskLevel": {
+            "Title": "Уровень риска",
+            "Field": {
+                "unurgent": "Не очень важный"
+            }
+        },
+        "Description": {
+            "Title": "Описание",
+            "Field": {}
+        },
+        "MasterPlan": {
+            "Title": "Мастер план и регулирующие положения",
+            "Requirement": {
+                "Type": {
+                    "Required": "Обязательное требование",
+                    "Optional": "Опциональное требование"
+                },
+                "Option": {
+                    "SecurityPassport": "Паспорт безопасности",
+                    "StateRegistrationCertificate": "Свидетельство о государственной регистрации",
+                    "Empty": "Без атрибута",
+                    "POPDeclaration": "Декларация поставщика POP",
+                    "TraceabilitySheet": "Лист прослеживаемости",
+                    "TestReport": "Rapport de test substances pour les articles",
+                    "PackingInformation": "Информация об упаковке"
+                }
+            },
+            "Section": {
+                "Developer": {
+                    "Title": "Статус поставщика: Производитель"
+                },
+                "Importer": {
+                    "Title": "Статус поставщика: Импортер"
+                },
+                "Exporter": {
+                    "Title": "Статус поставщика: Дистрибьютер"
+                }
+            },
+            "Table": {
+                "Columns": {
+                    "category": "Категория",
+                    "type": "Тип",
+                    "legal": "Cвязанные законодательные требования",
+                    "documents": "Документы",
+                    "origin": "Происхождение",
+                    "process": "Процесс",
+                    "responsiblePerson": "Ответственное лицо",
+                    "approvingPerson": "Утверждающее лицо",
+                    "documentTemplate": "Шаблон документа",
+                    "taskRequirement": "Обязательность задачи"
+                }
+            }
+        },
+        "RiskMap": {
+            "Title": "Карта рисков",
+            "Group": {
+                "Title": "Риск группы",
+                "Field": {
+                    "riskByProductUsageNegative": "Риск для людей при неправильном использовании",
+                    "riskByProductUsagePositive": "Риск для людей при правильном использовании",
+                    "riskEnvironment": "Риск нанесения ущерба окружающей среде",
+                    "riskProperty": "Риск для имущества",
+                    "riskLegal": "Законодательный риск",
+                    "riskHealth": "Риск для здоровья"
+                }
+            }
+        }
+    },
+    "ModelList": {
+        "Filters": {
+            "productModel": "Товарная модель",
+            "modelNameOrCode": "Наименование/код модели качества",
+            "qualityModel": "Модель качества",
+            "QE": "QE",
+            "withoutPlan": "Без утвержденного мастерплана",
+            "riskByProductUsageNegative": "Риск нанесения ущерба здоровью потребителя при неадекватном использовании товара",
+            "riskByProductUsagePositive": "Риск нанесения ущерба здоровью потребителя при адекватном использовании товара",
+            "riskEnvironment": "Риск нанесения ущерба окружающей среде",
+            "riskProperty": "Риск нанесения ущерба для имущества",
+            "riskLegal": "Законодательный риск",
+            "riskHealth": "Риск для здоровья потребителя",
+            "risk": "Риск",
+            "latestChanges": "Изменено за последние (дней)",
+            "isVerificationRequired": "Требуется проверка",
+            "isChemical": "Относится к категории химии",
+            "hasManyProducts": "Не менее одного товара",
+            "filter": "Фильтр"
+        },
+        "Table": {
+            "Columns": {
+                "modelStatus": "Статус",
+                "modelCode": "Код модели",
+                "qualityModel": "Модель качества",
+                "QE": "Связана с QE",
+                "nomenclature": "Номенклатура товарной модели",
+                "latestChange": "Последнее изменение",
+                "changeDate": "Дата изменения"
+            }
+        }
+    }
+}

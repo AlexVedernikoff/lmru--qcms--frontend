@@ -1,0 +1,16 @@
+Jenkinsfile
+*.md
+.helm
+.git
+.vscode
+.idea
+.env
+.DS_Store
+node_modules
+npm-debug
+.cache-loader
+.storybook
+webpack/cache
+reports
+.scannerwork
+coverage

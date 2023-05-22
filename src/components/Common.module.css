@@ -1,0 +1,16 @@
+.panel {
+    box-shadow: var(--box-shadow-l);
+    border-radius: var(--rounding-l);
+    background: var(--background-primary);
+    padding: 36px 24px 12px;
+}
+
+.sectionItem {
+    border: 1px solid var(--background-secondary);
+    border-radius: var(--rounding-l);
+    padding: 16px;
+}
+
+.justifyItemsStart {
+    justify-items: start;
+}

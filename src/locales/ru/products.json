@@ -1,0 +1,218 @@
+{
+    "Title": "Товары",
+    "Buttons": {
+        "Apply": "Применить",
+        "Search": "Поиск",
+        "Clear": "Очистить",
+        "More": "Больше",
+        "Less": "Меньше",
+        "AddModel": "Добавить модель",
+        "SelectAll": "Выбрать все",
+        "SelectDocumentsWithoutTransfer": "Начать сбор документов без переноса",
+        "Make": "Выполнить"
+    },
+    "Common": {
+        "Yes": "Да",
+        "No": "Нет",
+        "Select": "Выберите",
+        "Input": "Ввод",
+        "Actions": "Действия"
+    },
+    "ProductDetails": {
+        "Info": {
+            "Attributes": {
+                "Title": "Атрибуты",
+                "Table": {
+                    "Columns": {
+                        "characteristics": "Характеристики",
+                        "available": "Наличие",
+                        "type": "Тип"
+                    }
+                }
+            },
+            "Dates": {
+                "Title": "Даты",
+                "Field": {
+                    "creationDate": "Дата создания",
+                    "AVS": "AVS"
+                }
+            },
+            "InfoDetails": {
+                "Title": "Подробная информация",
+                "Field": {
+                    "gamma": "Гамма",
+                    "link": "Предварительная ссылка"
+                }
+            },
+            "Provider": {
+                "Title": "Поставщик",
+                "Field": {
+                    "providerName": "Наименование поставщика",
+                    "providerStatus": "Статус поставщика",
+                    "distributor": "Дистрибьютор"
+                }
+            },
+            "Product": {
+                "Title": "Продукт",
+                "Field": {
+                    "productCode": "Код товара",
+                    "EAN": "EAN",
+                    "TN_VED_Code": "Код ТН ВЭД",
+                    "risk": "Риск",
+                    "qualityModel": "Модель качества",
+                    "productModel": "Товарная модель",
+                    "isChemical": "Относится к категории химии",
+                    "STM": "СТМ",
+                    "intImport": "Международный импорт",
+                    "fromProject": "Из проекта"
+                },
+                "RiskOptions": {
+                    "minor": "Не очень важный"
+                }
+            }
+        },
+        "QualityStatusSection": {
+            "Title": "Статус качества",
+            "Table": {
+                "Empty": "Контактные данные поставщика отсутствуют",
+                "Columns": {}
+            },
+            "Comments": "Публичные комментарии"
+        }
+    },
+    "WithModels": {
+        "Filters": {
+            "productCode": "Код товара",
+            "nomenclature": "Номенклатура",
+            "qualityStatus": "Статус качества",
+            "qualityModel": "Модель качества",
+            "providerName": "Наименование поставщика",
+            "providerStatus": "Статус поставщика",
+            "filter": "Фильтр"
+        },
+        "Table": {
+            "Columns": {
+                "providerStatus": "Статус поставщика",
+                "productCode": "Код товара",
+                "productName": "Наименование товара",
+                "providerCode": "Код поставщика",
+                "providerName": "Наименование поставщика",
+                "qualityStatus": "Статус качества",
+
+                "QE": "QE",
+                "qualityModel": "Модель качества",
+                "EAN": "EAN",
+                "lastProductStatusDate": "Дата последнего статуса товара",
+                "qualityModelNumber": "Номер модели качества",
+                "qualityModelManager": "Менеджер по качеству товара",
+                "productDataCompleteness": "Полнота данных по товару",
+                "productTopAVS": "Топ-AVS товара",
+                "productCreationDate": "Дата создания товара",
+                "productActionsBy": "Выполнение действия по товару",
+                "departmentCode": "Код отдела",
+                "subDepartmentCode": "Код подотдела",
+                "TN_VED_Code": "Код ТН ВЭД",
+                "departmentName": "Наименование отдела",
+                "nomenclature": "Номенклатура"
+            }
+        }
+    },
+    "WithoutModels": {
+        "Filters": {
+            "nomenclature": "Номенклатура",
+            "QE": "QE",
+            "filter": "Фильтр",
+            "providerName": "Наименование поставщика",
+            "regulatoryStatus": "Регуляторный статус",
+            "fromProject": "Из проекта"
+        },
+        "Table": {
+            "SelectModel": "Пожалуйста, выберите соответствующую модель качества",
+            "Columns": {
+                "providerCodeNumber": "Кодовый номер поставщика",
+                "productCode": "Код товара",
+                "productName": "Наименование",
+                "params": "Параметры"
+            }
+        }
+    },
+    "Transfer": {
+        "Title": "Управление трансфером",
+        "Filters": {
+            "providerStatus": "Статус поставщика",
+            "QE": "QE",
+            "activeProducts": "Активные товары",
+            "productCode": "Код товара",
+            "productName": "Наименование товара",
+            "providerCode": "Код поставщика",
+            "providerName": "Наименование поставщика",
+            "qualityStatus": "Статус качества",
+            "filter": "Фильтр"
+        },
+        "Info": {
+            "Title": "Сводная информация",
+            "WithActiveProvider": "С активной связью с поставщиком: ",
+            "WithoutTransfer": "Без перенесенных продуктов: ",
+            "QE": "QE: ",
+            "QEData": "Подключенный инженер по контролю качества"
+        },
+        "Table": {
+            "Header": {
+                "providerName": "Поставщик",
+                "storeCode": "Код магазина",
+                "EAN": "EAN",
+                "providerStatus": "Статус поставщика",
+                "creationDate": "Дата создания"
+            },
+            "Columns": {
+                "creationDate": "Дата создания",
+                "productCodeAdeo": "Код товара Adeo",
+                "productCode": "Код товара",
+                "productName": "Наименование",
+                "providerName": "Поставщик"
+            }
+        }
+    },
+    "WithDocuments": {
+        "Filters": {
+            "productCode": "Код товара",
+            "providerName": "Наименование поставщика",
+            "filter": "Фильтр",
+            "RegulatoryStatus": "Регуляторный статус",
+            "DocumentType": "Тип документа",
+            "FileName": "Имя файла",
+            "DocumentStatus": "Статус документа",
+            "ComplianceStatus": "Статус соответствия",
+            "DateSearch": "Поиск по дате",
+            "Dates": "Даты"
+        },
+        "DetailFilters": {
+            "QE": "QE",
+            "Country": "Страна",
+            "QualityModel": "Модель качества",
+            "ProductModelNomenclature": "Номенклатура товарной модели",
+            "ManagementNomenclature": "Управленческая номенклатура",
+            "IncludingOutdatedDocuments": "Включая устаревшие документы"
+        },
+        "Table": {
+            "DocumentNumber": "Номер документа",
+            "Type": "Тип",
+            "ProductCode": "Код товара",
+            "EAN": "EAN",
+            "TNVED": "TНВЭД",
+            "Name": "Наименование",
+            "ReleaseDate": "Дата выпуска",
+            "EndDate": "Дата окончания",
+            "Status": "Статус",
+            "ConfirmationStatus": "Статус подтверждения",
+            "UploadDate": "Дата загрузки",
+            "NameSupplier": "Наименование поставщика",
+            "SupplierCodeRMS": "Код поставщика из RMS",
+            "INN": "ИНН",
+            "BusinessLicenseNumber": "Номер бизнес лицензии",
+            "SSMCode": "Код SSM",
+            "Role": "Загрузка выполнена (роль)",
+            "DownloadCompleted": "Загрузка выполнена"
+        }
+    }
+}

@@ -1,0 +1,127 @@
+{
+  "Title": "Поставщики",
+  "Buttons": {
+    "Apply": "Применить",
+    "Search": "Поиск",
+    "Clear": "Очистить",
+    "More": "Больше",
+    "Less": "Меньше",
+    "AddModel": "Добавить модель"
+  },
+  "Common": {
+    "Yes": "Да",
+    "No": "Нет",
+    "Select": "Выберите",
+    "Input": "Ввод"
+  },
+  "ProviderDetails": {
+    "MainData": {
+      "Title": "Основные",
+      "Category": "Категория",
+      "RMSCode": "Код RMS",
+      "Country": "Страна",
+      "BusinessLicense": "Бизнес лицензия",
+      "CodeSSM": "Код из SSM",
+      "INN": "ИНН",
+      "TopAVS": "Топ-AVS",
+      "SupplierInternationalProcurement": "Поставщик по международным закупкам",
+      "TemporaryPermission": "Временное разрешение",
+      "ExNameSupplier": "Экс наименование поставщика",
+      "SupplierStatus": "Статус поставщика",
+      "VendorLevelMonitoring": "Уровень поставщика для мониторинга",
+      "NonConformity": "Non conformity",
+      "NrustKiller": "Nrust killer",
+      "FailureRateInspections": "Частота отказов предотгрузочных инспекций",
+      "Status": "Статус",
+      "BillingCountry": "Страна выставления счетов",
+      "SupplyDepartment": "Отдел снабжения"
+    },
+    "ProductData": {
+      "ProfileComplete": "Профиль для завершения",
+      "Platform": "Платформа",
+      "QE": "QE",
+      "You": "Вы",
+      "YouProvide": "Предоставляете ли вы:",
+      "AvailabilitySTMProduct": "Наличие не менее 1 продукта СТМ",
+      "SupplierOneFactory": "Are you a manufacturer supplier with only one factory?"
+    },
+    "ProviderTabs": {
+      "ProjectCommand": {
+        "Title": "Проектная комманда",
+        "userServiceNumber": "Табельный номер пользователя",
+        "surname": "Фамилия",
+        "name": "Имя",
+        "email": "Адрес электронной почты",
+        "activityTypeCode": "Код типа деятельности"
+      },
+      "Contacts": {
+        "Title": "Контакты",
+        "surname": "Фамилия",
+        "name": "Имя",
+        "email": "Адрес электронной почты",
+        "telephone": "Телефон",
+        "mobile": "Мобильный",
+        "type": "Тип"
+      },
+      "Products": {
+        "Title": "Продукты",
+        "name": "Наименование",
+        "code": "Код",
+        "SupplierBindingStatus": "Статус привязки поставщика",
+        "SupplierLink": "Ссылка поставщика",
+        "EAN": "EAN",
+        "ComplianceStatusBU": "Статус соответствия по BU"
+      }
+    }
+  },
+  "ProvidersList": {
+    "Filters": {
+      "filter": "Фильтр",
+      "dates": "Даты",
+      "providerName": "Наименование поставщика",
+      "platform": "Платформа ответственная за самооценку",
+      "qualityAssessment": "Оценка по качеству",
+      "databasePotentialSuppliers": "База данных потенциальных поставщиков",
+      "referenceDatabaseSuppliers": "Ссылочная база данных поставщиков",
+      "supplierRegistrationStatus": "Статус регистрации поставщика",
+      "reference": "Ссылка",
+      "billingCountry": "Страна выставления счетов",
+      "countryLocationSupplier": "Страна расположения отделения поставщика",
+      "SQMResponsibleSelfAssessment": "SQM ответственный за самооценку",
+      "qualityManager": "Менеджер по качеству, мониторинг производства",
+      "country": "Страна",
+      "assessmentQualityTechnicalAudit": "Оценка по качеству технического аудита",
+      "environmentalAuditQualityAssessment": "Оценка по качеству экологического аудита",
+      "dateSearch": "Поиск по дате",
+      "withoutIQ": "Без IQ",
+      "withoutAssignedQE": "Без назначенного QE для интеллектуального мониторинга"
+    },
+    "DetailFilters": {
+      "relatedProducts":"Связанные товары", 
+      "managementNomenclature": "Управленческая номенклатура",
+      "productModelNomenclature": "Номенклатура товарной модели",
+      "qualityModel": "Модель качества",
+      "certificationStatus": "Статус сертификации",
+      "сharacteristic": "Характеристика",
+      "meaning": "Значение",
+      "withCTMProduct": "С товаром CTM",
+      "productDistributorOnly": "Только дистрибьютор продукции",
+      "withoutСontact": "Без контакта",
+      "actions": "Действия",
+      "type": "Тип",
+      "selfAssessmentStatus": "Статус самооценки",
+      "platform": "Платформа",
+      "qualityEngineer": "Инженер по качеству",
+      "contractor": "Подрядчик",
+      "PendingСreation": "В ожидании создания"
+    },
+    "Table": {
+      "Columns": {
+        "providerName": "(Поставщик)Наименование",
+        "providerCode": "(Поставщик)Код",
+        "providerCertified": "(Поставщик)Сертифицированный",
+        "providerWoodProducts": "(Поставщик)Изделия из дерева"
+      }
+    }
+  }
+}
