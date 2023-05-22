@@ -10,6 +10,7 @@ import {
     IProductTableTransferItem,
     TWithReactKey,
     IProviderTableWithDocuments,
+    ITaskTableNotification
 } from './models';
 
 export const PLAN_REQUIREMENT_TABLE_ITEMS: TWithReactKey<IMasterPlanRequirementTableItem>[] = [
@@ -275,3 +276,22 @@ export const PRODUCT_TABLE_WITH_DOCUMENTS: (IProviderTableWithDocuments & {key: 
         downloadCompleted: 'Чекаев Алексей',
     },
 ];
+
+export const TASK_NOTIFICATIONS_TABLE_ITEMS: (ITaskTableNotification & { key: React.Key })[] = [
+    {
+        key: 1,
+        date: '19.01.2021 10:56',
+        topic: 'Леруа Мерлен',
+        templateName: 'Support.cms',
+        recipient: 'Info@leroymerlin.com',
+        text: 'В сиситеме QMS Вам назначено действие по сбору документов'
+    },
+    {
+        key: 2,
+        date: '19.01.2021 10:56',
+        topic: 'Леруа Мерлен',
+        templateName: 'Support.cms',
+        recipient: 'Info@leroymerlin.com',
+        text: 'В сиситеме QMS Вам назначено действие по сбору документов'
+    }
+]
