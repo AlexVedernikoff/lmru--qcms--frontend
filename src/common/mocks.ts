@@ -277,7 +277,7 @@ export const PRODUCT_TABLE_WITH_DOCUMENTS: (IProviderTableWithDocuments & {key: 
     },
 ];
 
-export const TASK_NOTIFICATIONS_TABLE_ITEMS: (ITaskTableNotification & { key: React.Key })[] = [
+export const TASK_NOTIFICATIONS_TABLE_ITEMS: TWithReactKey<ITaskTableNotification>[] = [
     {
         key: 1,
         date: '19.01.2021 10:56',
