@@ -122,3 +122,11 @@ export interface IProviderTableWithDocuments {
     role: string;
     downloadCompleted: string;
 }
+
+export interface ITaskTableNotification {
+    date: string;
+    topic: string;
+    templateName: string;
+    recipient: string;
+    text: string;
+}

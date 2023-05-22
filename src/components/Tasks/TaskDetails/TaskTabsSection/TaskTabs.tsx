@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 import { TabList } from 'fronton-react';
 import { useState } from 'react';
+import NotificationsTable from './TaskTabNotifications/Table'
 
 const TaskTabs: React.FC = () => {
     const {t} = useTranslation('tasks');
@@ -21,6 +22,7 @@ const TaskTabs: React.FC = () => {
                 <Tab>{t('TaskTabs.Documents.Title')}</Tab>
                 <Tab>{t('TaskTabs.Notifications.Title')}</Tab>
             </TabList>
+            {tab === 1 && <NotificationsTable />}
         </Grid>
     );
 };
