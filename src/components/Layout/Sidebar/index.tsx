@@ -24,62 +24,62 @@ interface IItem {
     children?: IItem[];
 }
 
-const items: IItem[] = [
-    {
-        icon: HouseSimpleIcon,
-        text: 'Dashboard',
-        value: APP_ROUTES.dashboard,
-    },
-    {
-        icon: TruckIcon,
-        text: 'Поставщики',
-        value: APP_ROUTES.providers,
-    },
-    {
-        icon: CubeIcon,
-        text: 'Товары',
-        value: APP_ROUTES.products,
-        children: [
-            {
-                text: 'С моделью качества',
-                value: PRODUCTS_ROUTES.withModels,
-            },
-            {
-                text: 'Без модели качества',
-                value: PRODUCTS_ROUTES.withoutModels,
-            },
-            {
-                text: 'Управление трансфером',
-                value: PRODUCTS_ROUTES.transfer,
-            },
-            {
-                text: 'Документы',
-                value: PRODUCTS_ROUTES.documents,
-            },
-        ],
-    },
-    {
-        icon: FileIcon,
-        text: 'Задачи',
-        value: APP_ROUTES.tasks,
-    },
-    {
-        icon: ModelsIcon,
-        text: 'Модели',
-        value: APP_ROUTES.models,
-    },
-    {
-        icon: GearIcon,
-        text: 'Настройки',
-        value: APP_ROUTES.settings,
-    },
-];
-
 const Sidebar: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(true);
     const {t} = useTranslation('sidebar');
+
+    const items: IItem[] = [
+        {
+            icon: HouseSimpleIcon,
+            text: t('Items.Dashboard'),
+            value: APP_ROUTES.dashboard,
+        },
+        {
+            icon: TruckIcon,
+            text: t('Items.Providers'),
+            value: APP_ROUTES.providers,
+        },
+        {
+            icon: CubeIcon,
+            text: t('Items.Products'),
+            value: APP_ROUTES.products,
+            children: [
+                {
+                    text: t('Items.WithQualityModel'),
+                    value: PRODUCTS_ROUTES.withModels,
+                },
+                {
+                    text: t('Items.WithoutQualityModel'),
+                    value: PRODUCTS_ROUTES.withoutModels,
+                },
+                {
+                    text: t('Items.Transfer'),
+                    value: PRODUCTS_ROUTES.transfer,
+                },
+                {
+                    text: t('Items.Documents'),
+                    value: PRODUCTS_ROUTES.documents,
+                },
+            ],
+        },
+        {
+            icon: FileIcon,
+            text: t('Items.Tasks'),
+            value: APP_ROUTES.tasks,
+        },
+        {
+            icon: ModelsIcon,
+            text: t('Items.Models'),
+            value: APP_ROUTES.models,
+        },
+        {
+            icon: GearIcon,
+            text: t('Items.Settings'),
+            value: APP_ROUTES.settings,
+        },
+    ];
 
     const handleItemClick = useCallback(
         (value: string | number) => {
