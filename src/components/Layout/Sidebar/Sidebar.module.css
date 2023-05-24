@@ -3,6 +3,58 @@
     padding: 0;
 }
 
-.selected {
+.closeSidebar {
+    width: 100px;
+}
+
+.selectedAccordeon {
     background: #e3f1e0;
+}
+
+.selected::before {
+    content: url("../../Icons/Rectangle\ 4965.svg");
+    position: absolute;
+    left: -7px;
+}
+
+.btnClose {
+    position: absolute;
+    bottom: 50px;
+    left: 30px;
+}
+
+.btnOpen {
+    width: 300px;
+    display: flex;
+    justify-content: flex-start;
+    position: absolute;bottom: 50px;
+    color: #2A2E33;
+    background-color: #F5F5F8;
+    border: none;
+}
+
+.btnOpen > span {
+    gap: 15px;
+}
+
+.btnOpen:hover {
+    background-color: #F2F3F5;
+}
+
+.notification {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    left: 100px;
+    top: 170px;
+    z-index: 10;
+    width: 260px;
+    height: 230px;
+    border: 1px solid #F2F3F5;
+    border-radius: 20px;
+    background-color: #FFFF;
+    box-shadow: 10px 5px 5px gray;
 }

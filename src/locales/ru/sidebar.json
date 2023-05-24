@@ -1,0 +1,17 @@
+{
+    "Button": {
+        "Close": "Свернуть"
+    },
+    "Items": {
+        "Dashboard": "Dashboard",
+        "Providers": "Поставщики",
+        "Products": "Товары",
+        "WithQualityModel": "С моделью качества",
+        "WithoutQualityModel": "Без модели качества",
+        "Transfer": "Управление трансфером",
+        "Documents": "Документы",
+        "Tasks": "Задачи",
+        "Models": "Модели",
+        "Settings": "Настройки"
+    }
+}
