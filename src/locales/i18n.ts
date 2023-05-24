@@ -4,19 +4,22 @@ import products_ru from './ru/products.json';
 import models_ru from './ru/models.json';
 import providers_ru from './ru/providers.json';
 import tasks_ru from './ru/tasks.json';
+import sidebar_ru from './ru/sidebar.json';
 
 const resources = {
     en: {
         products: products_ru,
         models: models_ru,
         providers: providers_ru,
-        tasks: tasks_ru
+        tasks: tasks_ru,
+        sidebar: sidebar_ru
     },
     ru: {
         products: products_ru,
         models: models_ru,
         providers: providers_ru,
-        tasks: tasks_ru
+        tasks: tasks_ru,
+        sidebar: sidebar_ru
     },
 };
 
