@@ -130,3 +130,14 @@ export interface ITaskTableNotification {
     recipient: string;
     text: string;
 }
+
+export interface ITaskTableTasks {
+    taskNumber: number;
+    EAN: number;
+    providerLink: string;
+    matrixId: string;
+    documentStatus: string;
+    shopCode: number;
+    product: string;
+    taskStatus: string;
+}
