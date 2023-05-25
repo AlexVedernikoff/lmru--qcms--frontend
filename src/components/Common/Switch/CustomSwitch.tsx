@@ -1,17 +1,16 @@
 import styles from './styles.module.css';
 
-type SwitchProps = {
-  name: string;
-  handleChange: () => void;
-  checked: boolean;
+interface IProps {
+    name: string;
+    handleChange: () => void;
+    checked: boolean;
 }
 
-export const CustomSwitch = (props: SwitchProps) => {
-  const { name, handleChange, checked } = props;
+type TProps = React.PropsWithChildren<IProps>;
 
-  return (
+export const CustomSwitch: React.FC<TProps> = ({name, handleChange, checked}) => (
     <label htmlFor="switch" className={styles.switch}>
-      <input type="checkbox" onChange={handleChange} checked={checked} role="switch" id="switch" />
+        <input type="checkbox" onChange={handleChange} checked={checked} role="switch" id="switch" />
         {name}
-    </label>)
-}
+    </label>
+);

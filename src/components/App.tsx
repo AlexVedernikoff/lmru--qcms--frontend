@@ -8,13 +8,14 @@ import ProductsWithQualityModel from './Products/WithQualityModel';
 import ProductsWithoutQualityModel from './Products/WithoutQualityModel';
 import ProductsWithDocuments from './Products/WithDocuments';
 import ProductDetails from './Products/ProductDetails/ProductDetails';
+import ProviderDetails from './Providers/ProviderDetails/ProductDetails';
+import TaskDetails from './Tasks/TaskDetails/TaskDetails';
+import ModelDetails from './Models/ModelDetails';
 import Transfer from './Products/Transfer';
 import Providers from './Providers';
 import Products from './Products';
 import Models from './Models';
-import ModelDetails from './Models/ModelDetails';
-import ProviderDetails from './Providers/ProviderDetails/ProductDetails';
-import TaskDetails from './Tasks/TaskDetails/TaskDetails';
+import Tasks from './Tasks';
 
 const App: React.FC = () => (
     <Grid areas={['header header header', 'aside main spacer']} columnGap={16} columns="auto 1fr 12px">
@@ -42,7 +43,7 @@ const App: React.FC = () => (
 
                     <Route path={APP_ROUTES.products} element={<Navigate to={PRODUCTS_ROUTES.withModels} />} />
                 </Route>
-                <Route path={APP_ROUTES.tasks} element={<Empty />}>
+                <Route path={APP_ROUTES.tasks} element={<Tasks />}>
                     <Route path={TASKS_ROUTES.details} element={<TaskDetails />} />
                 </Route>
                 <Route path={APP_ROUTES.models} element={<Models />}>

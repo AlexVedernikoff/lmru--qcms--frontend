@@ -2,23 +2,23 @@ import {useCallback, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {RegularButton} from 'fronton-react';
-import {MagnifyingGlassIcon} from '@fronton/icons-react';
+import {ChatIcon, ChatTextIcon, MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {PRODUCT_TABLE_WITHOUT_MODELS_ITEMS} from '../../../../common/mocks';
-import {PRODUCTS_ROUTES} from '../../../../common/consts';
+import {TASK_LIST_ITEMS} from '../../../../common/mocks';
+import {TASKS_ROUTES} from '../../../../common/consts';
 import {IDataType, getTableColumns} from './TableColumns';
 import CustomTable from '../../../Common/CustomTable';
 
-const ProductsTable: React.FC = () => {
-    const {t} = useTranslation('products');
+const Table: React.FC = () => {
+    const {t} = useTranslation('tasks');
     const navigate = useNavigate();
 
-    const handleViewProductDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
+    const handleViewDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
         e => {
             const {id} = e.currentTarget.dataset;
             if (id) {
-                navigate(PRODUCTS_ROUTES.details.replace(':id', id));
+                navigate(TASKS_ROUTES.details.replace(':id', id));
             }
         },
         [navigate]
@@ -33,7 +33,26 @@ const ProductsTable: React.FC = () => {
                 render: (_value: string, record: IDataType) => (
                     <RegularButton
                         data-id={record.productCode.toString()}
-                        onClick={handleViewProductDetails}
+                        onClick={() => {}}
+                        href=""
+                        rel=""
+                        aria-label=""
+                        variant="pseudo"
+                        iconOnly
+                    >
+                        {true ? <ChatTextIcon /> : <ChatIcon />}
+                    </RegularButton>
+                ),
+                fixed: 'left',
+            },
+            {
+                title: '',
+                dataIndex: undefined,
+                width: 64,
+                render: (_value: string, record: IDataType) => (
+                    <RegularButton
+                        data-id={record.productCode.toString()}
+                        onClick={handleViewDetails}
                         href=""
                         rel=""
                         aria-label=""
@@ -47,10 +66,10 @@ const ProductsTable: React.FC = () => {
             },
             ...getTableColumns(t),
         ],
-        [handleViewProductDetails, t]
+        [handleViewDetails, t]
     );
 
-    const data = useMemo<IDataType[]>(() => PRODUCT_TABLE_WITHOUT_MODELS_ITEMS, []);
+    const data = useMemo<IDataType[]>(() => TASK_LIST_ITEMS, []);
 
     const rowSelection = useMemo<TableRowSelection<IDataType>>(
         () => ({
@@ -76,9 +95,10 @@ const ProductsTable: React.FC = () => {
             tableLayout="fixed"
             size="small"
             bordered
+            expandable={{columnWidth: 100}}
             pagination={{}}
         />
     );
 };
 
-export default ProductsTable;
+export default Table;
