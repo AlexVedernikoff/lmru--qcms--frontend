@@ -10,7 +10,8 @@ import {
     IProductTableTransferItem,
     TWithReactKey,
     IProviderTableWithDocuments,
-    ITaskTableNotification
+    ITaskTableNotification,
+    ITaskTableTasks
 } from './models';
 
 export const PLAN_REQUIREMENT_TABLE_ITEMS: TWithReactKey<IMasterPlanRequirementTableItem>[] = [
@@ -293,5 +294,30 @@ export const TASK_NOTIFICATIONS_TABLE_ITEMS: TWithReactKey<ITaskTableNotificatio
         templateName: 'Support.cms',
         recipient: 'Info@leroymerlin.com',
         text: 'В сиситеме QMS Вам назначено действие по сбору документов'
+    }
+]
+
+export const TASK_TASKS_TABLE_ITEMS: TWithReactKey<ITaskTableTasks>[] = [
+        {
+        key: 1,
+        taskNumber: 15235235,
+        EAN: 35467357634,
+        providerLink: 'Ссылка',
+        matrixId: 'идентификатор',
+        documentStatus: 'Согласовано',
+        shopCode: 12434654745,
+        product: 'ПАКЕТ Д/ПРАЧЕЧНОЙ С ВЫРУБНЫМИ РУЧК 500 ШТ',
+        taskStatus: 'Ожидание подтверждения провайдера услуг'
+    },
+    {
+        key: 2,
+        taskNumber: 15235235,
+        EAN: 35467357634,
+        providerLink: 'Ссылка',
+        matrixId: 'идентификатор',
+        documentStatus: 'Ожидает согласования',
+        shopCode: 12434654745,
+        product: 'ПАКЕТ Д/ПРАЧЕЧНОЙ С ВЫРУБНЫМИ РУЧК 500 ШТ',
+        taskStatus: 'Ожидание подтверждения провайдера услуг'
     }
 ]

@@ -36,6 +36,10 @@
         }
     },
     "TaskTabs": {
+        "Buttons": {
+            "Reject": "Отклонить",
+            "Approve": "Согласовать"
+        },
         "Documents": {
             "Title": "Документы"
         },
@@ -46,6 +50,17 @@
             "TemplateName": "Название шаблона",
             "Recipient": "Получатель",
             "Text": "Текст"
+        },
+        "Tasks": {
+            "Title": "Связанные задачи",
+            "TaskNumber": "№ Задачи",
+            "EAN": "EAN",
+            "ProviderLink": "Ссылка поставщика",
+            "MatrixId": "Идентификатор матрицы",
+            "DocumentStatus": "Статус документа",
+            "ShopCode": "Код магазина",
+            "Product": "Товар",
+            "TaskStatus": "Статус задачи"
         }
     }
 }
