@@ -4,19 +4,16 @@ import {ColumnsType} from 'antd/es/table';
 import {IDataType, getTasksTableColumns} from './TableColumns';
 import CustomTable from '../../../../../Common/CustomTable';
 import {TASK_TASKS_TABLE_ITEMS} from '../../../../../../common/mocks';
-import { TableRowSelection } from 'antd/es/table/interface';
-import { MagnifyingGlassIcon } from '@fronton/icons-react';
-import { Grid, RegularButton } from 'fronton-react';
+import {TableRowSelection} from 'antd/es/table/interface';
+import {MagnifyingGlassIcon} from '@fronton/icons-react';
+import {Grid, RegularButton} from 'fronton-react';
 
 const TasksTable: React.FC = () => {
     const {t} = useTranslation('tasks');
 
-    const handleViewProductDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
-        e => {
+    const handleViewProductDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(e => {
         //TODO добавить детализацию
-        },
-        []
-    );
+    }, []);
 
     const columns = useMemo<ColumnsType<IDataType>>(
         () => [
@@ -74,7 +71,7 @@ const TasksTable: React.FC = () => {
             />
 
             <Grid columnGap={16} columns="1fr 200px 200px">
-                <span/>
+                <span />
                 <RegularButton onClick={() => {}} size="m" variant="outline">
                     {t('TaskTabs.Buttons.Reject')}
                 </RegularButton>

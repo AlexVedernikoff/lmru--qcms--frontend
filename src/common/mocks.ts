@@ -297,3 +297,50 @@ export const TASK_NOTIFICATIONS_TABLE_ITEMS: TWithReactKey<ITaskTableNotificatio
         text: 'В сиситеме QMS Вам назначено действие по сбору документов',
     },
 ];
+
+export const TASK_TASKS_TABLE_ITEMS: TWithReactKey<ITaskTableTasks>[] = [
+    {
+        key: 1,
+        taskNumber: 15235235,
+        EAN: 35467357634,
+        providerLink: 'Ссылка',
+        matrixId: 'идентификатор',
+        documentStatus: 'Согласовано',
+        shopCode: 12434654745,
+        product: 'ПАКЕТ Д/ПРАЧЕЧНОЙ С ВЫРУБНЫМИ РУЧК 500 ШТ',
+        taskStatus: 'Ожидание подтверждения провайдера услуг',
+    },
+    {
+        key: 2,
+        taskNumber: 15235235,
+        EAN: 35467357634,
+        providerLink: 'Ссылка',
+        matrixId: 'идентификатор',
+        documentStatus: 'Ожидает согласования',
+        shopCode: 12434654745,
+        product: 'ПАКЕТ Д/ПРАЧЕЧНОЙ С ВЫРУБНЫМИ РУЧК 500 ШТ',
+        taskStatus: 'Ожидание подтверждения провайдера услуг',
+    },
+];
+
+export const TASK_LIST_ITEMS: TWithReactKey<ITaskListItem>[] = [
+    {
+        key: 1,
+        taskType: 'Сбор документов',
+        taskStatus: 'Завершена',
+        documents: 'Сертификат соответствия',
+        productCode: '87312445',
+        productName: 'МАСТИКА БИТУМ. ДЛЯ КРОВЕЛЬ 21,5 Л/18 КГ',
+        providerName: 'ООО "ХимТоргПроект"',
+        providerCode: '1004128001',
+        qualityStatus: 'Леруа Мерлен Россия: Предполагаемое соответствие',
+        QE: 'Денисенко Мария',
+        SQM: 'Иванов Иван',
+        taskNumber: '10230358109883',
+        expectedDocuments: 'Паспорт безопасности',
+        taskCategory: 'Сертификация - Сбор документов',
+        creationDate: '13.03.2023',
+        confirmationEndDate: '13.03.2023',
+        responsibleContractor: 'Константинопольский Константин',
+    },
+];
