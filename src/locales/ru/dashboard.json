@@ -1,6 +1,7 @@
 {
-    "Title": "To do",
+    "Title": "Dashboard",
     "List": {
+        "Title": "To do",
         "ReChecking": "Повторная проверка",
         "QualifyingTasksLaunch": "Квалификационные задачи к запуску",
         "TransferDocuments": "Трансфер документов",

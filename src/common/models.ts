@@ -1,3 +1,5 @@
+import {IconComponent} from '@fronton/icons-react';
+
 export type TWithReactKey<P = unknown> = P & {key: React.Key};
 
 export interface ITaskListItem {
@@ -162,4 +164,11 @@ export interface ITaskTableTasks {
     shopCode: number;
     product: string;
     taskStatus: string;
+}
+
+export interface IItemListTodo {
+    label: string;
+    value: number;
+    valueImportant: number;
+    icon: IconComponent | React.FC;
 }
