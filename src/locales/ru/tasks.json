@@ -1,4 +1,71 @@
 {
+    "Buttons": {
+        "Apply": "Применить",
+        "Search": "Поиск",
+        "Clear": "Очистить",
+        "More": "Больше",
+        "Less": "Меньше",
+        "AddModel": "Добавить модель",
+        "SelectAll": "Выбрать все"
+    },
+    "Common": {
+        "Select": "Выберите",
+        "Run": "Выполнить",
+        "Yes": "Да",
+        "No": "Нет"
+    },
+    "Title": "Задачи",
+    "TaskList": {
+        "Filters": {
+            "productCode": "Код товара",
+            "responsibleContractor": "Ответственный",
+            "QE": "QE",
+            "taskStatus": "Статус задачи",
+            "providerName": "Наименование поставщика",
+            "contractor": "Подрядчик",
+            "conclusion": "Заключение",
+            "documentType": "Тип запрашиваемого документа",
+            "taskNumber": "Задача №",
+            "taskType": "Тип задачи",
+            "isUpdating": "На обновлении",
+
+            "qualityStatus": "Статус соответствия",
+            "regularStatus": "Регуляторный статус",
+            "qualityModel": "Модель качества",
+            "characteristics": "Характеристика",
+            "characteristicValue": "Значение характеристики",
+            "gamma": "Гамма",
+            "fromProject": "Из проекта",
+            "withProviderActiveLink": "С активной связью с поставщиком",
+            "withoutTransfer": "Без трансфера",
+            "containsSubstanceLimit": "Содержит вещество с превышением лимита",
+            "containsSubstance": "Содержит вещество",
+            "withoutQualityManager": "Без менеджера по качеству",
+            "searchByDate": "Поиск по дате",
+            "dates": "Даты",
+            "country": "Страна"
+        },
+        "Table": {
+            "Columns": {
+                "taskType": "Тип",
+                "taskStatus": "Статус",
+                "documents": "Загруженные документы",
+                "productCode": "Код товара",
+                "productName": "Описание продукта",
+                "providerName": "Наименование поставщика",
+                "providerCode": "Код поставщика",
+                "qualityStatus": "Статус качества",
+                "QE": "QE",
+                "SQM": "SQM",
+                "taskNumber": "№",
+                "expectedDocuments": "Ожидаемые документы",
+                "taskCategory": "Категория задач",
+                "creationDate": "Дата создания",
+                "confirmationEndDate": "Дата окончания подтверждения",
+                "responsibleContractor": "Ответственный подрядчик"
+            }
+        }
+    },
     "TaskDetails": {
         "Buttons": {
             "Edit": "Редактировать",

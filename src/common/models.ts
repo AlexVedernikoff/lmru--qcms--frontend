@@ -1,5 +1,24 @@
 export type TWithReactKey<P = unknown> = P & {key: React.Key};
 
+export interface ITaskListItem {
+    taskType: string;
+    taskStatus: string;
+    documents: string;
+    productCode: string;
+    productName: string;
+    providerName: string;
+    providerCode: string;
+    qualityStatus: string;
+    QE: string;
+    SQM: string;
+    taskNumber: string;
+    expectedDocuments: string;
+    taskCategory: string;
+    creationDate: string;
+    confirmationEndDate: string;
+    responsibleContractor: string;
+}
+
 export interface IMasterPlanRequirementTableItem {
     category: string;
     type: string;
@@ -8,7 +27,10 @@ export interface IMasterPlanRequirementTableItem {
     origin: string;
     process: string;
     responsiblePerson: string;
-    approvingPerson: {type: string; place: string};
+    approvingPerson: {
+        type: string;
+        place: string;
+    };
     documentTemplate: string;
     taskRequirement: boolean;
 }

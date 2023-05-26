@@ -6,7 +6,7 @@ export interface IDataType extends IProductTableWithoutModelsItem {
     key: React.Key;
 }
 
-export const getProductTableColumns = (t: TFunction<'products', undefined, 'products'>): ColumnsType<IDataType> => [
+export const getTableColumns = (t: TFunction<'products', undefined, 'products'>): ColumnsType<IDataType> => [
     {
         title: t('WithoutModels.Table.Columns.providerCodeNumber'),
         dataIndex: 'providerCodeNumber',
