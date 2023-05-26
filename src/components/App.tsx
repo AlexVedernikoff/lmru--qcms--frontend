@@ -16,6 +16,7 @@ import Providers from './Providers';
 import Products from './Products';
 import Models from './Models';
 import Tasks from './Tasks';
+import Dashboard from './Dashboard';
 
 const App: React.FC = () => (
     <Grid areas={['header header header', 'aside main spacer']} columnGap={16} columns="auto 1fr 12px">
@@ -30,7 +31,7 @@ const App: React.FC = () => (
         <GridItem area="main">
             <br />
             <Routes>
-                <Route path={APP_ROUTES.dashboard} element={<Empty />} />
+                <Route path={APP_ROUTES.dashboard} element={<Dashboard />} />
                 <Route path={APP_ROUTES.providers} element={<Providers />} />
                 <Route path={PROVIDER_ROUTES.details} element={<ProviderDetails />} />
                 <Route path={APP_ROUTES.products} element={<Products />}>

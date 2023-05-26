@@ -1,0 +1,52 @@
+.cardBase {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    width: 220px;
+    height: 360px;
+
+    padding: 24px 24px 0;
+    border-radius: 12px;
+
+    transition: 0.3s;
+
+    box-shadow: 0px 9.69231px 32.3077px rgba(0, 0, 0, 0.08), 0px 0.606814px 8.09085px rgba(0, 0, 0, 0.035),
+        0px 0.322274px 4.29699px rgba(0, 0, 0, 0.0282725), 0px 0.134106px 1.78807px rgba(0, 0, 0, 0.0196802);
+}
+
+.cardBaseOver:hover {
+    width: 224px;
+    height: 364px;
+
+    box-shadow: 0px 12px 14px 4px rgba(0, 0, 0, 0.08), 0px 0.606814px 8.09085px rgba(0, 0, 0, 0.035),
+        0px 0.322274px 4.29699px rgba(0, 0, 0, 0.0282725), 0px 0.134106px 1.78807px rgba(0, 0, 0, 0.0196802);
+}
+
+.primaryCard {
+    composes: cardBase cardBaseOver;
+    color: #ffffff;
+    background: #5ab030;
+}
+
+.defaultCard {
+    composes: cardBase cardBaseOver;
+    background: #ffffff;
+}
+
+.cardImage {
+    display: flex;
+    justify-content: flex-end;
+
+    width: 180px;
+    height: 180px;
+}
+
+.cardTaskCount {
+    font-size: 48px !important;
+    height: 124px;
+}
+
+.cardTaskTitle {
+    height: 116px;
+}
