@@ -5,6 +5,7 @@ import models_ru from './ru/models.json';
 import providers_ru from './ru/providers.json';
 import tasks_ru from './ru/tasks.json';
 import sidebar_ru from './ru/sidebar.json';
+import dashboard_ru from './ru/dashboard.json';
 
 const resources = {
     en: {
@@ -12,14 +13,16 @@ const resources = {
         models: models_ru,
         providers: providers_ru,
         tasks: tasks_ru,
-        sidebar: sidebar_ru
+        sidebar: sidebar_ru,
+        dashboard: dashboard_ru
     },
     ru: {
         products: products_ru,
         models: models_ru,
         providers: providers_ru,
         tasks: tasks_ru,
-        sidebar: sidebar_ru
+        sidebar: sidebar_ru,
+        dashboard:  dashboard_ru
     },
 };
 
