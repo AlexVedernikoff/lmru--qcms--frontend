@@ -1,6 +1,15 @@
 {
-    "Title": "To do",
+    "Title": "Dashboard",
+    "TaskCard": {
+        "AllTasks": "Все задачи",
+        "OverdueTasks": "Просроченные задачи",
+        "NewTasks": "Новые задачи",
+        "DocUpdates": "Обновление документации",
+        "Rejected": "Отклоненные",
+        "ReCheck": "Повторная проверка"
+    },
     "List": {
+        "Title": "To do",
         "ReChecking": "Повторная проверка",
         "QualifyingTasksLaunch": "Квалификационные задачи к запуску",
         "TransferDocuments": "Трансфер документов",
