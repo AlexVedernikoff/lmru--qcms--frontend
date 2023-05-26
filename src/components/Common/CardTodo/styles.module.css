@@ -1,0 +1,51 @@
+.container {
+    height: 420px;
+    width: 695px;
+    border-radius: 16px;
+    border-left: thick solid #5AB030;
+    box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+}
+
+.addIcon {
+    cursor: pointer;
+}
+
+.title {
+    line-height: 32px;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.list {
+    list-style-type: none;
+    line-height: 24px;
+}
+
+.list li {
+    line-height: 24px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.containerValues {
+    display: flex;
+    gap: 10px;
+    margin: 0px 40px 0px 7px;
+}
+
+.importantValue{
+    width: 25px;
+    border-radius: 50%;
+    color: white;
+    background-color: #464C5C;
+    text-align: center;
+    margin-bottom: 8px;
+}
+

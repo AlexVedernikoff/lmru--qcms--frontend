@@ -1,0 +1,13 @@
+{
+    "Title": "To do",
+    "List": {
+        "ReChecking": "Повторная проверка",
+        "QualifyingTasksLaunch": "Квалификационные задачи к запуску",
+        "TransferDocuments": "Трансфер документов",
+        "ProductsWithErrors": "Товары с ошибками",
+        "ProductsWithoutQualityModels": "Товары без моделей качества",
+        "CertificationTasksLaunch": "Сертификационные задачи к запуску",
+        "AdditionalQualificationProducts": "Товары доп. квалификации",
+        "TasksAwaitingValidation": "Задачи ожидающие валидации"
+    }
+}
