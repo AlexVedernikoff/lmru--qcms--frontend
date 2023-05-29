@@ -169,6 +169,6 @@ export interface ITaskTableTasks {
 export interface IItemListTodo {
     label: string;
     value: number;
-    valueImportant: number;
-    icon: IconComponent | React.FC;
+    valueImportant?: number;
+    icon?: IconComponent | React.FC;
 }
