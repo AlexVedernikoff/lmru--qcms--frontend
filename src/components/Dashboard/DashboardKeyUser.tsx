@@ -2,6 +2,10 @@ import {CardTodo} from '../Common/CardTodo';
 import {FlagIcon} from '@fronton/icons-react';
 import {useTranslation} from 'react-i18next';
 import {IItemListTodo} from '../../common/models';
+import TaskCard from './TaskCard';
+import AllTasks from './Illustrations/AllTasks';
+import {Grid} from 'fronton-react';
+import AllTasksIcon from '../Icons/AllTasksIcon';
 
 export const DashboardKeyUser = () => {
     const {t} = useTranslation('dashboard');
@@ -58,9 +62,15 @@ export const DashboardKeyUser = () => {
     ];
 
     return (
-        <>
-            <span></span>
+        <Grid columns="repeat(5, auto)" gap={24}>
+            <TaskCard
+                title={t('TaskCard.AllTasks')}
+                count={100}
+                image={<AllTasks />}
+                icon={<AllTasksIcon />}
+                isPrimary
+            />
             <CardTodo items={items} />
-        </>
+        </Grid>
     );
 };
