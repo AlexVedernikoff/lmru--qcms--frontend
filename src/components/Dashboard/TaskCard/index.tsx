@@ -6,10 +6,12 @@ interface IProps {
     count: number;
     image?: React.ReactElement;
     isPrimary?: boolean;
+    icon?: React.ReactElement;
 }
 
-const TaskCard: React.FC<IProps> = ({title, count, image, isPrimary}) => (
+const TaskCard: React.FC<IProps> = ({title, count, image, isPrimary, icon}) => (
     <div className={isPrimary ? styles.primaryCard : styles.defaultCard}>
+        <div className={styles.allTasks}>{icon}</div>
         <Typography className={styles.cardTaskTitle} variant="h3">
             {title}
         </Typography>

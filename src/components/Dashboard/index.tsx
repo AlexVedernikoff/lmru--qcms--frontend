@@ -3,18 +3,21 @@ import {useTranslation} from 'react-i18next';
 import {Grid, Typography} from 'fronton-react';
 import DashboardProviderRole from './DashboardProviderRole';
 import DashboardServiceProviderRole from './DashboardServiceProviderRole';
+import {DashboardKeyUser} from './DashboardKeyUser';
+import {DashboardQE} from './DashboardQE';
 
 enum EUserRole {
     PROVIDER = 'provider',
     SERVICE_PROVIDER = 'service_provider',
     SQM = 'sqm',
+    QE = 'QE',
+    KEY_USER = 'key_user',
 }
+
+let role: EUserRole;
 
 const Dashboard: React.FC = () => {
     const {t} = useTranslation('dashboard');
-
-    // temp var
-    const role: EUserRole = true ? EUserRole.PROVIDER : EUserRole.SERVICE_PROVIDER;
 
     const item = useMemo(() => {
         switch (role) {
@@ -22,6 +25,10 @@ const Dashboard: React.FC = () => {
                 return <DashboardProviderRole />;
             case EUserRole.SERVICE_PROVIDER:
                 return <DashboardServiceProviderRole />;
+            case EUserRole.KEY_USER:
+                return <DashboardKeyUser />;
+            case EUserRole.QE:
+                return <DashboardQE />;
             default:
                 return <div>undefined</div>;
         }

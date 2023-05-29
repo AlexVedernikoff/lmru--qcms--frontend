@@ -4,7 +4,7 @@
     justify-content: space-between;
 
     width: 220px;
-    height: 360px;
+    height: 420px;
 
     padding: 24px 24px 0;
     border-radius: 12px;
@@ -17,7 +17,7 @@
 
 .cardBaseOver:hover {
     width: 224px;
-    height: 364px;
+    height: 424px;
 
     box-shadow: 0px 12px 14px 4px rgba(0, 0, 0, 0.08), 0px 0.606814px 8.09085px rgba(0, 0, 0, 0.035),
         0px 0.322274px 4.29699px rgba(0, 0, 0, 0.0282725), 0px 0.134106px 1.78807px rgba(0, 0, 0, 0.0196802);
@@ -49,4 +49,9 @@
 
 .cardTaskTitle {
     height: 116px;
+}
+
+.allTasks {
+    cursor: pointer;
+    padding-bottom: 20px;
 }
