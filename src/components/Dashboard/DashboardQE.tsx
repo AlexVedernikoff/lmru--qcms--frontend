@@ -1,4 +1,4 @@
-import {CardTodo} from '../Common/CardTodo';
+import {CardTodo} from './CardTodo';
 import {FlagIcon} from '@fronton/icons-react';
 import {useTranslation} from 'react-i18next';
 import {IItemListTodo} from '../../common/models';
