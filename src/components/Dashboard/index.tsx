@@ -30,12 +30,12 @@ const Dashboard: React.FC = () => {
             case EUserRole.QE:
                 return <DashboardQE />;
             default:
-                return <div>undefined</div>;
+                return <DashboardProviderRole />;
         }
-    }, [role]);
+    }, []);
 
     return (
-        <Grid rowGap={16}>
+        <Grid rowGap={48}>
             <Typography variant="h2">{t('Title')}</Typography>
             <Grid columns="250px 1fr" rowGap={16}>
                 {item}
