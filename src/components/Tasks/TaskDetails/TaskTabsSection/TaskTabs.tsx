@@ -1,14 +1,20 @@
-import {Grid, Tab} from 'fronton-react';
+import {useState} from 'react';
+import {Grid, Tab, TabList} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
-import { TabList } from 'fronton-react';
-import { useState } from 'react';
-import NotificationsTable from './TaskTabNotifications/Table'
+import NotificationsTable from './TaskTabNotifications/Table';
 import TasksTable from './TaskTabTasks/Table';
+import TaskTabDocuments from './TaskTabDocuments';
+
+enum ETabs {
+    documents,
+    notifications,
+    linkedTasks,
+}
 
 const TaskTabs: React.FC = () => {
     const {t} = useTranslation('tasks');
-    const [tab, setTab] = useState(0);
+    const [tab, setTab] = useState<ETabs>(ETabs.documents);
 
     return (
         <Grid className={styles.sectionItem} columns="1fr" rowGap={24} columnGap={24}>
@@ -24,8 +30,9 @@ const TaskTabs: React.FC = () => {
                 <Tab>{t('TaskTabs.Notifications.Title')}</Tab>
                 <Tab>{t('TaskTabs.Tasks.Title')}</Tab>
             </TabList>
-            {tab === 1 && <NotificationsTable />}
-            {tab === 2 && <TasksTable />}
+            {tab === ETabs.documents && <TaskTabDocuments />}
+            {tab === ETabs.notifications && <NotificationsTable />}
+            {tab === ETabs.linkedTasks && <TasksTable />}
         </Grid>
     );
 };
