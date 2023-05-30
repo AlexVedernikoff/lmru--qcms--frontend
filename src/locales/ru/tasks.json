@@ -108,7 +108,30 @@
             "Approve": "Согласовать"
         },
         "Documents": {
-            "Title": "Документы"
+            "Title": "Документы",
+            "AwaitingDocuments": {
+                "Title": "Ожидаемые документы",
+                "Field": {
+                    "documentName": "Название разрешительного документа",
+                    "documentType": "Тип документа",
+                    "template": "Шаблон",
+                    "comment": "Комментарий"
+                }
+            },
+            "UploadedDocuments": {
+                "Title": "Загруженные документы",
+                "Field": {
+                    "documentType": "Тип документа",
+                    "documentMask": "Маска документа",
+                    "status": "Статус",
+                    "documentName": "Имя документа",
+                    "partial": "Партийный",
+                    "uploadDate": "Дата загрузки",
+                    "startDate": "Дата начала действия",
+                    "endDate": "Дата окончания",
+                    "uploaderName": "Загружено"
+                }
+            }
         },
         "Notifications": {
             "Title": "Уведомления",

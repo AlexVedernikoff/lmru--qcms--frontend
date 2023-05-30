@@ -1,12 +1,12 @@
+import {useTranslation} from 'react-i18next';
 import {Grid, RegularButton, Typography} from 'fronton-react';
-import TaskDetailsInfoSection from './TaskDetailsInfoSection';
 import EditIcon from '../../Icons/EditIcon';
-import { useTranslation } from 'react-i18next';
+import TaskDetailsInfoSection from './TaskDetailsInfoSection';
 import TaskTabsSection from './TaskTabsSection';
 
 const TaskDetails: React.FC = () => {
     const title = `Сертификация - Сбор документов - Сбор документов - 10230358109883`;
-    const { t } = useTranslation('tasks');
+    const {t} = useTranslation('tasks');
 
     return (
         <Grid rowGap={16}>

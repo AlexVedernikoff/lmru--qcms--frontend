@@ -172,3 +172,22 @@ export interface IItemListTodo {
     valueImportant?: number;
     icon?: IconComponent | React.FC;
 }
+
+export interface ITaskAwaitingDocument {
+    documentName: string;
+    documentType: string;
+    template: string;
+    comment: string;
+}
+
+export interface ITaskUploadedDocument {
+    documentType: string;
+    documentMask: string;
+    status: string;
+    documentName: string;
+    partial: boolean;
+    uploadDate: string;
+    startDate: string;
+    endDate: string;
+    uploaderName: string;
+}

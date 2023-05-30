@@ -13,6 +13,8 @@ import {
     ITaskTableNotification,
     ITaskTableTasks,
     ITaskListItem,
+    ITaskAwaitingDocument,
+    ITaskUploadedDocument,
 } from './models';
 
 export const PLAN_REQUIREMENT_TABLE_ITEMS: TWithReactKey<IMasterPlanRequirementTableItem>[] = [
@@ -342,5 +344,30 @@ export const TASK_LIST_ITEMS: TWithReactKey<ITaskListItem>[] = [
         creationDate: '13.03.2023',
         confirmationEndDate: '13.03.2023',
         responsibleContractor: 'Константинопольский Константин',
+    },
+];
+
+export const TASK_AWAITING_DOCUMENT_ITEMS: TWithReactKey<ITaskAwaitingDocument>[] = [
+    {
+        key: 1,
+        documentName: 'Паспорт безопасности: Евразийский экономический союз (EAEU)',
+        documentType: 'Обязательный',
+        template: 'RU.77.01.34.015.E.002397.11.15.pdf',
+        comment: 'Комментарий',
+    },
+];
+
+export const TASK_UPLOADED_DOCUMENT_ITEMS: TWithReactKey<ITaskUploadedDocument>[] = [
+    {
+        key: 1,
+        documentType: 'Свидетельство о государственной регистрации',
+        documentMask: 'ЕАЭС RU C-CN.XXXX.A.XXXXX/XX',
+        status: 'Согласовано',
+        documentName: 'RU.77.01.34.015.E.002397.11.15.pdf',
+        partial: false,
+        uploadDate: '19.01.2021 10:56',
+        startDate: '19.01.2021 10:56',
+        endDate: '02.01.2020',
+        uploaderName: 'Сидоренкова Екатерина',
     },
 ];
