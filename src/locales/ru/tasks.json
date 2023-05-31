@@ -58,7 +58,7 @@
                 "QE": "QE",
                 "SQM": "SQM",
                 "taskNumber": "№",
-                "expectedDocuments": "Ожидаемые документы",
+                "awaitedDocuments": "Ожидаемые документы",
                 "taskCategory": "Категория задач",
                 "creationDate": "Дата создания",
                 "confirmationEndDate": "Дата окончания подтверждения",
@@ -109,7 +109,7 @@
         },
         "Documents": {
             "Title": "Документы",
-            "AwaitingDocuments": {
+            "AwaitedDocuments": {
                 "Title": "Ожидаемые документы",
                 "Field": {
                     "documentName": "Название разрешительного документа",

@@ -339,7 +339,7 @@ export const TASK_LIST_ITEMS: TWithReactKey<ITaskListItem>[] = [
         QE: 'Денисенко Мария',
         SQM: 'Иванов Иван',
         taskNumber: '10230358109883',
-        expectedDocuments: 'Паспорт безопасности',
+        awaitedDocuments: 'Паспорт безопасности',
         taskCategory: 'Сертификация - Сбор документов',
         creationDate: '13.03.2023',
         confirmationEndDate: '13.03.2023',

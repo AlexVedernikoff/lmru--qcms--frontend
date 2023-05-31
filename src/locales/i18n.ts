@@ -4,6 +4,7 @@ import products_ru from './ru/products.json';
 import models_ru from './ru/models.json';
 import providers_ru from './ru/providers.json';
 import tasks_ru from './ru/tasks.json';
+import tasks_en from './en/tasks.json';
 import sidebar_ru from './ru/sidebar.json';
 import dashboard_ru from './ru/dashboard.json';
 
@@ -12,9 +13,9 @@ const resources = {
         products: products_ru,
         models: models_ru,
         providers: providers_ru,
-        tasks: tasks_ru,
+        tasks: tasks_en,
         sidebar: sidebar_ru,
-        dashboard: dashboard_ru
+        dashboard: dashboard_ru,
     },
     ru: {
         products: products_ru,
@@ -22,7 +23,7 @@ const resources = {
         providers: providers_ru,
         tasks: tasks_ru,
         sidebar: sidebar_ru,
-        dashboard:  dashboard_ru
+        dashboard: dashboard_ru,
     },
 };
 

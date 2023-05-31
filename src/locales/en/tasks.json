@@ -1,0 +1,156 @@
+{
+    "Buttons": {
+        "Apply": "Apply",
+        "Search": "Search",
+        "Clear": "Clear",
+        "More": "More",
+        "Less": "Less",
+        "AddModel": "Add model",
+        "SelectAll": "Select all"
+    },
+    "Common": {
+        "Select": "Select",
+        "Run": "Run",
+        "Yes": "Yes",
+        "No": "No"
+    },
+    "Title": "Tasks",
+    "TaskList": {
+        "Filters": {
+            "productCode": "Product code",
+            "responsibleContractor": "Responsible type",
+            "QE": "QE",
+            "taskStatus": "Action status",
+            "providerName": "Supplier",
+            "contractor": "Provider",
+            "conclusion": "Conclusion",
+            "documentType": "Action №",
+            "taskNumber": "Задача №",
+            "taskType": "Action type",
+            "isUpdating": "Renewal",
+
+            "qualityStatus": "Conformity status",
+            "regularStatus": "Regulatory status",
+            "qualityModel": "qualityModel",
+            "characteristics": "Characteristic",
+            "characteristicValue": "Characteristic's value",
+            "gamma": "Gamma",
+            "fromProject": "From project",
+            "withProviderActiveLink": "With active supplier link",
+            "withoutTransfer": "Without transfer",
+            "containsSubstanceLimit": "With substance beyond limit",
+            "containsSubstance": "With substance",
+            "withoutQualityManager": "Without QE",
+            "searchByDate": "Search by date",
+            "dates": "Dates",
+            "country": "BU"
+        },
+        "Table": {
+            "Columns": {
+                "taskType": "Action type",
+                "taskStatus": "Action status",
+                "documents": "Uploaded documents",
+                "productCode": "Product code",
+                "productName": "Product name",
+                "providerName": "Supplier name",
+                "providerCode": "Код поставщика",
+                "qualityStatus": "Supplier code",
+                "QE": "QE",
+                "SQM": "SQM",
+                "taskNumber": "№",
+                "awaitedDocuments": "Awaited documents",
+                "taskCategory": "Action category",
+                "creationDate": "Creation date",
+                "confirmationEndDate": "Confirmation end date",
+                "responsibleContractor": "Responsible provider"
+            }
+        }
+    },
+    "TaskDetails": {
+        "Buttons": {
+            "Edit": "Edit",
+            "SubmitReview": "Submit to review"
+        },
+        "DetailsProvider": {
+            "Provider": "Supplier",
+            "ProviderStatus": "Supplier status",
+            "TargetBU": "Target BU"
+        },
+        "DetailsProduct": {
+            "Product": "Product",
+            "ProductCodeAdeo": "Product code ADEO",
+            "EAN": "EAN",
+            "QualityModel": "Quality model",
+            "QualityStatus": "Quality status",
+            "ADEORisk": "ADEO risk"
+        },
+        "DetailsQE": {
+            "QE": "QE",
+            "SQM": "SQM",
+            "Contractor": "Service provider",
+            "TypeApprover": "Type of approver",
+            "ApproverPlatform": "Approver's Platform",
+            "TaskStatus": "Action status"
+        },
+        "DetailsDates": {
+            "DateCreation": "Creation date",
+            "DateChange": "Date of change",
+            "ExpectedCompletionDate": "Expected completion date"
+        },
+        "DetailsComments": {
+            "PublicComments": "Public comments",
+            "Comments": "Comments"
+        }
+    },
+    "TaskTabs": {
+        "Buttons": {
+            "Reject": "Reject",
+            "Approve": "Approve"
+        },
+        "Documents": {
+            "Title": "Documents",
+            "AwaitedDocuments": {
+                "Title": "Awaiting documents",
+                "Field": {
+                    "documentName": "Document name",
+                    "documentType": "Document type",
+                    "template": "Template",
+                    "comment": "Comment"
+                }
+            },
+            "UploadedDocuments": {
+                "Title": "Uploaded documents",
+                "Field": {
+                    "documentType": "Document type",
+                    "documentMask": "Document mask",
+                    "status": "Document status",
+                    "documentName": "File name",
+                    "partial": "Party document",
+                    "uploadDate": "Upload date",
+                    "startDate": "Action start date",
+                    "endDate": "Action end date",
+                    "uploaderName": "Uploaded"
+                }
+            }
+        },
+        "Notifications": {
+            "Title": "Notifications",
+            "Date": "Date",
+            "Topic": "Topic",
+            "TemplateName": "Template name",
+            "Recipient": "Recipient",
+            "Text": "Text"
+        },
+        "Tasks": {
+            "Title": "Linked tasks",
+            "TaskNumber": "Action number",
+            "EAN": "EAN",
+            "ProviderLink": "Supplier link",
+            "MatrixId": "Идентификатор матрицы",
+            "DocumentStatus": "Document status",
+            "ShopCode": "Store code",
+            "Product": "Product",
+            "TaskStatus": "Action status"
+        }
+    }
+}
