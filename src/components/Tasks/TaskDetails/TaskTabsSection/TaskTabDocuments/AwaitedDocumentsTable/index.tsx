@@ -5,7 +5,7 @@ import {IDataType, getTableColumns} from './TableColumns';
 import CustomTable from '../../../../../Common/CustomTable';
 import {TASK_AWAITING_DOCUMENT_ITEMS} from '../../../../../../common/mocks';
 
-const AwaitingDocumentsTable: React.FC = () => {
+const AwaitedDocumentsTable: React.FC = () => {
     const {t} = useTranslation('tasks');
 
     const columns = useMemo<ColumnsType<IDataType>>(() => getTableColumns(t), [t]);
@@ -25,4 +25,4 @@ const AwaitingDocumentsTable: React.FC = () => {
     );
 };
 
-export default AwaitingDocumentsTable;
+export default AwaitedDocumentsTable;

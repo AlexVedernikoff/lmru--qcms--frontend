@@ -63,8 +63,8 @@ export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): Colu
         width: 240,
     },
     {
-        title: t('TaskList.Table.Columns.expectedDocuments'),
-        dataIndex: 'expectedDocuments',
+        title: t('TaskList.Table.Columns.awaitedDocuments'),
+        dataIndex: 'awaitedDocuments',
         width: 240,
     },
     {

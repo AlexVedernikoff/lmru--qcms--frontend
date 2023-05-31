@@ -14,7 +14,7 @@ export interface ITaskListItem {
     QE: string;
     SQM: string;
     taskNumber: string;
-    expectedDocuments: string;
+    awaitedDocuments: string;
     taskCategory: string;
     creationDate: string;
     confirmationEndDate: string;
