@@ -1,6 +1,6 @@
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {ITaskTableNotification} from '../../../../../../common/models';
+import {ITaskTableNotification} from '../../../../../../common/clientModels';
 
 export interface IDataType extends ITaskTableNotification {
     key: React.Key;

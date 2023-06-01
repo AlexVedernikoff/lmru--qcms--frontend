@@ -1,6 +1,6 @@
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {IProviderContactsTableItem} from '../../../../../../common/models';
+import {IProviderContactsTableItem} from '../../../../../../common/clientModels';
 
 export interface IDataType extends IProviderContactsTableItem {
     key: React.Key;
@@ -18,22 +18,22 @@ export const getContactsTableColumns = (t: TFunction<'providers', undefined, 'pr
         width: 346,
     },
     {
-        title:t('ProviderDetails.ProviderTabs.Contacts.email'),
+        title: t('ProviderDetails.ProviderTabs.Contacts.email'),
         dataIndex: 'email',
         width: 160,
     },
     {
-        title:t('ProviderDetails.ProviderTabs.Contacts.telephone'),
+        title: t('ProviderDetails.ProviderTabs.Contacts.telephone'),
         dataIndex: 'telephone',
         width: 160,
     },
     {
-        title:t('ProviderDetails.ProviderTabs.Contacts.mobile'),
+        title: t('ProviderDetails.ProviderTabs.Contacts.mobile'),
         dataIndex: 'mobile',
         width: 160,
-    },    
+    },
     {
-        title:t('ProviderDetails.ProviderTabs.Contacts.type'),
+        title: t('ProviderDetails.ProviderTabs.Contacts.type'),
         dataIndex: 'type',
         width: 160,
     },

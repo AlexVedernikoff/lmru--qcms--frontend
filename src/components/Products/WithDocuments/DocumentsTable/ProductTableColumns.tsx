@@ -1,8 +1,8 @@
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {IProviderTableWithDocuments} from '../../../../common/models';
+import {IProviderTableWithDocuments} from '../../../../common/clientModels';
 import DownloadIcon from '../../../Icons/DownloadIcon';
-import {Grid, IconButton } from 'fronton-react';
+import {Grid, IconButton} from 'fronton-react';
 import LinkIcon from '../../../Icons/LinkIcon';
 
 export interface IDataType extends IProviderTableWithDocuments {
@@ -14,10 +14,12 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
         title: t('WithDocuments.Table.DocumentNumber'),
         dataIndex: 'documentNumber',
         render: (text: string = '') => (
-          <Grid columns="2fr 0.5fr">
-              {text}
-              <IconButton label='Download'><DownloadIcon /> </IconButton>
-          </Grid>
+            <Grid columns="2fr 0.5fr">
+                {text}
+                <IconButton label="Download">
+                    <DownloadIcon />{' '}
+                </IconButton>
+            </Grid>
         ),
         width: 270,
     },
@@ -30,10 +32,12 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
         title: t('WithDocuments.Table.ProductCode'),
         dataIndex: 'productCode',
         render: (text: string = '') => (
-          <Grid columns="2fr 0.5fr">
-              {text}
-              <IconButton label='Download'><LinkIcon /> </IconButton>
-          </Grid>
+            <Grid columns="2fr 0.5fr">
+                {text}
+                <IconButton label="Download">
+                    <LinkIcon />{' '}
+                </IconButton>
+            </Grid>
         ),
         width: 124,
     },
@@ -68,7 +72,7 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
         width: 245,
     },
     {
-        title:t('WithDocuments.Table.ConfirmationStatus'),
+        title: t('WithDocuments.Table.ConfirmationStatus'),
         dataIndex: 'confirmationStatus',
         width: 245,
     },

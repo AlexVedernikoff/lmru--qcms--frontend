@@ -1,6 +1,6 @@
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {IProductTableWithoutModelsItem} from '../../../../common/models';
+import {IProductTableWithoutModelsItem} from '../../../../common/clientModels';
 
 export interface IDataType extends IProductTableWithoutModelsItem {
     key: React.Key;

@@ -1,7 +1,7 @@
 import {Dropdown, DropdownItem, Grid, IconButton} from 'fronton-react';
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {ITaskUploadedDocument} from '../../../../../../common/models';
+import {ITaskUploadedDocument} from '../../../../../../common/clientModels';
 import {CustomSwitch} from '../../../../../Common/Switch/CustomSwitch';
 import {TrashIcon} from '@fronton/icons-react';
 
