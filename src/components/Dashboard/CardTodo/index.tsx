@@ -1,7 +1,7 @@
 import styles from './styles.module.css';
 import AddTodoIcon from '../../Icons/AddTodoIcon';
 import {useTranslation} from 'react-i18next';
-import {IItemListTodo} from '../../../common/models';
+import {IItemListTodo} from '../../../common/clientModels';
 
 interface Props {
     items: IItemListTodo[];

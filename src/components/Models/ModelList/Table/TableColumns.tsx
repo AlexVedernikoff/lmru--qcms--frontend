@@ -1,7 +1,7 @@
 import {Grid, Label, Typography} from 'fronton-react';
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {IModelTableItem} from '../../../../common/models';
+import {IModelTableItem} from '../../../../common/clientModels';
 import NomenclatureRow from '../../Common/NomenclatureRow';
 
 export interface IDataType extends IModelTableItem {

@@ -1,6 +1,6 @@
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {IProviderTableItem} from '../../../../common/models';
+import {IProviderTableItem} from '../../../../common/clientModels';
 
 export interface IDataType extends IProviderTableItem {
     key: React.Key;

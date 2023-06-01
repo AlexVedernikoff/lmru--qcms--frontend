@@ -1,6 +1,6 @@
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {ITaskListItem} from '../../../../common/models';
+import {ITaskListItem} from '../../../../common/clientModels';
 
 export interface IDataType extends ITaskListItem {
     key: React.Key;

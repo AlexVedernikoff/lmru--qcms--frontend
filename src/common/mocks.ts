@@ -15,7 +15,7 @@ import {
     ITaskListItem,
     ITaskAwaitingDocument,
     ITaskUploadedDocument,
-} from './models';
+} from './clientModels';
 
 export const PLAN_REQUIREMENT_TABLE_ITEMS: TWithReactKey<IMasterPlanRequirementTableItem>[] = [
     {
