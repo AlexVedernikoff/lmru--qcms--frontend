@@ -1,6 +1,6 @@
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {ITaskAwaitingDocument} from '../../../../../../common/models';
+import {ITaskAwaitingDocument} from '../../../../../../common/clientModels';
 
 export interface IDataType extends ITaskAwaitingDocument {
     key: React.Key;

@@ -1,6 +1,6 @@
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {ITaskTableTasks} from '../../../../../../common/models';
+import {ITaskTableTasks} from '../../../../../../common/clientModels';
 import {Grid} from 'fronton-react';
 
 export interface IDataType extends ITaskTableTasks {

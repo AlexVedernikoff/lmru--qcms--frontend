@@ -1,6 +1,6 @@
 import {Grid, Typography, Caption} from 'fronton-react';
 import {ChevronRightIcon} from '@fronton/icons-react';
-import {IModelTableItem} from '../../../common/models';
+import {IModelTableItem} from '../../../common/clientModels';
 
 interface IProps {
     data: IModelTableItem['nomenclature'];

@@ -1,6 +1,6 @@
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {IProviderCommandTableItem} from '../../../../../../common/models';
+import {IProviderCommandTableItem} from '../../../../../../common/clientModels';
 
 export interface IDataType extends IProviderCommandTableItem {
     key: React.Key;
@@ -24,12 +24,12 @@ export const getCommandTableColumns = (t: TFunction<'providers', undefined, 'pro
         width: 346,
     },
     {
-        title:t('ProviderDetails.ProviderTabs.ProjectCommand.email'),
+        title: t('ProviderDetails.ProviderTabs.ProjectCommand.email'),
         dataIndex: 'email',
         width: 160,
     },
     {
-        title:t('ProviderDetails.ProviderTabs.ProjectCommand.activityTypeCode'),
+        title: t('ProviderDetails.ProviderTabs.ProjectCommand.activityTypeCode'),
         dataIndex: 'activityTypeCode',
         width: 160,
     },

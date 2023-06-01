@@ -2,7 +2,7 @@ import {Typography, RegularButton} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {IProductTableTransferItem} from '../../../../common/models';
+import {IProductTableTransferItem} from '../../../../common/clientModels';
 import styles from '../styles.module.css';
 
 export interface IDataType extends IProductTableTransferItem {

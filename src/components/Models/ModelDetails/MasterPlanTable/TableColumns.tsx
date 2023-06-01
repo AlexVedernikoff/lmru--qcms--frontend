@@ -1,7 +1,7 @@
 import {Dropdown, DropdownItem, Grid, IconButton} from 'fronton-react';
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {IMasterPlanRequirementTableItem} from '../../../../common/models';
+import {IMasterPlanRequirementTableItem} from '../../../../common/clientModels';
 import {FileSearchIcon, UploadIcon} from '@fronton/icons-react';
 
 export interface IDataType extends IMasterPlanRequirementTableItem {
