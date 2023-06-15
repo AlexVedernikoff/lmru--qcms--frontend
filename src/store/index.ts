@@ -1,11 +1,14 @@
 import {configureStore, ThunkAction, Action, combineReducers} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {setupListeners} from '@reduxjs/toolkit/dist/query';
 import {counterSlice} from './slices/exampleSlice';
 import {commonSlice} from './slices/common';
+import modelsApi from '../components/Models/modelsApi';
 
 const rootReducer = {
     common: commonSlice.reducer,
     counter: counterSlice.reducer,
+    [modelsApi.reducerPath]: modelsApi.reducer,
 };
 
 const createReducer = (injectedReducers = {}) =>
@@ -17,10 +20,12 @@ const createReducer = (injectedReducers = {}) =>
 const makeStore = () =>
     configureStore({
         reducer: createReducer(),
+        middleware: getDefaultMiddleware => getDefaultMiddleware().concat(modelsApi.middleware),
         devTools: process.env.NODE_ENV === 'development',
     });
 
 export const store = makeStore();
+setupListeners(store.dispatch);
 
 export type TAppDispatch = typeof store.dispatch;
 export type TRootState = ReturnType<typeof store.getState>;
