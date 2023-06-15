@@ -1,16 +1,25 @@
 import {useCallback, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
-import {RegularButton} from 'fronton-react';
+import {skipToken} from '@reduxjs/toolkit/dist/query';
+import {Grid, Label, RegularButton, Typography} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {MODEL_TABLE_ITEMS} from '../../../../common/mocks';
 import {MODELS_ROUTES} from '../../../../common/consts';
-import {IDataType, getTableColumns} from './TableColumns';
 import CustomTable from '../../../Common/CustomTable';
+import modelsApi from '../../modelsApi';
+import NomenclatureRow from '../../Common/NomenclatureRow';
+import {IModelItem} from '../../../../common/types/models';
+import {TWithReactKey} from '../../../../common/clientModels';
 
-const ModelsTable: React.FC = () => {
+type TDataType = TWithReactKey<IModelItem>;
+
+interface IProps {
+    onPageChange: (page: number, size: number) => void;
+}
+
+const ModelsTable: React.FC<IProps> = ({onPageChange}) => {
     const navigate = useNavigate();
     const {t} = useTranslation('models');
 
@@ -24,15 +33,15 @@ const ModelsTable: React.FC = () => {
         [navigate]
     );
 
-    const columns = useMemo<ColumnsType<IDataType>>(
+    const columns = useMemo<ColumnsType<TDataType>>(
         () => [
             {
                 title: '',
                 dataIndex: undefined,
                 width: 64,
-                render: (_value: string, record: IDataType) => (
+                render: (_value: string, record: TDataType) => (
                     <RegularButton
-                        data-id={record.modelCode}
+                        data-id={record.id}
                         onClick={handleDetailsOpen}
                         href=""
                         rel=""
@@ -45,23 +54,76 @@ const ModelsTable: React.FC = () => {
                 ),
                 fixed: 'left',
             },
-            ...getTableColumns(t),
+            {
+                title: t('ModelList.Table.Columns.modelStatus'),
+                dataIndex: 'qualityModelStatus',
+                render: (data: TDataType['qualityModelStatus']) => <div>{data}</div>,
+                width: 246,
+            },
+            {
+                title: t('ModelList.Table.Columns.modelCode'),
+                dataIndex: 'id',
+                render: (data: TDataType['id']) => <div>{data}</div>,
+                width: 246,
+            },
+            {
+                title: t('ModelList.Table.Columns.qualityModel'),
+                dataIndex: 'qualityModelLabel',
+                render: (data: TDataType['qualityModelLabel']) => (
+                    <Typography variant="m" size="body_short">
+                        {data}
+                    </Typography>
+                ),
+                width: 246,
+            },
+            {
+                title: t('ModelList.Table.Columns.QE'),
+                dataIndex: 'QE',
+                render: (data: TDataType['assignedApprovers'] = [], record) => (
+                    <Grid>
+                        {data.map((d, i) => (
+                            <Grid key={i} columns="36px 1fr" columnGap="12px" alignItems="center">
+                                <Label background="success-light">{record.calculatedRisk}</Label>
+                                <Typography variant="s" size="body_long">
+                                    {d.userId}
+                                </Typography>
+                            </Grid>
+                        ))}
+                    </Grid>
+                ),
+                width: 246,
+            },
+            {
+                title: t('ModelList.Table.Columns.nomenclature'),
+                dataIndex: 'nomenclature',
+                render: (data: TDataType['productModelNomenclatureModelCode'] = '') => <NomenclatureRow code={data} />,
+                width: 500,
+            },
+            {
+                title: t('ModelList.Table.Columns.latestChange'),
+                dataIndex: 'latestChange',
+                render: (data: TDataType['lastUpdateInfomation']) => <div>{data.updatedBy}</div>,
+                width: 246,
+            },
+            {
+                title: t('ModelList.Table.Columns.changeDate'),
+                dataIndex: 'changeDate',
+                render: (data: TDataType['lastUpdateInfomation']) => <div>{data.updatedAt}</div>,
+                width: 246,
+            },
         ],
         [handleDetailsOpen, t]
     );
 
-    const data = useMemo<IDataType[]>(() => MODEL_TABLE_ITEMS, []);
+    const {data} = modelsApi.endpoints.getModels.useQueryState(skipToken);
+    const tableData = useMemo<TDataType[]>(() => (data?.content || []).map((d, i) => ({...d, key: i})), [data]);
 
-    const rowSelection = useMemo<TableRowSelection<IDataType>>(
+    const rowSelection = useMemo<TableRowSelection<TDataType>>(
         () => ({
             type: 'checkbox',
-            onChange: (selectedRowKeys: React.Key[], selectedRows: IDataType[]) => {
+            onChange: (selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             },
-            // getCheckboxProps: (record: IDataType) => ({
-            //     disabled: record.qualityStatus === '2',
-            //     name: record.qualityStatus,
-            // }),
             fixed: 'left',
         }),
         []
@@ -71,12 +133,15 @@ const ModelsTable: React.FC = () => {
         <CustomTable
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={data}
+            dataSource={tableData}
             scroll={{x: 400}}
             tableLayout="fixed"
             size="small"
             bordered
-            pagination={{}}
+            pagination={{
+                ...data?.pageable,
+                onChange: onPageChange,
+            }}
         />
     );
 };
