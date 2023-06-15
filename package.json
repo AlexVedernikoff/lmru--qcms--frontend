@@ -8,13 +8,13 @@
         "antd": "^5.6.1",
         "date-fns": "^2.30.0",
         "fronton-react": "^1.6.13",
-        "i18next": "^22.5.1",
+        "i18next": "^23.0.1",
         "lodash": "^4.17.21",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-i18next": "^12.3.1",
+        "react-i18next": "^13.0.0",
         "react-redux": "^8.1.0",
-        "react-router-dom": "^6.12.1"
+        "react-router-dom": "^6.13.0"
     },
     "devDependencies": {
         "@types/node": "^20.3.1",
@@ -32,19 +32,6 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "eject": "react-scripts eject"
-    },
-    "prettier": {
-        "arrowParens": "avoid",
-        "bracketSpacing": false,
-        "endOfLine": "lf",
-        "jsxBracketSameLine": false,
-        "jsxSingleQuote": false,
-        "printWidth": 120,
-        "proseWrap": "preserve",
-        "semi": true,
-        "singleQuote": true,
-        "tabWidth": 4,
-        "trailingComma": "es5"
     },
     "eslintConfig": {
         "extends": [
