@@ -8,11 +8,11 @@
         "antd": "^5.6.1",
         "date-fns": "^2.30.0",
         "fronton-react": "^1.6.13",
-        "i18next": "^23.0.1",
+        "i18next": "^22.5.1",
         "lodash": "^4.17.21",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-i18next": "^13.0.0",
+        "react-i18next": "^12.3.1",
         "react-redux": "^8.1.0",
         "react-router-dom": "^6.13.0"
     },
