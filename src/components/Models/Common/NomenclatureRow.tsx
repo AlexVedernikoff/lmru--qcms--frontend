@@ -9,7 +9,7 @@ interface IProps {
 const NomenclatureRow: React.FC<IProps> = ({code}) => {
     const {data} = modelsApi.useGetModelNomenclatureQuery({securityCode: 'security_code', application: code});
 
-    if (!data) {
+    if (!data?.departments?.length) {
         return <div />;
     }
 
