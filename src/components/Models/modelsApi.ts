@@ -3,7 +3,7 @@ import {
     IModelNomenclatureParams,
     IModelsParams,
     IModelsResponse,
-    IModelNomenclatureResponse,
+    TModelNomenclatureResponse,
     IModelDetailsResponse,
     IModelDetailsParams,
 } from '../../common/types/models';
@@ -30,7 +30,7 @@ const modelsApi = createApi({
                 },
             }),
         }),
-        getModelNomenclature: builder.query<IModelNomenclatureResponse, IModelNomenclatureParams>({
+        getModelNomenclature: builder.query<TModelNomenclatureResponse, IModelNomenclatureParams>({
             query: params => ({
                 method: 'GET',
                 url: serviceUrl.getModelNomenclature,

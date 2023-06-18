@@ -91,9 +91,7 @@ interface INomenclatureDepartment extends INomenclatureBasic {
     })[];
 }
 
-export interface IModelNomenclatureResponse {
-    departments: INomenclatureDepartment[];
-}
+export type TModelNomenclatureResponse = INomenclatureDepartment[];
 
 export interface IModelNomenclatureParams {
     securityCode: string;
@@ -259,13 +257,4 @@ export interface IModelDetailsResponse {
         updatedAt: string; // required - дата изменения модели качества
         updatedBy: string; // required - ldap или идентификатор системы, обновивший модель качества
     };
-}
-
-export interface IErrorBasic {
-    code: number;
-    message: string;
-}
-
-export interface IErrorResponse {
-    errors: IErrorBasic[];
 }

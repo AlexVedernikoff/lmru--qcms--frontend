@@ -37,7 +37,7 @@ const ModelList: React.FC = () => {
         productModelNomenclatureModelCode: [],
     });
 
-    const {isLoading} = modelsApi.useGetModelsQuery({
+    const {data, isLoading} = modelsApi.useGetModelsQuery({
         header: {
             securityCode: 'security_code',
         },
@@ -47,10 +47,6 @@ const ModelList: React.FC = () => {
             searchBy,
         },
     });
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
 
     const handleFiltersSubmit = (filters: IFilterFormState) => {
         setSearchBy(p => ({
@@ -71,7 +67,7 @@ const ModelList: React.FC = () => {
             </Grid>
 
             <Grid rowGap={16} className={styles.panel}>
-                <ModelsTable onPageChange={handlePageChange} />
+                <ModelsTable onPageChange={handlePageChange} tableData={data!} isLoading={isLoading} />
             </Grid>
         </Grid>
     );

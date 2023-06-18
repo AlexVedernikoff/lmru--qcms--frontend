@@ -13,8 +13,8 @@ import ModelDetailsRiskMap from './ModelDetailsRiskMap';
 import modelsApi from '../modelsApi';
 
 enum ETabs {
-    masterPlan = 0,
-    riskMap = 1,
+    masterPlan,
+    riskMap,
 }
 
 const ModelDetails: React.FC = () => {
