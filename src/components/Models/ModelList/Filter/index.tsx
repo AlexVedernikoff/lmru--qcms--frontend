@@ -12,6 +12,7 @@ export interface IFilterFormState {
     modelNameOrCode?: string;
     QE?: string;
     productModel?: string;
+    personLevelRiskForCorrectUsage?: string;
 }
 
 interface IProps {

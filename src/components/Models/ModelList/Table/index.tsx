@@ -155,7 +155,9 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
             size="small"
             bordered
             pagination={{
-                ...tableData?.pageable,
+                pageSize: tableData?.pageable?.pageSize,
+                total: tableData?.pageable?.totalElements,
+                current: tableData?.pageable?.pageIndex + 1,
                 onChange: onPageChange,
             }}
         />

@@ -37,9 +37,11 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                     value={undefined}
                     onSelect={handleSelect('latestChanges')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    <DropdownItem text="1" value={'1'} />
+                    <DropdownItem text="2" value={'2'} />
+                    <DropdownItem text="3" value={'3'} />
+                    <DropdownItem text="4" value={'4'} />
+                    <DropdownItem text="5" value={'5'} />
                 </Dropdown>
 
                 <Grid rowGap={18} columns="1fr">
@@ -58,9 +60,11 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                     value={undefined}
                     onSelect={handleSelect('riskByProductUsageNegative')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    <DropdownItem text="1" value={'1'} />
+                    <DropdownItem text="2" value={'2'} />
+                    <DropdownItem text="3" value={'3'} />
+                    <DropdownItem text="4" value={'4'} />
+                    <DropdownItem text="5" value={'5'} />
                 </Dropdown>
 
                 <Dropdown
@@ -71,9 +75,11 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                     value={undefined}
                     onSelect={handleSelect('riskEnvironment')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    <DropdownItem text="1" value={'1'} />
+                    <DropdownItem text="2" value={'2'} />
+                    <DropdownItem text="3" value={'3'} />
+                    <DropdownItem text="4" value={'4'} />
+                    <DropdownItem text="5" value={'5'} />
                 </Dropdown>
 
                 <Dropdown
@@ -84,9 +90,11 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                     value={undefined}
                     onSelect={handleSelect('riskByProductUsagePositive')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    <DropdownItem text="1" value={'1'} />
+                    <DropdownItem text="2" value={'2'} />
+                    <DropdownItem text="3" value={'3'} />
+                    <DropdownItem text="4" value={'4'} />
+                    <DropdownItem text="5" value={'5'} />
                 </Dropdown>
             </Grid>
 
@@ -112,9 +120,11 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                     value={undefined}
                     onSelect={handleSelect('riskProperty')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    <DropdownItem text="1" value={'1'} />
+                    <DropdownItem text="2" value={'2'} />
+                    <DropdownItem text="3" value={'3'} />
+                    <DropdownItem text="4" value={'4'} />
+                    <DropdownItem text="5" value={'5'} />
                 </Dropdown>
 
                 <Grid rowGap={24} columnGap={24} columns="1fr 1fr" alignItems="baseline">
@@ -126,9 +136,11 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                         value={undefined}
                         onSelect={handleSelect('riskLegal')}
                     >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text="1" value={'1'} />
+                        <DropdownItem text="2" value={'2'} />
+                        <DropdownItem text="3" value={'3'} />
+                        <DropdownItem text="4" value={'4'} />
+                        <DropdownItem text="5" value={'5'} />
                     </Dropdown>
 
                     <Dropdown
@@ -139,9 +151,11 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                         value={undefined}
                         onSelect={handleSelect('riskHealth')}
                     >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text="1" value={'1'} />
+                        <DropdownItem text="2" value={'2'} />
+                        <DropdownItem text="3" value={'3'} />
+                        <DropdownItem text="4" value={'4'} />
+                        <DropdownItem text="5" value={'5'} />
                     </Dropdown>
                 </Grid>
             </Grid>

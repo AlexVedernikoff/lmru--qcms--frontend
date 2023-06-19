@@ -1,5 +1,5 @@
 import {useRef, useState, useEffect} from 'react';
-import {Table, TableProps} from 'antd';
+import {Table, TablePaginationConfig, TableProps} from 'antd';
 import {Counter, Grid, Pagination, PaginationItem} from 'fronton-react';
 import {ChevronLeftIcon, ChevronRightIcon} from '@fronton/icons-react';
 import './Table.css';
@@ -7,9 +7,6 @@ import './Table.css';
 function CustomTable<T extends object>(props: TableProps<T>) {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [containerSize, setContainerSize] = useState(500);
-
-    const [page, setPage] = useState(1);
-    const [size, setSize] = useState(10);
 
     const updateContainerSize = () => {
         if (containerRef.current) {
@@ -27,8 +24,9 @@ function CustomTable<T extends object>(props: TableProps<T>) {
 
     const handleChangeListSize = (_e: React.ChangeEvent<HTMLInputElement>, value: string) => {
         const v = parseInt(value, 10);
-        if (v && v !== size) {
-            setSize(v);
+        const {pageSize, current, onChange} = (props.pagination as TablePaginationConfig) || {};
+        if (v && v !== pageSize) {
+            onChange?.(current!, v);
         }
     };
 
@@ -36,8 +34,10 @@ function CustomTable<T extends object>(props: TableProps<T>) {
         const {item} = e.currentTarget.dataset;
         const newPage = item ? parseInt(item, 10) : undefined;
 
-        if (newPage && newPage !== page) {
-            setPage(newPage);
+        const {pageSize, current, onChange} = (props.pagination as TablePaginationConfig) || {};
+
+        if (newPage && newPage !== current) {
+            onChange?.(newPage, pageSize!);
         }
     };
 
@@ -51,19 +51,19 @@ function CustomTable<T extends object>(props: TableProps<T>) {
 
             {!!props.pagination && (
                 <Grid columns="1fr 1fr 1fr">
-                    <Counter onChange={handleChangeListSize} value={size.toString()} />
+                    <Counter onChange={handleChangeListSize} value={(props.pagination?.pageSize || 1).toString()} />
                     <span />
                     <Grid columns="1fr 1fr">
                         <span />
                         <Pagination
-                            currentPage={page}
+                            currentPage={props.pagination?.current!}
                             item={item => (
                                 <PaginationItem onClick={handleChangePage} data-item={item}>
                                     {item}
                                 </PaginationItem>
                             )}
-                            itemsCount={100}
-                            itemsPerPage={size}
+                            itemsCount={props.pagination?.total || 1}
+                            itemsPerPage={props.pagination?.pageSize || 1}
                             itemPrev={item => (
                                 <PaginationItem wrap onClick={handleChangePage} data-item={item}>
                                     <ChevronLeftIcon />

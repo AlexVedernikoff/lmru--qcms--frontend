@@ -54,11 +54,12 @@ const ModelList: React.FC = () => {
             qualityModelLabel: filters.qualityModel,
             productModelNomenclatureModelCode: filters.modelNameOrCode ? [filters.modelNameOrCode] : [],
             assignedApprovers: filters.QE ? [filters.QE] : [],
+            // personLevelRiskForCorrectUsage: filters.personLevelRiskForCorrectUsage,
         }));
     };
 
     const handlePageChange = (pageIndex: number, pageSize: number) => {
-        setPage({pageIndex, pageSize});
+        setPage({pageIndex: pageIndex - 1, pageSize});
     };
 
     return (
