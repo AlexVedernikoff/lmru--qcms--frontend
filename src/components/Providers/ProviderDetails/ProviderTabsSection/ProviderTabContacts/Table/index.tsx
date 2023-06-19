@@ -3,29 +3,37 @@ import {useTranslation} from 'react-i18next';
 import {ColumnsType} from 'antd/es/table';
 import {IDataType, getContactsTableColumns} from './TableColumns';
 import CustomTable from '../../../../../Common/CustomTable';
-import { PROVIDER_CONTACTS_TABLE_ITEMS } from '../../../../../../common/mocks';
+import {PROVIDER_CONTACTS_TABLE_ITEMS} from '../../../../../../common/mocks';
+import {useGetSupplierDetsQuery} from '../../../../../../api/getSupplierDetails';
+import {ISupplierDetailsResponse} from '../../../../../../common/types/supplierDetails';
 
 const ContactsTable: React.FC = () => {
+    const supplierId = 1;
+    const {data: supplierDetails = [], isLoading: isLoadingSupplierDetails} = useGetSupplierDetsQuery(supplierId);
+    const {supplierContacts} = supplierDetails as ISupplierDetailsResponse;
+    const data: IDataType[] = supplierContacts
+        ? supplierContacts.map(el => {
+              const {id, surname, name, emailAddress, phoneNumber, mobilePhoneNumber, type} = el;
+              return {
+                  key: id,
+                  surname,
+                  name,
+                  email: emailAddress,
+                  telephone: phoneNumber,
+                  mobile: mobilePhoneNumber,
+                  type,
+              };
+          })
+        : [];
+
     const {t} = useTranslation('providers');
 
-    const columns = useMemo<ColumnsType<IDataType>>(
-        () => [
-            ...getContactsTableColumns(t),
-        ],
-        [t]
-    );
+    const columns = useMemo<ColumnsType<IDataType>>(() => [...getContactsTableColumns(t)], [t]);
 
-    const data = useMemo<IDataType[]>(() => PROVIDER_CONTACTS_TABLE_ITEMS, []);
+    // const data = useMemo<IDataType[]>(() => PROVIDER_CONTACTS_TABLE_ITEMS, []);
 
     return (
-        <CustomTable
-            columns={columns}
-            dataSource={data}
-            scroll={{x: 400}}
-            tableLayout="fixed"
-            size="small"
-            bordered
-        />
+        <CustomTable columns={columns} dataSource={data} scroll={{x: 400}} tableLayout="fixed" size="small" bordered />
     );
 };
 
