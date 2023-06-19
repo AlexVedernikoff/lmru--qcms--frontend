@@ -5,12 +5,14 @@ import {counterSlice} from './slices/exampleSlice';
 import {commonSlice} from './slices/common';
 import modelsApi from '../components/Models/modelsApi';
 import {providersApi} from '../components/Providers/services';
+import {getSupplierDetails} from '../api/getSupplierDetails';
 
 const rootReducer = {
     common: commonSlice.reducer,
     counter: counterSlice.reducer,
     [modelsApi.reducerPath]: modelsApi.reducer,
     [providersApi.reducerPath]: providersApi.reducer,
+    [getSupplierDetails.reducerPath]: getSupplierDetails.reducer,
 };
 
 const createReducer = (injectedReducers = {}) =>
@@ -23,7 +25,9 @@ const makeStore = () =>
     configureStore({
         reducer: createReducer(),
         middleware: getDefaultMiddleware =>
-            getDefaultMiddleware().concat(modelsApi.middleware, providersApi.middleware),
+            getDefaultMiddleware()
+                .concat(modelsApi.middleware, providersApi.middleware)
+                .concat(getSupplierDetails.middleware),
         devTools: process.env.NODE_ENV === 'development',
     });
 
