@@ -170,19 +170,19 @@ export const PROVIDER_TABLE_ITEMS: TWithReactKey<IProviderTableItem>[] = [
 export const PROVIDER_COMMAND_TABLE_ITEMS: TWithReactKey<IProviderCommandTableItem>[] = [
     {
         key: 1,
-        userServiceNumber: 1003009004,
+        userServiceNumber: '1003009004',
         surname: 'Константинопольский',
         name: 'Константин',
         email: 'info@Leroy.ru',
-        activityTypeCode: 3458923746,
+        activityTypeCode: '3458923746',
     },
     {
         key: 2,
-        userServiceNumber: 209004,
+        userServiceNumber: '209004',
         surname: 'Петров',
         name: 'Сергей',
         email: 'info@Leroy1.ru',
-        activityTypeCode: 56658900046,
+        activityTypeCode: '56658900046',
     },
 ];
 

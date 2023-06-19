@@ -4,11 +4,13 @@ import {setupListeners} from '@reduxjs/toolkit/dist/query';
 import {counterSlice} from './slices/exampleSlice';
 import {commonSlice} from './slices/common';
 import modelsApi from '../components/Models/modelsApi';
+import { getSupplierDetails } from "../api/getSupplierDetails";
 
 const rootReducer = {
     common: commonSlice.reducer,
     counter: counterSlice.reducer,
     [modelsApi.reducerPath]: modelsApi.reducer,
+    [getSupplierDetails.reducerPath]: getSupplierDetails.reducer
 };
 
 const createReducer = (injectedReducers = {}) =>
@@ -20,7 +22,9 @@ const createReducer = (injectedReducers = {}) =>
 const makeStore = () =>
     configureStore({
         reducer: createReducer(),
-        middleware: getDefaultMiddleware => getDefaultMiddleware().concat(modelsApi.middleware),
+        middleware: getDefaultMiddleware => getDefaultMiddleware()
+        .concat(modelsApi.middleware)
+        .concat(getSupplierDetails.middleware),
         devTools: process.env.NODE_ENV === 'development',
     });
 
