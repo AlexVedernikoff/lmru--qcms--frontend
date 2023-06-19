@@ -53,6 +53,7 @@ const ModelList: React.FC = () => {
             ...p,
             qualityModelLabel: filters.qualityModel,
             productModelNomenclatureModelCode: filters.modelNameOrCode ? [filters.modelNameOrCode] : [],
+            assignedApprovers: filters.QE ? [filters.QE] : [],
         }));
     };
 

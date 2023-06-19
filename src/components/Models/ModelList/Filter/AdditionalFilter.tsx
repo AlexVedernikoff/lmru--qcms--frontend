@@ -25,9 +25,8 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                     value={undefined}
                     onSelect={handleSelect('withoutPlan')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    <DropdownItem text={t('Common.Yes')} value={'YES'} />
+                    <DropdownItem text={t('Common.No')} value={'NO'} />
                 </Dropdown>
 
                 <Dropdown

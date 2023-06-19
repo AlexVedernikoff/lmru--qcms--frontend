@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react';
+import {Grid, Input, RegularButton} from 'fronton-react';
 import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
 import AdditionalFilter from './AdditionalFilter';
 import styles from '../../../Common.module.css';
@@ -30,11 +30,7 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
-        setFormState(p => ({...p, [e.currentTarget.name]: value}));
-    };
-
-    const handleSelect = (name: string) => (value: string | null) => {
-        setFormState(p => ({...p, [name]: value!}));
+        setFormState(p => ({...p, [e.target.name]: value}));
     };
 
     const handleClear: React.MouseEventHandler<HTMLButtonElement> = _e => {
@@ -71,18 +67,15 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
                 </Grid>
 
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
+                    <Input
+                        inputSize="m"
+                        autoComplete="off"
                         label={t('ModelList.Filters.QE')}
+                        name={'QE'}
+                        placeholder=""
                         value={formState.QE}
-                        onSelect={handleSelect('QE')}
-                    >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                    </Dropdown>
+                        onChange={handleInputChange}
+                    />
                 </Grid>
 
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="14px">
