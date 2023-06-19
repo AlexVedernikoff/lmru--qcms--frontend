@@ -13,6 +13,19 @@ export interface IFilterFormState {
     QE?: string;
     productModel?: string;
     personLevelRiskForCorrectUsage?: string;
+    personLevelRiskForNonCorrectUsage?: string;
+    productRiskLevel?: string;
+    sustainabilityRisk?: string;
+    regulatoryRisk?: string;
+    calculatedRisk?: string;
+    healthRisk?: string;
+    linkedToNomenclature?: boolean;
+    linkedToEngineer?: boolean;
+    forMixtures?: boolean;
+    isVerificationRequired?: boolean;
+    hasManyProducts?: boolean;
+    withoutPlan?: string;
+    latestChanges?: string;
 }
 
 interface IProps {

@@ -53,8 +53,24 @@ const ModelList: React.FC = () => {
             ...p,
             qualityModelLabel: filters.qualityModel,
             productModelNomenclatureModelCode: filters.modelNameOrCode ? [filters.modelNameOrCode] : [],
+            productModelNomenclatureDepartmentCode: [],
+            productModelNomenclatureSubDepartmentCode: undefined,
+            productModelNomeclatureConsolidationCode: undefined,
             assignedApprovers: filters.QE ? [filters.QE] : [],
-            // personLevelRiskForCorrectUsage: filters.personLevelRiskForCorrectUsage,
+            personLevelRiskForCorrectUsage: filters.personLevelRiskForCorrectUsage
+                ? parseInt(filters.personLevelRiskForCorrectUsage, 10)
+                : undefined,
+            personLevelRiskForNonCorrectUsage: filters.personLevelRiskForNonCorrectUsage
+                ? parseInt(filters.personLevelRiskForNonCorrectUsage, 10)
+                : undefined,
+            healthRisk: filters.healthRisk ? parseInt(filters.healthRisk, 10) : undefined,
+            calculatedRisk: filters.calculatedRisk,
+            // linkedToNomenclature: false,
+            // linkedToEngineer: false,
+            forMixtures: filters.forMixtures,
+            productRiskLevel: filters.productRiskLevel ? parseInt(filters.productRiskLevel, 10) : undefined,
+            sustainabilityRisk: filters.sustainabilityRisk ? parseInt(filters.sustainabilityRisk, 10) : undefined,
+            regulatoryRisk: filters.regulatoryRisk ? parseInt(filters.regulatoryRisk, 10) : undefined,
         }));
     };
 
