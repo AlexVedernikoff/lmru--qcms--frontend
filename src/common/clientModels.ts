@@ -94,6 +94,7 @@ export interface IProductTableTransferItem {
 }
 
 export interface IProviderTableItem {
+    key: string | number;
     providerName: string;
     providerCode: number;
     providerCertified: string;
