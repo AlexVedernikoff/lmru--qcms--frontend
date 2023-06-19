@@ -60,7 +60,7 @@ export interface IModelItem {
         createdAt: string; // required - дата создания модели качества
         createdBy: string; // required - ldap или идентификатор системы, создавший модель качества
     };
-    lastUpdateInfomation: {
+    lastUpdateInformation: {
         updatedAt: string; // required - дата изменения модели качества
         updatedBy: string; // required - ldap или идентификатор системы, обновивший модель качества
     };

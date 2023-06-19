@@ -56,7 +56,23 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
         {
             title: t('ModelList.Table.Columns.modelStatus'),
             dataIndex: 'qualityModelStatus',
-            render: (data: TDataType['qualityModelStatus']) => <div>{data}</div>,
+            render: (data: TDataType['qualityModelStatus']) => {
+                let status = null;
+
+                switch (data) {
+                    case 'APPROVED':
+                        status = 'Согласован';
+                        break;
+                    case 'REJECTED':
+                        status = 'Отклонен';
+                        break;
+                    case 'DRAFT':
+                        status = 'Черновик';
+                        break;
+                }
+
+                return <div>{status}</div>;
+            },
             width: 246,
         },
         {
@@ -82,9 +98,9 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
                 <Grid>
                     {data.map((d, i) => (
                         <Grid key={i} columns="36px 1fr" columnGap="12px" alignItems="center">
-                            <Label background="success-light">{record.calculatedRisk}</Label>
+                            <Label background="success-light">{d.role}</Label>
                             <Typography variant="s" size="body_long">
-                                {d.userId}
+                                {d.id}
                             </Typography>
                         </Grid>
                     ))}
@@ -100,14 +116,14 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
         },
         {
             title: t('ModelList.Table.Columns.latestChange'),
-            dataIndex: 'lastUpdateInfomation',
-            render: (data: TDataType['lastUpdateInfomation']) => <div>{data?.updatedBy}</div>,
+            dataIndex: 'lastUpdateInformation',
+            render: (data: TDataType['lastUpdateInformation']) => <div>{data?.updatedBy}</div>,
             width: 246,
         },
         {
             title: t('ModelList.Table.Columns.changeDate'),
-            dataIndex: 'lastUpdateInfomation',
-            render: (data: TDataType['lastUpdateInfomation']) => <div>{data?.updatedAt}</div>,
+            dataIndex: 'lastUpdateInformation',
+            render: (data: TDataType['lastUpdateInformation']) => <div>{data?.updatedAt}</div>,
             width: 246,
         },
     ];
