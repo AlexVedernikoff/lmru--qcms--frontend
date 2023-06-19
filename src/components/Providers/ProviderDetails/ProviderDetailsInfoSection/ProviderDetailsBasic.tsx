@@ -1,24 +1,34 @@
-import { Checkbox, Grid, Input, Typography } from 'fronton-react';
-import { useTranslation } from 'react-i18next';
+import {Checkbox, Grid, Input, Typography} from 'fronton-react';
+import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
-import { Button } from 'antd';
+import {Button} from 'antd';
 import EditIcon from '../../../Icons/EditIcon';
-import { useGetSupplierDetsQuery } from "../../../../api/getSupplierDetails"
-import {    ISupplierDetailsResponse } from "../../../../common/types/supplierDetails"
+import {useGetSupplierDetsQuery} from '../../../../api/getSupplierDetails';
+import {ISupplierDetailsResponse} from '../../../../common/types/supplierDetails';
 
 const ProductDetailsProvider: React.FC = () => {
     const supplierId = 1;
-    const { t } = useTranslation('providers');
+    const {t} = useTranslation('providers');
     const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
-    const { data: supplierDetails = {}, isLoading: isLoadingSupplierDetails } = useGetSupplierDetsQuery(supplierId);
+    const {data: supplierDetails = {}} = useGetSupplierDetsQuery(supplierId);
 
-    const { billingCountry, businessLicence, manufacturingMonitoringPlatform, registrationStatus, status, supplierCategory, supplierDepartmentCountry, supplierExName, supplierInn, supplierRMSCode } = supplierDetails as ISupplierDetailsResponse || {};
+    const {
+        billingCountry,
+        businessLicence,
+        manufacturingMonitoringPlatform,
+        registrationStatus,
+        status,
+        supplierCategory,
+        supplierDepartmentCountry,
+        supplierExName,
+        supplierInn,
+        supplierRMSCode,
+    } = (supplierDetails as ISupplierDetailsResponse) || {};
 
     return (
-        <Grid className={styles.sectionItem} columns="3fr 0.1fr" rowGap={24} columnGap={24} >
-
+        <Grid className={styles.sectionItem} columns="3fr 0.1fr" rowGap={24} columnGap={24}>
             <Typography variant="h3">{t('ProviderDetails.MainData.Title')}</Typography>
-            <Button size='small' style={{ border: 'none' }} type="default" icon={<EditIcon />} />
+            <Button size="small" style={{border: 'none'}} type="default" icon={<EditIcon />} />
             <Grid rowGap={18} columnGap={24} columns="1fr 1fr">
                 <div>
                     <Typography variant="s" size="body_long" color="text-minor">
@@ -125,7 +135,6 @@ const ProductDetailsProvider: React.FC = () => {
                         {supplierInn}
                     </Typography>
                 </div>
-
 
                 <div>
                     <Typography variant="s" size="body_long" color="text-minor">

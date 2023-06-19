@@ -100,7 +100,7 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
 
             {isMoreFiltersActive && (
                 <Grid columnGap={16} columns="1fr" alignItems="center">
-                    <AdditionalFilter />
+                    <AdditionalFilter formState={formState} setFormState={setFormState} />
                 </Grid>
             )}
 

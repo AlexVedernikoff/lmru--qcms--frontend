@@ -112,7 +112,7 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
             title: t('ModelList.Table.Columns.nomenclature'),
             dataIndex: 'productModelNomenclatureModelCode',
             render: (data: TDataType['productModelNomenclatureModelCode']) => data && <NomenclatureRow code={data} />,
-            width: 500,
+            width: 700,
         },
         {
             title: t('ModelList.Table.Columns.latestChange'),
