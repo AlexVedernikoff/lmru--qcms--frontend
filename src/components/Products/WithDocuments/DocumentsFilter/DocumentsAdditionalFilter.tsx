@@ -9,11 +9,15 @@ import {IProductModelNomenclatureResponse} from '../../../../common/types/produc
 import {TreeSelect} from 'antd';
 import {TRootState} from '../../../../store/index';
 import {IFilters} from '../../../../store/slices/productsDocumentsSlice';
+import {useGetManagementNomenclatureQuery} from '../../../../api/getManagementNomenclature';
 
 const ProductsAdditionalFilter: React.FC = () => {
     const dispatch = useDispatch();
     const {data: productModelNomenclature = [], isLoading: isLoadingPermissiveDocuments} =
         useGetProductModelNomenclatureQuery();
+
+    const {data: managementNomenclature = [], isLoading: isLoadingManagementNomenclature} =
+        useGetManagementNomenclatureQuery();
 
     const productsDocumentsFiltersState = useSelector((state: TRootState) => state.productsDocumentsFilters);
 
