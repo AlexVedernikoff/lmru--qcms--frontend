@@ -91,22 +91,39 @@ const ProductsAdditionalFilter: React.FC = () => {
     const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
 
     const {SHOW_PARENT} = TreeSelect;
+    const modNomKeys = ['modelDepartmentId', 'modelSubDepartmentId', 'modelConsolidationId', 'modelCodeId'];
+
     const keys = ['modelDepartmentId', 'modelSubDepartmentId', 'modelConsolidationId', 'modelCodeId'];
 
-    const TreeSelectValue = () => {};
+    const manNomLeys = [
+        'productManagementNomenclatureDepartmentId',
+        'productManagementNomenclatureSubdepartmentId',
+        'productManagementNomenclatureTypeId',
+        'productManagementNomenclatureSubtypeId',
+    ];
 
-    const value = keys.reduce((acc: string[], key) => {
-        const idsArr: string[] = productsDocumentsFiltersState[key as keyof IFilters] as string[];
-        if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
-        return acc;
-    }, []);
+    const treeSelectValue = (keys: string[]) => {
+        const value = keys.reduce((acc: string[], key) => {
+            const idsArr: string[] = productsDocumentsFiltersState[key as keyof IFilters] as string[];
+            if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
+            return acc;
+        }, []);
+
+        return value;
+    };
+
+    const modelNomenclatureValue = treeSelectValue(modNomKeys);
+    const managementNomenclatureValue = treeSelectValue(modNomKeys);
+
+    console.log(' modelNomenclatureValue = ', modelNomenclatureValue);
 
     const initialAcc = keys.reduce((acc: any, key) => {
         acc[key] = [];
         return acc;
     }, {});
 
-    const onChange = (newValue: any) => {
+    const onTreeChange = (newValue: any, aaaaa: any) => {
+        console.log('aaaa = ', aaaaa);
         const result = newValue.reduce((acc: any, el: any) => {
             const [key, value] = el.split(' ');
             console.log('key, value = ', key, value);
@@ -128,11 +145,23 @@ const ProductsAdditionalFilter: React.FC = () => {
 
     const tPropsProdNom = {
         treeData: productNomenclatureData,
-        value,
-        onChange,
+        value: modelNomenclatureValue,
+        onChange: (val: any) => onTreeChange(val, 1234),
         treeCheckable: true,
         showCheckedStrategy: SHOW_PARENT,
         placeholder: 'Номенклатура товарной модели',
+        style: {
+            width: '100%',
+        },
+    };
+
+    const tPropsManNom = {
+        treeData: productNomenclatureData,
+        value: managementNomenclatureValue,
+        onChange: (val: any) => onTreeChange(val, 1234),
+        treeCheckable: true,
+        showCheckedStrategy: SHOW_PARENT,
+        placeholder: t('WithDocuments.DetailFilters.ManagementNomenclature'),
         style: {
             width: '100%',
         },
@@ -186,16 +215,16 @@ const ProductsAdditionalFilter: React.FC = () => {
                 {/**************** Фильтр "11 Номенклатура товарной модели" *****************/}
                 <TreeSelect {...tPropsProdNom} />
                 {/**************** Фильтр "12 Управленческая номенклатура" *****************/}
-                {/* Ждём бэкенд */}
-                <Input
+                <TreeSelect {...tPropsManNom} />
+
+                {/* <Input
                     inputSize="m"
                     autoComplete="off"
                     label={t('WithDocuments.DetailFilters.ManagementNomenclature')}
                     placeholder={t('Common.Input')}
                     value={undefined}
                     onChange={handleInputChange}
-                />
-
+                /> */}
                 <Grid columns="0.5fr 0.3fr">
                     <CustomSwitch
                         handleChange={handleChange}
