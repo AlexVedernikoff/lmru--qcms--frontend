@@ -1,0 +1,22 @@
+{
+    "id": 1,
+    "name": "string",
+    "subDepartments": [
+        {
+            "id": 1,
+            "name": "string",
+            "types": [
+                {
+                    "id": 1,
+                    "name": "string",
+                    "subTypes": [
+                        {
+                            "id": 1,
+                            "name": "string"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
