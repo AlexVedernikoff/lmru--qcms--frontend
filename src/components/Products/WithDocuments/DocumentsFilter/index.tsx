@@ -1,6 +1,4 @@
-//@ts-ignore
-//@ts-nocheck
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {DatePicker, Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react';
@@ -51,14 +49,16 @@ const DocumentsFilter: React.FC = () => {
 
         dispatch(setProductsDocumentsTableData(productsDocumentsTableData));
     };
-
-    const documentsTypes = permissiveDocuments.map((el: IPermissiveDocumentsResponse) => el.type);
+    const documentsTypes = useMemo(
+        () => permissiveDocuments.map((el: IPermissiveDocumentsResponse) => el.type),
+        [permissiveDocuments]
+    );
     useEffect(() => {
         onHandleFilterChange(documentsTypes[0], 'documentType');
-    }, []);
+    }, [documentsTypes.length]);
 
-    const List = documentsTypes.map((el: any) => {
-        return <DropdownItem text={el} value={el} />;
+    const List = documentsTypes.map(el => {
+        return <DropdownItem text={el} value={el} key={el} />;
     });
 
     const {t} = useTranslation('products');
@@ -68,7 +68,7 @@ const DocumentsFilter: React.FC = () => {
         setIsMoreFiltersActive(prevState => !prevState);
     };
 
-    const dates = {...productsDocumentsFiltersState.dates};
+    const {dates} = productsDocumentsFiltersState;
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
@@ -209,10 +209,8 @@ const DocumentsFilter: React.FC = () => {
                         label={t('WithDocuments.Filters.DateSearch')}
                         value={dates.dateType}
                         onSelect={e => {
-                            console.log('dates = ', dates);
-                            dates.dateType = e as EDateType;
-                            console.log('Newdates = ', dates);
-                            onHandleFilterChange({...dates}, 'dates');
+                            const dateType = e as EDateType;
+                            onHandleFilterChange({...dates, dateType}, 'dates');
                         }}
                     >
                         <DropdownItem text={t('WithDocuments.Table.CREATED')} value={'CREATED'} />
@@ -226,7 +224,6 @@ const DocumentsFilter: React.FC = () => {
                             productsDocumentsFiltersState.dates.endDate,
                         ]}
                         mode="range"
-                        dateMask="dd.mm.yy"
                         onChange={function noRefCheck(e) {
                             const datesArr = [dates.startDate, dates.endDate];
                             const datesArrRemoveEmpty = datesArr.filter(el => el);
