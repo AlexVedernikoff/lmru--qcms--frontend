@@ -98,7 +98,6 @@
                 "providerCode": "Код поставщика",
                 "providerName": "Наименование поставщика",
                 "qualityStatus": "Статус качества",
-
                 "QE": "QE",
                 "qualityModel": "Модель качества",
                 "EAN": "EAN",
@@ -176,8 +175,8 @@
     "WithDocuments": {
         "Filters": {
             "productCode": "Код товара",
-            "providerName": "Наименование поставщика",
-            "filter": "Фильтр",
+            "supplierName": "Наименование поставщика",
+            "productNumberKey": "Товарные номера",
             "RegulatoryStatus": "Регуляторный статус",
             "DocumentType": "Тип документа",
             "FileName": "Имя файла",
@@ -212,7 +211,22 @@
             "BusinessLicenseNumber": "Номер бизнес лицензии",
             "SSMCode": "Код SSM",
             "Role": "Загрузка выполнена (роль)",
-            "DownloadCompleted": "Загрузка выполнена"
+            "DownloadCompleted": "Загрузка выполнена",
+            "SupplierName": "Название поставщика",
+            "SupplierTaxIndetifier": "ИНН",
+            "IMPORTER": "Импортер",
+            "MANUFACTURER": "Дистрибьютор",
+            "SUPPLIER": "Поставщик",
+            "ACTIVE": "Активный",
+            "INACTIVE": "Неактивный",
+            "Russia": "Россия",
+            "APPROVED": "Утвержден",
+            "REJECTED": "Отклонен",
+            "NEEDS_APPROVAL": "Ожидает согласование",
+            "CREATED": "Дата создания",
+            "UPDATED": "Дата последнего обновления",
+            "ISSUE": "Дата создания документа",
+            "EXPIRY": "Дата окончания действия"
         }
     }
 }

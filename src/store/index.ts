@@ -6,6 +6,11 @@ import {commonSlice} from './slices/common';
 import modelsApi from '../components/Models/modelsApi';
 import {providersApi} from '../components/Providers/services';
 import {getSupplierDetails} from '../api/getSupplierDetails';
+import {getPermissiveDocuments} from '../api/getPermissiveDocuments';
+import {getProductModelNomenclature} from '../api/getProductModelNomenclature';
+import {postSearchQualityDocuments} from '../api/postSearchQualityDocuments';
+import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
+import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
 
 const rootReducer = {
     common: commonSlice.reducer,
@@ -13,6 +18,11 @@ const rootReducer = {
     [modelsApi.reducerPath]: modelsApi.reducer,
     [providersApi.reducerPath]: providersApi.reducer,
     [getSupplierDetails.reducerPath]: getSupplierDetails.reducer,
+    productsDocumentsFilters: productsDocumentsFilters.reducer,
+    productsDocumentsTableData: productsDocumentsTableData.reducer,
+    [getPermissiveDocuments.reducerPath]: getPermissiveDocuments.reducer,
+    [getProductModelNomenclature.reducerPath]: getProductModelNomenclature.reducer,
+    [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
 };
 
 const createReducer = (injectedReducers = {}) =>
@@ -27,7 +37,10 @@ const makeStore = () =>
         middleware: getDefaultMiddleware =>
             getDefaultMiddleware()
                 .concat(modelsApi.middleware, providersApi.middleware)
-                .concat(getSupplierDetails.middleware),
+                .concat(getSupplierDetails.middleware)
+                .concat(getPermissiveDocuments.middleware)
+                .concat(getProductModelNomenclature.middleware)
+                .concat(postSearchQualityDocuments.middleware),
         devTools: process.env.NODE_ENV === 'development',
     });
 
