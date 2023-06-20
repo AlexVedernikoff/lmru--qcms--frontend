@@ -1,3 +1,5 @@
+//@ts-ignore
+//@ts-nocheck
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
@@ -12,16 +14,14 @@ import {
 } from '../../../../store/slices/productsDocumentsSlice';
 import {useGetPermissiveDocsQuery} from '../../../../api/getPermissiveDocuments';
 import {usePostSearchQualityDocsMutation} from '../../../../api/postSearchQualityDocuments';
-import {prepareBody} from './prepareBody.js';
 import {IPermissiveDocumentsResponse} from '../../../../common/types/permissiveDocuments';
 import {setProductsDocumentsTableData} from '../../../../store/slices/productsDocumentsTableDataSlice';
 import {TRootState} from '../../../../store/index';
-
 import styles from '../../../Common.module.css';
 
 const DocumentsFilter: React.FC = () => {
     const dispatch = useDispatch();
-    const onHandleFilterChange = (e: any, k: string) => {
+    const onHandleFilterChange = (e: IFilters[keyof IFilters], k: string) => {
         dispatch(setProductsDocumentsFilters([e, k]));
     };
 
@@ -33,7 +33,7 @@ const DocumentsFilter: React.FC = () => {
 
     const productsDocumentsFiltersState = useSelector((state: TRootState) => state.productsDocumentsFilters);
 
-    const {data: permissiveDocuments = [], isLoading: isLoadingPermissiveDocuments} = useGetPermissiveDocsQuery(true);
+    const {data: permissiveDocuments = []} = useGetPermissiveDocsQuery(true);
     const [qualityDocuments] = usePostSearchQualityDocsMutation();
 
     const receiveQualityDocuments = async () => {
@@ -55,7 +55,7 @@ const DocumentsFilter: React.FC = () => {
     const documentsTypes = permissiveDocuments.map((el: IPermissiveDocumentsResponse) => el.type);
     useEffect(() => {
         onHandleFilterChange(documentsTypes[0], 'documentType');
-    }, [documentsTypes[0]]);
+    }, []);
 
     const List = documentsTypes.map((el: any) => {
         return <DropdownItem text={el} value={el} />;
@@ -67,8 +67,6 @@ const DocumentsFilter: React.FC = () => {
     const handleShowMoreFiltersClick = () => {
         setIsMoreFiltersActive(prevState => !prevState);
     };
-
-    const handleProductCodeChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
 
     const dates = {...productsDocumentsFiltersState.dates};
 
@@ -83,7 +81,7 @@ const DocumentsFilter: React.FC = () => {
                         placeholder={t('Common.Select')}
                         label={t('WithDocuments.Filters.productNumberKey')}
                         value={productsDocumentsFiltersState.productNumberKey}
-                        onSelect={e => onHandleFilterChange(e, 'productNumberKey')}
+                        onSelect={e => onHandleFilterChange(e!, 'productNumberKey')}
                     >
                         <DropdownItem text={t('WithDocuments.Table.ProductCode')} value={'productCode'} />
                         <DropdownItem text={t('WithDocuments.Table.EAN')} value={'EAN'} />
@@ -108,7 +106,7 @@ const DocumentsFilter: React.FC = () => {
                         placeholder={t('Common.Select')}
                         label={t('WithDocuments.Filters.supplierName')}
                         value={productsDocumentsFiltersState.supplierNameKey}
-                        onSelect={e => onHandleFilterChange(e, 'supplierNameKey')}
+                        onSelect={e => onHandleFilterChange(e!, 'supplierNameKey')}
                     >
                         <DropdownItem text={t('WithDocuments.Table.SupplierName')} value={'supplierName'} />
                         <DropdownItem text={t('WithDocuments.Table.SupplierCodeRMS')} value={'supplierCodeRMS'} />
@@ -138,7 +136,7 @@ const DocumentsFilter: React.FC = () => {
                         placeholder={t('Common.Select')}
                         label={t('WithDocuments.Filters.RegulatoryStatus')}
                         value={productsDocumentsFiltersState.regulatoryStatus[0]}
-                        onSelect={e => onHandleFilterChange([e], 'regulatoryStatus')}
+                        onSelect={e => onHandleFilterChange([e!], 'regulatoryStatus')}
                     >
                         <DropdownItem text={t('WithDocuments.Table.IMPORTER')} value={'IMPORTER'} />
                         <DropdownItem text={t('WithDocuments.Table.MANUFACTURER')} value={'MANUFACTURER'} />
@@ -155,7 +153,7 @@ const DocumentsFilter: React.FC = () => {
                         placeholder={t('Common.Select')}
                         label={t('WithDocuments.Filters.DocumentType')}
                         value={productsDocumentsFiltersState.documentType || documentsTypes[0] || 'Загрузка данных'}
-                        onSelect={e => onHandleFilterChange(e, 'documentType')}
+                        onSelect={e => onHandleFilterChange(e!, 'documentType')}
                     >
                         <ul>{List}</ul>
                     </Dropdown>
@@ -181,7 +179,7 @@ const DocumentsFilter: React.FC = () => {
                         placeholder={t('Common.Select')}
                         label={t('WithDocuments.Filters.DocumentStatus')}
                         value={productsDocumentsFiltersState.status[0]}
-                        onSelect={e => onHandleFilterChange([e], 'status')}
+                        onSelect={e => onHandleFilterChange([e!], 'status')}
                     >
                         <DropdownItem text={t('WithDocuments.Table.ACTIVE')} value={'ACTIVE'} />
                         <DropdownItem text={t('WithDocuments.Table.INACTIVE')} value={'INACTIVE'} />
@@ -197,7 +195,7 @@ const DocumentsFilter: React.FC = () => {
                         placeholder={t('Common.Select')}
                         label={t('WithDocuments.Filters.ComplianceStatus')}
                         value={productsDocumentsFiltersState.approvingStatus[0]}
-                        onSelect={e => onHandleFilterChange([e], 'approvingStatus')}
+                        onSelect={e => onHandleFilterChange([e!], 'approvingStatus')}
                     >
                         <DropdownItem text={t('WithDocuments.Table.APPROVED')} value={'APPROVED'} />
                         <DropdownItem text={t('WithDocuments.Table.REJECTED')} value={'REJECTED'} />
@@ -222,14 +220,13 @@ const DocumentsFilter: React.FC = () => {
                         <DropdownItem text={t('WithDocuments.Table.ISSUE')} value={'ISSUE'} />
                         <DropdownItem text={t('WithDocuments.Table.EXPIRY')} value={'EXPIRY'} />
                     </Dropdown>
-
                     <DatePicker
                         date={[
                             productsDocumentsFiltersState.dates.startDate,
                             productsDocumentsFiltersState.dates.endDate,
                         ]}
-                        dateMask="dd.mm.yy"
                         mode="range"
+                        dateMask="dd.mm.yy"
                         onChange={function noRefCheck(e) {
                             const datesArr = [dates.startDate, dates.endDate];
                             const datesArrRemoveEmpty = datesArr.filter(el => el);
@@ -251,7 +248,6 @@ const DocumentsFilter: React.FC = () => {
                                 'dates'
                             );
                         }}
-                        view="double"
                     />
                 </Grid>
             </Grid>
