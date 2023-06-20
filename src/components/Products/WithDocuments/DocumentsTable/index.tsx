@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
+import {useDispatch, useSelector} from 'react-redux';
 import {Dropdown, DropdownItem, Grid, RegularButton} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
@@ -7,11 +8,42 @@ import {TableRowSelection} from 'antd/es/table/interface';
 import {PRODUCT_TABLE_WITH_DOCUMENTS} from '../../../../common/mocks';
 import {IDataType, getProductTableColumns} from './ProductTableColumns';
 import CustomTable from '../../../Common/CustomTable';
+import {usePostSearchQualityDocsMutation} from '../../../../api/postSearchQualityDocuments';
 
 const DocumentsTable: React.FC = () => {
+    const productsDocuments = useSelector((state: any) => state.productsDocumentsTableData.content);
+
+    const data = useMemo<IDataType[]>(
+        () =>
+            productsDocuments?.map((el: any) => {
+                return {
+                    key: el.id,
+                    documentNumber: el.id,
+                    type: el.type,
+                    productCode: el.productsDetails[0]?.productCode,
+                    EAN: el.productsDetails[0]?.ean,
+                    TNVED: el.productsDetails[0]?.productTNVEDCode,
+                    name: el.productsDetails[0]?.productTNVEDCode,
+                    releaseDate: el.issueDate,
+                    endDate: el.expireDate,
+                    status: el.status,
+                    confirmationStatus: el.productsDetails[0]?.approvingStatus,
+                    uploadDate: el.creationInformation.createdAt,
+                    nameSupplier: el.productsDetails[0]?.supplierName,
+                    supplieroCodeRMS: el.productsDetails[0]?.supplierRMSCode,
+                    INN: el.productsDetails[0]?.supplierTaxIdentifier,
+                    businessLicenseNumber: 0,
+                    SSMCode: 0,
+                    role: el.creationInformation.createdBy.Role,
+                    downloadCompleted: el.creationInformation.createdBy,
+                };
+            }),
+        [productsDocuments]
+    );
+
     const {t} = useTranslation('products');
     const handleSelect = (value: string | null) => {};
-    
+
     const columns = useMemo<ColumnsType<IDataType>>(
         () => [
             {
@@ -21,7 +53,7 @@ const DocumentsTable: React.FC = () => {
                 render: (_value: string, record: IDataType) => (
                     <RegularButton
                         data-id={record.productCode.toString()}
-                        onClick={()=>{}}
+                        onClick={() => {}}
                         href=""
                         rel=""
                         aria-label=""
@@ -37,8 +69,6 @@ const DocumentsTable: React.FC = () => {
         ],
         [t]
     );
-
-    const data = useMemo<IDataType[]>(() => PRODUCT_TABLE_WITH_DOCUMENTS, []);
 
     const rowSelection = useMemo<TableRowSelection<IDataType>>(
         () => ({
@@ -72,7 +102,7 @@ const DocumentsTable: React.FC = () => {
                     <DropdownItem text="test" value={'test'} />
                 </Dropdown>
                 <RegularButton onClick={() => {}} size="m" variant="primary">
-                      {t('Buttons.Make')}
+                    {t('Buttons.Make')}
                 </RegularButton>
             </Grid>
             <CustomTable
