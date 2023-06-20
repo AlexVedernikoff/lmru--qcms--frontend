@@ -13,7 +13,7 @@ import {IProvidersResponse, IProvidersResponseItem} from '../../../../common/typ
 interface Props {
     providers: IProvidersResponse | undefined; // IProviderTableItem[]
 }
-export type RawTable = Pick<IProvidersResponseItem, 'supplierName' | 'supplierRMSCode'>;
+export type RawTable = Pick<IProvidersResponseItem, 'supplierName' | 'supplierRMSCode' | 'id'>;
 
 const ProvidersTable: React.FC<Props> = props => {
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ const ProvidersTable: React.FC<Props> = props => {
     const {providers} = props;
 
     let rawTable = providers?.content.map((el, i) => {
-        let raw = {supplierName: el.supplierName, supplierRMSCode: el.supplierRMSCode, key: i};
+        let raw = {supplierName: el.supplierName, supplierRMSCode: el.supplierRMSCode, id: el.id, key: i};
         return raw;
     });
 
@@ -43,7 +43,7 @@ const ProvidersTable: React.FC<Props> = props => {
                 width: 64,
                 render: (_value: string, record: RawTable) => (
                     <RegularButton
-                        // data-id={record.providerCode.toString()}
+                        data-id={record.id.toString()}
                         onClick={handleViewProviderDetails}
                         href=""
                         rel=""
