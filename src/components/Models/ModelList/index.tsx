@@ -58,8 +58,8 @@ const ModelList: React.FC = () => {
             productModelNomenclatureSubDepartmentCode: filters.productModelNomenclatureSubDepartmentCode?.length
                 ? filters.productModelNomenclatureSubDepartmentCode
                 : undefined,
-            productModelNomeclatureConsolidationCode: filters.productModelNomeclatureConsolidationCode?.length
-                ? filters.productModelNomeclatureConsolidationCode
+            productModelNomeclatureConsolidationCode: filters.productModelNomenclatureConsolidationCode?.length
+                ? filters.productModelNomenclatureConsolidationCode
                 : undefined,
             productModelNomenclatureModelCode: filters.productModelNomenclatureModelCode?.length
                 ? filters.productModelNomenclatureModelCode

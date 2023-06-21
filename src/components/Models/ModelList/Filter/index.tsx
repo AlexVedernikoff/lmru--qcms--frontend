@@ -29,7 +29,7 @@ export interface IFilterFormState {
     latestChanges?: string;
     productModelNomenclatureDepartmentCode?: string[];
     productModelNomenclatureSubDepartmentCode?: string[];
-    productModelNomeclatureConsolidationCode?: string[];
+    productModelNomenclatureConsolidationCode?: string[];
     productModelNomenclatureModelCode?: string[];
 }
 
@@ -91,7 +91,7 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
                 case 'consolidation':
                     setFormState({
                         ...formState,
-                        productModelNomeclatureConsolidationCode: nomenclature
+                        productModelNomenclatureConsolidationCode: nomenclature
                             .flatMap(v =>
                                 v.subdepartments.flatMap(s => s.modelConsolidationGroups.filter(c => c.code === code))
                             )
