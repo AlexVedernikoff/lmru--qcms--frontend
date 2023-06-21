@@ -31,10 +31,10 @@ const ModelList: React.FC = () => {
         sustainabilityRisk: undefined,
         healthRisk: undefined,
         regulatoryRisk: undefined,
-        productModelNomenclatureDepartmentCode: [],
-        productModelNomenclatureSubDepartmentCode: [],
-        productModelNomeclatureConsolidationCode: [],
-        productModelNomenclatureModelCode: [],
+        productModelNomenclatureDepartmentCode: undefined,
+        productModelNomenclatureSubDepartmentCode: undefined,
+        productModelNomeclatureConsolidationCode: undefined,
+        productModelNomenclatureModelCode: undefined,
     });
 
     const {data, isLoading} = modelsApi.useGetModelsQuery({
@@ -52,11 +52,19 @@ const ModelList: React.FC = () => {
         setSearchBy(p => ({
             ...p,
             qualityModelLabel: filters.qualityModel,
-            productModelNomenclatureDepartmentCode: filters.productModelNomenclatureDepartmentCode,
-            productModelNomenclatureSubDepartmentCode: filters.productModelNomenclatureSubDepartmentCode,
-            productModelNomeclatureConsolidationCode: filters.productModelNomeclatureConsolidationCode,
-            productModelNomenclatureModelCode: filters.productModelNomenclatureModelCode,
-            assignedApprovers: filters.QE ? [filters.QE] : [],
+            productModelNomenclatureDepartmentCode: filters.productModelNomenclatureDepartmentCode?.length
+                ? filters.productModelNomenclatureDepartmentCode
+                : undefined,
+            productModelNomenclatureSubDepartmentCode: filters.productModelNomenclatureSubDepartmentCode?.length
+                ? filters.productModelNomenclatureSubDepartmentCode
+                : undefined,
+            productModelNomeclatureConsolidationCode: filters.productModelNomeclatureConsolidationCode?.length
+                ? filters.productModelNomeclatureConsolidationCode
+                : undefined,
+            productModelNomenclatureModelCode: filters.productModelNomenclatureModelCode?.length
+                ? filters.productModelNomenclatureModelCode
+                : undefined,
+            assignedApprovers: filters.QE ? [filters.QE] : undefined,
             personLevelRiskForCorrectUsage: filters.personLevelRiskForCorrectUsage
                 ? parseInt(filters.personLevelRiskForCorrectUsage, 10)
                 : undefined,
