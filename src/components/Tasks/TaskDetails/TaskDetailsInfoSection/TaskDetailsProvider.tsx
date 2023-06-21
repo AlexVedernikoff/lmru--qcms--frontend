@@ -1,10 +1,12 @@
 import {Grid, RegularButton, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
-import { MagnifyingGlassIcon } from '@fronton/icons-react';
+import {MagnifyingGlassIcon} from '@fronton/icons-react';
+import {PropsTaskDetails} from '../TaskDetails';
 
-const TaskDetailsProvider: React.FC = () => {
+const TaskDetailsProvider: React.FC<PropsTaskDetails> = props => {
     const {t} = useTranslation('tasks');
+    const {taskDetails} = props;
 
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">
@@ -14,7 +16,7 @@ const TaskDetailsProvider: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {'1004128001 - ООО "ХимТоргПроект"'}
+                    {`${taskDetails.supplierData.supplierRMSCode} - ${taskDetails.supplierData.name}`}
                     <RegularButton
                         onClick={() => {}}
                         href=""
@@ -37,7 +39,7 @@ const TaskDetailsProvider: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {'Дистрибьютор'}
+                    {taskDetails.product.regulatoryStatus}
                 </Typography>
             </div>
 
@@ -49,7 +51,7 @@ const TaskDetailsProvider: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {'Леруа Мерлен Россия'}
+                    {taskDetails.targetBuCodes}
                 </Typography>
             </div>
         </Grid>

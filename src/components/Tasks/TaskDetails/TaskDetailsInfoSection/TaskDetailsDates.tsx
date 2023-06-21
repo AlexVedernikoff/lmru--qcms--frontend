@@ -1,9 +1,12 @@
 import {Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
+import {convertDateFromServer} from '../../../../utils/convertDateFromServer';
+import {PropsTaskDetails} from '../TaskDetails';
 
-const TaskDetailsDates: React.FC = () => {
+const TaskDetailsDates: React.FC<PropsTaskDetails> = props => {
     const {t} = useTranslation('tasks');
+    const {taskDetails} = props;
 
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">
@@ -37,7 +40,7 @@ const TaskDetailsDates: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {'11.02.2024'}
+                    {convertDateFromServer(taskDetails.realisationDueDate)}
                 </Typography>
             </div>
         </Grid>

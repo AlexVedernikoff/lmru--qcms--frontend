@@ -1,11 +1,13 @@
 import {Grid, RegularButton, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
-import { MagnifyingGlassIcon } from '@fronton/icons-react';
+import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import classes from './styles.module.css';
+import {PropsTaskDetails} from '../TaskDetails';
 
-const TaskDetailsProduct: React.FC = () => {
+const TaskDetailsProduct: React.FC<PropsTaskDetails> = props => {
     const {t} = useTranslation('tasks');
+    const {taskDetails} = props;
 
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">
@@ -15,7 +17,7 @@ const TaskDetailsProduct: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {'87312445 - МАСТИКА БИТУМ. ДЛЯ КРОВЕЛЬ 21,5 Л/18 КГ'}
+                    {`${taskDetails.product.code} - ${taskDetails.product.code}`}
                     <RegularButton
                         onClick={() => {}}
                         href=""
@@ -38,21 +40,26 @@ const TaskDetailsProduct: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {'87312445'}
+                    {
+                        // может просто code?
+                    }
+                    {taskDetails.product.adeoProductCode}
                 </Typography>
             </div>
 
             <br />
 
-            <div>
-                <Typography variant="s" size="body_long" color="text-minor">
-                    {t('TaskDetails.DetailsProduct.EAN')}
-                </Typography>
-                <br />
-                <Typography variant="s" size="body_short">
-                    {'4607952904828'}
-                </Typography>
-            </div>
+            {taskDetails.documents.uploadedDocuments[0]?.productInfoDetails && (
+                <div>
+                    <Typography variant="s" size="body_long" color="text-minor">
+                        {t('TaskDetails.DetailsProduct.EAN')}
+                    </Typography>
+                    <br />
+                    <Typography variant="s" size="body_short">
+                        {taskDetails.documents.uploadedDocuments[0]?.productInfoDetails[0].ean}
+                    </Typography>
+                </div>
+            )}
 
             <br />
 
@@ -62,7 +69,7 @@ const TaskDetailsProduct: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {'Гидроизоляция'}
+                    {taskDetails.product.qualityModel}
                     <RegularButton
                         onClick={() => {}}
                         href=""
@@ -85,7 +92,7 @@ const TaskDetailsProduct: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {'Предполагаемое соответствие'}
+                    {taskDetails.product.qualityStatus}
                 </Typography>
             </div>
 
@@ -97,7 +104,7 @@ const TaskDetailsProduct: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography className={classes.important} variant="s" size="body_short">
-                    {'Очень важный'}
+                    {taskDetails.product.adeoRisk}
                 </Typography>
             </div>
         </Grid>

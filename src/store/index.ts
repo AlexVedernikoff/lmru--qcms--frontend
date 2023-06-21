@@ -11,6 +11,7 @@ import {getProductModelNomenclature} from '../api/getProductModelNomenclature';
 import {postSearchQualityDocuments} from '../api/postSearchQualityDocuments';
 import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
 import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
+import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
 
 const rootReducer = {
     common: commonSlice.reducer,
@@ -23,6 +24,7 @@ const rootReducer = {
     [getPermissiveDocuments.reducerPath]: getPermissiveDocuments.reducer,
     [getProductModelNomenclature.reducerPath]: getProductModelNomenclature.reducer,
     [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
+    [taskDetailsApi.reducerPath]: taskDetailsApi.reducer,
 };
 
 const createReducer = (injectedReducers = {}) =>
@@ -35,12 +37,15 @@ const makeStore = () =>
     configureStore({
         reducer: createReducer(),
         middleware: getDefaultMiddleware =>
-            getDefaultMiddleware()
-                .concat(modelsApi.middleware, providersApi.middleware)
-                .concat(getSupplierDetails.middleware)
-                .concat(getPermissiveDocuments.middleware)
-                .concat(getProductModelNomenclature.middleware)
-                .concat(postSearchQualityDocuments.middleware),
+            getDefaultMiddleware().concat(
+                modelsApi.middleware,
+                providersApi.middleware,
+                taskDetailsApi.middleware,
+                getSupplierDetails.middleware,
+                getPermissiveDocuments.middleware,
+                getProductModelNomenclature.middleware,
+                postSearchQualityDocuments.middleware
+            ),
         devTools: process.env.NODE_ENV === 'development',
     });
 

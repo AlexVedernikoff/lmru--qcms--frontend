@@ -1,18 +1,39 @@
-import {Dropdown, DropdownItem, Grid, IconButton} from 'fronton-react';
+import {Dropdown, DropdownItem, Grid, IconButton, RegularButton} from 'fronton-react';
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import {ITaskUploadedDocument} from '../../../../../../common/clientModels';
+// import {ITaskUploadedDocument} from '../../../../../../common/clientModels';
+import DownloadIcon from '../../../../../Icons/DownloadIcon';
 import {CustomSwitch} from '../../../../../Common/Switch/CustomSwitch';
 import {TrashIcon} from '@fronton/icons-react';
+import {ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
 
 export interface IDataType extends ITaskUploadedDocument {
     key: React.Key;
 }
 
-export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): ColumnsType<IDataType> => [
+const downloadDocument = async () => {
+    //TODO доделать скачивание файла корректно
+    const res = await fetch(
+        'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/109',
+        {
+            headers: {
+                securityCode: 'security_code',
+            },
+        }
+    )
+        .then(response => {
+            return response.blob();
+        })
+        .then(blob => {
+            var file = window.URL.createObjectURL(blob);
+            window.location.assign(file);
+        });
+};
+
+export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): ColumnsType<ITaskUploadedDocument> => [
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.documentType'),
-        dataIndex: 'documentType',
+        dataIndex: 'type',
         width: 380,
         render: d => (
             <Dropdown size="s" closeOnSelect placeholder={t('Common.Select')} value={d} onSelect={() => {}}>
@@ -48,6 +69,15 @@ export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): Colu
         title: t('TaskTabs.Documents.UploadedDocuments.Field.documentName'),
         dataIndex: 'documentName',
         width: 240,
+        render: d => (
+            <RegularButton
+                variant="pseudo"
+                iconRight={<DownloadIcon />}
+                onClick={() => {
+                    downloadDocument();
+                }}
+            />
+        ),
     },
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.partial'),

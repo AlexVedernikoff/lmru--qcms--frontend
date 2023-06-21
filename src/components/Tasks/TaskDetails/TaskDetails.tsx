@@ -3,10 +3,57 @@ import {Grid, RegularButton, Typography} from 'fronton-react';
 import EditIcon from '../../Icons/EditIcon';
 import TaskDetailsInfoSection from './TaskDetailsInfoSection';
 import TaskTabsSection from './TaskTabsSection';
+import {useGetTaskDetailsQuery, useUpdateInfoTaskMutation} from './servicesTaskDetails';
+import {ITaskDetails, ITaskUpdateInfoParams, ITaskUpdateInfoResponse} from '../../../common/types/taskDetails';
+import {useEffect, useState} from 'react';
+import {
+    MutationDefinition,
+    BaseQueryFn,
+    FetchArgs,
+    FetchBaseQueryError,
+    FetchBaseQueryMeta,
+} from '@reduxjs/toolkit/dist/query';
+import {MutationTrigger} from '@reduxjs/toolkit/dist/query/react/buildHooks';
+
+export type PropsTaskDetails = {
+    taskDetails: ITaskDetails;
+    setPost?: (value: ITaskUpdateInfoParams) => void;
+    updateInfoTask?: MutationTrigger<
+        MutationDefinition<
+            ITaskUpdateInfoParams,
+            BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>,
+            never,
+            ITaskUpdateInfoResponse,
+            'taskDetailsApi'
+        >
+    >;
+    initialValue?: ITaskUpdateInfoParams;
+    post?: ITaskUpdateInfoParams;
+};
 
 const TaskDetails: React.FC = () => {
-    const title = `Сертификация - Сбор документов - Сбор документов - 10230358109883`;
     const {t} = useTranslation('tasks');
+    const {data: taskDetails} = useGetTaskDetailsQuery(1);
+
+    const initialValue = {
+        updatedBy: '',
+        qualityActions: [],
+    };
+    const [post, setPost] = useState<ITaskUpdateInfoParams>(initialValue);
+    const [updateInfoTask] = useUpdateInfoTaskMutation();
+    useEffect(() => {
+        const initialValue1 = {
+            updatedBy: '',
+            qualityActions: [{id: 23, actionStatus: taskDetails?.actionStatus, conclusion: taskDetails?.conclusion}],
+        };
+        setPost(initialValue1);
+    }, [taskDetails]);
+
+    let title = '';
+
+    if (taskDetails) {
+        title = `${taskDetails.categoryName} - ${taskDetails.categoryTypeName} - ${taskDetails.id}`;
+    }
 
     return (
         <Grid rowGap={16}>
@@ -28,8 +75,16 @@ const TaskDetails: React.FC = () => {
                     {t('TaskDetails.Buttons.Edit')}
                 </Typography>
             </Grid>
-            <TaskDetailsInfoSection />
-            <TaskTabsSection />
+            {taskDetails && (
+                <TaskDetailsInfoSection
+                    taskDetails={taskDetails}
+                    post={post}
+                    setPost={setPost}
+                    initialValue={initialValue}
+                    updateInfoTask={updateInfoTask}
+                />
+            )}
+            {taskDetails && <TaskTabsSection taskDetails={taskDetails} />}
         </Grid>
     );
 };
