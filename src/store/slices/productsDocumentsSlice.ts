@@ -26,7 +26,7 @@ export interface IFilters {
     supplierNameValue: string;
     regulatoryStatus: string[];
     documentType: string;
-    documentName: string;
+    documentName: string | undefined;
     status: string[];
     dates: IDates;
     country: string;
@@ -52,7 +52,7 @@ export const initialState: IFilters = {
     supplierNameValue: '',
     regulatoryStatus: ['IMPORTER'],
     documentType: '',
-    documentName: '',
+    documentName: undefined,
     status: ['ACTIVE'],
     dates: {
         dateType: EDateType.CREATED,

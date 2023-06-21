@@ -16,21 +16,26 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
         render: (text: string = '') => (
             <Grid columns="2fr 0.5fr">
                 {text}
+
                 <IconButton
                     label="Download"
                     onClick={() => {
                         const options = {
                             headers: {
                                 securityCode: 'security_code',
+                                'Access-Control-Expose-Headers': '*',
                             },
                         };
 
                         const url =
-                            'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/1';
+                            'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/110';
 
                         fetch(url, options)
                             .then(res => {
-                                const headers1 = res.headers.get('content-disposition');
+                                // const headers1 = res.headers.get('content-disposition');
+                                // debugger;
+
+                                const headers1 = res.headers.get('Content-Disposition');
                                 const headers2 = res.headers.get('Content-Length');
 
                                 console.log('headers = ', headers1);
@@ -43,7 +48,13 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
                                 console.log('blob = ', blob);
 
                                 var file = window.URL.createObjectURL(blob);
-                                window.location.assign(file);
+
+                                let a = document.createElement('a');
+                                a.href = file;
+                                a.download = 'test.csv';
+                                a.click();
+
+                                // window.location.assign(file);
                             });
                     }}
                 >

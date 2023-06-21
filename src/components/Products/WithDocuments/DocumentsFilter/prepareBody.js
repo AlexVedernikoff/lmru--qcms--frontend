@@ -8,6 +8,14 @@ const initialBody = {
 
 export const prepareBody = productsDocumentsFiltersState => {
     const requsetBody = {...initialBody};
+    const {searchBy} = requsetBody;
+    const {documentType, documentName, status, approvingStatus} = productsDocumentsFiltersState;
+
+    searchBy.type = [documentType, 'string'];
+    searchBy.status = status;
+    searchBy.fileName = documentName || undefined;
+    searchBy.approvingStatus = approvingStatus;
+
     // const {productNumberKey, productNumberValue, supplierNameKey, supplierNameValue} = productsDocumentsFiltersState;
     // requsetBody.searchBy = {
     //     [productNumberKey]: productNumberValue,
