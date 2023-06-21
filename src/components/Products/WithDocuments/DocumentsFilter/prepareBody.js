@@ -11,7 +11,7 @@ export const prepareBody = productsDocumentsFiltersState => {
     const {searchBy} = requsetBody;
     const {documentType, documentName, status, approvingStatus} = productsDocumentsFiltersState;
 
-    searchBy.type = [documentType, 'string'];
+    searchBy.type = documentType;
     searchBy.status = status;
     searchBy.fileName = documentName || undefined;
     searchBy.approvingStatus = approvingStatus;

@@ -54,9 +54,9 @@ const DocumentsFilter: React.FC = () => {
         () => permissiveDocuments.map((el: IPermissiveDocumentsResponse) => el.type),
         [permissiveDocuments]
     );
-    useEffect(() => {
-        onHandleFilterChange(documentsTypes[0], 'documentType');
-    }, [documentsTypes.length]);
+    // useEffect(() => {
+    //     onHandleFilterChange(documentsTypes[0], 'documentType');
+    // }, [documentsTypes.length]);
 
     const List = documentsTypes.map(el => {
         return <DropdownItem text={el} value={el} key={el} />;
@@ -151,10 +151,14 @@ const DocumentsFilter: React.FC = () => {
                     <Dropdown
                         size="m"
                         closeOnSelect
-                        placeholder={t('Common.Select')}
+                        placeholder={documentsTypes.length ? t('Common.Select') : 'Загрузка данных'}
                         label={t('WithDocuments.Filters.DocumentType')}
-                        value={productsDocumentsFiltersState.documentType || documentsTypes[0] || 'Загрузка данных'}
-                        onSelect={e => onHandleFilterChange(e!, 'documentType')}
+                        value={
+                            productsDocumentsFiltersState.documentType
+                                ? productsDocumentsFiltersState.documentType[0]
+                                : undefined
+                        }
+                        onSelect={e => onHandleFilterChange([e as string], 'documentType')}
                     >
                         <ul>{List}</ul>
                     </Dropdown>
