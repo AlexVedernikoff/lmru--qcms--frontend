@@ -18,8 +18,8 @@ interface IModelsBodyParams {
         healthRisk?: number; // optional, поиск по уровню риска для здоровья
         regulatoryRisk?: number; //  optional, поиск по уровню законодательного риска
         productModelNomenclatureDepartmentCode?: string[]; // optional, поиск по коду департамента (логическое или)
-        productModelNomenclatureSubDepartmentCode?: string; // optional, поиск по саб департаменту (логическое или)
-        productModelNomeclatureConsolidationCode?: string; // optional, поиск по группе (логическое или)
+        productModelNomenclatureSubDepartmentCode?: string[]; // optional, поиск по саб департаменту (логическое или)
+        productModelNomeclatureConsolidationCode?: string[]; // optional, поиск по группе (логическое или)
         productModelNomenclatureModelCode?: string[]; // optional, поиск по модели (логическое или)
     };
 }

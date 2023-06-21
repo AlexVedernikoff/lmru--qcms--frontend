@@ -42,7 +42,7 @@ function CustomTable<T extends object>(props: TableProps<T>) {
     };
 
     return (
-        <Grid ref={ref => (containerRef.current = ref)} columns="1fr" rowGap="12px">
+        <Grid ref={ref => (containerRef.current = ref)} columns="1fr" rowGap={12}>
             <Table
                 {...props}
                 style={{width: containerSize}}
