@@ -32,8 +32,8 @@ const ModelList: React.FC = () => {
         healthRisk: undefined,
         regulatoryRisk: undefined,
         productModelNomenclatureDepartmentCode: [],
-        productModelNomenclatureSubDepartmentCode: undefined,
-        productModelNomeclatureConsolidationCode: undefined,
+        productModelNomenclatureSubDepartmentCode: [],
+        productModelNomeclatureConsolidationCode: [],
         productModelNomenclatureModelCode: [],
     });
 
@@ -52,10 +52,10 @@ const ModelList: React.FC = () => {
         setSearchBy(p => ({
             ...p,
             qualityModelLabel: filters.qualityModel,
-            productModelNomenclatureModelCode: filters.modelNameOrCode ? [filters.modelNameOrCode] : [],
-            productModelNomenclatureDepartmentCode: [],
-            productModelNomenclatureSubDepartmentCode: undefined,
-            productModelNomeclatureConsolidationCode: undefined,
+            productModelNomenclatureDepartmentCode: filters.productModelNomenclatureDepartmentCode,
+            productModelNomenclatureSubDepartmentCode: filters.productModelNomenclatureSubDepartmentCode,
+            productModelNomeclatureConsolidationCode: filters.productModelNomeclatureConsolidationCode,
+            productModelNomenclatureModelCode: filters.productModelNomenclatureModelCode,
             assignedApprovers: filters.QE ? [filters.QE] : [],
             personLevelRiskForCorrectUsage: filters.personLevelRiskForCorrectUsage
                 ? parseInt(filters.personLevelRiskForCorrectUsage, 10)

@@ -18,7 +18,7 @@ const ProductsWithoutQualityModel: React.FC = () => {
                 </Typography>
 
                 <Grid rowGap={4}>
-                    <Grid columns="24px 1fr" columnGap="12px">
+                    <Grid columns="24px 1fr" columnGap={12}>
                         <ModelsIcon color="black" />
 
                         <Typography variant="l" size="body_long">
