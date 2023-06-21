@@ -14,6 +14,7 @@ import {
     ITaskTableTasks,
     ITaskListItem,
 } from './clientModels';
+import {IProvidersResponse} from './types/providers';
 import {ITaskAwaitingDocument, ITaskUploadedDocument} from './types/taskDetails';
 
 export const PLAN_REQUIREMENT_TABLE_ITEMS: TWithReactKey<IMasterPlanRequirementTableItem>[] = [
@@ -166,22 +167,159 @@ export const PROVIDER_TABLE_ITEMS: TWithReactKey<IProviderTableItem>[] = [
     },
 ];
 
+export const PROVIDER_TABLE_RESPONSE: IProvidersResponse = {
+    pageable: {
+        pageIndex: 0,
+        pageSize: 10,
+        totalPages: 10,
+        totalElements: 100,
+    },
+    content: [
+        {
+            id: 1, // required, Уникальный идентификатор поставщика в БД
+            version: 12, // required, Версия объекта в БД
+            type: 'type', // required, тип поставщика
+            status: 'ACTIVE', //optional, статус записи ['ACTIVE, 'INACTIVE']
+            billingCountry: 'Россия', // optional, страна выставления счетов
+            registrationStatus: 'Россия', // optional, статус регистрации поставщика
+            supplierDepartmentCountry: 'Россия', // optional, страна расположения отделения поставщика
+            supplierSelfRatingPlatform: 'Россия', // optional, платформа, ответственная за самооценку
+            supplierSelfRatingSQM: 'Россия', // optional, SQM, ответственный за самооценку
+            manufacturingMonitoringPlatform: 'string', // optional, платформа мониторинга производства
+            manufacturingMonitoringManager: 'string', // optional, менеджер по качеству, мониторинг производства
+            country: 'string', // optional, страна
+            qualityRating: 'string', // optional, оценка по качеству
+            technicalQualityRating: 'string', // optional, оценка по качеству технического аудита
+            ecologyQualityRating: 'string', // optional, оценка по качеству экологического аудита
+            supplierCategory: 'string', // requried, категория поставщика
+            businessLicence: 'string', // optinal, номер бизнес-лицензии
+            supplierRMSCode: 'pppppooopopop', // required, номер поставщика в RMS (или отделения поставщика)
+            supplierName: '090 value', // optional, название поставщика
+            supplierExName: 'string', // optional, предыдущее название поставщика
+            supplierInn: 'string', // optional, ИНН поставщика
+            supplierExternalCode: 'string', // optional, код поставщика во внешней системе
+            buId: ['string'], // required, Бизнес-юниты, в которых представлен поставщик
+            supplierProjectTeam: [
+                // optional, детальная информация о проектной команде
+                {
+                    id: 1, // required, идентификатор связки пользователя с поставщиком в БД
+                    tabelNumber: 'string', // optinal, табельный номер пользователя
+                    userSurname: 'string', // required, фамилия
+                    userName: 'string', // required, имя
+                    userEmailAdress: 'string', // optional, адрес электронной почты
+                    activityCode: 'string', // optional, код типа деятельности
+                },
+            ],
+            SupplierContacts: [
+                // optional, информация о контактах поставщиках
+                {
+                    id: 1, // required, идентификатор контакта с поставщиком в БД
+                    userSurname: 'string', // required, Фамилия
+                    userName: 'string', // required, Имя
+                    emailAdress: 'string', // optional, адрес электронной почты
+                    phoneNumber: 'string', // optional, телефон
+                    mobilePhoneNumber: 'string', // optional, мобильный телефон
+                    type: 'string', // optinal, тип контакта
+                },
+            ],
+            SupplierDocuments: [
+                // optional, информация о контактах поставщиках
+                {
+                    id: 1, // required, идентификатор контакта с поставщиком в БД
+                    documentId: 12, // required, идентификатор загруженного документа
+                },
+            ],
+            creationInformation: {
+                createdAt: 'string', // required, время создания задачи
+                createdBy: 'string', // required, ldap или идентификатор системы, создавшей задачу
+            },
+            lastUpdateInfomation: {
+                updatedAt: 'string', // required, время создания задачи
+                updatedBy: 'string', // required, ldap или идентификатор системы, обновившей задачу
+            },
+        },
+        {
+            id: 2, // required, Уникальный идентификатор поставщика в БД
+            version: 12, // required, Версия объекта в БД
+            type: 'type', // required, тип поставщика
+            status: 'ACTIVE', //optional, статус записи ['ACTIVE, 'INACTIVE']
+            billingCountry: 'Россия', // optional, страна выставления счетов
+            registrationStatus: 'Россия', // optional, статус регистрации поставщика
+            supplierDepartmentCountry: 'Россия', // optional, страна расположения отделения поставщика
+            supplierSelfRatingPlatform: 'Россия', // optional, платформа, ответственная за самооценку
+            supplierSelfRatingSQM: 'Россия', // optional, SQM, ответственный за самооценку
+            manufacturingMonitoringPlatform: 'string', // optional, платформа мониторинга производства
+            manufacturingMonitoringManager: 'string', // optional, менеджер по качеству, мониторинг производства
+            country: 'string', // optional, страна
+            qualityRating: 'string', // optional, оценка по качеству
+            technicalQualityRating: 'string', // optional, оценка по качеству технического аудита
+            ecologyQualityRating: 'string', // optional, оценка по качеству экологического аудита
+            supplierCategory: 'string', // requried, категория поставщика
+            businessLicence: 'string', // optinal, номер бизнес-лицензии
+            supplierRMSCode: '09283y7t64t7', // required, номер поставщика в RMS (или отделения поставщика)
+            supplierName: '1 value', // optional, название поставщика
+            supplierExName: 'string', // optional, предыдущее название поставщика
+            supplierInn: 'string', // optional, ИНН поставщика
+            supplierExternalCode: 'string', // optional, код поставщика во внешней системе
+            buId: ['string'], // required, Бизнес-юниты, в которых представлен поставщик
+            supplierProjectTeam: [
+                // optional, детальная информация о проектной команде
+                {
+                    id: 1, // required, идентификатор связки пользователя с поставщиком в БД
+                    tabelNumber: 'string', // optinal, табельный номер пользователя
+                    userSurname: 'string', // required, фамилия
+                    userName: 'string', // required, имя
+                    userEmailAdress: 'string', // optional, адрес электронной почты
+                    activityCode: 'string', // optional, код типа деятельности
+                },
+            ],
+            SupplierContacts: [
+                // optional, информация о контактах поставщиках
+                {
+                    id: 1, // required, идентификатор контакта с поставщиком в БД
+                    userSurname: 'string', // required, Фамилия
+                    userName: 'string', // required, Имя
+                    emailAdress: 'string', // optional, адрес электронной почты
+                    phoneNumber: 'string', // optional, телефон
+                    mobilePhoneNumber: 'string', // optional, мобильный телефон
+                    type: 'string', // optinal, тип контакта
+                },
+            ],
+            SupplierDocuments: [
+                // optional, информация о контактах поставщиках
+                {
+                    id: 1, // required, идентификатор контакта с поставщиком в БД
+                    documentId: 12, // required, идентификатор загруженного документа
+                },
+            ],
+            creationInformation: {
+                createdAt: 'string', // required, время создания задачи
+                createdBy: 'string', // required, ldap или идентификатор системы, создавшей задачу
+            },
+            lastUpdateInfomation: {
+                updatedAt: 'string', // required, время создания задачи
+                updatedBy: 'string', // required, ldap или идентификатор системы, обновившей задачу
+            },
+        },
+    ],
+};
+
 export const PROVIDER_COMMAND_TABLE_ITEMS: TWithReactKey<IProviderCommandTableItem>[] = [
     {
         key: 1,
-        userServiceNumber: 1003009004,
+        userServiceNumber: '1003009004',
         surname: 'Константинопольский',
         name: 'Константин',
         email: 'info@Leroy.ru',
-        activityTypeCode: 3458923746,
+        activityTypeCode: '3458923746',
     },
     {
         key: 2,
-        userServiceNumber: 209004,
+        userServiceNumber: '209004',
         surname: 'Петров',
         name: 'Сергей',
         email: 'info@Leroy1.ru',
-        activityTypeCode: 56658900046,
+        activityTypeCode: '56658900046',
     },
 ];
 

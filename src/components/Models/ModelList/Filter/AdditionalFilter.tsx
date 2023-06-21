@@ -1,10 +1,27 @@
 import {Checkbox, Dropdown, DropdownItem, Grid} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
+import {IFilterFormState} from '.';
 
-const AdditionalFilter: React.FC = () => {
+const riskLevels = Array.from({length: 5}, (_v, i) => {
+    const val = i + 1;
+    return <DropdownItem key={val} text={val.toString()} value={val} />;
+});
+
+interface IProps {
+    formState: IFilterFormState;
+    setFormState: (state: IFilterFormState) => void;
+}
+
+const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
     const {t} = useTranslation('models');
 
-    const handleSelect = (value: string | null) => {};
+    const handleSelect = (name: string) => (value: string | null) => {
+        setFormState({...formState, [name]: value!});
+    };
+
+    const handleCheckbox = (name: string) => (next: boolean) => {
+        setFormState({...formState, [name]: next});
+    };
 
     return (
         <Grid columnGap={24} columns="repeat(3, 1fr)" alignItems="baseline">
@@ -14,12 +31,11 @@ const AdditionalFilter: React.FC = () => {
                     closeOnSelect
                     placeholder={t('Common.Select')}
                     label={t('ModelList.Filters.withoutPlan')}
-                    value={undefined}
-                    onSelect={handleSelect}
+                    value={formState.withoutPlan}
+                    onSelect={handleSelect('withoutPlan')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    <DropdownItem text={t('Common.Yes')} value={'YES'} />
+                    <DropdownItem text={t('Common.No')} value={'NO'} />
                 </Dropdown>
 
                 <Dropdown
@@ -27,18 +43,28 @@ const AdditionalFilter: React.FC = () => {
                     closeOnSelect
                     placeholder={t('Common.Select')}
                     label={t('ModelList.Filters.latestChanges')}
-                    value={undefined}
-                    onSelect={handleSelect}
+                    value={formState.latestChanges}
+                    onSelect={handleSelect('latestChanges')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    {riskLevels}
                 </Dropdown>
 
                 <Grid rowGap={18} columns="1fr">
-                    <Checkbox checked={false} label={t('ModelList.Filters.isVerificationRequired')} />
-                    <Checkbox checked={false} label={t('ModelList.Filters.hasManyProducts')} />
-                    <Checkbox checked={false} label={t('ModelList.Filters.isChemical')} />
+                    <Checkbox
+                        onChange={handleCheckbox('isVerificationRequired')}
+                        checked={formState.isVerificationRequired!}
+                        label={t('ModelList.Filters.isVerificationRequired')}
+                    />
+                    <Checkbox
+                        onChange={handleCheckbox('hasManyProducts')}
+                        checked={formState.hasManyProducts!}
+                        label={t('ModelList.Filters.hasManyProducts')}
+                    />
+                    <Checkbox
+                        onChange={handleCheckbox('forMixtures')}
+                        checked={formState.forMixtures!}
+                        label={t('ModelList.Filters.isChemical')}
+                    />
                 </Grid>
             </Grid>
 
@@ -48,12 +74,10 @@ const AdditionalFilter: React.FC = () => {
                     closeOnSelect
                     placeholder={t('Common.Select')}
                     label={t('ModelList.Filters.riskByProductUsageNegative')}
-                    value={undefined}
-                    onSelect={handleSelect}
+                    value={formState.personLevelRiskForNonCorrectUsage!}
+                    onSelect={handleSelect('personLevelRiskForNonCorrectUsage')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    {riskLevels}
                 </Dropdown>
 
                 <Dropdown
@@ -61,12 +85,10 @@ const AdditionalFilter: React.FC = () => {
                     closeOnSelect
                     placeholder={t('Common.Select')}
                     label={t('ModelList.Filters.riskEnvironment')}
-                    value={undefined}
-                    onSelect={handleSelect}
+                    value={formState.sustainabilityRisk!}
+                    onSelect={handleSelect('sustainabilityRisk')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    {riskLevels}
                 </Dropdown>
 
                 <Dropdown
@@ -74,12 +96,10 @@ const AdditionalFilter: React.FC = () => {
                     closeOnSelect
                     placeholder={t('Common.Select')}
                     label={t('ModelList.Filters.riskByProductUsagePositive')}
-                    value={undefined}
-                    onSelect={handleSelect}
+                    value={formState.personLevelRiskForCorrectUsage!}
+                    onSelect={handleSelect('personLevelRiskForCorrectUsage')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    {riskLevels}
                 </Dropdown>
             </Grid>
 
@@ -89,12 +109,12 @@ const AdditionalFilter: React.FC = () => {
                     closeOnSelect
                     placeholder={t('Common.Select')}
                     label={t('ModelList.Filters.risk')}
-                    value={undefined}
-                    onSelect={handleSelect}
+                    value={formState.calculatedRisk!}
+                    onSelect={handleSelect('calculatedRisk')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    <DropdownItem text="низкий" value={'MINOR'} />
+                    <DropdownItem text="средний" value={'MAJOR'} />
+                    <DropdownItem text="высокий" value={'CRITICAL'} />
                 </Dropdown>
 
                 <Dropdown
@@ -102,12 +122,10 @@ const AdditionalFilter: React.FC = () => {
                     closeOnSelect
                     placeholder={t('Common.Select')}
                     label={t('ModelList.Filters.riskProperty')}
-                    value={undefined}
-                    onSelect={handleSelect}
+                    value={formState.productRiskLevel!}
+                    onSelect={handleSelect('productRiskLevel')}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    {riskLevels}
                 </Dropdown>
 
                 <Grid rowGap={24} columnGap={24} columns="1fr 1fr" alignItems="baseline">
@@ -116,12 +134,10 @@ const AdditionalFilter: React.FC = () => {
                         closeOnSelect
                         placeholder={t('Common.Select')}
                         label={t('ModelList.Filters.riskLegal')}
-                        value={undefined}
-                        onSelect={handleSelect}
+                        value={formState.regulatoryRisk!}
+                        onSelect={handleSelect('regulatoryRisk')}
                     >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
+                        {riskLevels}
                     </Dropdown>
 
                     <Dropdown
@@ -129,12 +145,10 @@ const AdditionalFilter: React.FC = () => {
                         closeOnSelect
                         placeholder={t('Common.Select')}
                         label={t('ModelList.Filters.riskHealth')}
-                        value={undefined}
-                        onSelect={handleSelect}
+                        value={formState.healthRisk!}
+                        onSelect={handleSelect('healthRisk')}
                     >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
+                        {riskLevels}
                     </Dropdown>
                 </Grid>
             </Grid>

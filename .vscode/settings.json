@@ -1,4 +1,10 @@
 {
     "typescript.tsdk": "node_modules\\typescript\\lib",
-    "css.lint.validProperties": ["composes"]
+    "css.lint.validProperties": ["composes"],
+    "files.eol": "\n",
+    "editor.tabSize": 4,
+    "editor.linkedEditing": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.configPath": ".prettierrc"
 }

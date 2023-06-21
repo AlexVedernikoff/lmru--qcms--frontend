@@ -1,6 +1,6 @@
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import {Grid, Tab, TabList, Typography} from 'fronton-react';
 import styles from '../../Common.module.css';
 import ModelDetailsMainData from './ModelDetailsMainData';
@@ -10,17 +10,19 @@ import ModelDetailsRiskLevel from './ModelDetailsRiskLevel';
 import ModelDetailsDescription from './ModelDetailsDescription';
 import ModelDetailsMasterPlan from './ModelDetailsMasterPlan';
 import ModelDetailsRiskMap from './ModelDetailsRiskMap';
+import modelsApi from '../modelsApi';
 
 enum ETabs {
-    masterPlan = 0,
-    riskMap = 1,
+    masterPlan,
+    riskMap,
 }
 
 const ModelDetails: React.FC = () => {
     const {t} = useTranslation('models');
+    const {id = ''} = useParams();
+    const {data} = modelsApi.useGetModelDetailsQuery({id, securityCode: 'security_code'});
 
-    const {id} = useParams();
-    const title = `Колоранты для колеровочных машин - ${id}`;
+    const title = useMemo(() => `${data?.qualityModelFullName} - ${id}`, [data?.qualityModelFullName, id]);
 
     const [activeTab, setActiveTab] = useState<ETabs>(ETabs.masterPlan);
 

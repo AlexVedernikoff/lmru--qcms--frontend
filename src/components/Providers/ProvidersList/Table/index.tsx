@@ -5,14 +5,25 @@ import {RegularButton} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {PROVIDER_TABLE_ITEMS} from '../../../../common/mocks';
 import {PROVIDER_ROUTES} from '../../../../common/consts';
-import {IDataType, getProviderTableColumns} from './TableColumns';
+import {getProviderTableColumns} from './TableColumns';
 import CustomTable from '../../../Common/CustomTable';
+import {IProvidersResponse, IProvidersResponseItem} from '../../../../common/types/providers';
 
-const ProvidersTable: React.FC = () => {
+interface Props {
+    providers: IProvidersResponse | undefined; // IProviderTableItem[]
+}
+export type RawTable = Pick<IProvidersResponseItem, 'supplierName' | 'supplierRMSCode' | 'id'>;
+
+const ProvidersTable: React.FC<Props> = props => {
     const navigate = useNavigate();
     const {t} = useTranslation('providers');
+    const {providers} = props;
+
+    let rawTable = providers?.content.map((el, i) => {
+        let raw = {supplierName: el.supplierName, supplierRMSCode: el.supplierRMSCode, id: el.id, key: i};
+        return raw;
+    });
 
     const handleViewProviderDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
         e => {
@@ -24,15 +35,15 @@ const ProvidersTable: React.FC = () => {
         [navigate]
     );
 
-    const columns = useMemo<ColumnsType<IDataType>>(
+    const columns = useMemo<ColumnsType<RawTable>>(
         () => [
             {
                 title: '',
                 dataIndex: undefined,
                 width: 64,
-                render: (_value: string, record: IDataType) => (
+                render: (_value: string, record: RawTable) => (
                     <RegularButton
-                        data-id={record.providerCode.toString()}
+                        data-id={record.id.toString()}
                         onClick={handleViewProviderDetails}
                         href=""
                         rel=""
@@ -50,12 +61,12 @@ const ProvidersTable: React.FC = () => {
         [handleViewProviderDetails, t]
     );
 
-    const data = useMemo<IDataType[]>(() => PROVIDER_TABLE_ITEMS, []);
+    const data = useMemo<RawTable[] | undefined>(() => rawTable, [rawTable]);
 
-    const rowSelection = useMemo<TableRowSelection<IDataType>>(
+    const rowSelection = useMemo<TableRowSelection<RawTable>>(
         () => ({
             type: 'checkbox',
-            onChange: (selectedRowKeys: React.Key[], selectedRows: IDataType[]) => {
+            onChange: (selectedRowKeys: React.Key[], selectedRows: RawTable[]) => {
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             },
             // getCheckboxProps: (record: IDataType) => ({

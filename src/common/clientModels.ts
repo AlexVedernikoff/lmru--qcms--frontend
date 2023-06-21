@@ -94,6 +94,7 @@ export interface IProductTableTransferItem {
 }
 
 export interface IProviderTableItem {
+    key: string | number;
     providerName: string;
     providerCode: number;
     providerCertified: string;
@@ -101,11 +102,11 @@ export interface IProviderTableItem {
 }
 
 export interface IProviderCommandTableItem {
-    userServiceNumber: number;
+    userServiceNumber: string;
     surname: string;
     name: string;
     email: string;
-    activityTypeCode: number;
+    activityTypeCode: string;
 }
 
 export interface IProviderContactsTableItem {

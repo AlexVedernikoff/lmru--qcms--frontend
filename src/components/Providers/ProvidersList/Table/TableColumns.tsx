@@ -1,21 +1,23 @@
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
 import {IProviderTableItem} from '../../../../common/clientModels';
+import {IProvidersResponse} from '../../../../common/types/providers';
+import {RawTable} from '.';
 
-export interface IDataType extends IProviderTableItem {
+export interface IDataType extends IProvidersResponse, IProviderTableItem {
     key: React.Key;
 }
 
-export const getProviderTableColumns = (t: TFunction<'providers', undefined, 'providers'>): ColumnsType<IDataType> => [
+export const getProviderTableColumns = (t: TFunction<'providers', undefined, 'providers'>): ColumnsType<RawTable> => [
     {
         title: t('ProvidersList.Table.Columns.providerName'),
-        dataIndex: 'providerName',
+        dataIndex: 'supplierName',
         render: (text: string) => <div>{text}</div>,
         width: 246,
     },
     {
         title: t('ProvidersList.Table.Columns.providerCode'),
-        dataIndex: 'providerCode',
+        dataIndex: 'supplierRMSCode',
         width: 124,
     },
     {

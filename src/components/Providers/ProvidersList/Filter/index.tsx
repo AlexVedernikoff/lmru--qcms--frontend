@@ -4,18 +4,70 @@ import {Checkbox, Dropdown, DropdownItem, Grid, Input, RegularButton, DatePicker
 import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
 import AdditionalFilter from './AdditionalFilter';
 import styles from '../../../Common.module.css';
+import {IManagementNomenclature, IModelNomenclature, IProvidersParams} from '../../../../common/types/providers';
 
-const ProvidersFilter: React.FC = () => {
+interface Props {
+    loadProvidersList: (value: IProvidersParams) => void;
+    modelNomenclature: IModelNomenclature | undefined;
+    managementNomenclature: IManagementNomenclature | undefined;
+}
+
+const ProvidersFilter: React.FC<Props> = props => {
     const {t} = useTranslation('providers');
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
-
+    const [filter, setFilter] = useState<string>();
+    const [inputFilter, setInputFilter] = useState<string>();
+    const {loadProvidersList, modelNomenclature} = props;
     const handleShowMoreFiltersClick = () => {
         setIsMoreFiltersActive(prevState => !prevState);
     };
 
-    const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
+    const [searchBy, setSearchBy] = useState<IProvidersParams['searchBy']>({});
 
-    const handleSelect = (value: string | null) => {};
+    const updateRequestPayload = {
+        pageIndex: 2,
+        pageSize: 2,
+        searchBy: {
+            [String(filter)]: inputFilter,
+            ...searchBy,
+        },
+    };
+
+    const keys = ['modelDepartmentId', 'modelSubDepartmentId', 'modelConsolidationId', 'modelCodeId'];
+    const initialAcc = keys.reduce((acc: any, key) => {
+        acc[key] = [];
+        return acc;
+    }, {});
+
+    const handleFiltersAdditional: (newValue: string[]) => void = newValue => {
+        const newFilters = newValue.reduce((acc: any, el: any) => {
+            const [key, value] = el.split(' ');
+
+            if (!acc[key]) acc[key] = [];
+            acc[key].push(value);
+            return acc;
+        }, initialAcc);
+
+        setSearchBy(filters => ({
+            ...filters,
+            ...newFilters,
+        }));
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
+        // setInputFilter(value);
+    };
+
+    const handleSelect = () => {
+        // const value = e.target.value;
+        // setFilter(value);
+    };
+
+    const resetFilters = () => {
+        setInputFilter(undefined);
+        setFilter(undefined);
+        setSearchBy(undefined);
+    };
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
@@ -24,14 +76,20 @@ const ProvidersFilter: React.FC = () => {
                     <Dropdown
                         size="m"
                         closeOnSelect
-                        placeholder={t('ProvidersList.Filters.providerName')}
+                        placeholder={t('Common.Select')}
                         label={t('ProvidersList.Filters.filter')}
-                        value={undefined}
-                        onSelect={handleSelect}
+                        value={filter}
+                        onSelect={function selectValue(value) {
+                            value && setFilter(value);
+                        }}
                     >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text={t('ProvidersList.Filters.providerName')} value={'supplierName'} />
+                        <DropdownItem text={t('ProvidersList.Filters.providerCode')} value={'supplierCode'} />
+                        <DropdownItem text={t('ProvidersList.Filters.INN')} value={'supplierTaxIndetifier'} />
+                        <DropdownItem
+                            text={t('ProvidersList.Filters.businessLicenseNumber')}
+                            value={'businessLicenseNumber'}
+                        />
                     </Dropdown>
 
                     <Input
@@ -39,8 +97,9 @@ const ProvidersFilter: React.FC = () => {
                         autoComplete="off"
                         label=""
                         placeholder=""
-                        value="ООО Ромашка"
-                        onChange={handleInputChange}
+                        value={inputFilter}
+                        disabled={!filter}
+                        onChange={(e, value) => setInputFilter(value)}
                     />
 
                     <Checkbox checked={false} label={t('ProvidersList.Filters.databasePotentialSuppliers')} />
@@ -93,7 +152,7 @@ const ProvidersFilter: React.FC = () => {
                         <DropdownItem text="test" value={'test'} />
                         <DropdownItem text="test" value={'test'} />
                     </Dropdown>
-            
+
                     <Dropdown
                         size="m"
                         closeOnSelect
@@ -106,7 +165,7 @@ const ProvidersFilter: React.FC = () => {
                         <DropdownItem text="test" value={'test'} />
                         <DropdownItem text="test" value={'test'} />
                     </Dropdown>
-                    
+
                     <Dropdown
                         size="m"
                         closeOnSelect
@@ -119,7 +178,7 @@ const ProvidersFilter: React.FC = () => {
                         <DropdownItem text="test" value={'test'} />
                         <DropdownItem text="test" value={'test'} />
                     </Dropdown>
-            
+
                     <Dropdown
                         size="m"
                         closeOnSelect
@@ -187,16 +246,17 @@ const ProvidersFilter: React.FC = () => {
                         <DropdownItem text="test" value={'test'} />
                     </Dropdown>
 
-                    <DatePicker onChange={() => { }}
-                        datePlaceholder='ДД/ММ/ГГГГ -ДД/ММ/ГГГГ'
+                    <DatePicker
+                        onChange={() => {}}
+                        datePlaceholder="ДД/ММ/ГГГГ -ДД/ММ/ГГГГ"
                         label={t('ProvidersList.Filters.dates')}
-                        dateMask={"ДД/ММ/ГГГГ -ДД/ММ/ГГГГ"}
-                        />
+                        dateMask={'ДД/ММ/ГГГГ -ДД/ММ/ГГГГ'}
+                    />
 
                     <Grid columnGap={16} columns="120px 1fr" alignItems="baseline" alignContent="baseline">
                         <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="baseline" alignContent="baseline">
-                            <Checkbox checked={false} label={t("Common.Yes")} />
-                            <Checkbox checked={false} label={t("Common.No")} />
+                            <Checkbox checked={false} label={t('Common.Yes')} />
+                            <Checkbox checked={false} label={t('Common.No')} />
                         </Grid>
                         <Typography variant="s" size="body_short">
                             {t('ProvidersList.Filters.withoutIQ')}
@@ -205,8 +265,8 @@ const ProvidersFilter: React.FC = () => {
 
                     <Grid columnGap={16} columns="120px 1fr" alignItems="baseline" alignContent="baseline">
                         <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="baseline" alignContent="baseline">
-                            <Checkbox checked={false} label={t("Common.Yes")} />
-                            <Checkbox checked={false} label={t("Common.No")} />
+                            <Checkbox checked={false} label={t('Common.Yes')} />
+                            <Checkbox checked={false} label={t('Common.No')} />
                         </Grid>
                         <Typography variant="s" size="body_short">
                             {t('ProvidersList.Filters.withoutAssignedQE')}
@@ -217,7 +277,10 @@ const ProvidersFilter: React.FC = () => {
 
             {isMoreFiltersActive && (
                 <Grid columnGap={16} columns="1fr" alignItems="center">
-                    <AdditionalFilter />
+                    <AdditionalFilter
+                        modelNomenclature={modelNomenclature}
+                        handleFiltersAdditional={handleFiltersAdditional}
+                    />
                 </Grid>
             )}
 
@@ -239,11 +302,11 @@ const ProvidersFilter: React.FC = () => {
                 <span />
 
                 <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton onClick={() => {}} size="m" variant="outline">
+                    <RegularButton onClick={resetFilters} size="m" variant="outline">
                         {t('Buttons.Clear')}
                     </RegularButton>
 
-                    <RegularButton onClick={() => {}} size="m" variant="primary">
+                    <RegularButton onClick={() => loadProvidersList(updateRequestPayload)} size="m" variant="primary">
                         {t('Buttons.Search')}
                     </RegularButton>
                 </Grid>

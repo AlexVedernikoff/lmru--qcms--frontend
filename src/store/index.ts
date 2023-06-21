@@ -1,12 +1,29 @@
 import {configureStore, ThunkAction, Action, combineReducers} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {setupListeners} from '@reduxjs/toolkit/dist/query';
 import {counterSlice} from './slices/exampleSlice';
 import {commonSlice} from './slices/common';
+import modelsApi from '../components/Models/modelsApi';
+import {providersApi} from '../components/Providers/services';
+import {getSupplierDetails} from '../api/getSupplierDetails';
+import {getPermissiveDocuments} from '../api/getPermissiveDocuments';
+import {getProductModelNomenclature} from '../api/getProductModelNomenclature';
+import {postSearchQualityDocuments} from '../api/postSearchQualityDocuments';
+import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
+import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
 import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
 
 const rootReducer = {
     common: commonSlice.reducer,
     counter: counterSlice.reducer,
+    [modelsApi.reducerPath]: modelsApi.reducer,
+    [providersApi.reducerPath]: providersApi.reducer,
+    [getSupplierDetails.reducerPath]: getSupplierDetails.reducer,
+    productsDocumentsFilters: productsDocumentsFilters.reducer,
+    productsDocumentsTableData: productsDocumentsTableData.reducer,
+    [getPermissiveDocuments.reducerPath]: getPermissiveDocuments.reducer,
+    [getProductModelNomenclature.reducerPath]: getProductModelNomenclature.reducer,
+    [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
     [taskDetailsApi.reducerPath]: taskDetailsApi.reducer,
 };
 
@@ -19,11 +36,21 @@ const createReducer = (injectedReducers = {}) =>
 const makeStore = () =>
     configureStore({
         reducer: createReducer(),
-        middleware: getDefaultMiddleware => getDefaultMiddleware().concat(taskDetailsApi.middleware),
+        middleware: getDefaultMiddleware =>
+            getDefaultMiddleware().concat(
+                modelsApi.middleware,
+                providersApi.middleware,
+                taskDetailsApi.middleware,
+                getSupplierDetails.middleware,
+                getPermissiveDocuments.middleware,
+                getProductModelNomenclature.middleware,
+                postSearchQualityDocuments.middleware
+            ),
         devTools: process.env.NODE_ENV === 'development',
     });
 
 export const store = makeStore();
+setupListeners(store.dispatch);
 
 export type TAppDispatch = typeof store.dispatch;
 export type TRootState = ReturnType<typeof store.getState>;

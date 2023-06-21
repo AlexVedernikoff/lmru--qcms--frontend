@@ -1,11 +1,41 @@
 import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react';
+import {Grid, Input, RegularButton} from 'fronton-react';
 import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
 import AdditionalFilter from './AdditionalFilter';
 import styles from '../../../Common.module.css';
+import modelsApi from '../../modelsApi';
+import {skipToken} from '@reduxjs/toolkit/dist/query';
 
-const ModelsFilter: React.FC = () => {
+export interface IFilterFormState {
+    qualityModel?: string;
+    modelNameOrCode?: string;
+    QE?: string;
+    productModel?: string;
+    personLevelRiskForCorrectUsage?: string;
+    personLevelRiskForNonCorrectUsage?: string;
+    productRiskLevel?: string;
+    sustainabilityRisk?: string;
+    regulatoryRisk?: string;
+    calculatedRisk?: string;
+    healthRisk?: string;
+    linkedToNomenclature?: boolean;
+    linkedToEngineer?: boolean;
+    forMixtures?: boolean;
+    isVerificationRequired?: boolean;
+    hasManyProducts?: boolean;
+    withoutPlan?: string;
+    latestChanges?: string;
+}
+
+interface IProps {
+    onSubmit: (filters: IFilterFormState) => void;
+}
+
+const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
+    const {isLoading} = modelsApi.endpoints.getModels.useQueryState(skipToken);
+    const [formState, setFormState] = useState<IFilterFormState>({});
+
     const {t} = useTranslation('models');
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
 
@@ -13,9 +43,18 @@ const ModelsFilter: React.FC = () => {
         setIsMoreFiltersActive(prevState => !prevState);
     };
 
-    const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
+        setFormState(p => ({...p, [e.target.name]: value}));
+    };
 
-    const handleSelect = (value: string | null) => {};
+    const handleClear: React.MouseEventHandler<HTMLButtonElement> = _e => {
+        setFormState({});
+        onSubmit(formState);
+    };
+
+    const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = _e => {
+        onSubmit(formState);
+    };
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
@@ -27,7 +66,7 @@ const ModelsFilter: React.FC = () => {
                         label={t('ModelList.Filters.qualityModel')}
                         name={'qualityModel'}
                         placeholder=""
-                        value={undefined}
+                        value={formState.qualityModel}
                         onChange={handleInputChange}
                     />
 
@@ -37,24 +76,21 @@ const ModelsFilter: React.FC = () => {
                         label={t('ModelList.Filters.modelNameOrCode')}
                         name={'modelNameOrCode'}
                         placeholder=""
-                        value={undefined}
+                        value={formState.modelNameOrCode}
                         onChange={handleInputChange}
                     />
                 </Grid>
 
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
+                    <Input
+                        inputSize="m"
+                        autoComplete="off"
                         label={t('ModelList.Filters.QE')}
-                        value={undefined}
-                        onSelect={handleSelect}
-                    >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                    </Dropdown>
+                        name={'QE'}
+                        placeholder=""
+                        value={formState.QE}
+                        onChange={handleInputChange}
+                    />
                 </Grid>
 
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="14px">
@@ -64,7 +100,7 @@ const ModelsFilter: React.FC = () => {
                         label={t('ModelList.Filters.productModel')}
                         name={'productModel'}
                         placeholder=""
-                        value={undefined}
+                        value={formState.productModel}
                         onChange={handleInputChange}
                     />
                 </Grid>
@@ -72,7 +108,7 @@ const ModelsFilter: React.FC = () => {
 
             {isMoreFiltersActive && (
                 <Grid columnGap={16} columns="1fr" alignItems="center">
-                    <AdditionalFilter />
+                    <AdditionalFilter formState={formState} setFormState={setFormState} />
                 </Grid>
             )}
 
@@ -94,11 +130,11 @@ const ModelsFilter: React.FC = () => {
                 <span />
 
                 <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton onClick={() => {}} size="m" variant="outline">
+                    <RegularButton disabled={isLoading} onClick={handleClear} size="m" variant="outline">
                         {t('Buttons.Clear')}
                     </RegularButton>
 
-                    <RegularButton onClick={() => {}} size="m" variant="primary">
+                    <RegularButton disabled={isLoading} size="m" variant="primary" onClick={handleSubmit}>
                         {t('Buttons.Search')}
                     </RegularButton>
                 </Grid>
