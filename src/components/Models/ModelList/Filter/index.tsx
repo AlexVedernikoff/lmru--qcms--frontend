@@ -66,7 +66,7 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
         [nomenclature]
     );
 
-    const handleProductModelChange = (value: string[], labelList: React.ReactNode[]) => {
+    const handleProductModelChange = (value: string[]) => {
         setFormState({...formState, productModel: value.length > 0 ? value : undefined});
 
         for (const selected of value) {

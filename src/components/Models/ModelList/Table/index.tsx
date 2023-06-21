@@ -111,7 +111,24 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
         {
             title: t('ModelList.Table.Columns.nomenclature'),
             dataIndex: 'productModelNomenclatureModelCode',
-            render: (data: TDataType['productModelNomenclatureModelCode']) => data && <NomenclatureRow code={data} />,
+            render: (_data: TDataType['productModelNomenclatureModelCode'], record) => {
+                const {
+                    productModelNomenclatureDepartmentCode,
+                    productModelNomenclatureSubDepartmentCode,
+                    productModelNomenclatureConsolidationCode,
+                    productModelNomenclatureModelCode,
+                } = record;
+                return (
+                    <NomenclatureRow
+                        data={{
+                            productModelNomenclatureDepartmentCode,
+                            productModelNomenclatureSubDepartmentCode,
+                            productModelNomenclatureConsolidationCode,
+                            productModelNomenclatureModelCode,
+                        }}
+                    />
+                );
+            },
             width: 700,
         },
         {

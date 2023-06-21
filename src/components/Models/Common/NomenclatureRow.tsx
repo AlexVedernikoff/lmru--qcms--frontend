@@ -1,24 +1,39 @@
 import {useMemo} from 'react';
 import {Grid, Typography, Caption} from 'fronton-react';
 import {ChevronRightIcon} from '@fronton/icons-react';
-import modelsApi from '../modelsApi';
+import {IModelItem} from '../../../common/types/models';
 
 interface IProps {
-    code: string;
+    data: Pick<
+        IModelItem,
+        | 'productModelNomenclatureDepartmentCode'
+        | 'productModelNomenclatureSubDepartmentCode'
+        | 'productModelNomenclatureConsolidationCode'
+        | 'productModelNomenclatureModelCode'
+    >;
 }
 
-const NomenclatureRow: React.FC<IProps> = ({code}) => {
-    const {data} = modelsApi.useGetModelNomenclatureQuery({securityCode: 'security_code', application: code});
-
+const NomenclatureRow: React.FC<IProps> = ({
+    data: {
+        productModelNomenclatureDepartmentCode,
+        productModelNomenclatureSubDepartmentCode,
+        productModelNomenclatureConsolidationCode,
+        productModelNomenclatureModelCode,
+    },
+}) => {
     const departments = useMemo(
-        () =>
-            [
-                data?.[0],
-                data?.[0]?.subdepartments?.[0],
-                data?.[0]?.subdepartments?.[0]?.modelConsolidationGroups?.[0],
-                data?.[0]?.subdepartments?.[0]?.modelConsolidationGroups?.[0]?.models?.[0],
-            ] || [],
-        [data]
+        () => [
+            productModelNomenclatureDepartmentCode,
+            productModelNomenclatureSubDepartmentCode,
+            productModelNomenclatureConsolidationCode,
+            productModelNomenclatureModelCode,
+        ],
+        [
+            productModelNomenclatureDepartmentCode,
+            productModelNomenclatureSubDepartmentCode,
+            productModelNomenclatureConsolidationCode,
+            productModelNomenclatureModelCode,
+        ]
     );
 
     if (!departments.length) {
@@ -33,9 +48,9 @@ const NomenclatureRow: React.FC<IProps> = ({code}) => {
                     <Grid key={i} columns={`repeat(${showChevron ? 2 : 1}, 1fr)`} alignItems="center" columnGap={12}>
                         <Grid columns="1fr">
                             <Typography variant="s" size="body_long">
-                                {d?.code}
+                                {d}
                             </Typography>
-                            <Caption message={d?.nameRu} />
+                            <Caption message={d} />
                         </Grid>
                         {showChevron && <ChevronRightIcon />}
                     </Grid>

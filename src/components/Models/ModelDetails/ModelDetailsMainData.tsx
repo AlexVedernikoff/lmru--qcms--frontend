@@ -14,7 +14,7 @@ const ModelDetailsMainData: React.FC = () => {
             <Typography variant="h3">{t('ModelDetails.MainData.Title')}</Typography>
             <TextBlock label={t('ModelDetails.MainData.Field.nomenclature')} text={nomenclatureName} />
             <br />
-            <NomenclatureRow code={''} />
+            <NomenclatureRow data={{}} />
         </Grid>
     );
 };
