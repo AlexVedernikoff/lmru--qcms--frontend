@@ -12,7 +12,7 @@ import {usePostSearchQualityDocsMutation} from '../../../../api/postSearchQualit
 
 const DocumentsTable: React.FC = () => {
     const productsDocuments = useSelector((state: any) => state.productsDocumentsTableData.content);
-    console.log('productsDocuments = ', productsDocuments);
+    // console.log('productsDocuments = ', productsDocuments);
 
     const data = useMemo<IDataType[]>(
         () =>
@@ -42,7 +42,7 @@ const DocumentsTable: React.FC = () => {
         [productsDocuments]
     );
 
-    console.log('data = ', data);
+    // console.log('data = ', data);
 
     const {t} = useTranslation('products');
     const handleSelect = (value: string | null) => {};

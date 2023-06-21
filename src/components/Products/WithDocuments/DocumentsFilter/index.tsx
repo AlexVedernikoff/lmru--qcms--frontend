@@ -16,6 +16,7 @@ import {IPermissiveDocumentsResponse} from '../../../../common/types/permissiveD
 import {setProductsDocumentsTableData} from '../../../../store/slices/productsDocumentsTableDataSlice';
 import {TRootState} from '../../../../store/index';
 import styles from '../../../Common.module.css';
+import {prepareBody} from './prepareBody.js';
 
 const DocumentsFilter: React.FC = () => {
     const dispatch = useDispatch();
@@ -36,14 +37,14 @@ const DocumentsFilter: React.FC = () => {
 
     const receiveQualityDocuments = async () => {
         // * Временно отправляем requestBody без фильтров из-за правок на бэкенде *
-        // const requestBody = prepareBody(productsDocumentsFiltersState);
-        const requestBody = {
-            pageIndex: 0,
-            pageSize: 1,
-            // sortField: 'string',
-            sortDirection: 'ASC',
-            searchBy: {},
-        };
+        const requestBody = prepareBody(productsDocumentsFiltersState);
+        // const requestBody = {
+        //     pageIndex: 0,
+        //     pageSize: 1,
+        //     // sortField: 'string',
+        //     sortDirection: 'ASC',
+        //     searchBy: {},
+        // };
 
         const productsDocumentsTableData = await qualityDocuments(requestBody);
 

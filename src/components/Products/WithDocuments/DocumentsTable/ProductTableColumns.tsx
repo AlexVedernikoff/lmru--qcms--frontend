@@ -26,7 +26,7 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
                         };
 
                         const url =
-                            'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/110';
+                            'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/1';
 
                         fetch(url, options)
                             .then(res => {
