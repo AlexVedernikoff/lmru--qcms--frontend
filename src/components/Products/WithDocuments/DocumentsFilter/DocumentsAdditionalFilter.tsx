@@ -56,21 +56,26 @@ const ProductsAdditionalFilter: React.FC = () => {
     const managementNomenclatureData = managementNomenclature.map((el: IManagementNomenclatureResponse) => {
         return {
             title: el.name,
-            value: `productManagementNomenclatureDepartmentId ${el.name}`,
+            value: `productManagementNomenclatureDepartmentId ${el.id} ${el.name.replace(/\s/g, '_')}`,
             children: el.subDepartments.map(subDep => {
                 return {
                     title: subDep.name,
-                    value: `productManagementNomenclatureSubdepartmentId ${subDep.name}`,
+                    value: `productManagementNomenclatureSubdepartmentId ${el.id} ${subDep.name.replace(/\s/g, '_')}`,
                     children: subDep.types
                         ? subDep.types.map(modCon => {
                               return {
                                   title: modCon.name,
-                                  value: `modelConsolidationId ${modCon.name}`,
+                                  value: `productManagementNomenclatureTypeId ${el.id} ${modCon.name.replace(
+                                      /\s/g,
+                                      '_'
+                                  )}`,
                                   children: modCon.subTypes
                                       ? modCon.subTypes.map(mod => {
                                             return {
                                                 title: mod.name,
-                                                value: `modelCodeId ${mod.name}`,
+                                                value: `productManagementNomenclatureSubtypeId ${
+                                                    el.id
+                                                } ${mod.name.replace(/\s/g, '_')}`,
                                             };
                                         })
                                       : undefined,
@@ -82,7 +87,7 @@ const ProductsAdditionalFilter: React.FC = () => {
         };
     });
 
-    console.log('managementNomenclatureData = ', managementNomenclatureData);
+    console.log('!!!!!!!!!!!!!!!managementNomenclatureData = ', managementNomenclatureData);
 
     const {t} = useTranslation('products');
 
@@ -102,31 +107,36 @@ const ProductsAdditionalFilter: React.FC = () => {
         'productManagementNomenclatureSubtypeId',
     ];
 
-    const treeSelectValue = (keys: string[]) => {
-        const value = keys.reduce((acc: string[], key) => {
+    const treeSelectValue = (keys: string[]) =>
+        keys.reduce((acc: string[], key) => {
             const idsArr: string[] = productsDocumentsFiltersState[key as keyof IFilters] as string[];
             if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
             return acc;
         }, []);
 
-        return value;
-    };
-
     const modelNomenclatureValue = treeSelectValue(modNomKeys);
-    const managementNomenclatureValue = treeSelectValue(modNomKeys);
+    const managementNomenclatureValue = treeSelectValue(manNomLeys);
 
-    console.log(' modelNomenclatureValue = ', modelNomenclatureValue);
+    // const initialAcc = keys.reduce((acc: any, key) => {
+    //     acc[key] = [];
+    //     return acc;
+    // }, {});
 
-    const initialAcc = keys.reduce((acc: any, key) => {
-        acc[key] = [];
-        return acc;
-    }, {});
+    // console.log('modelNomenclatureValue = ', modelNomenclatureValue);
+    // console.log('!!!!!!managementNomenclatureValue = ', managementNomenclatureValue);
 
-    const onTreeChange = (newValue: any, aaaaa: any) => {
-        console.log('aaaa = ', aaaaa);
+    const onTreeChange = (newValue: any, keys: any) => {
+        const initialAcc = keys.reduce((acc: any, key: any) => {
+            acc[key] = [];
+            return acc;
+        }, {});
+
+        console.log('keys if function = ', keys);
         const result = newValue.reduce((acc: any, el: any) => {
-            const [key, value] = el.split(' ');
-            console.log('key, value = ', key, value);
+            // const [key, value] = el.split(' ');
+            const key = el.split(' ')[0];
+            const value = el.split(' ').slice(1).join(' ');
+            console.log('!!!!!!key, value = ', key, value);
             console.log('acc[key] = ', acc[key]);
             if (!acc[key]) acc[key] = [];
             acc[key].push(value);
@@ -137,7 +147,7 @@ const ProductsAdditionalFilter: React.FC = () => {
             onHandleFilterChange(result[key], key);
         }
         if (!Object.keys(result).length) {
-            keys.forEach(key => {
+            keys.forEach((key: any) => {
                 onHandleFilterChange([], key);
             });
         }
@@ -146,7 +156,7 @@ const ProductsAdditionalFilter: React.FC = () => {
     const tPropsProdNom = {
         treeData: productNomenclatureData,
         value: modelNomenclatureValue,
-        onChange: (val: any) => onTreeChange(val, 1234),
+        onChange: (val: any) => onTreeChange(val, modNomKeys),
         treeCheckable: true,
         showCheckedStrategy: SHOW_PARENT,
         placeholder: 'Номенклатура товарной модели',
@@ -156,9 +166,9 @@ const ProductsAdditionalFilter: React.FC = () => {
     };
 
     const tPropsManNom = {
-        treeData: productNomenclatureData,
+        treeData: managementNomenclatureData,
         value: managementNomenclatureValue,
-        onChange: (val: any) => onTreeChange(val, 1234),
+        onChange: (val: any) => onTreeChange(val, manNomLeys),
         treeCheckable: true,
         showCheckedStrategy: SHOW_PARENT,
         placeholder: t('WithDocuments.DetailFilters.ManagementNomenclature'),

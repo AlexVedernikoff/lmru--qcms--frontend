@@ -34,6 +34,12 @@ export interface IFilters {
     modelSubDepartmentId: string[] | undefined;
     modelConsolidationId: string[] | undefined;
     modelCodeId: string[] | undefined;
+
+    productManagementNomenclatureDepartmentId: string[] | undefined;
+    productManagementNomenclatureSubdepartmentId: string[] | undefined;
+    productManagementNomenclatureTypeId: string[] | undefined;
+    productManagementNomenclatureSubtypeId: string[] | undefined;
+
     approvedBy: string;
     qualityModelId: [number | undefined | string];
 }
@@ -58,6 +64,12 @@ export const initialState: IFilters = {
     modelSubDepartmentId: undefined,
     modelConsolidationId: undefined,
     modelCodeId: undefined,
+
+    productManagementNomenclatureDepartmentId: undefined,
+    productManagementNomenclatureSubdepartmentId: undefined,
+    productManagementNomenclatureTypeId: undefined,
+    productManagementNomenclatureSubtypeId: undefined,
+
     approvedBy: '',
     qualityModelId: [''],
 };
