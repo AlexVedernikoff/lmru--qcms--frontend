@@ -29,3 +29,29 @@ export const prepareBody = productsDocumentsFiltersState => {
 
     return requsetBody;
 };
+
+const j = {
+    productDescription: 'string',
+    productCode: 'string',
+    productTNVEDcode: 'string',
+    ean: 'string',
+    // *******************
+    supplierRMSCode: 'string',
+    supplierName: 'string',
+    supplierTaxIdentifer: 'string',
+    // *******************
+    productManagementNomenclatureDepartmentId: [0],
+    productManagementNomenclatureSubdepartmentId: [0],
+    productManagementNomenclatureTypeId: [0],
+    productManagementNomenclatureSubtypeId: [0],
+    // *******************
+    productModelNomenclatureDepartmentId: ['string'],
+    productModelNomenclatureSubdepartmentId: ['string'],
+    productModelNomenclatureConsolidationId: ['string'],
+    productModelNomenclatureCodeId: ['string'],
+};
+
+// approvedBy исчезло.
+// наименование поставщика (второй фильтр) исчезло
+// productDescription: - это товарные номера наименование?
+// модель качества qualityModelId?
