@@ -16,7 +16,37 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
         render: (text: string = '') => (
             <Grid columns="2fr 0.5fr">
                 {text}
-                <IconButton label="Download">
+                <IconButton
+                    label="Download"
+                    onClick={() => {
+                        const options = {
+                            headers: {
+                                securityCode: 'security_code',
+                            },
+                        };
+
+                        const url =
+                            'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/110';
+
+                        fetch(url, options)
+                            .then(res => {
+                                const headers1 = res.headers.get('content-disposition');
+                                const headers2 = res.headers.get('Content-Length');
+
+                                console.log('headers = ', headers1);
+
+                                console.log('headers = ', headers2);
+
+                                return res.blob();
+                            })
+                            .then(blob => {
+                                console.log('blob = ', blob);
+
+                                var file = window.URL.createObjectURL(blob);
+                                window.location.assign(file);
+                            });
+                    }}
+                >
                     <DownloadIcon />{' '}
                 </IconButton>
             </Grid>

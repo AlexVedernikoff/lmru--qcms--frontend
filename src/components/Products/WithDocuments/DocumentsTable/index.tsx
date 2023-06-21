@@ -12,6 +12,7 @@ import {usePostSearchQualityDocsMutation} from '../../../../api/postSearchQualit
 
 const DocumentsTable: React.FC = () => {
     const productsDocuments = useSelector((state: any) => state.productsDocumentsTableData.content);
+    console.log('productsDocuments = ', productsDocuments);
 
     const data = useMemo<IDataType[]>(
         () =>
@@ -20,26 +21,28 @@ const DocumentsTable: React.FC = () => {
                     key: el.id,
                     documentNumber: el.id,
                     type: el.type,
-                    productCode: el.productsDetails[0]?.productCode,
-                    EAN: el.productsDetails[0]?.ean,
-                    TNVED: el.productsDetails[0]?.productTNVEDCode,
-                    name: el.productsDetails[0]?.productTNVEDCode,
-                    releaseDate: el.issueDate,
-                    endDate: el.expireDate,
+                    productCode: el.productsDetails[0]?.productCode || ' ',
+                    EAN: el.productsDetails[0]?.ean || ' ',
+                    TNVED: el.productsDetails[0]?.productTNVEDCode || ' ',
+                    name: el.productsDetails[0]?.productTNVEDCode || ' ',
+                    releaseDate: el.issueDate || ' ',
+                    endDate: el.expireDate || ' ',
                     status: el.status,
-                    confirmationStatus: el.productsDetails[0]?.approvingStatus,
-                    uploadDate: el.creationInformation.createdAt,
-                    nameSupplier: el.productsDetails[0]?.supplierName,
-                    supplieroCodeRMS: el.productsDetails[0]?.supplierRMSCode,
-                    INN: el.productsDetails[0]?.supplierTaxIdentifier,
+                    confirmationStatus: el.productsDetails[0]?.approvingStatus || ' ',
+                    uploadDate: el.creationInformation.createdAt || ' ',
+                    nameSupplier: el.productsDetails[0]?.supplierName || ' ',
+                    supplieroCodeRMS: el.productsDetails[0]?.supplierRMSCode || ' ',
+                    INN: el.productsDetails[0]?.supplierTaxIdentifier || ' ',
                     businessLicenseNumber: 0,
                     SSMCode: 0,
-                    role: el.creationInformation.createdBy.Role,
-                    downloadCompleted: el.creationInformation.createdBy,
+                    role: el.creationInformation.createdBy.Role || ' ',
+                    downloadCompleted: el.creationInformation.createdBy || ' ',
                 };
             }),
         [productsDocuments]
     );
+
+    console.log('data = ', data);
 
     const {t} = useTranslation('products');
     const handleSelect = (value: string | null) => {};
