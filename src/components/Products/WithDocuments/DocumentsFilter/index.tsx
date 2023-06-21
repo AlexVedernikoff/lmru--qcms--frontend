@@ -30,7 +30,7 @@ const DocumentsFilter: React.FC = () => {
         }
     };
 
-    const productsDocumentsFiltersState = useSelector((state: TRootState) => state.productsDocumentsFilters);
+    const productsDocumentsFiltersState: IFilters = useSelector((state: TRootState) => state.productsDocumentsFilters);
 
     const {data: permissiveDocuments = []} = useGetPermissiveDocsQuery(true);
     const [qualityDocuments] = usePostSearchQualityDocsMutation();
@@ -70,6 +70,8 @@ const DocumentsFilter: React.FC = () => {
     };
 
     const {dates} = productsDocumentsFiltersState;
+
+    const {approvingStatus} = productsDocumentsFiltersState;
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
@@ -199,7 +201,7 @@ const DocumentsFilter: React.FC = () => {
                         closeOnSelect
                         placeholder={t('Common.Select')}
                         label={t('WithDocuments.Filters.ComplianceStatus')}
-                        value={productsDocumentsFiltersState.approvingStatus[0]}
+                        value={approvingStatus ? approvingStatus[0] : undefined}
                         onSelect={e => onHandleFilterChange([e!], 'approvingStatus')}
                     >
                         <DropdownItem text={t('WithDocuments.Table.APPROVED')} value={'APPROVED'} />

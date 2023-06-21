@@ -4,6 +4,7 @@ import {IProviderTableWithDocuments} from '../../../../common/clientModels';
 import DownloadIcon from '../../../Icons/DownloadIcon';
 import {Grid, IconButton} from 'fronton-react';
 import LinkIcon from '../../../Icons/LinkIcon';
+import {downloadFile} from '../../../../api/downloadQualityDocument';
 
 export interface IDataType extends IProviderTableWithDocuments {
     key: React.Key;
@@ -16,46 +17,10 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
         render: (text: string = '') => (
             <Grid columns="2fr 0.5fr">
                 {text}
-
                 <IconButton
                     label="Download"
                     onClick={() => {
-                        const options = {
-                            headers: {
-                                securityCode: 'security_code',
-                                'Access-Control-Expose-Headers': '*',
-                            },
-                        };
-
-                        const url =
-                            'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/1';
-
-                        fetch(url, options)
-                            .then(res => {
-                                // const headers1 = res.headers.get('content-disposition');
-                                // debugger;
-
-                                const headers1 = res.headers.get('Content-Disposition');
-                                const headers2 = res.headers.get('Content-Length');
-
-                                console.log('headers = ', headers1);
-
-                                console.log('headers = ', headers2);
-
-                                return res.blob();
-                            })
-                            .then(blob => {
-                                console.log('blob = ', blob);
-
-                                var file = window.URL.createObjectURL(blob);
-
-                                let a = document.createElement('a');
-                                a.href = file;
-                                a.download = 'test.csv';
-                                a.click();
-
-                                // window.location.assign(file);
-                            });
+                        downloadFile(Number(text));
                     }}
                 >
                     <DownloadIcon />{' '}

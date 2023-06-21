@@ -21,7 +21,7 @@ interface IDates {
 export interface IFilters {
     productNumberKey: string;
     productNumberValue: string;
-    approvingStatus: [EComplianceStatusValues];
+    approvingStatus: [EComplianceStatusValues] | undefined;
     supplierNameKey: string;
     supplierNameValue: string;
     regulatoryStatus: string[];
@@ -47,7 +47,7 @@ export interface IFilters {
 export const initialState: IFilters = {
     productNumberKey: 'productCode',
     productNumberValue: '',
-    approvingStatus: [EComplianceStatusValues.APPROVED],
+    approvingStatus: undefined,
     supplierNameKey: 'supplierName',
     supplierNameValue: '',
     regulatoryStatus: ['IMPORTER'],

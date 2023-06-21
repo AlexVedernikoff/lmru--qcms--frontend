@@ -1,22 +1,33 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-// import {IProductModelNomenclatureResponse} from '../common/types/productModelNomenclature';
-
-const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/';
-
-export const downloadQualityDocument = createApi({
-    reducerPath: 'downloadQualityDocument',
-    baseQuery: fetchBaseQuery({
-        baseUrl: hostUrl,
-        prepareHeaders: (headers, {getState}) => {
-            headers.set('securityCode', 'security_code');
-            return headers;
+export function downloadFile(id: number) {
+    const headers = {
+        headers: {
+            securityCode: 'security_code',
         },
-    }),
-    endpoints: builder => ({
-        downloadQualityDocument: builder.query<any, void>({
-            query: id => `/v1/download-quality-document/${110}`,
-        }),
-    }),
-});
+    };
 
-export const {useDownloadQualityDocumentQuery} = downloadQualityDocument;
+    let fileName: string | null | undefined = '';
+
+    const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/';
+
+    fetch(`${hostUrl}${id}`, headers)
+        .then(response => {
+            if (String(response.status)[0] === '4') {
+                console.log('Ошибка! Такого файла не существует.');
+                return;
+            }
+
+            fileName = response.headers.get('Content-Disposition')?.split("'").slice(-1)[0];
+            return response.blob();
+        })
+        .then(blob => {
+            if (blob != null) {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName as string;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            }
+        });
+}
