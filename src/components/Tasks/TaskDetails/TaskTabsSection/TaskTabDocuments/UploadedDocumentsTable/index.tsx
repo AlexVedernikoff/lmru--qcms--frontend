@@ -30,13 +30,9 @@ const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
         setDrag(false);
     };
 
-    interface HTMLInputEvent extends Event {
-        target: HTMLInputElement & EventTarget;
-    }
-
-    const onDropHandler = async (e: HTMLInputEvent | DragEvent) => {
+    const onDropHandler = async (e: DragEvent) => {
         e.preventDefault();
-        const files = [...(e as DragEvent).dataTransfer.files];
+        const {files} = e.dataTransfer;
         if (!files.length) return;
         const formData = new FormData();
         formData.append('file', files[0]);
