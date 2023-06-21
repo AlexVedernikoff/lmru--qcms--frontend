@@ -1,12 +1,15 @@
 import {Grid} from 'fronton-react';
 import TaskTabs from './TaskTabs';
 import styles from '../../../Common.module.css';
+import {PropsTaskDetails} from '../TaskDetails';
 
-const TaskTabsSection: React.FC = () => {
+const TaskTabsSection: React.FC<PropsTaskDetails> = props => {
+    const {taskDetails} = props;
+
     return (
         <Grid className={styles.panel} rowGap={16} columnGap={16}>
             <Grid rowGap={16} columnGap={16}>
-                <TaskTabs />
+                <TaskTabs taskDetails={taskDetails} />
             </Grid>
         </Grid>
     );

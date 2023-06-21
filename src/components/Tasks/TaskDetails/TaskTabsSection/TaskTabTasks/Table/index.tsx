@@ -7,8 +7,9 @@ import {TASK_TASKS_TABLE_ITEMS} from '../../../../../../common/mocks';
 import {TableRowSelection} from 'antd/es/table/interface';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {Grid, RegularButton} from 'fronton-react';
+import {PropsTaskDetails} from '../../../TaskDetails';
 
-const TasksTable: React.FC = () => {
+const TasksTable: React.FC<PropsTaskDetails> = props => {
     const {t} = useTranslation('tasks');
 
     const handleViewProductDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(e => {
@@ -40,7 +41,7 @@ const TasksTable: React.FC = () => {
         ],
         [handleViewProductDetails, t]
     );
-
+    // TODO убрать моки
     const data = useMemo<IDataType[]>(() => TASK_TASKS_TABLE_ITEMS, []);
 
     const rowSelection = useMemo<TableRowSelection<IDataType>>(

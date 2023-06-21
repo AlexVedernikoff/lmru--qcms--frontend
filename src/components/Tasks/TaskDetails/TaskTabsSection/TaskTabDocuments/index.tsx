@@ -3,9 +3,11 @@ import {useTranslation} from 'react-i18next';
 import AwaitedDocumentsTable from './AwaitedDocumentsTable';
 import UploadedDocumentsTable from './UploadedDocumentsTable';
 import commonStyles from '../../../../Common.module.css';
+import {PropsTaskDetails} from '../../TaskDetails';
 
-const TaskTabDocuments: React.FC = () => {
+const TaskTabDocuments: React.FC<PropsTaskDetails> = props => {
     const {t} = useTranslation('tasks');
+    const {taskDetails} = props;
 
     return (
         <Grid gap={16}>
@@ -13,14 +15,14 @@ const TaskTabDocuments: React.FC = () => {
                 <Typography variant="m" size="body_accent">
                     {t('TaskTabs.Documents.AwaitedDocuments.Title')}
                 </Typography>
-                <AwaitedDocumentsTable />
+                <AwaitedDocumentsTable taskDetails={taskDetails} />
             </Grid>
 
             <Grid className={commonStyles.sectionItem} rowGap={24}>
                 <Typography variant="m" size="body_accent">
                     {t('TaskTabs.Documents.UploadedDocuments.Title')}
                 </Typography>
-                <UploadedDocumentsTable />
+                <UploadedDocumentsTable taskDetails={taskDetails} />
             </Grid>
         </Grid>
     );

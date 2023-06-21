@@ -1,0 +1,17 @@
+.drop {
+    min-height: 146px;
+    border: 2px dashed #ced0d6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.save {
+    margin: 10px;
+}
+
+.hidden {
+    display: none;
+}

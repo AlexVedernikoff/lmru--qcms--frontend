@@ -2,10 +2,12 @@ import {configureStore, ThunkAction, Action, combineReducers} from '@reduxjs/too
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {counterSlice} from './slices/exampleSlice';
 import {commonSlice} from './slices/common';
+import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
 
 const rootReducer = {
     common: commonSlice.reducer,
     counter: counterSlice.reducer,
+    [taskDetailsApi.reducerPath]: taskDetailsApi.reducer,
 };
 
 const createReducer = (injectedReducers = {}) =>
@@ -17,6 +19,7 @@ const createReducer = (injectedReducers = {}) =>
 const makeStore = () =>
     configureStore({
         reducer: createReducer(),
+        middleware: getDefaultMiddleware => getDefaultMiddleware().concat(taskDetailsApi.middleware),
         devTools: process.env.NODE_ENV === 'development',
     });
 
