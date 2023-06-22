@@ -1,35 +1,45 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-enum EComplianceStatusValues {
+enum EApprovingStatusValues {
     'APPROVED' = 'APPROVED',
     'REJECTED' = 'REJECTED',
     'NEEDS_APPROVAL' = 'NEEDS_APPROVAL',
 }
+
+enum ERegulatoryStatusValues {
+    'IMPORTER' = 'IMPORTER',
+    'SUPPLIER' = 'SUPPLIER',
+    'MANUFACTURER' = 'MANUFACTURER',
+}
+
 export enum EDateType {
-    'CREATED' = 'CREATED',
-    'UPDATED' = 'UPDATED',
-    'ISSUE' = 'ISSUE',
-    'EXPIRY' = 'EXPIRY',
+    'createDate' = 'createDate',
+    'updateDate' = 'updateDate',
+    'issueDate' = 'issueDate',
+    'expireDate' = 'expireDate',
 }
 
 interface IDates {
-    dateType: EDateType;
+    dateType: EDateType | undefined;
     startDate: string;
     endDate: string;
 }
 
 export interface IFilters {
     productNumberKey: string;
-    productNumberValue: string;
-    approvingStatus: [EComplianceStatusValues] | undefined;
+    productNumberValue: string | undefined;
+
     supplierNameKey: string;
-    supplierNameValue: string;
-    regulatoryStatus: string[] | undefined;
+    supplierNameValue: string | undefined;
+
+    approvingStatus: [EApprovingStatusValues] | undefined;
+    regulatoryStatus: [ERegulatoryStatusValues] | undefined;
+
     type: string[] | undefined;
     fileName: string | undefined;
     status: string[] | undefined;
     dates: IDates;
-    country: string;
+    country: string | undefined;
     modelDepartmentId: string[] | undefined;
     modelSubDepartmentId: string[] | undefined;
     modelConsolidationId: string[] | undefined;
@@ -40,25 +50,27 @@ export interface IFilters {
     productManagementNomenclatureTypeId: string[] | undefined;
     productManagementNomenclatureSubtypeId: string[] | undefined;
 
-    qualityModelId: [number | undefined | string];
+    qualityModelId: number[] | undefined;
 }
 
 export const initialState: IFilters = {
     productNumberKey: 'productCode',
-    productNumberValue: '',
-    approvingStatus: undefined,
+    productNumberValue: undefined,
+
     supplierNameKey: 'supplierName',
-    supplierNameValue: '',
+    supplierNameValue: undefined,
+
+    approvingStatus: undefined,
     regulatoryStatus: undefined,
     type: undefined,
     fileName: undefined,
     status: undefined,
     dates: {
-        dateType: EDateType.CREATED,
+        dateType: undefined,
         startDate: '',
         endDate: '',
     },
-    country: '9',
+    country: undefined,
 
     modelDepartmentId: undefined,
     modelSubDepartmentId: undefined,
@@ -70,7 +82,7 @@ export const initialState: IFilters = {
     productManagementNomenclatureTypeId: undefined,
     productManagementNomenclatureSubtypeId: undefined,
 
-    qualityModelId: [''],
+    qualityModelId: undefined,
 };
 
 export const productsDocumentsFilters = createSlice({

@@ -177,6 +177,8 @@ const ProductsAdditionalFilter: React.FC = () => {
         },
     };
 
+    const {country, qualityModelId} = productsDocumentsFiltersState;
+
     return (
         <Grid columnGap={16} columns="repeat(2, 1fr)" alignItems="baseline">
             <Grid rowGap={16} columns="1fr" alignItems="baseline">
@@ -200,7 +202,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                     closeOnSelect
                     placeholder="Выберите"
                     label={t('WithDocuments.DetailFilters.Country')}
-                    value={productsDocumentsFiltersState.country}
+                    value={country}
                     onSelect={e => onHandleFilterChange(e, 'country')}
                 >
                     <DropdownItem text={t('WithDocuments.Table.Russia')} value={9} />
@@ -213,7 +215,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                     label={t('WithDocuments.DetailFilters.QualityModel')}
                     name={'qualityModelId'}
                     placeholder=""
-                    value={String(productsDocumentsFiltersState.qualityModelId)}
+                    value={qualityModelId ? String(qualityModelId[0]) : undefined}
                     onChange={e => {
                         const eventToNum = Number(e.target.value);
                         if (isNaN(eventToNum)) return;

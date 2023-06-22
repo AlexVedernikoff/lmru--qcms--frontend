@@ -16,7 +16,7 @@ import {IPermissiveDocumentsResponse} from '../../../../common/types/permissiveD
 import {setProductsDocumentsTableData} from '../../../../store/slices/productsDocumentsTableDataSlice';
 import {TRootState} from '../../../../store/index';
 import styles from '../../../Common.module.css';
-import {prepareBody} from './prepareBody.js';
+import {prepareBody} from './prepareBody';
 
 const DocumentsFilter: React.FC = () => {
     const dispatch = useDispatch();
@@ -69,9 +69,7 @@ const DocumentsFilter: React.FC = () => {
         setIsMoreFiltersActive(prevState => !prevState);
     };
 
-    const {dates} = productsDocumentsFiltersState;
-
-    const {approvingStatus, regulatoryStatus, type, fileName, status} = productsDocumentsFiltersState;
+    const {approvingStatus, regulatoryStatus, type, fileName, status, dates} = productsDocumentsFiltersState;
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
@@ -216,10 +214,10 @@ const DocumentsFilter: React.FC = () => {
                             onHandleFilterChange({...dates, dateType}, 'dates');
                         }}
                     >
-                        <DropdownItem text={t('WithDocuments.Table.CREATED')} value={'CREATED'} />
-                        <DropdownItem text={t('WithDocuments.Table.UPDATED')} value={'UPDATED'} />
-                        <DropdownItem text={t('WithDocuments.Table.ISSUE')} value={'ISSUE'} />
-                        <DropdownItem text={t('WithDocuments.Table.EXPIRY')} value={'EXPIRY'} />
+                        <DropdownItem text={t('WithDocuments.Table.CREATED')} value={'createDate'} />
+                        <DropdownItem text={t('WithDocuments.Table.UPDATED')} value={'updateDate'} />
+                        <DropdownItem text={t('WithDocuments.Table.ISSUE')} value={'issueDate'} />
+                        <DropdownItem text={t('WithDocuments.Table.EXPIRY')} value={'expireDate'} />
                     </Dropdown>
                     <DatePicker
                         date={[

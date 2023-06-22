@@ -1,3 +1,5 @@
+import {IFilters} from '../../../../store/slices/productsDocumentsSlice';
+
 const initialBody = {
     pageIndex: 0,
     pageSize: 1,
@@ -6,30 +8,37 @@ const initialBody = {
     searchBy: {},
 };
 
-export const prepareBody = productsDocumentsFiltersState => {
-    const requsetBody = {...initialBody};
+export const prepareBody = (productsDocumentsFiltersState: IFilters) => {
+    const requsetBody: any = {...initialBody};
     const {searchBy} = requsetBody;
-    const {
-        productNumberKey,
-        productNumberValue,
-        supplierNameKey,
-        supplierNameValue,
-        type, // documentType в предыдущей документации. Фильтр "04 Тип документа"
-        fileName, // documentName в предыдущей документации. Фильтр "05 имя файла fileName"
-        status, // Фильтр "06 Статус документа " enum ["ACTIVE", "INACTIVE"]
-        approvingStatus, // Фильтр "07 Статус соответствия"
-        regulatoryStatus, // Фильтр 03 "Регуляторный статус"
-    } = productsDocumentsFiltersState;
+
+    const {productNumberKey, productNumberValue, supplierNameKey, supplierNameValue, dates} =
+        productsDocumentsFiltersState;
+
+    const {dateType, startDate, endDate} = dates;
+    const newDateArr = ['createDate', 'updateDate'];
 
     requsetBody.searchBy = {
         [productNumberKey]: productNumberValue,
         [supplierNameKey]: supplierNameValue,
+        [String(dateType)]:
+            startDate && endDate
+                ? {
+                      'Start date for search (After)': newDateArr.includes(String(dateType))
+                          ? new Date(startDate)
+                          : startDate,
+                      'End date for search (Before)': newDateArr.includes(String(dateType))
+                          ? new Date(endDate)
+                          : endDate,
+                  }
+                : undefined,
         ...productsDocumentsFiltersState,
     };
     delete requsetBody.searchBy.productNumberKey;
     delete requsetBody.searchBy.productNumberValue;
     delete requsetBody.searchBy.supplierNameKey;
     delete requsetBody.searchBy.supplierNameValue;
+    delete requsetBody.searchBy.dates;
 
     return requsetBody;
 };
