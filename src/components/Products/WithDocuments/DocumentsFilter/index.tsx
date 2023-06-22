@@ -50,10 +50,13 @@ const DocumentsFilter: React.FC = () => {
 
         dispatch(setProductsDocumentsTableData(productsDocumentsTableData));
     };
-    const documentsTypes = useMemo(
-        () => permissiveDocuments.map((el: IPermissiveDocumentsResponse) => el.type),
+    let documentsTypes = useMemo(
+        () => Array.from(new Set(permissiveDocuments.map((el: IPermissiveDocumentsResponse) => el.type))),
         [permissiveDocuments]
     );
+
+    // documentsTypes = Array.from(new Set(documentsTypes));
+
     // useEffect(() => {
     //     onHandleFilterChange(documentsTypes[0], 'documentType');
     // }, [documentsTypes.length]);

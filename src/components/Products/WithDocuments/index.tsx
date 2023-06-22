@@ -1,9 +1,18 @@
+import {useState} from 'react';
 import {Grid} from 'fronton-react';
 import DocumentsFilter from './DocumentsFilter';
 import DocumentsTable from './DocumentsTable';
 import styles from '../../Common.module.css';
 
 const ProductsWithDocuments: React.FC = () => {
+    // const [page, setPage] = useState({
+    //     pageSize: 10,
+    //     pageIndex: 0,
+    // });
+
+    // const handlePageChange = (pageIndex: number, pageSize: number) => {
+    //     setPage({pageIndex: pageIndex - 1, pageSize});
+    // };
     return (
         <Grid rowGap={16}>
             <Grid rowGap={16}>

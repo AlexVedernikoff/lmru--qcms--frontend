@@ -10,9 +10,19 @@ import {IDataType, getProductTableColumns} from './ProductTableColumns';
 import CustomTable from '../../../Common/CustomTable';
 import {usePostSearchQualityDocsMutation} from '../../../../api/postSearchQualityDocuments';
 
-const DocumentsTable: React.FC = () => {
-    const productsDocuments = useSelector((state: any) => state.productsDocumentsTableData.content);
-    // console.log('productsDocuments = ', productsDocuments);
+// interface IProps {
+//     onPageChange: (page: number, size: number) => void;
+// }
+
+// const DocumentsTable: React.FC<IProps> = () => {
+const DocumentsTable = () => {
+    const {content: productsDocuments, pageable} = useSelector((state: any) => state.productsDocumentsTableData);
+
+    // interface IProps {
+    //     onPageChange: (page: number, size: number) => void;
+    //     tableData: IModelsResponse;
+    //     isLoading: boolean;
+    // }
 
     const data = useMemo<IDataType[]>(
         () =>
@@ -89,37 +99,21 @@ const DocumentsTable: React.FC = () => {
     );
 
     return (
-        <>
-            <Grid columns="5fr 3fr 1fr" columnGap={20}>
-                <br />
-                {/* Скрыто по согласованию с Никитой Фёдоровым */}
-                {/* <Dropdown
-                    size="m"
-                    closeOnSelect
-                    placeholder={t('Common.Select')}
-                    label={t('Common.Actions')}
-                    value={undefined}
-                    onSelect={handleSelect}
-                >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                </Dropdown>
-                <RegularButton onClick={() => {}} size="m" variant="primary">
-                    {t('Buttons.Make')}
-                </RegularButton> */}
-            </Grid>
-            <CustomTable
-                rowSelection={rowSelection}
-                columns={columns}
-                dataSource={data}
-                scroll={{x: 400}}
-                tableLayout="fixed"
-                size="small"
-                bordered
-                pagination={{}}
-            />
-        </>
+        <CustomTable
+            rowSelection={rowSelection}
+            columns={columns}
+            dataSource={data}
+            scroll={{x: 400}}
+            tableLayout="fixed"
+            size="small"
+            bordered
+            pagination={{
+                pageSize: pageable?.pageSize,
+                total: pageable?.totalElements,
+                current: pageable?.pageIndex + 1,
+                // onChange: onPageChange,
+            }}
+        />
     );
 };
 

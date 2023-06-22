@@ -25,6 +25,14 @@ interface IDates {
     endDate: string;
 }
 
+// export interface IQualityDocumentsRequest {
+//     pageIndex: number;
+//     pageSize: number;
+//     sortField?: string;
+//     sortDirection: string;
+//     searchBy: SearchBy;
+// }
+
 export interface IFilters {
     productNumberKey: string;
     productNumberValue: string | undefined;
