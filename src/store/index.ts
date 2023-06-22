@@ -12,6 +12,7 @@ import {postSearchQualityDocuments} from '../api/postSearchQualityDocuments';
 import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
 import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
 import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
+import productDetailsApi from '../components/Products/ProductDetails/productDetailsApi';
 
 const rootReducer = {
     common: commonSlice.reducer,
@@ -25,6 +26,7 @@ const rootReducer = {
     [getProductModelNomenclature.reducerPath]: getProductModelNomenclature.reducer,
     [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
     [taskDetailsApi.reducerPath]: taskDetailsApi.reducer,
+    [productDetailsApi.reducerPath]: productDetailsApi.reducer,
 };
 
 const createReducer = (injectedReducers = {}) =>
@@ -44,7 +46,8 @@ const makeStore = () =>
                 getSupplierDetails.middleware,
                 getPermissiveDocuments.middleware,
                 getProductModelNomenclature.middleware,
-                postSearchQualityDocuments.middleware
+                postSearchQualityDocuments.middleware,
+                productDetailsApi.middleware
             ),
         devTools: process.env.NODE_ENV === 'development',
     });
