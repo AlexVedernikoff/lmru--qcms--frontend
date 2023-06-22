@@ -225,6 +225,7 @@ const DocumentsFilter: React.FC = () => {
                             productsDocumentsFiltersState.dates.endDate,
                         ]}
                         mode="range"
+                        view="double"
                         onChange={function noRefCheck(e) {
                             const datesArr = [dates.startDate, dates.endDate];
                             const datesArrRemoveEmpty = datesArr.filter(el => el);

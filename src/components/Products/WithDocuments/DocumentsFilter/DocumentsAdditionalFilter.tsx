@@ -241,11 +241,12 @@ const ProductsAdditionalFilter: React.FC = () => {
                     onChange={handleInputChange}
                 /> */}
                 <Grid columns="0.5fr 0.3fr">
-                    <CustomSwitch
+                    {/* Скрыто по согласованию с Никитой Фёдоровым */}
+                    {/* <CustomSwitch
                         handleChange={handleChange}
                         name={t('WithDocuments.DetailFilters.IncludingOutdatedDocuments')}
                         checked={checked}
-                    />
+                    /> */}
                 </Grid>
             </Grid>
         </Grid>

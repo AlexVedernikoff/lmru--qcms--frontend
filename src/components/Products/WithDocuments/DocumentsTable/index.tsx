@@ -92,7 +92,8 @@ const DocumentsTable: React.FC = () => {
         <>
             <Grid columns="5fr 3fr 1fr" columnGap={20}>
                 <br />
-                <Dropdown
+                {/* Скрыто по согласованию с Никитой Фёдоровым */}
+                {/* <Dropdown
                     size="m"
                     closeOnSelect
                     placeholder={t('Common.Select')}
@@ -106,7 +107,7 @@ const DocumentsTable: React.FC = () => {
                 </Dropdown>
                 <RegularButton onClick={() => {}} size="m" variant="primary">
                     {t('Buttons.Make')}
-                </RegularButton>
+                </RegularButton> */}
             </Grid>
             <CustomTable
                 rowSelection={rowSelection}
