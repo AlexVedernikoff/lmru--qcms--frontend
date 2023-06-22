@@ -26,23 +26,37 @@ const ProductsAdditionalFilter: React.FC = () => {
         dispatch(setProductsDocumentsFilters([e, k]));
     };
 
+    const modNomKeys = [
+        'productModelNomenclatureDepartmentId',
+        'productModelNomenclatureSubdepartmentId',
+        'productModelNomenclatureConsolidationId',
+        'productModelNomenclatureCodeId',
+    ];
+
+    const manNomLeys = [
+        'productManagementNomenclatureDepartmentId',
+        'productManagementNomenclatureSubdepartmentId',
+        'productManagementNomenclatureTypeId',
+        'productManagementNomenclatureSubtypeId',
+    ];
+
     const productNomenclatureData = productModelNomenclature.map((el: IProductModelNomenclatureResponse) => {
         return {
-            title: el.code,
-            value: `modelDepartmentId ${el.code}`,
+            title: el.nameRu,
+            value: `${modNomKeys[0]} ${el.code}`,
             children: el.subdepartments.map(subDep => {
                 return {
-                    title: subDep.code,
-                    value: `modelSubDepartmentId ${subDep.code}`,
+                    title: subDep.nameRu,
+                    value: `${modNomKeys[1]} ${subDep.code}`,
                     children: subDep.modelConsolidationGroups.map(modCon => {
                         return {
-                            title: modCon.code,
-                            value: `modelConsolidationId ${modCon.code}`,
+                            title: modCon.nameRu,
+                            value: `${modNomKeys[2]} ${modCon.code}`,
                             children: modCon.models
                                 ? modCon.models.map(mod => {
                                       return {
-                                          title: mod.code,
-                                          value: `modelCodeId ${mod.code}`,
+                                          title: mod.nameRu,
+                                          value: `${modNomKeys[3]} ${mod.code}`,
                                       };
                                   })
                                 : undefined,
@@ -56,26 +70,21 @@ const ProductsAdditionalFilter: React.FC = () => {
     const managementNomenclatureData = managementNomenclature.map((el: IManagementNomenclatureResponse) => {
         return {
             title: el.name,
-            value: `productManagementNomenclatureDepartmentId ${el.id} ${el.name.replace(/\s/g, '_')}`,
+            value: `${manNomLeys[0]} ${el.id}`,
             children: el.subDepartments.map(subDep => {
                 return {
                     title: subDep.name,
-                    value: `productManagementNomenclatureSubdepartmentId ${el.id} ${subDep.name.replace(/\s/g, '_')}`,
+                    value: `${manNomLeys[1]} ${subDep.id}`,
                     children: subDep.types
                         ? subDep.types.map(modCon => {
                               return {
                                   title: modCon.name,
-                                  value: `productManagementNomenclatureTypeId ${el.id} ${modCon.name.replace(
-                                      /\s/g,
-                                      '_'
-                                  )}`,
+                                  value: `${manNomLeys[2]} ${modCon.id}`,
                                   children: modCon.subTypes
                                       ? modCon.subTypes.map(mod => {
                                             return {
                                                 title: mod.name,
-                                                value: `productManagementNomenclatureSubtypeId ${
-                                                    el.id
-                                                } ${mod.name.replace(/\s/g, '_')}`,
+                                                value: `${manNomLeys[3]} ${mod.id}`,
                                             };
                                         })
                                       : undefined,
@@ -87,7 +96,7 @@ const ProductsAdditionalFilter: React.FC = () => {
         };
     });
 
-    console.log('!!!!!!!!!!!!!!!managementNomenclatureData = ', managementNomenclatureData);
+    // console.log('!!!!!!!!!!!!!!!managementNomenclatureData = ', managementNomenclatureData);
 
     const {t} = useTranslation('products');
 
@@ -96,16 +105,6 @@ const ProductsAdditionalFilter: React.FC = () => {
     const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
 
     const {SHOW_PARENT} = TreeSelect;
-    const modNomKeys = ['modelDepartmentId', 'modelSubDepartmentId', 'modelConsolidationId', 'modelCodeId'];
-
-    const keys = ['modelDepartmentId', 'modelSubDepartmentId', 'modelConsolidationId', 'modelCodeId'];
-
-    const manNomLeys = [
-        'productManagementNomenclatureDepartmentId',
-        'productManagementNomenclatureSubdepartmentId',
-        'productManagementNomenclatureTypeId',
-        'productManagementNomenclatureSubtypeId',
-    ];
 
     const treeSelectValue = (keys: string[]) =>
         keys.reduce((acc: string[], key) => {
@@ -131,14 +130,17 @@ const ProductsAdditionalFilter: React.FC = () => {
             return acc;
         }, {});
 
-        console.log('keys if function = ', keys);
+        // console.log('Мы работаем с массивом ключей = ', keys);
+        // console.log('Мы работаем с массивом ключей = ', manNomLeys === keys);
+
         const result = newValue.reduce((acc: any, el: any) => {
-            // const [key, value] = el.split(' ');
-            const key = el.split(' ')[0];
-            const value = el.split(' ').slice(1).join(' ');
-            console.log('!!!!!!key, value = ', key, value);
-            console.log('acc[key] = ', acc[key]);
-            if (!acc[key]) acc[key] = [];
+            let [key, value] = el.split(' ');
+            if (manNomLeys === keys) value = Number(value);
+            // const key = el.split(' ')[0];
+            // const value = el.split(' ').slice(1).join(' ');
+            // console.log('!!!!!!key, value = ', key, value);
+            // console.log('acc[key] = ', acc[key]);
+            // if (!acc[key]) acc[key] = [];
             acc[key].push(value);
             return acc;
         }, initialAcc);

@@ -40,15 +40,16 @@ export interface IFilters {
     status: string[] | undefined;
     dates: IDates;
     country: string | undefined;
-    modelDepartmentId: string[] | undefined;
-    modelSubDepartmentId: string[] | undefined;
-    modelConsolidationId: string[] | undefined;
-    modelCodeId: string[] | undefined;
 
-    productManagementNomenclatureDepartmentId: string[] | undefined;
-    productManagementNomenclatureSubdepartmentId: string[] | undefined;
-    productManagementNomenclatureTypeId: string[] | undefined;
-    productManagementNomenclatureSubtypeId: string[] | undefined;
+    productModelNomenclatureDepartmentId: string[] | undefined;
+    productModelNomenclatureSubdepartmentId: string[] | undefined;
+    productModelNomenclatureConsolidationId: string[] | undefined;
+    productModelNomenclatureCodeId: string[] | undefined;
+
+    productManagementNomenclatureDepartmentId: number[] | undefined;
+    productManagementNomenclatureSubdepartmentId: number[] | undefined;
+    productManagementNomenclatureTypeId: number[] | undefined;
+    productManagementNomenclatureSubtypeId: number[] | undefined;
 
     qualityModelId: number[] | undefined;
 }
@@ -72,10 +73,10 @@ export const initialState: IFilters = {
     },
     country: undefined,
 
-    modelDepartmentId: undefined,
-    modelSubDepartmentId: undefined,
-    modelConsolidationId: undefined,
-    modelCodeId: undefined,
+    productModelNomenclatureDepartmentId: undefined,
+    productModelNomenclatureSubdepartmentId: undefined,
+    productModelNomenclatureConsolidationId: undefined,
+    productModelNomenclatureCodeId: undefined,
 
     productManagementNomenclatureDepartmentId: undefined,
     productManagementNomenclatureSubdepartmentId: undefined,
