@@ -181,7 +181,8 @@ const ProductsAdditionalFilter: React.FC = () => {
         <Grid columnGap={16} columns="repeat(2, 1fr)" alignItems="baseline">
             <Grid rowGap={16} columns="1fr" alignItems="baseline">
                 {/**************** Фильтр "09 QE" *****************/}
-                <Input
+                {/**************** Скрыт по согласованию с Никитой Фёдоровым *****************/}
+                {/* <Input
                     inputSize="m"
                     autoComplete="off"
                     label={t('WithDocuments.DetailFilters.QE')}
@@ -191,7 +192,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                     onChange={e => {
                         onHandleFilterChange(e.target.value, 'approvedBy');
                     }}
-                />
+                /> */}
 
                 {/**************** Фильтр "10 Страна" *****************/}
                 <Dropdown

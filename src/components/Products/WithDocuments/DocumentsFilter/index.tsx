@@ -71,7 +71,7 @@ const DocumentsFilter: React.FC = () => {
 
     const {dates} = productsDocumentsFiltersState;
 
-    const {approvingStatus} = productsDocumentsFiltersState;
+    const {approvingStatus, regulatoryStatus, type, fileName, status} = productsDocumentsFiltersState;
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
@@ -87,9 +87,9 @@ const DocumentsFilter: React.FC = () => {
                         onSelect={e => onHandleFilterChange(e!, 'productNumberKey')}
                     >
                         <DropdownItem text={t('WithDocuments.Table.ProductCode')} value={'productCode'} />
-                        <DropdownItem text={t('WithDocuments.Table.EAN')} value={'EAN'} />
-                        <DropdownItem text={t('WithDocuments.Table.TNVED')} value={'TNVED'} />
-                        <DropdownItem text={t('WithDocuments.Table.Name')} value={'Name'} />
+                        <DropdownItem text={t('WithDocuments.Table.EAN')} value={'ean'} />
+                        <DropdownItem text={t('WithDocuments.Table.TNVED')} value={'productTNVEDcode'} />
+                        <DropdownItem text={t('WithDocuments.Table.Name')} value={'productDescription'} />
                     </Dropdown>
 
                     <Input
@@ -112,14 +112,14 @@ const DocumentsFilter: React.FC = () => {
                         onSelect={e => onHandleFilterChange(e!, 'supplierNameKey')}
                     >
                         <DropdownItem text={t('WithDocuments.Table.SupplierName')} value={'supplierName'} />
-                        <DropdownItem text={t('WithDocuments.Table.SupplierCodeRMS')} value={'supplierCodeRMS'} />
+                        <DropdownItem text={t('WithDocuments.Table.SupplierCodeRMS')} value={'supplierRMSCode'} />
                         <DropdownItem
                             text={t('WithDocuments.Table.SupplierTaxIndetifier')}
-                            value={'SupplierTaxIndetifier'}
+                            value={'supplierTaxIdentifer'}
                         />
                         <DropdownItem
                             text={t('WithDocuments.Table.BusinessLicenseNumber')}
-                            value={'BusinessLicenseNumber'}
+                            value={'supplierBusinessLicense'}
                         />
                     </Dropdown>
 
@@ -138,7 +138,7 @@ const DocumentsFilter: React.FC = () => {
                         closeOnSelect
                         placeholder={t('Common.Select')}
                         label={t('WithDocuments.Filters.RegulatoryStatus')}
-                        value={productsDocumentsFiltersState.regulatoryStatus[0]}
+                        value={regulatoryStatus ? regulatoryStatus[0] : undefined}
                         onSelect={e => onHandleFilterChange([e!], 'regulatoryStatus')}
                     >
                         <DropdownItem text={t('WithDocuments.Table.IMPORTER')} value={'IMPORTER'} />
@@ -155,17 +155,13 @@ const DocumentsFilter: React.FC = () => {
                         closeOnSelect
                         placeholder={documentsTypes.length ? t('Common.Select') : 'Загрузка данных'}
                         label={t('WithDocuments.Filters.DocumentType')}
-                        value={
-                            productsDocumentsFiltersState.documentType
-                                ? productsDocumentsFiltersState.documentType[0]
-                                : undefined
-                        }
-                        onSelect={e => onHandleFilterChange([e as string], 'documentType')}
+                        value={type ? type[0] : undefined}
+                        onSelect={e => onHandleFilterChange([e as string], 'type')}
                     >
                         <ul>{List}</ul>
                     </Dropdown>
 
-                    {/**************** Фильтр "05 имя файла content.documentName " *****************/}
+                    {/**************** Фильтр "05 имя файла fileName" *****************/}
 
                     <Input
                         inputSize="m"
@@ -173,9 +169,9 @@ const DocumentsFilter: React.FC = () => {
                         label={t('WithDocuments.Filters.FileName')}
                         name={'qualityModel'}
                         placeholder=""
-                        value={productsDocumentsFiltersState.documentName}
+                        value={fileName}
                         onChange={e => {
-                            onHandleFilterChange(e.target.value, 'documentName');
+                            onHandleFilterChange(e.target.value, 'fileName');
                         }}
                     />
                     {/**************** Фильтр "06 Статус документа " *****************/}
@@ -185,7 +181,7 @@ const DocumentsFilter: React.FC = () => {
                         closeOnSelect
                         placeholder={t('Common.Select')}
                         label={t('WithDocuments.Filters.DocumentStatus')}
-                        value={productsDocumentsFiltersState.status[0]}
+                        value={status ? status[0] : undefined}
                         onSelect={e => onHandleFilterChange([e!], 'status')}
                     >
                         <DropdownItem text={t('WithDocuments.Table.ACTIVE')} value={'ACTIVE'} />

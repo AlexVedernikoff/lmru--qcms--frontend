@@ -24,10 +24,10 @@ export interface IFilters {
     approvingStatus: [EComplianceStatusValues] | undefined;
     supplierNameKey: string;
     supplierNameValue: string;
-    regulatoryStatus: string[];
-    documentType: string[] | undefined;
-    documentName: string | undefined;
-    status: string[];
+    regulatoryStatus: string[] | undefined;
+    type: string[] | undefined;
+    fileName: string | undefined;
+    status: string[] | undefined;
     dates: IDates;
     country: string;
     modelDepartmentId: string[] | undefined;
@@ -40,7 +40,6 @@ export interface IFilters {
     productManagementNomenclatureTypeId: string[] | undefined;
     productManagementNomenclatureSubtypeId: string[] | undefined;
 
-    approvedBy: string;
     qualityModelId: [number | undefined | string];
 }
 
@@ -50,16 +49,17 @@ export const initialState: IFilters = {
     approvingStatus: undefined,
     supplierNameKey: 'supplierName',
     supplierNameValue: '',
-    regulatoryStatus: ['IMPORTER'],
-    documentType: undefined,
-    documentName: undefined,
-    status: ['ACTIVE'],
+    regulatoryStatus: undefined,
+    type: undefined,
+    fileName: undefined,
+    status: undefined,
     dates: {
         dateType: EDateType.CREATED,
         startDate: '',
         endDate: '',
     },
     country: '9',
+
     modelDepartmentId: undefined,
     modelSubDepartmentId: undefined,
     modelConsolidationId: undefined,
@@ -70,7 +70,6 @@ export const initialState: IFilters = {
     productManagementNomenclatureTypeId: undefined,
     productManagementNomenclatureSubtypeId: undefined,
 
-    approvedBy: '',
     qualityModelId: [''],
 };
 
