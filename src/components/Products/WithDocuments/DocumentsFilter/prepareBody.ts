@@ -1,8 +1,8 @@
 import {IFilters} from '../../../../store/slices/productsDocumentsSlice';
 
 const initialBody = {
-    pageIndex: 0,
-    pageSize: 1,
+    pageIndex: 4,
+    pageSize: 5,
     sortField: 'expireDate',
     sortDirection: 'ASC',
     searchBy: {},

@@ -5,6 +5,7 @@ import {ChevronLeftIcon, ChevronRightIcon} from '@fronton/icons-react';
 import './Table.css';
 
 function CustomTable<T extends object>(props: TableProps<T>) {
+    console.log('props = ', props);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [containerSize, setContainerSize] = useState(500);
 
@@ -47,6 +48,7 @@ function CustomTable<T extends object>(props: TableProps<T>) {
                 {...props}
                 style={{width: containerSize}}
                 pagination={{...props.pagination, style: {display: 'none'}}}
+                // pagination={{...props.pagination}}
             />
 
             {!!props.pagination && (
