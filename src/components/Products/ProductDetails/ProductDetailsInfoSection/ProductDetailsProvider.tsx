@@ -2,8 +2,16 @@ import {Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 
+import {useParams} from 'react-router-dom';
+
+import productDetailsApi from '../productDetailsApi';
+
 const ProductDetailsProvider: React.FC = () => {
     const {t} = useTranslation('products');
+    const {id = ''} = useParams();
+
+    const {data} = productDetailsApi.useGetDetailsForProductsQuery({id, securityCode: 'security_code'});
+    console.log('data', data);
 
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">
