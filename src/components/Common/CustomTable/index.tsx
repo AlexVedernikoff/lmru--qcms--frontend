@@ -5,7 +5,6 @@ import {ChevronLeftIcon, ChevronRightIcon} from '@fronton/icons-react';
 import './Table.css';
 
 function CustomTable<T extends object>(props: TableProps<T>) {
-    console.log('props = ', props);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [containerSize, setContainerSize] = useState(500);
 
