@@ -1,16 +1,14 @@
 import {useMemo} from 'react';
 import {Grid, Typography, Caption} from 'fronton-react';
 import {ChevronRightIcon} from '@fronton/icons-react';
-import {IModelItem} from '../../../common/types/models';
 
 interface IProps {
-    data: Pick<
-        IModelItem,
-        | 'productModelNomenclatureDepartmentCode'
-        | 'productModelNomenclatureSubDepartmentCode'
-        | 'productModelNomenclatureConsolidationCode'
-        | 'productModelNomenclatureModelCode'
-    >;
+    data: {
+        productModelNomenclatureDepartmentCode: string | undefined;
+        productModelNomenclatureSubDepartmentCode: string | undefined;
+        productModelNomenclatureConsolidationCode: string | undefined;
+        productModelNomenclatureModelCode: string | undefined;
+    };
 }
 
 const NomenclatureRow: React.FC<IProps> = ({
