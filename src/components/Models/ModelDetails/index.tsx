@@ -20,7 +20,7 @@ enum ETabs {
 const ModelDetails: React.FC = () => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
-    const {data: details} = modelsApi.useGetModelDetailsQuery({id, securityCode: 'security_code'});
+    const {data: details} = modelsApi.endpoints.getModelDetails.useQuery({id, securityCode: 'security_code'});
 
     const title = useMemo(() => `${details?.qualityModelFullName} - ${id}`, [details?.qualityModelFullName, id]);
 

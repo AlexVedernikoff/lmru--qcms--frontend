@@ -121,10 +121,10 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
                 return (
                     <NomenclatureRow
                         data={{
-                            productModelNomenclatureDepartmentCode,
-                            productModelNomenclatureSubDepartmentCode,
-                            productModelNomenclatureConsolidationCode,
-                            productModelNomenclatureModelCode,
+                            department: productModelNomenclatureDepartmentCode,
+                            subdepartment: productModelNomenclatureSubDepartmentCode,
+                            consolidation: productModelNomenclatureConsolidationCode,
+                            model: productModelNomenclatureModelCode,
                         }}
                     />
                 );

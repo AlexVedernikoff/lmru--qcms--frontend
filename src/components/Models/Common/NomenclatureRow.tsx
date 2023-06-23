@@ -4,34 +4,17 @@ import {ChevronRightIcon} from '@fronton/icons-react';
 
 interface IProps {
     data: {
-        productModelNomenclatureDepartmentCode: string | undefined;
-        productModelNomenclatureSubDepartmentCode: string | undefined;
-        productModelNomenclatureConsolidationCode: string | undefined;
-        productModelNomenclatureModelCode: string | undefined;
+        department: string | undefined;
+        subdepartment: string | undefined;
+        consolidation: string | undefined;
+        model: string | undefined;
     };
 }
 
-const NomenclatureRow: React.FC<IProps> = ({
-    data: {
-        productModelNomenclatureDepartmentCode,
-        productModelNomenclatureSubDepartmentCode,
-        productModelNomenclatureConsolidationCode,
-        productModelNomenclatureModelCode,
-    },
-}) => {
+const NomenclatureRow: React.FC<IProps> = ({data: {department, subdepartment, consolidation, model}}) => {
     const departments = useMemo(
-        () => [
-            productModelNomenclatureDepartmentCode,
-            productModelNomenclatureSubDepartmentCode,
-            productModelNomenclatureConsolidationCode,
-            productModelNomenclatureModelCode,
-        ],
-        [
-            productModelNomenclatureDepartmentCode,
-            productModelNomenclatureSubDepartmentCode,
-            productModelNomenclatureConsolidationCode,
-            productModelNomenclatureModelCode,
-        ]
+        () => [department, subdepartment, consolidation, model],
+        [department, subdepartment, consolidation, model]
     );
 
     if (!departments.length) {
