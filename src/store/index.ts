@@ -11,6 +11,7 @@ import {getProductModelNomenclature} from '../api/getProductModelNomenclature';
 import {postSearchQualityDocuments} from '../api/postSearchQualityDocuments';
 import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
 import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
+import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
 import {getManagementNomenclature} from '../api/getManagementNomenclature';
 
 const rootReducer = {
