@@ -120,7 +120,7 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
                 } = record;
                 return (
                     <NomenclatureRow
-                        data={{
+                        code={{
                             department: productModelNomenclatureDepartmentCode,
                             subdepartment: productModelNomenclatureSubDepartmentCode,
                             consolidation: productModelNomenclatureConsolidationCode,

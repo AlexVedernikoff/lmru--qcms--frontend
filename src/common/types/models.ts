@@ -1,3 +1,9 @@
+export enum ERiskLevel {
+    'MINOR' = 'MINOR',
+    'MAJOR' = 'MAJOR',
+    'CRITICAL' = 'CRITICAL',
+}
+
 interface IModelsBodyParams {
     pageIndex: number; // required, номер страницы
     pageSize: number; // required, количество элементов на странице
@@ -144,7 +150,7 @@ export interface IModelDetailsResponse {
         sustainabilityRisk?: number; //  optional - риск в отношении устойчивого развития
         healthRisk?: number; //  optional - риск для здоровья
         regulatoryRisk?: number; //  optional -  законодательный риск
-        calculatedRisk: string; // required - уровень риска, ENUM: ['MINOR', 'MAJOR', 'CRITICAL']
+        calculatedRisk: ERiskLevel; // required - уровень риска, ENUM: ['MINOR', 'MAJOR', 'CRITICAL']
         riskComments?: string; // optional - комментарий к группе рисков
     };
     // optional, связанные законодательные требования для модели качества
