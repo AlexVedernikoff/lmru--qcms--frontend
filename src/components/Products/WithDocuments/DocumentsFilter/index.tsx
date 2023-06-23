@@ -44,8 +44,6 @@ const DocumentsFilter: React.FC = () => {
     };
 
     useEffect(() => {
-        console.log('Новое значение страницы = ', currentPage);
-        console.log('Обновляем данные!');
         receiveQualityDocuments();
     }, [currentPage]);
 
