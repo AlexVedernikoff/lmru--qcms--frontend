@@ -8,21 +8,24 @@ import {TableRowSelection} from 'antd/es/table/interface';
 import {PRODUCT_TABLE_WITH_DOCUMENTS} from '../../../../common/mocks';
 import {IDataType, getProductTableColumns} from './ProductTableColumns';
 import CustomTable from '../../../Common/CustomTable';
-import {usePostSearchQualityDocsMutation} from '../../../../api/postSearchQualityDocuments';
+import {setProductsDocumentsFilters} from '../../../../store/slices/productsDocumentsSlice';
 
-// interface IProps {
-//     onPageChange: (page: number, size: number) => void;
-// }
-
-// const DocumentsTable: React.FC<IProps> = () => {
 const DocumentsTable = () => {
     const {content: productsDocuments, pageable} = useSelector((state: any) => state.productsDocumentsTableData);
 
-    // interface IProps {
-    //     onPageChange: (page: number, size: number) => void;
-    //     tableData: IModelsResponse;
-    //     isLoading: boolean;
-    // }
+    const dispatch = useDispatch();
+
+    const onPageChange = (e: any) => {
+        dispatch(
+            setProductsDocumentsFilters([
+                {
+                    ...pageable,
+                    pageIndex: e - 1,
+                },
+                'pageable',
+            ])
+        );
+    };
 
     const data = useMemo<IDataType[]>(
         () =>
@@ -51,8 +54,6 @@ const DocumentsTable = () => {
             }),
         [productsDocuments]
     );
-
-    // console.log('data = ', data);
 
     const {t} = useTranslation('products');
     const handleSelect = (value: string | null) => {};
@@ -111,7 +112,7 @@ const DocumentsTable = () => {
                 pageSize: pageable?.pageSize,
                 total: pageable?.totalElements,
                 current: pageable?.pageIndex + 1,
-                // onChange: onPageChange,
+                onChange: onPageChange,
             }}
         />
     );

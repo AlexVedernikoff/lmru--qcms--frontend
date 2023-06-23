@@ -1,8 +1,8 @@
 import {IFilters} from '../../../../store/slices/productsDocumentsSlice';
 
 const initialBody = {
-    pageIndex: 4,
-    pageSize: 5,
+    pageIndex: 0,
+    pageSize: 10,
     sortField: 'expireDate',
     sortDirection: 'ASC',
     searchBy: {},
@@ -11,11 +11,13 @@ const initialBody = {
 export const prepareBody = (productsDocumentsFiltersState: IFilters) => {
     const requsetBody: any = {...initialBody};
 
-    const {productNumberKey, productNumberValue, supplierNameKey, supplierNameValue, dates} =
+    const {productNumberKey, productNumberValue, supplierNameKey, supplierNameValue, dates, pageable} =
         productsDocumentsFiltersState;
 
     const {dateType, startDate, endDate} = dates;
     const newDateArr = ['createDate', 'updateDate'];
+
+    requsetBody.pageIndex = pageable.pageIndex;
 
     requsetBody.searchBy = {
         [productNumberKey]: productNumberValue,
@@ -42,6 +44,7 @@ export const prepareBody = (productsDocumentsFiltersState: IFilters) => {
     delete requsetBody.searchBy.supplierNameKey;
     delete requsetBody.searchBy.supplierNameValue;
     delete requsetBody.searchBy.dates;
+    delete requsetBody.searchBy.pageable;
 
     return requsetBody;
 };

@@ -32,34 +32,27 @@ const DocumentsFilter: React.FC = () => {
 
     const productsDocumentsFiltersState: IFilters = useSelector((state: TRootState) => state.productsDocumentsFilters);
 
+    const currentPage = productsDocumentsFiltersState.pageable.pageIndex;
+
     const {data: permissiveDocuments = []} = useGetPermissiveDocsQuery(true);
     const [qualityDocuments] = usePostSearchQualityDocsMutation();
 
     const receiveQualityDocuments = async () => {
-        // * Временно отправляем requestBody без фильтров из-за правок на бэкенде *
         const requestBody = prepareBody(productsDocumentsFiltersState);
-        // const requestBody = {
-        //     pageIndex: 0,
-        //     pageSize: 1,
-        //     // sortField: 'string',
-        //     sortDirection: 'ASC',
-        //     searchBy: {},
-        // };
-
         const productsDocumentsTableData = await qualityDocuments(requestBody);
-
         dispatch(setProductsDocumentsTableData(productsDocumentsTableData));
     };
-    let documentsTypes = useMemo(
+
+    useEffect(() => {
+        console.log('Новое значение страницы = ', currentPage);
+        console.log('Обновляем данные!');
+        receiveQualityDocuments();
+    }, [currentPage]);
+
+    const documentsTypes = useMemo(
         () => Array.from(new Set(permissiveDocuments.map((el: IPermissiveDocumentsResponse) => el.type))),
         [permissiveDocuments]
     );
-
-    // documentsTypes = Array.from(new Set(documentsTypes));
-
-    // useEffect(() => {
-    //     onHandleFilterChange(documentsTypes[0], 'documentType');
-    // }, [documentsTypes.length]);
 
     const List = documentsTypes.map(el => {
         return <DropdownItem text={el} value={el} key={el} />;

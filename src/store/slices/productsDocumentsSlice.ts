@@ -25,13 +25,12 @@ interface IDates {
     endDate: string;
 }
 
-// export interface IQualityDocumentsRequest {
-//     pageIndex: number;
-//     pageSize: number;
-//     sortField?: string;
-//     sortDirection: string;
-//     searchBy: SearchBy;
-// }
+export interface IPageable {
+    pageIndex: number;
+    pageSize: number;
+    sortField?: string;
+    sortDirection: string;
+}
 
 export interface IFilters {
     productNumberKey: string;
@@ -60,6 +59,7 @@ export interface IFilters {
     productManagementNomenclatureSubtypeId: number[] | undefined;
 
     qualityModelId: number[] | undefined;
+    pageable: IPageable;
 }
 
 export const initialState: IFilters = {
@@ -92,6 +92,12 @@ export const initialState: IFilters = {
     productManagementNomenclatureSubtypeId: undefined,
 
     qualityModelId: undefined,
+    pageable: {
+        pageIndex: 0,
+        pageSize: 10,
+        sortField: 'expireDate',
+        sortDirection: 'ASC',
+    },
 };
 
 export const productsDocumentsFilters = createSlice({
