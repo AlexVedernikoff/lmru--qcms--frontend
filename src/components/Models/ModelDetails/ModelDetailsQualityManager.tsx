@@ -1,9 +1,13 @@
 import {Dropdown, DropdownItem, Grid, Typography} from 'fronton-react';
+import {useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import styles from '../../Common.module.css';
+import modelsApi from '../modelsApi';
 
 const ModelDetailsQualityManager: React.FC = () => {
     const {t} = useTranslation('models');
+    const {id = ''} = useParams();
+    const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
 
     const handleSelect = (value: string | null) => {};
 
@@ -22,9 +26,9 @@ const ModelDetailsQualityManager: React.FC = () => {
                     value={undefined}
                     onSelect={handleSelect}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    {details?.assignedApprovers?.map(d => (
+                        <DropdownItem key={d.id} text={d.buId.toString()} value={d.buId} />
+                    ))}
                 </Dropdown>
 
                 <Dropdown
@@ -35,9 +39,9 @@ const ModelDetailsQualityManager: React.FC = () => {
                     value={undefined}
                     onSelect={handleSelect}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    {details?.assignedApprovers?.map(d => (
+                        <DropdownItem key={d.id} text={d.role} value={d.role} />
+                    ))}
                 </Dropdown>
 
                 <Dropdown
@@ -48,9 +52,9 @@ const ModelDetailsQualityManager: React.FC = () => {
                     value={undefined}
                     onSelect={handleSelect}
                 >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
+                    {details?.assignedApprovers?.map(d => (
+                        <DropdownItem key={d.id} text={d.role} value={d.role} />
+                    ))}
                 </Dropdown>
             </Grid>
         </Grid>

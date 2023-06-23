@@ -1,7 +1,7 @@
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
 import {useMemo, useState} from 'react';
-import {Grid, Tab, TabList, Typography} from 'fronton-react';
+import {Grid, RegularButton, Tab, TabList, Typography} from 'fronton-react';
 import styles from '../../Common.module.css';
 import ModelDetailsMainData from './ModelDetailsMainData';
 import ModelDetailsQualityManager from './ModelDetailsQualityManager';
@@ -20,7 +20,7 @@ enum ETabs {
 const ModelDetails: React.FC = () => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
-    const {data: details} = modelsApi.useGetModelDetailsQuery({id, securityCode: 'security_code'});
+    const {data: details} = modelsApi.endpoints.getModelDetails.useQuery({id, securityCode: 'security_code'});
 
     const title = useMemo(() => `${details?.qualityModelFullName} - ${id}`, [details?.qualityModelFullName, id]);
 
@@ -32,7 +32,12 @@ const ModelDetails: React.FC = () => {
 
     return (
         <Grid rowGap={16} rows="auto 1fr">
-            <Typography variant="h2">{title}</Typography>
+            <Grid columnGap={16} columns="1fr auto">
+                <Typography variant="h2">{title}</Typography>
+                <div>
+                    <RegularButton>{t('Buttons.Edit')}</RegularButton>
+                </div>
+            </Grid>
 
             <Grid className={styles.panel} rowGap={24} columnGap={16}>
                 <Grid columnGap={16} columns="570px 1fr">
