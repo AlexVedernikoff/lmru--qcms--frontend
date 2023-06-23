@@ -39,13 +39,16 @@ const makeStore = () =>
     configureStore({
         reducer: createReducer(),
         middleware: getDefaultMiddleware =>
-            getDefaultMiddleware()
-                .concat(modelsApi.middleware, providersApi.middleware)
-                .concat(getSupplierDetails.middleware)
-                .concat(getPermissiveDocuments.middleware)
-                .concat(getProductModelNomenclature.middleware)
-                .concat(postSearchQualityDocuments.middleware)
-                .concat(getManagementNomenclature.middleware),
+            getDefaultMiddleware().concat(
+                modelsApi.middleware,
+                providersApi.middleware,
+                taskDetailsApi.middleware,
+                getSupplierDetails.middleware,
+                getPermissiveDocuments.middleware,
+                getProductModelNomenclature.middleware,
+                postSearchQualityDocuments.middleware,
+                getManagementNomenclature.middleware
+            ),
         devTools: process.env.NODE_ENV === 'development',
     });
 

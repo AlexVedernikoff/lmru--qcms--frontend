@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-// import {IProductModelNomenclatureResponse} from '../common/types/productModelNomenclature';
+import {IProductModelNomenclatureResponse} from '../common/types/productModelNomenclature';
 
 const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/';
 
@@ -13,7 +13,7 @@ export const getManagementNomenclature = createApi({
         },
     }),
     endpoints: builder => ({
-        getManagementNomenclature: builder.query<any, void>({
+        getManagementNomenclature: builder.query<IProductModelNomenclatureResponse, void>({
             query: () => 'search-service/nomeclature',
         }),
     }),
