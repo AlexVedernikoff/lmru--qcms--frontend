@@ -96,8 +96,6 @@ const ProductsAdditionalFilter: React.FC = () => {
         };
     });
 
-    // console.log('!!!!!!!!!!!!!!!managementNomenclatureData = ', managementNomenclatureData);
-
     const {t} = useTranslation('products');
 
     const [checked, setChecked] = useState(false);
@@ -116,35 +114,19 @@ const ProductsAdditionalFilter: React.FC = () => {
     const modelNomenclatureValue = treeSelectValue(modNomKeys);
     const managementNomenclatureValue = treeSelectValue(manNomLeys);
 
-    // const initialAcc = keys.reduce((acc: any, key) => {
-    //     acc[key] = [];
-    //     return acc;
-    // }, {});
-
-    // console.log('modelNomenclatureValue = ', modelNomenclatureValue);
-    // console.log('!!!!!!managementNomenclatureValue = ', managementNomenclatureValue);
-
     const onTreeChange = (newValue: any, keys: any) => {
         const initialAcc = keys.reduce((acc: any, key: any) => {
             acc[key] = [];
             return acc;
         }, {});
 
-        // console.log('Мы работаем с массивом ключей = ', keys);
-        // console.log('Мы работаем с массивом ключей = ', manNomLeys === keys);
-
         const result = newValue.reduce((acc: any, el: any) => {
             let [key, value] = el.split(' ');
-            if (manNomLeys === keys) value = Number(value);
-            // const key = el.split(' ')[0];
-            // const value = el.split(' ').slice(1).join(' ');
-            // console.log('!!!!!!key, value = ', key, value);
-            // console.log('acc[key] = ', acc[key]);
-            // if (!acc[key]) acc[key] = [];
+            if (keys === manNomLeys) value = Number(value);
             acc[key].push(value);
             return acc;
         }, initialAcc);
-        console.log('result = ', result);
+
         for (const key in result) {
             onHandleFilterChange(result[key], key);
         }
@@ -161,7 +143,7 @@ const ProductsAdditionalFilter: React.FC = () => {
         onChange: (val: any) => onTreeChange(val, modNomKeys),
         treeCheckable: true,
         showCheckedStrategy: SHOW_PARENT,
-        placeholder: 'Номенклатура товарной модели',
+        placeholder: t('WithDocuments.DetailFilters.ProductModelNomenclature'),
         style: {
             width: '100%',
         },
@@ -184,20 +166,6 @@ const ProductsAdditionalFilter: React.FC = () => {
     return (
         <Grid columnGap={16} columns="repeat(2, 1fr)" alignItems="baseline">
             <Grid rowGap={16} columns="1fr" alignItems="baseline">
-                {/**************** Фильтр "09 QE" *****************/}
-                {/**************** Скрыт по согласованию с Никитой Фёдоровым *****************/}
-                {/* <Input
-                    inputSize="m"
-                    autoComplete="off"
-                    label={t('WithDocuments.DetailFilters.QE')}
-                    name={'approvedBy'}
-                    placeholder=""
-                    value={productsDocumentsFiltersState.approvedBy}
-                    onChange={e => {
-                        onHandleFilterChange(e.target.value, 'approvedBy');
-                    }}
-                /> */}
-
                 {/**************** Фильтр "10 Страна" *****************/}
                 <Dropdown
                     size="m"
@@ -231,23 +199,6 @@ const ProductsAdditionalFilter: React.FC = () => {
                 <TreeSelect {...tPropsProdNom} />
                 {/**************** Фильтр "12 Управленческая номенклатура" *****************/}
                 <TreeSelect {...tPropsManNom} />
-
-                {/* <Input
-                    inputSize="m"
-                    autoComplete="off"
-                    label={t('WithDocuments.DetailFilters.ManagementNomenclature')}
-                    placeholder={t('Common.Input')}
-                    value={undefined}
-                    onChange={handleInputChange}
-                /> */}
-                <Grid columns="0.5fr 0.3fr">
-                    {/* Скрыто по согласованию с Никитой Фёдоровым */}
-                    {/* <CustomSwitch
-                        handleChange={handleChange}
-                        name={t('WithDocuments.DetailFilters.IncludingOutdatedDocuments')}
-                        checked={checked}
-                    /> */}
-                </Grid>
             </Grid>
         </Grid>
     );
