@@ -9,11 +9,16 @@ import {IProductModelNomenclatureResponse} from '../../../../common/types/produc
 import {TreeSelect} from 'antd';
 import {TRootState} from '../../../../store/index';
 import {IFilters} from '../../../../store/slices/productsDocumentsSlice';
+import {useGetManagementNomenclatureQuery} from '../../../../api/getManagementNomenclature';
+import {IManagementNomenclatureResponse} from '../../../../common/types/productManagementNomenclature';
 
 const ProductsAdditionalFilter: React.FC = () => {
     const dispatch = useDispatch();
     const {data: productModelNomenclature = [], isLoading: isLoadingPermissiveDocuments} =
         useGetProductModelNomenclatureQuery();
+
+    const {data: managementNomenclature = [], isLoading: isLoadingManagementNomenclature} =
+        useGetManagementNomenclatureQuery();
 
     const productsDocumentsFiltersState = useSelector((state: TRootState) => state.productsDocumentsFilters);
 
@@ -21,23 +26,37 @@ const ProductsAdditionalFilter: React.FC = () => {
         dispatch(setProductsDocumentsFilters([e, k]));
     };
 
-    const treeData = productModelNomenclature.map((el: IProductModelNomenclatureResponse) => {
+    const modNomKeys = [
+        'productModelNomenclatureDepartmentId',
+        'productModelNomenclatureSubdepartmentId',
+        'productModelNomenclatureConsolidationId',
+        'productModelNomenclatureCodeId',
+    ];
+
+    const manNomLeys = [
+        'productManagementNomenclatureDepartmentId',
+        'productManagementNomenclatureSubdepartmentId',
+        'productManagementNomenclatureTypeId',
+        'productManagementNomenclatureSubtypeId',
+    ];
+
+    const productNomenclatureData = productModelNomenclature.map((el: IProductModelNomenclatureResponse) => {
         return {
-            title: el.code,
-            value: `modelDepartmentId ${el.code}`,
+            title: el.nameRu,
+            value: `${modNomKeys[0]} ${el.code}`,
             children: el.subdepartments.map(subDep => {
                 return {
-                    title: subDep.code,
-                    value: `modelSubDepartmentId ${subDep.code}`,
+                    title: subDep.nameRu,
+                    value: `${modNomKeys[1]} ${subDep.code}`,
                     children: subDep.modelConsolidationGroups.map(modCon => {
                         return {
-                            title: modCon.code,
-                            value: `modelConsolidationId ${modCon.code}`,
+                            title: modCon.nameRu,
+                            value: `${modNomKeys[2]} ${modCon.code}`,
                             children: modCon.models
                                 ? modCon.models.map(mod => {
                                       return {
-                                          title: mod.code,
-                                          value: `modelCodeId ${mod.code}`,
+                                          title: mod.nameRu,
+                                          value: `${modNomKeys[3]} ${mod.code}`,
                                       };
                                   })
                                 : undefined,
@@ -48,81 +67,112 @@ const ProductsAdditionalFilter: React.FC = () => {
         };
     });
 
+    const managementNomenclatureData = managementNomenclature.map((el: IManagementNomenclatureResponse) => {
+        return {
+            title: el.name,
+            value: `${manNomLeys[0]} ${el.id}`,
+            children: el.subDepartments.map(subDep => {
+                return {
+                    title: subDep.name,
+                    value: `${manNomLeys[1]} ${subDep.id}`,
+                    children: subDep.types
+                        ? subDep.types.map(modCon => {
+                              return {
+                                  title: modCon.name,
+                                  value: `${manNomLeys[2]} ${modCon.id}`,
+                                  children: modCon.subTypes
+                                      ? modCon.subTypes.map(mod => {
+                                            return {
+                                                title: mod.name,
+                                                value: `${manNomLeys[3]} ${mod.id}`,
+                                            };
+                                        })
+                                      : undefined,
+                              };
+                          })
+                        : undefined,
+                };
+            }),
+        };
+    });
+
     const {t} = useTranslation('products');
 
     const [checked, setChecked] = useState(false);
     const handleChange = () => setChecked(!checked);
     const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
-    const handleSelect = (value: string | null) => {};
+
     const {SHOW_PARENT} = TreeSelect;
-    const keys = ['modelDepartmentId', 'modelSubDepartmentId', 'modelConsolidationId', 'modelCodeId'];
 
-    const value = keys.reduce((acc: string[], key) => {
-        const idsArr: string[] = productsDocumentsFiltersState[key as keyof IFilters] as string[];
-        if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
-        return acc;
-    }, []);
+    const treeSelectValue = (keys: string[]) =>
+        keys.reduce((acc: string[], key) => {
+            const idsArr: string[] = productsDocumentsFiltersState[key as keyof IFilters] as string[];
+            if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
+            return acc;
+        }, []);
 
-    const initialAcc = keys.reduce((acc: any, key) => {
-        acc[key] = [];
-        return acc;
-    }, {});
+    const modelNomenclatureValue = treeSelectValue(modNomKeys);
+    const managementNomenclatureValue = treeSelectValue(manNomLeys);
 
-    const onChange = (newValue: any) => {
+    const onTreeChange = (newValue: any, keys: any) => {
+        const initialAcc = keys.reduce((acc: any, key: any) => {
+            acc[key] = [];
+            return acc;
+        }, {});
+
         const result = newValue.reduce((acc: any, el: any) => {
-            const [key, value] = el.split(' ');
-            console.log('key, value = ', key, value);
-            console.log('acc[key] = ', acc[key]);
-            if (!acc[key]) acc[key] = [];
+            let [key, value] = el.split(' ');
+            if (keys === manNomLeys) value = Number(value);
             acc[key].push(value);
             return acc;
         }, initialAcc);
-        console.log('result = ', result);
+
         for (const key in result) {
             onHandleFilterChange(result[key], key);
         }
         if (!Object.keys(result).length) {
-            keys.forEach(key => {
+            keys.forEach((key: any) => {
                 onHandleFilterChange([], key);
             });
         }
     };
 
-    const tProps = {
-        treeData,
-        value,
-        onChange,
+    const tPropsProdNom = {
+        treeData: productNomenclatureData,
+        value: modelNomenclatureValue,
+        onChange: (val: any) => onTreeChange(val, modNomKeys),
         treeCheckable: true,
         showCheckedStrategy: SHOW_PARENT,
-        placeholder: 'Номенклатура товарной модели',
+        placeholder: t('WithDocuments.DetailFilters.ProductModelNomenclature'),
         style: {
             width: '100%',
         },
     };
 
+    const tPropsManNom = {
+        treeData: managementNomenclatureData,
+        value: managementNomenclatureValue,
+        onChange: (val: any) => onTreeChange(val, manNomLeys),
+        treeCheckable: true,
+        showCheckedStrategy: SHOW_PARENT,
+        placeholder: t('WithDocuments.DetailFilters.ManagementNomenclature'),
+        style: {
+            width: '100%',
+        },
+    };
+
+    const {country, qualityModelId} = productsDocumentsFiltersState;
+
     return (
         <Grid columnGap={16} columns="repeat(2, 1fr)" alignItems="baseline">
             <Grid rowGap={16} columns="1fr" alignItems="baseline">
-                {/**************** Фильтр "09 QE" *****************/}
-                <Input
-                    inputSize="m"
-                    autoComplete="off"
-                    label={t('WithDocuments.DetailFilters.QE')}
-                    name={'approvedBy'}
-                    placeholder=""
-                    value={productsDocumentsFiltersState.approvedBy}
-                    onChange={e => {
-                        onHandleFilterChange(e.target.value, 'approvedBy');
-                    }}
-                />
-
                 {/**************** Фильтр "10 Страна" *****************/}
                 <Dropdown
                     size="m"
                     closeOnSelect
                     placeholder="Выберите"
                     label={t('WithDocuments.DetailFilters.Country')}
-                    value={productsDocumentsFiltersState.country}
+                    value={country}
                     onSelect={e => onHandleFilterChange(e, 'country')}
                 >
                     <DropdownItem text={t('WithDocuments.Table.Russia')} value={9} />
@@ -135,7 +185,7 @@ const ProductsAdditionalFilter: React.FC = () => {
                     label={t('WithDocuments.DetailFilters.QualityModel')}
                     name={'qualityModelId'}
                     placeholder=""
-                    value={String(productsDocumentsFiltersState.qualityModelId)}
+                    value={qualityModelId ? String(qualityModelId[0]) : undefined}
                     onChange={e => {
                         const eventToNum = Number(e.target.value);
                         if (isNaN(eventToNum)) return;
@@ -146,25 +196,9 @@ const ProductsAdditionalFilter: React.FC = () => {
 
             <Grid rowGap={16} columns="1fr" alignItems="baseline">
                 {/**************** Фильтр "11 Номенклатура товарной модели" *****************/}
-                <TreeSelect {...tProps} />
+                <TreeSelect {...tPropsProdNom} />
                 {/**************** Фильтр "12 Управленческая номенклатура" *****************/}
-                {/* Ждём бэкенд */}
-                <Input
-                    inputSize="m"
-                    autoComplete="off"
-                    label={t('WithDocuments.DetailFilters.ManagementNomenclature')}
-                    placeholder={t('Common.Input')}
-                    value={undefined}
-                    onChange={handleInputChange}
-                />
-
-                <Grid columns="0.5fr 0.3fr">
-                    <CustomSwitch
-                        handleChange={handleChange}
-                        name={t('WithDocuments.DetailFilters.IncludingOutdatedDocuments')}
-                        checked={checked}
-                    />
-                </Grid>
+                <TreeSelect {...tPropsManNom} />
             </Grid>
         </Grid>
     );

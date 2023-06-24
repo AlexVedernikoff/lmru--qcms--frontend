@@ -8,10 +8,30 @@ import {TableRowSelection} from 'antd/es/table/interface';
 import {PRODUCT_TABLE_WITH_DOCUMENTS} from '../../../../common/mocks';
 import {IDataType, getProductTableColumns} from './ProductTableColumns';
 import CustomTable from '../../../Common/CustomTable';
-import {usePostSearchQualityDocsMutation} from '../../../../api/postSearchQualityDocuments';
+import {setProductsDocumentsFilters} from '../../../../store/slices/productsDocumentsSlice';
+import {TRootState} from '../../../../store/index';
+import {IProductsDocumentsTableData} from '../../../../store/slices/productsDocumentsTableDataSlice';
 
-const DocumentsTable: React.FC = () => {
-    const productsDocuments = useSelector((state: any) => state.productsDocumentsTableData.content);
+const DocumentsTable = () => {
+    const productsDocumentsTableData: IProductsDocumentsTableData = useSelector(
+        (state: TRootState) => state.productsDocumentsTableData
+    );
+
+    const {content: productsDocuments, pageable} = productsDocumentsTableData;
+
+    const dispatch = useDispatch();
+
+    const onPageChange = (e: any) => {
+        dispatch(
+            setProductsDocumentsFilters([
+                {
+                    ...pageable,
+                    pageIndex: e - 1,
+                },
+                'pageable',
+            ])
+        );
+    };
 
     const data = useMemo<IDataType[]>(
         () =>
@@ -20,22 +40,22 @@ const DocumentsTable: React.FC = () => {
                     key: el.id,
                     documentNumber: el.id,
                     type: el.type,
-                    productCode: el.productsDetails[0]?.productCode,
-                    EAN: el.productsDetails[0]?.ean,
-                    TNVED: el.productsDetails[0]?.productTNVEDCode,
-                    name: el.productsDetails[0]?.productTNVEDCode,
-                    releaseDate: el.issueDate,
-                    endDate: el.expireDate,
+                    productCode: el.productsDetails[0]?.productCode || ' ',
+                    EAN: el.productsDetails[0]?.ean || ' ',
+                    TNVED: el.productsDetails[0]?.productTNVEDCode || ' ',
+                    name: el.productsDetails[0]?.productTNVEDCode || ' ',
+                    releaseDate: el.issueDate || ' ',
+                    endDate: el.expireDate || ' ',
                     status: el.status,
-                    confirmationStatus: el.productsDetails[0]?.approvingStatus,
-                    uploadDate: el.creationInformation.createdAt,
-                    nameSupplier: el.productsDetails[0]?.supplierName,
-                    supplieroCodeRMS: el.productsDetails[0]?.supplierRMSCode,
-                    INN: el.productsDetails[0]?.supplierTaxIdentifier,
+                    confirmationStatus: el.productsDetails[0]?.approvingStatus || ' ',
+                    uploadDate: el.creationInformation.createdAt || ' ',
+                    nameSupplier: el.productsDetails[0]?.supplierName || ' ',
+                    supplieroCodeRMS: el.productsDetails[0]?.supplierRMSCode || ' ',
+                    INN: el.productsDetails[0]?.supplierTaxIdentifier || ' ',
                     businessLicenseNumber: 0,
                     SSMCode: 0,
-                    role: el.creationInformation.createdBy.Role,
-                    downloadCompleted: el.creationInformation.createdBy,
+                    role: el.creationInformation.createdBy.Role || ' ',
+                    downloadCompleted: el.creationInformation.createdBy || ' ',
                 };
             }),
         [productsDocuments]
@@ -86,36 +106,21 @@ const DocumentsTable: React.FC = () => {
     );
 
     return (
-        <>
-            <Grid columns="5fr 3fr 1fr" columnGap={20}>
-                <br />
-                <Dropdown
-                    size="m"
-                    closeOnSelect
-                    placeholder={t('Common.Select')}
-                    label={t('Common.Actions')}
-                    value={undefined}
-                    onSelect={handleSelect}
-                >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                </Dropdown>
-                <RegularButton onClick={() => {}} size="m" variant="primary">
-                    {t('Buttons.Make')}
-                </RegularButton>
-            </Grid>
-            <CustomTable
-                rowSelection={rowSelection}
-                columns={columns}
-                dataSource={data}
-                scroll={{x: 400}}
-                tableLayout="fixed"
-                size="small"
-                bordered
-                pagination={{}}
-            />
-        </>
+        <CustomTable
+            rowSelection={rowSelection}
+            columns={columns}
+            dataSource={data}
+            scroll={{x: 400}}
+            tableLayout="fixed"
+            size="small"
+            bordered
+            pagination={{
+                pageSize: pageable?.pageSize,
+                total: pageable?.totalElements,
+                current: pageable?.pageIndex + 1,
+                onChange: onPageChange,
+            }}
+        />
     );
 };
 
