@@ -12,7 +12,7 @@ import {postSearchQualityDocuments} from '../api/postSearchQualityDocuments';
 import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
 import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
 import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
-import productDetailsApi from '../components/Products/ProductDetails/productDetailsApi';
+import {productDetailsApi} from '../components/Products/ProductDetails/productDetailsApi';
 
 const rootReducer = {
     common: commonSlice.reducer,

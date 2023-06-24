@@ -2,9 +2,21 @@ import {Checkbox, Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 
+import {useGetDetailsForProductsQuery} from '../productDetailsApi';
+
+import {mockIdsForQuery} from '../mockIdsForQuery';
+
+// import {useParams} from 'react-router-dom';
+
 const ProductDetailsProduct: React.FC = () => {
     const {t} = useTranslation('products');
 
+    // const {id = ''} = useParams();
+
+    const id = mockIdsForQuery.productId;
+
+    const {data: details, isLoading} = useGetDetailsForProductsQuery({id, securityCode: 'security_code'});
+    console.log('details', details);
     return (
         <Grid className={styles.sectionItem} rowGap={24} columnGap={24}>
             <Typography variant="h3">{t('ProductDetails.Info.Product.Title')}</Typography>
@@ -16,7 +28,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {'87334230'}
+                        {details?.code}
                     </Typography>
                 </div>
 
@@ -26,7 +38,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {'4607141437762'}
+                        {details?.ean}
                     </Typography>
                 </div>
 
@@ -36,7 +48,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {'3209100009'}
+                        {details?.ean}
                     </Typography>
                 </div>
             </Grid>

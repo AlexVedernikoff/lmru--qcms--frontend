@@ -7,14 +7,14 @@ const serviceUrl = {
     getDetailsForProducts: 'product-quality/v1/products',
 };
 
-const productDetailsApi = createApi({
+export const productDetailsApi = createApi({
     reducerPath: 'productDetailsApi',
     baseQuery: fetchBaseQuery({baseUrl: hostUrl}),
     endpoints: builder => ({
         getDetailsForProducts: builder.query<any, IQualityProductDetailsParams>({
             query: params => ({
                 method: 'GET',
-                url: `${serviceUrl.getDetailsForProducts}/${params.id}?1`,
+                url: `${serviceUrl.getDetailsForProducts}/${params.id}?qualityActionIds=1&documentIds=3&qualityModelId=1`,
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
@@ -25,4 +25,4 @@ const productDetailsApi = createApi({
     }),
 });
 
-export default productDetailsApi;
+export const {useGetDetailsForProductsQuery} = productDetailsApi;
