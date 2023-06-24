@@ -9,9 +9,15 @@ import {PRODUCT_TABLE_WITH_DOCUMENTS} from '../../../../common/mocks';
 import {IDataType, getProductTableColumns} from './ProductTableColumns';
 import CustomTable from '../../../Common/CustomTable';
 import {setProductsDocumentsFilters} from '../../../../store/slices/productsDocumentsSlice';
+import {TRootState} from '../../../../store/index';
+import {IProductsDocumentsTableData} from '../../../../store/slices/productsDocumentsTableDataSlice';
 
 const DocumentsTable = () => {
-    const {content: productsDocuments, pageable} = useSelector((state: any) => state.productsDocumentsTableData);
+    const productsDocumentsTableData: IProductsDocumentsTableData = useSelector(
+        (state: TRootState) => state.productsDocumentsTableData
+    );
+
+    const {content: productsDocuments, pageable} = productsDocumentsTableData;
 
     const dispatch = useDispatch();
 
