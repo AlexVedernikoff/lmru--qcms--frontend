@@ -11,6 +11,7 @@ import {getProductModelNomenclature} from '../api/getProductModelNomenclature';
 import {postSearchQualityDocuments} from '../api/postSearchQualityDocuments';
 import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
 import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
+import withModelApi from '../components/Products/WithQualityModel/withModelApi';
 import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
 import {getManagementNomenclature} from '../api/getManagementNomenclature';
 
@@ -18,10 +19,15 @@ const rootReducer = {
     common: commonSlice.reducer,
     counter: counterSlice.reducer,
     [modelsApi.reducerPath]: modelsApi.reducer,
+    [withModelApi.reducerPath]: withModelApi.reducer,
+    [providersApi.reducerPath]: providersApi.reducer,
     [providersApi.reducerPath]: providersApi.reducer,
     [getSupplierDetails.reducerPath]: getSupplierDetails.reducer,
     productsDocumentsFilters: productsDocumentsFilters.reducer,
     productsDocumentsTableData: productsDocumentsTableData.reducer,
+    [getPermissiveDocuments.reducerPath]: getPermissiveDocuments.reducer,
+    [getProductModelNomenclature.reducerPath]: getProductModelNomenclature.reducer,
+    [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
     [getPermissiveDocuments.reducerPath]: getPermissiveDocuments.reducer,
     [getProductModelNomenclature.reducerPath]: getProductModelNomenclature.reducer,
     [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
@@ -44,6 +50,10 @@ const makeStore = () =>
                 providersApi.middleware,
                 taskDetailsApi.middleware,
                 getSupplierDetails.middleware,
+                withModelApi.middleware,
+                getPermissiveDocuments.middleware,
+                getProductModelNomenclature.middleware,
+                postSearchQualityDocuments.middleware,
                 getPermissiveDocuments.middleware,
                 getProductModelNomenclature.middleware,
                 postSearchQualityDocuments.middleware,
