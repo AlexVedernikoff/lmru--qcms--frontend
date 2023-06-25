@@ -4,6 +4,7 @@ import {IProviderTableWithDocuments} from '../../../../common/clientModels';
 import DownloadIcon from '../../../Icons/DownloadIcon';
 import {Grid, IconButton} from 'fronton-react';
 import LinkIcon from '../../../Icons/LinkIcon';
+import {downloadFile} from '../../../../api/downloadQualityDocument';
 
 export interface IDataType extends IProviderTableWithDocuments {
     key: React.Key;
@@ -16,7 +17,12 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
         render: (text: string = '') => (
             <Grid columns="2fr 0.5fr">
                 {text}
-                <IconButton label="Download">
+                <IconButton
+                    label="Download"
+                    onClick={() => {
+                        downloadFile(Number(text));
+                    }}
+                >
                     <DownloadIcon />{' '}
                 </IconButton>
             </Grid>
