@@ -5,15 +5,10 @@ import styles from '../../../Common.module.css';
 import {useGetDetailsForProductsQuery} from '../productDetailsApi';
 
 import {mockIdsForQuery} from '../mockIdsForQuery';
-
-// import {useParams} from 'react-router-dom';
+import {getRiskOption} from '../productUtils.ts/riskOption';
 
 const ProductDetailsProduct: React.FC = () => {
     const {t} = useTranslation('products');
-
-    // const {id = ''} = useParams();
-
-    // const id = mockIdsForQuery.productId;
 
     const queryParam = {
         mockIdsForQuery,
@@ -21,8 +16,11 @@ const ProductDetailsProduct: React.FC = () => {
         productId: '1',
     };
 
-    const {data: details, isLoading} = useGetDetailsForProductsQuery(queryParam);
+    const {data: details} = useGetDetailsForProductsQuery(queryParam);
     console.log('details', details);
+
+    const riskOption = getRiskOption(t, details);
+
     return (
         <Grid className={styles.sectionItem} rowGap={24} columnGap={24}>
             <Typography variant="h3">{t('ProductDetails.Info.Product.Title')}</Typography>
@@ -54,7 +52,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {details?.ean}
+                        {'???'}
                     </Typography>
                 </div>
             </Grid>
@@ -66,7 +64,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {t('ProductDetails.Info.Product.RiskOptions.minor')}
+                        {riskOption}
                     </Typography>
                 </div>
 
