@@ -131,7 +131,7 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
     const handleShowMoreFiltersClick = () => {
         setIsMoreFiltersActive(prevState => !prevState);
     };
-    console.log(formState, 'formState');
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
         setFormState(p => ({...p, [e.target.name]: value}));
     };

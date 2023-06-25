@@ -25,7 +25,7 @@ const ProductsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) =
     const navigate = useNavigate();
     const {t} = useTranslation('products');
     // const {productsList} = props;
-    console.log(tableData, 'tableData');
+    // console.log(tableData, 'tableData');
 
     const handleViewProductDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
         e => {

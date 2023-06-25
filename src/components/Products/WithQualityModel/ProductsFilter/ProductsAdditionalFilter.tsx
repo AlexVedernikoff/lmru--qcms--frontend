@@ -13,10 +13,17 @@ interface IProps {
 
 const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, handleInputChange}) => {
     const {t} = useTranslation('products');
+    const [filterSearchDate, setFilterSearchDate] = useState<string>();
+
     const handleSelect = (name: string) => (value: string | null) => {
         setFormState({...formState, [name]: value!});
     };
-    const [filterSearchDate, setFilterSearchDate] = useState<string>();
+
+    const handleCheckboxChange = (value: boolean | undefined, name?: string) => {
+        if (name) {
+            setFormState({...formState, [name]: value});
+        }
+    };
 
     return (
         <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline">
@@ -64,75 +71,70 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
                 />
 
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="center" alignContent="baseline">
-                        <CustomCheckbox field="" setFormState={setFormState} formState={formState} />
-                    </Grid>
-                    <Typography variant="s" size="body_short">
-                        Из проекта
-                    </Typography>
+                    <CustomCheckbox
+                        name=""
+                        value={formState.project}
+                        onChange={handleCheckboxChange}
+                        label="Из проекта"
+                    />
                 </Grid>
 
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="center" alignContent="baseline">
-                        <CustomCheckbox field="" setFormState={setFormState} formState={formState} />
-                    </Grid>
-                    <Typography variant="s" size="body_short">
-                        Без трансфера
-                    </Typography>
+                    <CustomCheckbox
+                        name=""
+                        value={formState.project}
+                        onChange={handleCheckboxChange}
+                        label="Без трансфера"
+                    />
                 </Grid>
             </Grid>
 
             <Grid rowGap={16} columns="1fr" alignItems="baseline">
                 <Typography variant="h3">Подробная информация</Typography>
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="center" alignContent="baseline">
-                        <CustomCheckbox field="" setFormState={setFormState} formState={formState} />
-                    </Grid>
-                    <Typography variant="s" size="body_short">
-                        Активные товары
-                    </Typography>
+                    <CustomCheckbox
+                        name=""
+                        value={formState.project}
+                        onChange={handleCheckboxChange}
+                        label="Активные товары"
+                    />
                 </Grid>
 
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="center" alignContent="baseline">
-                        <CustomCheckbox field="mdd" setFormState={setFormState} formState={formState} />
-                    </Grid>
-                    <Typography variant="s" size="body_short">
-                        СТМ
-                    </Typography>
+                    <CustomCheckbox name="mdd" value={formState.mdd} onChange={handleCheckboxChange} label="СТМ" />
                 </Grid>
 
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="center" alignContent="baseline">
-                        <CustomCheckbox field="import" setFormState={setFormState} formState={formState} />
-                    </Grid>
-                    <Typography variant="s" size="body_short">
-                        Международный импорт
-                    </Typography>
+                    <CustomCheckbox
+                        name="import"
+                        value={formState.import}
+                        onChange={handleCheckboxChange}
+                        label="Международный импорт"
+                    />
                 </Grid>
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="center" alignContent="baseline">
-                        <CustomCheckbox field="" setFormState={setFormState} formState={formState} />
-                    </Grid>
-                    <Typography variant="s" size="body_short">
-                        Отсутствуют данные о товаре
-                    </Typography>
+                    <CustomCheckbox
+                        name=""
+                        value={formState.project}
+                        onChange={handleCheckboxChange}
+                        label="Отсутствуют данные о товаре"
+                    />
                 </Grid>
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="center" alignContent="baseline">
-                        <CustomCheckbox field="" setFormState={setFormState} formState={formState} />
-                    </Grid>
-                    <Typography variant="s" size="body_short">
-                        Ожидают запуска квалификации
-                    </Typography>
+                    <CustomCheckbox
+                        name=""
+                        value={formState.project}
+                        onChange={handleCheckboxChange}
+                        label="Ожидают запуска квалификации"
+                    />
                 </Grid>
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="center" alignContent="baseline">
-                        <CustomCheckbox field="" setFormState={setFormState} formState={formState} />
-                    </Grid>
-                    <Typography variant="s" size="body_short">
-                        Ожидают запуска сертификации
-                    </Typography>
+                    <CustomCheckbox
+                        name=""
+                        value={formState.project}
+                        onChange={handleCheckboxChange}
+                        label="Ожидают запуска сертификации"
+                    />
                 </Grid>
                 <Dropdown
                     size="m"
@@ -159,16 +161,12 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
                     <DropdownItem text="test" value={'test'} />
                 </Dropdown>
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="center" alignContent="baseline">
-                        <CustomCheckbox
-                            field="isProductWithSubstance"
-                            setFormState={setFormState}
-                            formState={formState}
-                        />
-                    </Grid>
-                    <Typography variant="s" size="body_short">
-                        Относится к категории химии
-                    </Typography>
+                    <CustomCheckbox
+                        name="isProductWithSubstance"
+                        value={formState.isProductWithSubstance}
+                        onChange={handleCheckboxChange}
+                        label="Относится к категории химии"
+                    />
                 </Grid>
                 <Dropdown
                     size="m"
@@ -194,7 +192,7 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
                     label={'Поиск по дате'}
                     value={filterSearchDate}
                     onSelect={function changeSelect(value) {
-                        console.log(value, 'VALUE');
+                        // console.log(value, 'VALUE');
                         value && setFilterSearchDate(value);
                     }}
                 >

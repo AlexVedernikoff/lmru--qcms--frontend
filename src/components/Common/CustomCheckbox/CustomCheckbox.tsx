@@ -1,105 +1,82 @@
-import {useState, useEffect, FC, useCallback} from 'react';
+import {useState, useEffect, FC} from 'react';
+import {Grid, Typography} from 'fronton-react';
 import styles from './styles.module.css';
-import {IFilterFormState} from '../../Products/WithQualityModel/ProductsFilter';
 
-type Props = {
-    field: string;
-    formState: IFilterFormState;
-    setFormState: (state: IFilterFormState) => void;
-};
+interface IProps {
+    name: string;
+    value: boolean | undefined;
+    onChange: (value: boolean | undefined, name: string) => void;
+    label?: string;
+}
 
-type IStateCheckbox = {
-    [field: string]: boolean | undefined;
-};
+const CustomCheckbox: FC<IProps> = ({name, value, onChange, label}) => {
+    const [flagYes, setFlagYes] = useState(false);
+    const [flagNo, setFlagNo] = useState(false);
 
-const CustomCheckbox: FC<Props> = ({field, setFormState, formState}) => {
-    const [stateCheckbox, setStateCheckbox] = useState<IStateCheckbox>({
-        [field]: undefined,
-    });
-
-    const [checkboxesState, setCheckboxesState] = useState<{
-        yes?: boolean;
-        no?: boolean;
-    }>({
-        yes: undefined,
-        no: undefined,
-    });
-
-    type checkboxNames = keyof typeof checkboxesState;
-    const onChangeCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, checked} = e.target;
-
-        if (!checked) {
-            setCheckboxesState(prev => ({
-                ...prev,
-                [name]: undefined,
-            }));
-        } else {
-            setCheckboxesState(prev => ({
-                ...prev,
-                [name]: checked,
-            }));
-        }
-
-        if (checked) {
-            const anotherCheckboxName = (Object.keys(checkboxesState) as Array<checkboxNames>).find(n => n !== name)!;
-
-            setCheckboxesState(prev => ({
-                ...prev,
-                [anotherCheckboxName]: undefined,
-            }));
-        }
+    const clearValues = () => {
+        setFlagYes(false);
+        setFlagNo(false);
     };
 
     useEffect(() => {
-        const checkbox = (Object.keys(checkboxesState) as Array<checkboxNames>).find(key => checkboxesState[key]);
-        switch (checkbox) {
-            case 'no':
-                setStateCheckbox({[field]: false});
-                return;
-            case 'yes':
-                setStateCheckbox({[field]: true});
-                return;
-            default:
-                setStateCheckbox({[field]: undefined});
+        if (value === undefined) {
+            clearValues();
+        } else {
+            setFlagYes(value);
+            setFlagNo(!value);
         }
-    }, [checkboxesState, field]);
+    }, [value]);
 
-    const data = useCallback(
-        (mddState: IStateCheckbox) => {
-            setFormState({...formState, [field]: mddState[field]});
-        },
-        [field, formState, setFormState]
-    );
+    const handleYesChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+        if (e.target.checked) {
+            setFlagYes(true);
+            onChange(true, name);
+        } else {
+            setFlagYes(false);
+            onChange(undefined, name);
+        }
+    };
 
-    useEffect(() => {
-        console.log(stateCheckbox);
-        data(stateCheckbox);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [stateCheckbox]);
+    const handleNoChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+        if (e.target.checked) {
+            setFlagNo(true);
+            onChange(false, name);
+        } else {
+            setFlagNo(false);
+            onChange(undefined, name);
+        }
+    };
 
     return (
         <>
-            <label className={styles.label}>
-                <input
-                    className={styles.input}
-                    type="checkbox"
-                    name="yes"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeCheckbox(e)}
-                    checked={!!checkboxesState.yes}
-                />
-                Да
-            </label>
-            <label className={styles.label}>
-                <input
-                    className={styles.input}
-                    type="checkbox"
-                    name="no"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeCheckbox(e)}
-                    checked={!!checkboxesState.no}
-                />
-                Нет
-            </label>
+            <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="center" alignContent="baseline">
+                <label className={styles.label}>
+                    <input
+                        className={styles.input}
+                        type="checkbox"
+                        name="yes"
+                        onChange={handleYesChange}
+                        checked={flagYes}
+                    />
+                    Да
+                </label>
+                <label className={styles.label}>
+                    <input
+                        className={styles.input}
+                        type="checkbox"
+                        name="no"
+                        onChange={handleNoChange}
+                        checked={flagNo}
+                    />
+                    Нет
+                </label>
+            </Grid>
+
+            {!!label && (
+                <Typography variant="s" size="body_short">
+                    {label}
+                </Typography>
+            )}
         </>
     );
 };
