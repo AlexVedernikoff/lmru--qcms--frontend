@@ -1,11 +1,10 @@
 import {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
-import {Dropdown, DropdownItem, Grid, RegularButton} from 'fronton-react';
+import {RegularButton} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {PRODUCT_TABLE_WITH_DOCUMENTS} from '../../../../common/mocks';
 import {IDataType, getProductTableColumns} from './ProductTableColumns';
 import CustomTable from '../../../Common/CustomTable';
 import {setProductsDocumentsFilters} from '../../../../store/slices/productsDocumentsSlice';
@@ -21,12 +20,12 @@ const DocumentsTable = () => {
 
     const dispatch = useDispatch();
 
-    const onPageChange = (e: any) => {
+    const onPageChange = (page: number) => {
         dispatch(
             setProductsDocumentsFilters([
                 {
                     ...pageable,
-                    pageIndex: e - 1,
+                    pageIndex: page - 1,
                 },
                 'pageable',
             ])
@@ -35,7 +34,7 @@ const DocumentsTable = () => {
 
     const data = useMemo<IDataType[]>(
         () =>
-            productsDocuments?.map((el: any) => {
+            productsDocuments?.map(el => {
                 return {
                     key: el.id,
                     documentNumber: el.id,
@@ -62,7 +61,6 @@ const DocumentsTable = () => {
     );
 
     const {t} = useTranslation('products');
-    const handleSelect = (value: string | null) => {};
 
     const columns = useMemo<ColumnsType<IDataType>>(
         () => [

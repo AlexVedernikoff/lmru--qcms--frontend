@@ -1,24 +1,22 @@
-import {useState} from 'react';
-import {setProductsDocumentsFilters} from '../../../../store/slices/productsDocumentsSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import {Dropdown, DropdownItem, Grid, Input} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
+import {TreeSelect} from 'antd';
+import {setProductsDocumentsFilters} from '../../../../store/slices/productsDocumentsSlice';
 import {useGetProductModelNomenclatureQuery} from '../../../../api/getProductModelNomenclature';
 import {IProductModelNomenclatureResponse} from '../../../../common/types/productModelNomenclature';
-import {TreeSelect} from 'antd';
 import {TRootState} from '../../../../store/index';
 import {IFilters} from '../../../../store/slices/productsDocumentsSlice';
 import {useGetManagementNomenclatureQuery} from '../../../../api/getManagementNomenclature';
 import {IManagementNomenclatureResponse} from '../../../../common/types/productManagementNomenclature';
 
+const {SHOW_PARENT} = TreeSelect;
+
 const ProductsAdditionalFilter: React.FC = () => {
     const dispatch = useDispatch();
-    const {data: productModelNomenclature = [], isLoading: isLoadingPermissiveDocuments} =
-        useGetProductModelNomenclatureQuery();
+    const {data: productModelNomenclature = []} = useGetProductModelNomenclatureQuery();
 
-    const {data: managementNomenclature = [], isLoading: isLoadingManagementNomenclature} =
-        useGetManagementNomenclatureQuery();
+    const {data: managementNomenclature = []} = useGetManagementNomenclatureQuery();
 
     const productsDocumentsFiltersState = useSelector((state: TRootState) => state.productsDocumentsFilters);
 
@@ -97,12 +95,6 @@ const ProductsAdditionalFilter: React.FC = () => {
     });
 
     const {t} = useTranslation('products');
-
-    const [checked, setChecked] = useState(false);
-    const handleChange = () => setChecked(!checked);
-    const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
-
-    const {SHOW_PARENT} = TreeSelect;
 
     const treeSelectValue = (keys: string[]) =>
         keys.reduce((acc: string[], key) => {
