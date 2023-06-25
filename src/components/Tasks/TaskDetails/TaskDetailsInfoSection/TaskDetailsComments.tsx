@@ -24,7 +24,7 @@ const TaskDetailsComments: React.FC<Required<PropsTaskDetails>> = props => {
             }).unwrap();
             setPost(initialValue);
         } catch {
-            console.log('ERROR');
+            // console.log('ERROR');
         }
     };
 

@@ -17,7 +17,7 @@ const MasterPlanTable: React.FC = () => {
         () => ({
             type: 'checkbox',
             onChange: (selectedRowKeys: React.Key[], selectedRows: IDataType[]) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             },
             fixed: 'left',
         }),

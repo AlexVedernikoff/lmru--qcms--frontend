@@ -12,7 +12,6 @@ export function downloadFile(id: number) {
     fetch(`${hostUrl}${id}`, headers)
         .then(response => {
             if (String(response.status)[0] === '4') {
-                console.log(`Ошибка! Файла с id = ${id} не существует.`);
                 alert(`Ошибка! Файла с id = ${id} не существует.`);
                 return;
             }

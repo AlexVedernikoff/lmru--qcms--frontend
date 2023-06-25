@@ -75,7 +75,7 @@ const Table: React.FC = () => {
         () => ({
             type: 'checkbox',
             onChange: (selectedRowKeys: React.Key[], selectedRows: IDataType[]) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             },
             // getCheckboxProps: (record: IDataType) => ({
             //     disabled: record.qualityStatus === '2',

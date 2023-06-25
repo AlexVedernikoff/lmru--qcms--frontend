@@ -13,7 +13,7 @@ import DownloadIcon from '../../../../../Icons/DownloadIcon';
 const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
     const {t} = useTranslation('tasks');
     const [drag, setDrag] = useState(false);
-    const [responseLoadDocuments, setResponseLoadDocuments] = useState();
+    const [, setResponseLoadDocuments] = useState();
     const filePicker = useRef<HTMLInputElement | null>(null);
     // const { taskDetails } = props;
     const columns = useMemo<ColumnsType<ITaskUploadedDocument>>(() => getTableColumns(t), [t]);
@@ -58,11 +58,10 @@ const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
 
     // TODO переписать позже +  получаем 500 +попробовать загрузить норм xls и заполнить documnentMetaData + считать данные и обновить на странице
 
-    const handleChange = async (e: {target: {files: any}}) => {
-        console.log(e.target.files, ' files');
+    const handleChange = async (e: {target: {files: FileList | null}}) => {
         if (!e.target.files) return;
         const formData = new FormData();
-        const files = [...e.target.files];
+        const {files} = e.target;
         formData.append('file', files[0]);
         formData.append(
             'documentMetaData',
@@ -91,7 +90,7 @@ const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
     const handlePick = () => {
         filePicker.current?.click();
     };
-    console.log(responseLoadDocuments, 'response');
+
     return (
         <>
             <CustomTable

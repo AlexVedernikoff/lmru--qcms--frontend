@@ -11,16 +11,13 @@ export interface IDataType extends ITaskUploadedDocument {
     key: React.Key;
 }
 
-const downloadDocument = async () => {
+const downloadDocument = () => {
     //TODO доделать скачивание файла корректно
-    const res = await fetch(
-        'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/109',
-        {
-            headers: {
-                securityCode: 'security_code',
-            },
-        }
-    )
+    fetch('https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/109', {
+        headers: {
+            securityCode: 'security_code',
+        },
+    })
         .then(response => {
             return response.blob();
         })

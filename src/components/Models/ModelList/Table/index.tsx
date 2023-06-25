@@ -154,7 +154,7 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
         () => ({
             type: 'checkbox',
             onChange: (selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             },
             fixed: 'left',
         }),
