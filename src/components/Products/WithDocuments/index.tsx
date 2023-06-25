@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {Grid} from 'fronton-react';
 import DocumentsFilter from './DocumentsFilter';
 import DocumentsTable from './DocumentsTable';

@@ -1,5 +1,5 @@
 import {useTranslation} from 'react-i18next';
-import {Chip, ChipVariant, Grid, RegularButton, Typography} from 'fronton-react';
+import {Chip, Grid, RegularButton, Typography} from 'fronton-react';
 import {useParams} from 'react-router-dom';
 import HistoryBackIcon from '../../Icons/HistoryBackIcon';
 import styles from './ModelDetails.module.css';
