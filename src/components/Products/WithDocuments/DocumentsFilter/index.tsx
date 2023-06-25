@@ -45,6 +45,7 @@ const DocumentsFilter: React.FC = () => {
 
     useEffect(() => {
         receiveQualityDocuments();
+        // eslint-disable-next-line
     }, [currentPage]);
 
     const documentsTypes = useMemo(

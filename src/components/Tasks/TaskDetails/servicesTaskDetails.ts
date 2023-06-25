@@ -4,11 +4,7 @@ import {ITaskDetails, ITaskUpdateInfoParams, ITaskUpdateInfoResponse} from '../.
 
 //TODO с бэка адрес рабочий пока используется чтобы получить хотя бы какие-то данные потом изменить на hostUrl и расскоментить serviceTaskDetails
 const test = 'https://qcms-dev-shared-stage.apps.lmru.tech/api/qas/';
-// const hostUrl = 'https://qcms-dev-shared-stage.apps.lmru.tech/api/rqrms/';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/';
 const serviceTaskDetails = '/v1/quality-action-service/quality-actions';
-// const serviceTaskDetails = '/v1/quality-actions-details'
 const updateInfoTask = '/quality-actions:batch-update';
 const servicePostTaskDocuments = '/v1/create-quality-document';
 
