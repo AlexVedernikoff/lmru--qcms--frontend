@@ -1,3 +1,5 @@
 export const mockIdsForQuery = {
-    productId: '1',
+    qualityModelId: '1',
+    documentIds: ['3'],
+    qualityActionIds: ['3'],
 };

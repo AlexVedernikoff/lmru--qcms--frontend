@@ -13,9 +13,15 @@ const ProductDetailsProduct: React.FC = () => {
 
     // const {id = ''} = useParams();
 
-    const id = mockIdsForQuery.productId;
+    // const id = mockIdsForQuery.productId;
 
-    const {data: details, isLoading} = useGetDetailsForProductsQuery({id, securityCode: 'security_code'});
+    const queryParam = {
+        mockIdsForQuery,
+        securityCode: 'security_code',
+        productId: '1',
+    };
+
+    const {data: details, isLoading} = useGetDetailsForProductsQuery(queryParam);
     console.log('details', details);
     return (
         <Grid className={styles.sectionItem} rowGap={24} columnGap={24}>

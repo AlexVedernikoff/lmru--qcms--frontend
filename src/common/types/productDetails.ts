@@ -1,4 +1,11 @@
 export interface IQualityProductDetailsParams {
-    id: string;
+    productId: string;
     securityCode: string;
+    mockIdsForQuery: IQueriesObj;
+}
+
+interface IQueriesObj {
+    qualityModelId?: string;
+    documentIds?: string[];
+    qualityActionIds?: string[];
 }
