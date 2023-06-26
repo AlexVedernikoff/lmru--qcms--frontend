@@ -266,3 +266,21 @@ export interface IModelDetailsResponse {
         updatedBy: string; // required - ldap или идентификатор системы, обновивший модель качества
     };
 }
+
+export interface IUpdateQualityModelParams {
+    application?: string;
+    accept: string;
+    securityCode?: string;
+    id: string;
+    body: object;
+}
+
+export interface IUpdateQualityModelResponse {}
+
+export type IUpdateMasterPlanTasksParams = {
+    securityCode?: string;
+    id: string;
+    body: object;
+};
+
+export interface IUpdateMasterPlanTasksResponse {}
