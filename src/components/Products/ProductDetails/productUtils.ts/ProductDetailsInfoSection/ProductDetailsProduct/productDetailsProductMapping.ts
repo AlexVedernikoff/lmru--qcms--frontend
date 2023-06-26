@@ -11,7 +11,7 @@ const getRiskOption = (t: TFunction, details: any) => {
     const major = t('ProductDetails.Info.Product.RiskOptions.major');
     const critical = t('ProductDetails.Info.Product.RiskOptions.critical');
 
-    const gottenRiskOption = details?.qualityModel.productGroupRisks.calculatedRisk;
+    const gottenRiskOption = details?.qualityModel?.productGroupRisks?.calculatedRisk;
     const riskMinor = gottenRiskOption === ERiskOptions.Minor ? minor : '';
     const riskMajor = gottenRiskOption === ERiskOptions.Major ? major : '';
     const riskCritical = gottenRiskOption === ERiskOptions.Critical ? critical : '';
@@ -28,9 +28,10 @@ const getRiskOption = (t: TFunction, details: any) => {
 };
 
 export const productDetailsProductMapping = (t: TFunction, details: any) => {
+    const customId = details?.customId;
     const riskOption = getRiskOption(t, details);
     const qualityModel = details?.qualityAction?.product?.qualityModel;
-
+    const regulatoryStatus = details?.regulatoryStatus;
     const productModelNomenclature = details?.qualityModel?.productModelNomenclature;
     const areAllNomenclature =
         productModelNomenclature?.departmentName &&
@@ -48,6 +49,8 @@ ${productModelNomenclature?.modelConsolidationName} / ${productModelNomenclature
     const isFromProject = details?.project;
 
     return {
+        customId,
+        regulatoryStatus,
         riskOption,
         qualityModel,
         productModelValueStr: areAllNomenclature ? productModelValueStr : '',

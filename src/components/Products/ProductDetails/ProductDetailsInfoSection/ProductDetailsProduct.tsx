@@ -4,22 +4,16 @@ import styles from '../../../Common.module.css';
 
 import {useGetDetailsForProductsQuery} from '../productDetailsApi';
 
-import {mockIdsForQuery} from '../mockIdsForQuery';
+import {mockForGetDetailsForProduct} from '../mockProductDetails';
 
 import {productDetailsProductMapping} from '../productUtils.ts/ProductDetailsInfoSection/ProductDetailsProduct/productDetailsProductMapping';
 
 const ProductDetailsProduct: React.FC = () => {
     const {t} = useTranslation('products');
 
-    const queryParam = {
-        mockIdsForQuery,
-        securityCode: 'security_code',
-        productId: '1',
-    };
+    console.log(mockForGetDetailsForProduct);
 
-    const {data: details} = useGetDetailsForProductsQuery(queryParam);
-    console.log('details', details);
-
+    const {data: details} = useGetDetailsForProductsQuery(mockForGetDetailsForProduct);
     const mapping = productDetailsProductMapping(t, details);
 
     return (
@@ -53,7 +47,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {''}
+                        {mapping.customId}
                     </Typography>
                 </div>
             </Grid>

@@ -1,8 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {IQualityProductDetailsParams} from '../../../common/types/productDetails';
 
-import {prepareUrlQueryPart} from '../../../utils/prepareUrlQueryPart';
-
 const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/';
 
 const serviceUrl = {
@@ -16,9 +14,7 @@ export const productDetailsApi = createApi({
         getDetailsForProducts: builder.query<any, IQualityProductDetailsParams>({
             query: params => ({
                 method: 'GET',
-                url: `${serviceUrl.getDetailsForProducts}/${params.productId}${prepareUrlQueryPart(
-                    params.mockIdsForQuery
-                )}`,
+                url: `${serviceUrl.getDetailsForProducts}/${params.productId}`,
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
