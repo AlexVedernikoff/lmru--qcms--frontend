@@ -18,12 +18,12 @@ const ModelList: React.FC = () => {
     });
 
     const [searchBy, setSearchBy] = useState<IModelsParams['body']['searchBy']>({
-        labels: [],
+        // labels: [],
         qualityModelLabel: undefined,
         assignedApprovers: [],
         calculatedRisk: undefined,
-        linkedToNomenclature: false,
-        linkedToEngineer: false,
+        // linkedToNomenclature: false,
+        // linkedToEngineer: false,
         forMixtures: false,
         productRiskLevel: undefined,
         personLevelRiskForCorrectUsage: undefined,
@@ -77,12 +77,12 @@ const ModelList: React.FC = () => {
             calculatedRisk: filters.calculatedRisk,
             // linkedToNomenclature: false,
             // linkedToEngineer: false,
-            forMixtures: filters.forMixtures,
+            forMixtures: filters.forMixtures ? true : undefined,
             productRiskLevel: filters.productRiskLevel ? parseInt(filters.productRiskLevel, 10) : undefined,
             sustainabilityRisk: filters.sustainabilityRisk ? parseInt(filters.sustainabilityRisk, 10) : undefined,
             regulatoryRisk: filters.regulatoryRisk ? parseInt(filters.regulatoryRisk, 10) : undefined,
             lastUpdatedAt: filters.latestChanges ? parseInt(filters.latestChanges, 10) : undefined,
-            needApprove: filters.needApprove,
+            needApprove: filters.needApprove ? true : undefined,
         }));
     };
 
