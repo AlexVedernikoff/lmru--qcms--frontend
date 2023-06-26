@@ -10,27 +10,21 @@ import {usePostSearchProdsMutation} from '../../../../../../api/postSearchProduc
 const ContactsTable: React.FC = () => {
     const {id: supplierId = ''} = useParams();
     const {data: supplierDetails} = useGetSupplierDetsQuery(supplierId);
-    const {supplierRMSCode} = supplierDetails || {};
-
     const [searchProducts, searchProductsResults] = usePostSearchProdsMutation();
-
-    const requestBody = {
-        pageIndex: 1,
-        pageSize: 1,
-        searchBy: {
-            code: supplierRMSCode,
-        },
-    };
-
-    const receiveQualityDocuments = async () => {
-        await searchProducts(requestBody);
-    };
 
     const dataArr = searchProductsResults.data?.content;
 
     useEffect(() => {
-        receiveQualityDocuments();
-    }, [supplierId]);
+        if (supplierDetails?.supplierRMSCode) {
+            searchProducts({
+                pageIndex: 1,
+                pageSize: 1,
+                searchBy: {
+                    code: supplierDetails?.supplierRMSCode,
+                },
+            });
+        }
+    }, [searchProducts, supplierDetails?.supplierRMSCode]);
 
     const data: IDataType[] = dataArr
         ? dataArr.map(({ean, code, description, regulatoryStatus, supplierCode, qualityStatuses}) => ({
