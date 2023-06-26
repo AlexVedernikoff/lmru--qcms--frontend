@@ -14,6 +14,7 @@ import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSli
 import withModelApi from '../components/Products/WithQualityModel/withModelApi';
 import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
 import {getManagementNomenclature} from '../api/getManagementNomenclature';
+import {postSearchProducts} from '../api/postSearchProducts';
 
 const rootReducer = {
     common: commonSlice.reducer,
@@ -30,9 +31,9 @@ const rootReducer = {
     [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
     [getPermissiveDocuments.reducerPath]: getPermissiveDocuments.reducer,
     [getProductModelNomenclature.reducerPath]: getProductModelNomenclature.reducer,
-    [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
     [taskDetailsApi.reducerPath]: taskDetailsApi.reducer,
     [getManagementNomenclature.reducerPath]: getManagementNomenclature.reducer,
+    [postSearchProducts.reducerPath]: postSearchProducts.reducer,
 };
 
 const createReducer = (injectedReducers = {}) =>
@@ -57,7 +58,8 @@ const makeStore = () =>
                 getPermissiveDocuments.middleware,
                 getProductModelNomenclature.middleware,
                 postSearchQualityDocuments.middleware,
-                getManagementNomenclature.middleware
+                getManagementNomenclature.middleware,
+                postSearchProducts.middleware
             ),
         devTools: process.env.NODE_ENV === 'development',
     });

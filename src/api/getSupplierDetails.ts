@@ -13,7 +13,7 @@ export const getSupplierDetails = createApi({
         },
     }),
     endpoints: builder => ({
-        getSupplierDets: builder.query<ISupplierDetailsResponse, number>({
+        getSupplierDets: builder.query<ISupplierDetailsResponse, string>({
             query: id => `/partner-assessment-inspection-audit/suppliers/${id}`,
         }),
     }),

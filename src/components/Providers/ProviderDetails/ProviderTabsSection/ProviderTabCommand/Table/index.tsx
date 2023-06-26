@@ -1,4 +1,5 @@
 import {useMemo} from 'react';
+import {useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {ColumnsType} from 'antd/es/table';
 import {IDataType, getCommandTableColumns} from './TableColumns';
@@ -7,9 +8,11 @@ import {useGetSupplierDetsQuery} from '../../../../../../api/getSupplierDetails'
 import {ISupplierDetailsResponse} from '../../../../../../common/types/supplierDetails';
 
 const CommandTable: React.FC = () => {
-    const supplierId = 1;
-    const {data: supplierDetails = []} = useGetSupplierDetsQuery(supplierId);
-    const {supplierProjectTeam} = supplierDetails as ISupplierDetailsResponse;
+    const {t} = useTranslation('providers');
+    const {id: supplierId = ''} = useParams();
+
+    const {data: supplierDetails} = useGetSupplierDetsQuery(supplierId);
+    const {supplierProjectTeam} = (supplierDetails as ISupplierDetailsResponse) || {};
     const data: IDataType[] = supplierProjectTeam
         ? supplierProjectTeam.map(({activityCode, emailAddress, id, name, surname, tabelNumber}) => ({
               key: id,
@@ -20,8 +23,6 @@ const CommandTable: React.FC = () => {
               activityTypeCode: activityCode,
           }))
         : [];
-
-    const {t} = useTranslation('providers');
 
     const columns = useMemo<ColumnsType<IDataType>>(() => [...getCommandTableColumns(t)], [t]);
 
