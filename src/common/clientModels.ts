@@ -120,10 +120,10 @@ export interface IProviderContactsTableItem {
 
 export interface IProviderProductsTableItem {
     name: string;
-    code: number;
+    code: string;
     SupplierBindingStatus: string;
     SupplierLink: string;
-    EAN: number;
+    EAN: string;
     ComplianceStatusBU: string;
 }
 

@@ -348,10 +348,10 @@ export const PROVIDER_PRODUCTS_TABLE_ITEMS: TWithReactKey<IProviderProductsTable
     {
         key: 1,
         name: 'AXTON PRIMER',
-        code: 123456,
+        code: '123456',
         SupplierBindingStatus: 'Активный',
         SupplierLink: 'PE18-32',
-        EAN: 123456,
+        EAN: '123456',
         ComplianceStatusBU: `Леруа Мерлен 
         Леруа Мерлен 
         Леруа Мерлен 
@@ -361,10 +361,10 @@ export const PROVIDER_PRODUCTS_TABLE_ITEMS: TWithReactKey<IProviderProductsTable
     {
         key: 2,
         name: 'AXTON PRIMER',
-        code: 123456,
+        code: '123456',
         SupplierBindingStatus: 'Активный',
         SupplierLink: 'PE18-32',
-        EAN: 123456,
+        EAN: '123456',
         ComplianceStatusBU: `Леруа Мерлен 
         Леруа Мерлен 
         Леруа Мерлен 
