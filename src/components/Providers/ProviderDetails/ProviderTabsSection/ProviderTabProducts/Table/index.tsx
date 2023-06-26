@@ -11,7 +11,6 @@ import {ISearchProductsResponse} from '../../../../../../common/types/searchProd
 
 const ContactsTable: React.FC = () => {
     const {id: supplierId = ''} = useParams();
-    console.log('id  useParams =', supplierId);
 
     type QueryReturnValue =
         | {

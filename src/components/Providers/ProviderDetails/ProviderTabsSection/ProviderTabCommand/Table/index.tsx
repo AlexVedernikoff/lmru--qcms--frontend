@@ -8,8 +8,8 @@ import {useGetSupplierDetsQuery} from '../../../../../../api/getSupplierDetails'
 import {ISupplierDetailsResponse} from '../../../../../../common/types/supplierDetails';
 
 const CommandTable: React.FC = () => {
+    const {t} = useTranslation('providers');
     const {id: supplierId = ''} = useParams();
-    console.log('id  useParams =', supplierId);
 
     const {data: supplierDetails} = useGetSupplierDetsQuery(supplierId);
     const {supplierProjectTeam} = (supplierDetails as ISupplierDetailsResponse) || {};
@@ -23,8 +23,6 @@ const CommandTable: React.FC = () => {
               activityTypeCode: activityCode,
           }))
         : [];
-
-    const {t} = useTranslation('providers');
 
     const columns = useMemo<ColumnsType<IDataType>>(() => [...getCommandTableColumns(t)], [t]);
 
