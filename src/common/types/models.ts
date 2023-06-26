@@ -27,6 +27,8 @@ interface IModelsBodyParams {
         productModelNomenclatureSubDepartmentCode?: string[]; // optional, поиск по саб департаменту (логическое или)
         productModelNomeclatureConsolidationCode?: string[]; // optional, поиск по группе (логическое или)
         productModelNomenclatureModelCode?: string[]; // optional, поиск по модели (логическое или)
+        lastUpdatedAt?: number; // optional, поиск по количеству дней с последнего изменения
+        needApprove?: boolean; // optional, поиск тех моделей качества, для которых требуется проверка
     };
 }
 

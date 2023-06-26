@@ -1,4 +1,4 @@
-import {Checkbox, Dropdown, DropdownItem, Grid} from 'fronton-react';
+import {Checkbox, Dropdown, DropdownItem, Grid, Input} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import {IFilterFormState} from '.';
 
@@ -15,8 +15,12 @@ interface IProps {
 const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
     const {t} = useTranslation('models');
 
-    const handleSelect = (name: string) => (value: string | null) => {
-        setFormState({...formState, [name]: value!});
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
+        setFormState({...formState, [e.target.name]: value!});
+    };
+
+    const handleSelect = (name: keyof IFilterFormState) => (value: string | null) => {
+        setFormState({...formState, [name]: formState[name] === value ? undefined : value!});
     };
 
     const handleCheckbox = (name: string) => (next: boolean) => {
@@ -26,7 +30,7 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
     return (
         <Grid columnGap={24} columns="repeat(3, 1fr)" alignItems="baseline">
             <Grid rowGap={24} columns="1fr" alignItems="baseline">
-                <Dropdown
+                {/* <Dropdown
                     size="m"
                     closeOnSelect
                     placeholder={t('Common.Select')}
@@ -36,9 +40,9 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                 >
                     <DropdownItem text={t('Common.Yes')} value={'YES'} />
                     <DropdownItem text={t('Common.No')} value={'NO'} />
-                </Dropdown>
+                </Dropdown> */}
 
-                <Dropdown
+                {/* <Dropdown
                     size="m"
                     closeOnSelect
                     placeholder={t('Common.Select')}
@@ -47,19 +51,29 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                     onSelect={handleSelect('latestChanges')}
                 >
                     {riskLevels}
-                </Dropdown>
+                </Dropdown> */}
+                <Input
+                    inputSize="m"
+                    autoComplete="off"
+                    label={t('ModelList.Filters.latestChanges')}
+                    name={'latestChanges'}
+                    placeholder=""
+                    value={formState.latestChanges}
+                    onChange={handleInputChange}
+                    type="number"
+                />
 
                 <Grid rowGap={18} columns="1fr">
                     <Checkbox
-                        onChange={handleCheckbox('isVerificationRequired')}
-                        checked={formState.isVerificationRequired!}
-                        label={t('ModelList.Filters.isVerificationRequired')}
+                        onChange={handleCheckbox('needApprove')}
+                        checked={formState.needApprove!}
+                        label={t('ModelList.Filters.needApprove')}
                     />
-                    <Checkbox
+                    {/* <Checkbox
                         onChange={handleCheckbox('hasManyProducts')}
                         checked={formState.hasManyProducts!}
                         label={t('ModelList.Filters.hasManyProducts')}
-                    />
+                    /> */}
                     <Checkbox
                         onChange={handleCheckbox('forMixtures')}
                         checked={formState.forMixtures!}

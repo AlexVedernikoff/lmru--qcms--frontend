@@ -8,6 +8,8 @@ import modelsApi from '../../modelsApi';
 import {skipToken} from '@reduxjs/toolkit/dist/query';
 import {TreeSelect} from 'antd';
 
+import s from './AdditionalFilter.module.css';
+
 export interface IFilterFormState {
     qualityModel?: string;
     modelNameOrCode?: string;
@@ -23,14 +25,14 @@ export interface IFilterFormState {
     linkedToNomenclature?: boolean;
     linkedToEngineer?: boolean;
     forMixtures?: boolean;
-    isVerificationRequired?: boolean;
+    needApprove?: boolean;
     hasManyProducts?: boolean;
     withoutPlan?: string;
-    latestChanges?: string;
     productModelNomenclatureDepartmentCode?: string[];
     productModelNomenclatureSubDepartmentCode?: string[];
     productModelNomenclatureConsolidationCode?: string[];
     productModelNomenclatureModelCode?: string[];
+    latestChanges?: string;
 }
 
 interface IProps {
@@ -48,16 +50,16 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
     const treeData = useMemo(
         () =>
             nomenclature.map(el => ({
-                title: el.code,
+                title: el.nameRu || el.code,
                 value: `department ${el.code}`,
                 children: el.subdepartments.map(subDep => ({
-                    title: subDep.code,
+                    title: subDep.nameRu || subDep.code,
                     value: `subdepartment ${subDep.code}`,
                     children: subDep.modelConsolidationGroups.map(modCon => ({
-                        title: modCon.code,
+                        title: modCon.nameRu || modCon.code,
                         value: `consolidation ${modCon.code}`,
                         children: modCon?.models?.map(mod => ({
-                            title: mod.code,
+                            title: modCon.nameRu || modCon.code,
                             value: `model ${mod.code}`,
                         })),
                     })),
@@ -133,7 +135,7 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
-            <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline" rowGap={48}>
+            <Grid columnGap={16} columns="repeat(3, 1fr)" rowGap={48}>
                 <Grid columnGap={16} columns="1fr" alignItems="center" rowGap={25}>
                     <Input
                         inputSize="m"
@@ -170,6 +172,7 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
 
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap={14}>
                     <TreeSelect
+                        className={s.treeSelect}
                         size="large"
                         treeData={treeData}
                         value={formState.productModel}

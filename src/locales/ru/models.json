@@ -121,7 +121,7 @@
             "riskHealth": "Риск для здоровья",
             "risk": "Риск",
             "latestChanges": "Изменено за последние (дней)",
-            "isVerificationRequired": "Требуется проверка",
+            "needApprove": "Требуется проверка",
             "isChemical": "Относится к категории химии",
             "hasManyProducts": "Не менее одного товара",
             "filter": "Фильтр"

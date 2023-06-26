@@ -35,6 +35,8 @@ const ModelList: React.FC = () => {
         productModelNomenclatureSubDepartmentCode: undefined,
         productModelNomeclatureConsolidationCode: undefined,
         productModelNomenclatureModelCode: undefined,
+        lastUpdatedAt: undefined,
+        needApprove: undefined,
     });
 
     const {data, isLoading} = modelsApi.useGetModelsQuery({
@@ -79,6 +81,8 @@ const ModelList: React.FC = () => {
             productRiskLevel: filters.productRiskLevel ? parseInt(filters.productRiskLevel, 10) : undefined,
             sustainabilityRisk: filters.sustainabilityRisk ? parseInt(filters.sustainabilityRisk, 10) : undefined,
             regulatoryRisk: filters.regulatoryRisk ? parseInt(filters.regulatoryRisk, 10) : undefined,
+            lastUpdatedAt: filters.latestChanges ? parseInt(filters.latestChanges, 10) : undefined,
+            needApprove: filters.needApprove,
         }));
     };
 
