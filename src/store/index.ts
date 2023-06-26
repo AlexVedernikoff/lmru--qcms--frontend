@@ -1,39 +1,32 @@
 import {configureStore, ThunkAction, Action, combineReducers} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {setupListeners} from '@reduxjs/toolkit/dist/query';
-import {counterSlice} from './slices/exampleSlice';
-import {commonSlice} from './slices/common';
 import modelsApi from '../components/Models/modelsApi';
-import {providersApi} from '../components/Providers/services';
-import {getSupplierDetails} from '../api/getSupplierDetails';
+import withModelApi from '../components/Products/WithQualityModel/withModelApi';
+import {getManagementNomenclature} from '../api/getManagementNomenclature';
 import {getPermissiveDocuments} from '../api/getPermissiveDocuments';
 import {getProductModelNomenclature} from '../api/getProductModelNomenclature';
+import {getSupplierDetails} from '../api/getSupplierDetails';
+import {postSearchProducts} from '../api/postSearchProducts';
 import {postSearchQualityDocuments} from '../api/postSearchQualityDocuments';
 import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
 import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
-import withModelApi from '../components/Products/WithQualityModel/withModelApi';
+import {providersApi} from '../components/Providers/services';
 import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
-import {getManagementNomenclature} from '../api/getManagementNomenclature';
-import {postSearchProducts} from '../api/postSearchProducts';
 
 const rootReducer = {
-    common: commonSlice.reducer,
-    counter: counterSlice.reducer,
-    [modelsApi.reducerPath]: modelsApi.reducer,
-    [withModelApi.reducerPath]: withModelApi.reducer,
-    [providersApi.reducerPath]: providersApi.reducer,
-    [providersApi.reducerPath]: providersApi.reducer,
+    [getManagementNomenclature.reducerPath]: getManagementNomenclature.reducer,
+    [getPermissiveDocuments.reducerPath]: getPermissiveDocuments.reducer,
+    [getProductModelNomenclature.reducerPath]: getProductModelNomenclature.reducer,
     [getSupplierDetails.reducerPath]: getSupplierDetails.reducer,
+    [modelsApi.reducerPath]: modelsApi.reducer,
+    [postSearchProducts.reducerPath]: postSearchProducts.reducer,
+    [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
+    [providersApi.reducerPath]: providersApi.reducer,
+    [taskDetailsApi.reducerPath]: taskDetailsApi.reducer,
+    [withModelApi.reducerPath]: withModelApi.reducer,
     productsDocumentsFilters: productsDocumentsFilters.reducer,
     productsDocumentsTableData: productsDocumentsTableData.reducer,
-    [getPermissiveDocuments.reducerPath]: getPermissiveDocuments.reducer,
-    [getProductModelNomenclature.reducerPath]: getProductModelNomenclature.reducer,
-    [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
-    [getPermissiveDocuments.reducerPath]: getPermissiveDocuments.reducer,
-    [getProductModelNomenclature.reducerPath]: getProductModelNomenclature.reducer,
-    [taskDetailsApi.reducerPath]: taskDetailsApi.reducer,
-    [getManagementNomenclature.reducerPath]: getManagementNomenclature.reducer,
-    [postSearchProducts.reducerPath]: postSearchProducts.reducer,
 };
 
 const createReducer = (injectedReducers = {}) =>
@@ -47,19 +40,16 @@ const makeStore = () =>
         reducer: createReducer(),
         middleware: getDefaultMiddleware =>
             getDefaultMiddleware().concat(
+                getManagementNomenclature.middleware,
+                getPermissiveDocuments.middleware,
+                getProductModelNomenclature.middleware,
+                getSupplierDetails.middleware,
                 modelsApi.middleware,
+                postSearchProducts.middleware,
+                postSearchQualityDocuments.middleware,
                 providersApi.middleware,
                 taskDetailsApi.middleware,
-                getSupplierDetails.middleware,
-                withModelApi.middleware,
-                getPermissiveDocuments.middleware,
-                getProductModelNomenclature.middleware,
-                postSearchQualityDocuments.middleware,
-                getPermissiveDocuments.middleware,
-                getProductModelNomenclature.middleware,
-                postSearchQualityDocuments.middleware,
-                getManagementNomenclature.middleware,
-                postSearchProducts.middleware
+                withModelApi.middleware
             ),
         devTools: process.env.NODE_ENV === 'development',
     });
@@ -73,19 +63,3 @@ export type TAppThunk<ReturnType = void> = ThunkAction<ReturnType, TRootState, u
 
 export const useAppDispatch = () => useDispatch<TAppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<TRootState> = useSelector;
-
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectCount = (state: TRootState) => state.counter.value;
-
-// We can also write thunks by hand, which may contain both sync and async logic.
-// Here's an example of conditionally dispatching actions based on current state.
-export const incrementIfOdd =
-    (amount: number): TAppThunk =>
-    (dispatch, getState) => {
-        const currentValue = selectCount(getState());
-        if (currentValue % 2 === 1) {
-            dispatch(counterSlice.actions.incrementByAmount(amount));
-        }
-    };
