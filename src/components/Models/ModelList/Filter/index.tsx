@@ -69,40 +69,40 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
     );
 
     const handleProductModelChange = (value: string[]) => {
-        setFormState({...formState, productModel: value.length > 0 ? value : undefined});
+        let formNewState: IFilterFormState = {...formState, productModel: value.length > 0 ? [...value] : undefined};
 
         for (const selected of value) {
             const [type, code] = selected.split(' ');
             switch (type) {
                 case 'department':
-                    setFormState({
-                        ...formState,
+                    formNewState = {
+                        ...formNewState,
                         productModelNomenclatureDepartmentCode: nomenclature
                             .filter(v => v.code === code)
                             .map(v => v.code),
-                    });
+                    };
                     break;
                 case 'subdepartment':
-                    setFormState({
-                        ...formState,
+                    formNewState = {
+                        ...formNewState,
                         productModelNomenclatureSubDepartmentCode: nomenclature
                             .flatMap(v => v.subdepartments.filter(s => s.code === code))
                             .map(v => v.code),
-                    });
+                    };
                     break;
                 case 'consolidation':
-                    setFormState({
-                        ...formState,
+                    formNewState = {
+                        ...formNewState,
                         productModelNomenclatureConsolidationCode: nomenclature
                             .flatMap(v =>
                                 v.subdepartments.flatMap(s => s.modelConsolidationGroups.filter(c => c.code === code))
                             )
                             .map(v => v.code),
-                    });
+                    };
                     break;
                 case 'model':
-                    setFormState({
-                        ...formState,
+                    formNewState = {
+                        ...formNewState,
                         productModelNomenclatureModelCode: nomenclature
                             .flatMap(v =>
                                 v.subdepartments.flatMap(s =>
@@ -110,10 +110,12 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
                                 )
                             )
                             .map(v => v.code),
-                    });
+                    };
                     break;
             }
         }
+
+        setFormState(formNewState);
     };
 
     const handleShowMoreFiltersClick = () => {
@@ -135,7 +137,7 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
-            <Grid columnGap={16} columns="repeat(3, 1fr)" rowGap={48}>
+            <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="start" rowGap={48}>
                 <Grid columnGap={16} columns="1fr" alignItems="center" rowGap={25}>
                     <Input
                         inputSize="m"
