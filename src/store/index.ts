@@ -31,10 +31,8 @@ const rootReducer = {
     [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
     [getPermissiveDocuments.reducerPath]: getPermissiveDocuments.reducer,
     [getProductModelNomenclature.reducerPath]: getProductModelNomenclature.reducer,
-    [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
     [taskDetailsApi.reducerPath]: taskDetailsApi.reducer,
     [getManagementNomenclature.reducerPath]: getManagementNomenclature.reducer,
-    [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
     [postSearchProducts.reducerPath]: postSearchProducts.reducer,
 };
 
