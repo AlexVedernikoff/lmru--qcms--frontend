@@ -1,11 +1,11 @@
+import {useMemo} from 'react';
+import {useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {Chip, Grid, RegularButton, Typography} from 'fronton-react';
-import {useParams} from 'react-router-dom';
-import HistoryBackIcon from '../../Icons/HistoryBackIcon';
-import styles from './ModelDetails.module.css';
-import modelsApi from '../modelsApi';
-import {useMemo} from 'react';
 import {ERiskLevel} from '../../../common/types/models';
+import HistoryBackIcon from '../../Icons/HistoryBackIcon';
+import modelsApi from '../modelsApi';
+import styles from './ModelDetails.module.css';
 
 interface IProps {
     onResetClick?: () => void;
