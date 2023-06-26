@@ -7,7 +7,7 @@ import {useGetSupplierDetsQuery} from '../../../../../../api/getSupplierDetails'
 import {ISupplierDetailsResponse} from '../../../../../../common/types/supplierDetails';
 
 const ContactsTable: React.FC = () => {
-    const supplierId = 1;
+    const supplierId = window.location.href.split('/').slice(-1)[0];
     const {data: supplierDetails = []} = useGetSupplierDetsQuery(supplierId);
     const {supplierContacts} = supplierDetails as ISupplierDetailsResponse;
     const data: IDataType[] = supplierContacts

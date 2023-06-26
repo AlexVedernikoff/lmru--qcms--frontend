@@ -6,7 +6,7 @@ import {useGetSupplierDetsQuery} from '../../../../api/getSupplierDetails';
 
 const ProviderDetailsProfile: React.FC = () => {
     const {t} = useTranslation('providers');
-    const supplierId = 1;
+    const supplierId = window.location.href.split('/').slice(-1)[0];
     const {data: supplierDetails} = useGetSupplierDetsQuery(supplierId);
 
     return (

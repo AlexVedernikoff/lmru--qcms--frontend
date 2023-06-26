@@ -7,7 +7,7 @@ import {useGetSupplierDetsQuery} from '../../../../api/getSupplierDetails';
 import {ISupplierDetailsResponse} from '../../../../common/types/supplierDetails';
 
 const ProductDetailsProvider: React.FC = () => {
-    const supplierId = 1;
+    const supplierId = window.location.href.split('/').slice(-1)[0];
     const {t} = useTranslation('providers');
     const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
     const {data: supplierDetails = {}} = useGetSupplierDetsQuery(supplierId);

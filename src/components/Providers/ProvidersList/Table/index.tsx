@@ -28,6 +28,7 @@ const ProvidersTable: React.FC<Props> = props => {
     const handleViewProviderDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
         e => {
             const {id} = e.currentTarget.dataset;
+            console.log(`мы переходим на страницу деталей поставщиков с id = ${id}`);
             if (id) {
                 navigate(PROVIDER_ROUTES.details.replace(':id', id));
             }
