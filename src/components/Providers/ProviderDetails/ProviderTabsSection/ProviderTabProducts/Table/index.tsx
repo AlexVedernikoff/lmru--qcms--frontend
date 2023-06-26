@@ -1,59 +1,32 @@
-import {useMemo, useEffect, useState} from 'react';
+import {useMemo, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {ColumnsType} from 'antd/es/table';
 import {IDataType, getProductsTableColumns} from './TableColumns';
 import CustomTable from '../../../../../Common/CustomTable';
-import {PROVIDER_PRODUCTS_TABLE_ITEMS} from '../../../../../../common/mocks';
 import {useGetSupplierDetsQuery} from '../../../../../../api/getSupplierDetails';
 import {usePostSearchProdsMutation} from '../../../../../../api/postSearchProducts';
-import {ISearchProductsResponse} from '../../../../../../common/types/searchProducts';
 
 const ContactsTable: React.FC = () => {
     const {id: supplierId = ''} = useParams();
-
-    type QueryReturnValue =
-        | {
-              data: ISearchProductsResponse;
-          }
-        | {
-              error: any;
-          };
-
-    const [productsData, setproductsData] = useState<{
-        data: ISearchProductsResponse;
-    }>();
-
-    // const [productsData, setproductsData] = useState<QueryReturnValue>();
-
     const {data: supplierDetails} = useGetSupplierDetsQuery(supplierId);
     const {supplierRMSCode} = supplierDetails || {};
-    console.log('supplierRMSCode = ', supplierRMSCode);
 
-    const [searchProducts] = usePostSearchProdsMutation();
+    const [searchProducts, searchProductsResults] = usePostSearchProdsMutation();
 
     const requestBody = {
         pageIndex: 1,
         pageSize: 1,
         searchBy: {
-            // code: supplierRMSCode,
-            code: '1',
+            code: supplierRMSCode,
         },
     };
 
     const receiveQualityDocuments = async () => {
-        // const requestBody = prepareBody(productsDocumentsFiltersState);
-        const productsDocumentsTableData = await searchProducts(requestBody);
-        // console.log('productsDocumentsTableData = ', productsDocumentsTableData);
-        setproductsData(
-            productsDocumentsTableData as {
-                data: ISearchProductsResponse;
-            }
-        );
+        await searchProducts(requestBody);
     };
 
-    const dataArr = productsData?.data.content;
-    console.log('productsData.data.content = ', dataArr);
+    const dataArr = searchProductsResults.data?.content;
 
     useEffect(() => {
         receiveQualityDocuments();
@@ -75,8 +48,6 @@ const ContactsTable: React.FC = () => {
     const {t} = useTranslation('providers');
 
     const columns = useMemo<ColumnsType<IDataType>>(() => [...getProductsTableColumns(t)], [t]);
-
-    // const data1 = useMemo<IDataType[]>(() => PROVIDER_PRODUCTS_TABLE_ITEMS, []);
 
     return (
         <CustomTable columns={columns} dataSource={data} scroll={{x: 400}} tableLayout="fixed" size="small" bordered />
