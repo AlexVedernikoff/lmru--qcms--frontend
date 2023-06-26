@@ -5,6 +5,8 @@ import styles from '../../../Common.module.css';
 const ProductDetailsDates: React.FC = () => {
     const {t} = useTranslation('products');
 
+    // const createdAt = details?.creationInformation?.createdAt
+
     return (
         <Grid className={styles.sectionItem} rowGap={16} columnGap={16} columns="1fr" rows="36px">
             <Typography variant="h3">{t('ProductDetails.Info.Dates.Title')}</Typography>
