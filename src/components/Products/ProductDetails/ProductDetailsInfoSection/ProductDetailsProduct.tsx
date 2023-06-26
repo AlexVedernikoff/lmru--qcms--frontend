@@ -4,16 +4,14 @@ import styles from '../../../Common.module.css';
 
 import {useGetDetailsForProductsQuery} from '../productDetailsApi';
 
-import {mockForGetDetailsForProduct} from '../mockProductDetails';
+import {productId, securityCode} from '../mockProductDetails';
 
 import {productDetailsProductMapping} from '../productUtils.ts/ProductDetailsInfoSection/ProductDetailsProduct/productDetailsProductMapping';
 
 const ProductDetailsProduct: React.FC = () => {
     const {t} = useTranslation('products');
 
-    console.log(mockForGetDetailsForProduct);
-
-    const {data: details} = useGetDetailsForProductsQuery(mockForGetDetailsForProduct);
+    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
     const mapping = productDetailsProductMapping(t, details);
 
     return (

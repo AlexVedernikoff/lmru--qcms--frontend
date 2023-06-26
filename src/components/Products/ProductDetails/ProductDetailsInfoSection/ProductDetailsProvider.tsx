@@ -2,14 +2,14 @@ import {Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 
-import {mockForGetDetailsForProduct} from '../mockProductDetails';
+import {productId, securityCode} from '../mockProductDetails';
 
 import {useGetDetailsForProductsQuery} from '../productDetailsApi';
 
 const ProductDetailsProvider: React.FC = () => {
     const {t} = useTranslation('products');
 
-    const {data: details} = useGetDetailsForProductsQuery(mockForGetDetailsForProduct);
+    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
 
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">
