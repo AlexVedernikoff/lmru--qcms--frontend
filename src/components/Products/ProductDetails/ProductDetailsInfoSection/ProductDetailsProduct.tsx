@@ -68,7 +68,7 @@ const ProductDetailsProduct: React.FC = () => {
                     <br />
                     {/* <LinkButton> */}
                     <Typography variant="s" size="body_short">
-                        {mapping.qualityModel ? mapping.qualityModel : ''}
+                        {mapping.qualityModel}
                     </Typography>
                     {/* </LinkButton> */}
                 </div>
@@ -85,22 +85,13 @@ const ProductDetailsProduct: React.FC = () => {
             </div>
 
             <div>
-                <Checkbox
-                    checked={mapping.isChemical ? mapping.isChemical : false}
-                    label={t('ProductDetails.Info.Product.Field.isChemical')}
-                />
+                <Checkbox checked={mapping.isChemical} label={t('ProductDetails.Info.Product.Field.isChemical')} />
             </div>
 
             <Grid rowGap={4} columns="165px 250px 200px 1fr">
-                <Checkbox checked={mapping.isSTM ? true : false} label={t('ProductDetails.Info.Product.Field.STM')} />
-                <Checkbox
-                    checked={mapping.isImport ? true : false}
-                    label={t('ProductDetails.Info.Product.Field.intImport')}
-                />
-                <Checkbox
-                    checked={mapping.isFromProject ? true : false}
-                    label={t('ProductDetails.Info.Product.Field.fromProject')}
-                />
+                <Checkbox checked={mapping.isSTM} label={t('ProductDetails.Info.Product.Field.STM')} />
+                <Checkbox checked={mapping.isImport} label={t('ProductDetails.Info.Product.Field.intImport')} />
+                <Checkbox checked={mapping.isFromProject} label={t('ProductDetails.Info.Product.Field.fromProject')} />
             </Grid>
         </Grid>
     );
