@@ -190,15 +190,20 @@ const Table: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => {
 
     return (
         <CustomTable
+            loading={isLoading}
             rowSelection={rowSelection}
             columns={columns}
             dataSource={dataSource}
-            scroll={{x: true}}
+            scroll={{x: 400}}
             tableLayout="fixed"
             size="small"
             bordered
-            expandable={{columnWidth: 100}}
-            pagination={{}}
+            pagination={{
+                pageSize: tableData?.pageable?.pageSize,
+                total: tableData?.pageable?.totalElements,
+                current: tableData?.pageable?.pageIndex + 1,
+                onChange: onPageChange,
+            }}
         />
     );
 };
