@@ -1,22 +1,22 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 enum EApprovingStatusValues {
-    'APPROVED' = 'APPROVED',
-    'REJECTED' = 'REJECTED',
-    'NEEDS_APPROVAL' = 'NEEDS_APPROVAL',
+    APPROVED = 'APPROVED',
+    REJECTED = 'REJECTED',
+    NEEDS_APPROVAL = 'NEEDS_APPROVAL',
 }
 
 enum ERegulatoryStatusValues {
-    'IMPORTER' = 'IMPORTER',
-    'SUPPLIER' = 'SUPPLIER',
-    'MANUFACTURER' = 'MANUFACTURER',
+    IMPORTER = 'IMPORTER',
+    SUPPLIER = 'SUPPLIER',
+    MANUFACTURER = 'MANUFACTURER',
 }
 
 export enum EDateType {
-    'createDate' = 'createDate',
-    'updateDate' = 'updateDate',
-    'issueDate' = 'issueDate',
-    'expireDate' = 'expireDate',
+    createDate = 'createDate',
+    updateDate = 'updateDate',
+    issueDate = 'issueDate',
+    expireDate = 'expireDate',
 }
 
 interface IDates {
@@ -39,8 +39,8 @@ export interface IFilters {
     supplierNameKey: string;
     supplierNameValue: string | undefined;
 
-    approvingStatus: [EApprovingStatusValues] | undefined;
-    regulatoryStatus: [ERegulatoryStatusValues] | undefined;
+    approvingStatus: EApprovingStatusValues[] | undefined;
+    regulatoryStatus: ERegulatoryStatusValues[] | undefined;
 
     type: string[] | undefined;
     fileName: string | undefined;
