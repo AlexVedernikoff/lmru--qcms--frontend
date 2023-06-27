@@ -1,24 +1,64 @@
+import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Grid, Typography} from 'fronton-react';
+import {Grid, RegularButton, Typography} from 'fronton-react';
+import {PlusIcon, TrashIcon} from '@fronton/icons-react';
 import {useParams} from 'react-router-dom';
 import CardView from '../../Common/CardView';
-import MasterPlanTable from './MasterPlanTable';
 import modelsApi from '../modelsApi';
+import MasterPlanTable from './MasterPlanTable';
+import MasterPlanAddModal from './MasterPlanAddModal';
 
-const MasterPlanRequirements: React.FC = () => {
+interface IProps {
+    planIndex: number;
+}
+
+const MasterPlanRequirements: React.FC<IProps> = ({planIndex}) => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
     const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
 
+    const [isOpen, setIsOpen] = useState(false);
+
     const handleCardClose = () => {};
+
+    const handleSaveClick = () => {};
+
+    const handleAddClick = () => {
+        setIsOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsOpen(false);
+    };
+
+    const handleDeleteClick = () => {};
 
     return (
         <Grid rowGap={24}>
-            <Grid columns="1fr 1fr 1fr" columnGap={24} rowGap={24}>
+            <Grid columns="1fr auto">
+                <div />
+                <div>
+                    <RegularButton onClick={handleSaveClick} variant="pseudo" iconLeft={<PlusIcon />}>
+                        {t('Buttons.Save')}
+                    </RegularButton>
+                    <RegularButton onClick={handleAddClick} variant="pseudo" iconLeft={<PlusIcon />}>
+                        {t('Buttons.Add')}
+                    </RegularButton>
+                    <RegularButton onClick={handleDeleteClick} variant="pseudo" iconLeft={<TrashIcon />}>
+                        {t('Buttons.Delete')}
+                    </RegularButton>
+                </div>
+            </Grid>
+
+            <Grid columns="auto auto auto" columnGap={24} rowGap={24}>
                 {details?.regulatoryReferences?.map((data, index) => (
                     <CardView
                         key={index}
-                        header={data.required ? t('ModelDetails.MasterPlan.Requirement.Type.Required') : ''}
+                        header={
+                            data.required
+                                ? t('ModelDetails.MasterPlan.Requirement.Type.Required')
+                                : t('ModelDetails.MasterPlan.Requirement.Type.Optional')
+                        }
                         onClose={handleCardClose}
                         infoLink={data.hyperlink}
                     >
@@ -29,7 +69,11 @@ const MasterPlanRequirements: React.FC = () => {
                 ))}
             </Grid>
 
-            <MasterPlanTable />
+            {!!details?.masterPlanIds?.[planIndex]?.id && (
+                <MasterPlanTable data={details?.masterPlanIds?.[planIndex]} />
+            )}
+
+            <MasterPlanAddModal isOpen={isOpen} onClose={handleModalClose} />
         </Grid>
     );
 };

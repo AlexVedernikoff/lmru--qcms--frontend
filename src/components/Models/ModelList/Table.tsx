@@ -174,7 +174,7 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
             pagination={{
                 pageSize: tableData?.pageable?.pageSize,
                 total: tableData?.pageable?.totalElements,
-                current: tableData?.pageable?.pageIndex + 1,
+                current: (tableData?.pageable?.pageIndex || 0) + 1,
                 onChange: onPageChange,
             }}
         />

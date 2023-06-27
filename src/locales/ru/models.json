@@ -80,7 +80,21 @@
                 }
             },
             "Table": {
+                "Options": {
+                    "Person": {
+                        "DISTRIBUTOR": "Дистрибьютер",
+                        "IMPORTER": "Импортер",
+                        "MANUFACTURER": "Производитель"
+                    },
+                    "Role": {
+                        "SUPPLIER": "Поставщик",
+                        "QE": "QE",
+                        "SQM": "SQM",
+                        "SERVICE_PROVIDER": "Подрядчик"
+                    }
+                },
                 "Columns": {
+                    "status": "Статус поставщика",
                     "category": "Категория",
                     "type": "Тип",
                     "legal": "Cвязанные законодательные требования",
