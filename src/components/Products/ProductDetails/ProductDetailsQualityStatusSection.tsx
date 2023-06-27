@@ -78,6 +78,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                     blockOrders: mapping.blockedForOrders,
                     blockSellings: mapping.blockedForSellings,
                     blockPublics: mapping.blockedForPublics,
+                    status: mapping.qualityStatus,
                 };
             });
 
@@ -88,18 +89,28 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleChange = (record: IDataType, value: string) => {
         if (value === EBlockers.BlockOrders) {
+            console.log('EBlockers', EBlockers.BlockOrders);
+            console.log('value', value);
+            console.log(record);
+
             setTableData(prevState =>
                 prevState.map((el: any) => (el.id === record.id ? {...el, blockOrders: !el.blockOrders} : el))
             );
         }
         if (value === EBlockers.BlockSellings) {
+            console.log('EBlockers', EBlockers.BlockSellings);
+            console.log('value', value);
+            console.log(record);
             setTableData(prevState =>
-                prevState.map((el: any) => (el.id === record.id ? {...el, isBlockSellings: !el.isBlockSellings} : el))
+                prevState.map((el: any) => (el.id === record.id ? {...el, blockSellings: !el.blockSellings} : el))
             );
         }
         if (value === EBlockers.BlockPublics) {
+            console.log('EBlockers', EBlockers.BlockPublics);
+            console.log('value', value);
+            console.log(record);
             setTableData(prevState =>
-                prevState.map((el: any) => (el.id === record.id ? {...el, BlockPublics: !el.BlockPublics} : el))
+                prevState.map((el: any) => (el.id === record.id ? {...el, blockPublics: !el.blockPublics} : el))
             );
         }
     };
@@ -126,7 +137,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                             <Dropdown
                                 size="m"
                                 closeOnSelect
-                                placeholder={t('Common.Select')}
+                                // placeholder={t('Common.Select')}
                                 value={record.status}
                                 onSelect={handleSelect(record)}
                             >
@@ -144,7 +155,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             {
                 title: 'Блокировка заказов',
                 dataIndex: 'blockOrders',
-                render: (record: IDataType) => (
+                render: (_statuses: string[], record: IDataType) => (
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                         <CustomSwitch
                             handleChange={() => handleChange(record, EBlockers.BlockOrders)}
@@ -160,7 +171,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             {
                 title: 'Блокировка продажи',
                 dataIndex: 'blockSellings',
-                render: (record: IDataType) => (
+                render: (_statuses: string[], record: IDataType) => (
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                         <CustomSwitch
                             handleChange={() => handleChange(record, EBlockers.BlockSellings)}
@@ -176,7 +187,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             {
                 title: 'Блокировка публицкации',
                 dataIndex: 'blockPublics',
-                render: (record: IDataType) => (
+                render: (_statuses: string[], record: IDataType) => (
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                         <CustomSwitch
                             handleChange={() => handleChange(record, EBlockers.BlockPublics)}
