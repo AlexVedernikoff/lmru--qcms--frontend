@@ -2,21 +2,24 @@ import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
 import {ITaskTableTasks} from '../../../../../../common/clientModels';
 import {Grid} from 'fronton-react';
+import {ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
 
 export interface IDataType extends ITaskTableTasks {
     key: React.Key;
 }
 
-export const getTasksTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): ColumnsType<IDataType> => [
+export const getTasksTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): ColumnsType<ITaskUploadedDocument> => [
     {
         title: t('TaskTabs.Tasks.TaskNumber'),
-        dataIndex: 'taskNumber',
+        dataIndex: 'linkedTasksIds',
         width: 130,
+        render: text => <div>{text?.join(',')}</div>,
     },
     {
         title: t('TaskTabs.Tasks.EAN'),
-        dataIndex: 'EAN',
+        dataIndex: 'productInfoDetails',
         width: 160,
+        render: text => <div>{text?.ean}</div>,
     },
     {
         title: t('TaskTabs.Tasks.ProviderLink'),
@@ -30,9 +33,9 @@ export const getTasksTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>):
     },
     {
         title: t('TaskTabs.Tasks.DocumentStatus'),
-        dataIndex: 'documentStatus',
-        render: (text: string) => {
-            if (text === 'Ожидает согласования') {
+        dataIndex: 'productInfoDetails',
+        render: text => {
+            if (text?.productDescription === 'Ожидает согласования') {
                 return (
                     <Grid columns="0.1fr 1fr">
                         <div
@@ -44,11 +47,11 @@ export const getTasksTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>):
                                 height: '7px',
                             }}
                         />
-                        <div style={{color: '#ECC600'}}>{text}</div>
+                        <div style={{color: '#ECC600'}}>{text.productDescription}</div>
                     </Grid>
                 );
             }
-            if (text === 'Согласовано') {
+            if (text?.productDescription === 'Согласовано') {
                 return (
                     <Grid columns="0.1fr 1fr">
                         <div
@@ -74,8 +77,9 @@ export const getTasksTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>):
     },
     {
         title: t('TaskTabs.Tasks.Product'),
-        dataIndex: 'product',
+        dataIndex: 'productInfoDetails',
         width: 300,
+        render: text => <div>{text?.productDescription}</div>,
     },
     {
         title: t('TaskTabs.Tasks.TaskStatus'),
