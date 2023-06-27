@@ -7,6 +7,10 @@ import {ColumnsType} from 'antd/es/table';
 import {useMemo, useState} from 'react';
 import HistoryBackIcon from '../../Icons/HistoryBackIcon';
 import {CustomSwitch} from '../../Common/Switch/CustomSwitch';
+import {useGetDetailsForProductsQuery} from './productDetailsApi';
+
+import {productId, securityCode} from './mockProductDetails';
+import {qaulityStatusSectionMapping} from './productUtils.ts/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
 
 interface IqStatuses {
     id: string;
@@ -29,6 +33,10 @@ enum EBlockers {
 
 const ProductDetailsQualityStatusSection: React.FC = () => {
     const {t} = useTranslation('products');
+
+    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
+
+    const mapping = qaulityStatusSectionMapping(details);
 
     const [isBlockOrder, setIsBlockOrder] = useState(false);
     const [isBlockSellings, setIsBlockSellings] = useState(false);
