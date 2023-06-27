@@ -6,6 +6,7 @@ import styles from '../../Common.module.css';
 import {ColumnsType} from 'antd/es/table';
 import {useMemo, useState} from 'react';
 import HistoryBackIcon from '../../Icons/HistoryBackIcon';
+import {CustomSwitch} from '../../Common/Switch/CustomSwitch';
 
 interface IqStatuses {
     id: string;
@@ -20,8 +21,24 @@ interface IDataType extends IqStatuses {
     key: React.Key;
 }
 
+enum EBlockers {
+    BlockOrders = 'blockOrders',
+    BlockSellings = 'blockSellings',
+    BlockPublics = 'blockPublics',
+}
+
 const ProductDetailsQualityStatusSection: React.FC = () => {
     const {t} = useTranslation('products');
+
+    const [isBlockOrder, setIsBlockOrder] = useState(false);
+    const [isBlockSellings, setIsBlockSellings] = useState(false);
+    const [isBlockPublics, setIsBlockPublics] = useState(false);
+
+    const handleChange = (value: string) => {
+        value === EBlockers.BlockOrders && setIsBlockOrder(!isBlockOrder);
+        value === EBlockers.BlockSellings && setIsBlockSellings(!isBlockSellings);
+        value === EBlockers.BlockPublics && setIsBlockPublics(!isBlockPublics);
+    };
 
     const [chosenValue, setChosenValue] = useState<string>('Отсутствующие данные о качестве');
 
@@ -73,17 +90,53 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             {
                 title: 'Блокировка заказов',
                 dataIndex: 'blockOrders',
+                render: (record: IDataType) => (
+                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
+                        <CustomSwitch
+                            handleChange={() => handleChange(EBlockers.BlockOrders)}
+                            name=""
+                            checked={isBlockOrder}
+                        />
+                        <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
+                            <HistoryBackIcon />
+                        </RegularButton>
+                    </div>
+                ),
             },
             {
                 title: 'Блокировка продажи',
                 dataIndex: 'blockSellings',
+                render: (record: IDataType) => (
+                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
+                        <CustomSwitch
+                            handleChange={() => handleChange(EBlockers.BlockSellings)}
+                            name=""
+                            checked={isBlockSellings}
+                        />
+                        <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
+                            <HistoryBackIcon />
+                        </RegularButton>
+                    </div>
+                ),
             },
             {
                 title: 'Блокировка публицкации',
                 dataIndex: 'blockPublics',
+                render: (record: IDataType) => (
+                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
+                        <CustomSwitch
+                            handleChange={() => handleChange(EBlockers.BlockPublics)}
+                            name=""
+                            checked={isBlockPublics}
+                        />
+                        <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
+                            <HistoryBackIcon />
+                        </RegularButton>
+                    </div>
+                ),
             },
         ],
-        [chosenValue, t]
+        [t, chosenValue, isBlockOrder, isBlockSellings, isBlockPublics]
     );
 
     const attr_data = useMemo<IDataType[]>(() => STATUSES.map(d => ({...d, key: d.id})), []);
@@ -107,6 +160,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 <Typography variant="h3">{t('ProductDetails.QualityStatusSection.Comments')}</Typography>
                 <Textarea />
             </Grid>
+            <RegularButton>Отправить</RegularButton>
         </Grid>
     );
 };
