@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import AccordionPanel from '../../Common/AccordionPanel';
-import MasterPlanForm from './MasterPlanForm';
+import MasterPlanRequirements from './MasterPlanRequirements';
 
 const ModelDetailsMasterPlan: React.FC = () => {
     const {t} = useTranslation('models');
@@ -19,7 +19,7 @@ const ModelDetailsMasterPlan: React.FC = () => {
         <div>
             {sectionList.map((section, index) => (
                 <AccordionPanel key={index} numberIcon={index + 1} header={section}>
-                    <MasterPlanForm />
+                    <MasterPlanRequirements planIndex={index} />
                 </AccordionPanel>
             ))}
         </div>

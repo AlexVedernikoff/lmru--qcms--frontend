@@ -1,13 +1,32 @@
-import {Modal, ModalContent, ModalFooter, ModalHeader} from 'fronton-react';
+import {Modal, ModalContent, ModalFooter, ModalHeader, RegularButton} from 'fronton-react';
+import {useTranslation} from 'react-i18next';
+import MasterPlanTable from './MasterPlanTable';
 
-const MasterPlanAddModal: React.FC = () => {
-    const handleClose = () => {};
+interface IProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+const MasterPlanAddModal: React.FC<IProps> = ({isOpen, onClose}) => {
+    const {t} = useTranslation('models');
+
+    // const [tableData, setTableData] = useState([]);
+
+    const handleClose = () => {
+        onClose();
+    };
+
+    const handleSave = () => {};
 
     return (
-        <Modal show onClose={handleClose}>
-            <ModalHeader></ModalHeader>
-            <ModalContent></ModalContent>
-            <ModalFooter></ModalFooter>
+        <Modal show={isOpen} onClose={handleClose} size="l">
+            <ModalHeader title={t('Buttons.Add')} />
+            <ModalContent>
+                <MasterPlanTable />
+            </ModalContent>
+            <ModalFooter>
+                <RegularButton onClick={handleSave}>{t('Buttons.Save')}</RegularButton>
+            </ModalFooter>
         </Modal>
     );
 };

@@ -3,7 +3,6 @@ import {
     IProductTableWithoutModelsItem,
     IProviderContactsTableItem,
     IModelTableItem,
-    IMasterPlanRequirementTableItem,
     IProviderTableItem,
     IProviderCommandTableItem,
     IProviderProductsTableItem,
@@ -16,25 +15,6 @@ import {
 } from './clientModels';
 import {IProvidersResponse} from './types/providers';
 import {ITaskAwaitingDocument} from './types/taskDetails';
-
-export const PLAN_REQUIREMENT_TABLE_ITEMS: TWithReactKey<IMasterPlanRequirementTableItem>[] = [
-    {
-        key: '1',
-        category: 'Квалификация - Сбор документов',
-        type: 'Тестирование',
-        legal: 'Federal_Law_No_2300_I_1992 (Law on Consumer Rights Protection)  Россия',
-        documents: 'Документы из регулирующих положений',
-        origin: 'QUALIF_CERTIF_COLLECT_TEST_ALL MODEL_RPL_n°2',
-        process: 'Автоматический',
-        responsiblePerson: 'Подрядчик',
-        approvingPerson: {
-            type: 'QE',
-            place: 'Платформа Россия',
-        },
-        documentTemplate: '',
-        taskRequirement: false,
-    },
-];
 
 export const MODEL_TABLE_ITEMS: TWithReactKey<IModelTableItem>[] = [
     {

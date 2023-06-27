@@ -111,6 +111,73 @@ export interface IModelDetailsParams {
     securityCode: string;
 }
 
+export interface IMasterPlanTask {
+    id: string; // required - идентификатор задачи в БД
+    categoryType: {
+        id: number;
+        name: string;
+        category: {
+            id: number;
+            name: string;
+        };
+    }; // required, - тип задачи из категории (содержит ссылку на категорию, к которой относится)
+    version: number; // required - версия задачи
+    regulatoryType: string; // required - тип плана ENUM: [DISTRIBUTOR, IMPORTER, MANUFACTURER] (поставщик, СТМ, дистрибьютор)
+    // otional, законодательное требование для протоколов сертификационных испытаний (из отдельной таблички)
+    linkedRegulations: {
+        id: string; // required, идентификатор связанного законодательного требования
+        name: string; // required, название связанного законодательного требования
+        regionCodes: string[]; // requried, регион распространения законодательного требования
+    }[];
+    // required, - документы, необходимые в рамках квалификационного и сертификационного сбора
+    packagingMaterialDocumentTypes: {
+        id: string; // required, идентификатор в базе
+        description: string; // required, название документа
+    }[];
+    manualProcessing: boolean; // required, флаг показывающий, что задача на поставщика будет создана вручную или автоматически
+    taskRequired: boolean; // required, флаг показывающий влияние задачи на статус сертификации товара
+    responsible: {
+        id: number;
+        type: string; // required, ENUM ['SUPPLIER','QE', 'SQM', 'SERVICE_PROVIDER'] - тип ответственного за выполнение задачи
+        externalId?: string; // optional - ответственный за выполнение задачи, назначается только для Service Provider
+    };
+    approvers: {
+        id: number;
+        type: string; // required, ENUM ['SUPPLIER', 'QE', 'SQM', 'SERVICE_PROVIDER'] - категория подтверждающего выполнение задачи
+        externalId?: string; // optional - подтверждающий выполнение задачи
+    }[];
+    documentTemplates?: number[]; // optional - id шаблона документа, запрашиваемого в рамках задачи
+    creationInformation: {
+        createdAt: string; // required - дата создания задачи
+        createdBy: string; // required - ldap или идентификатор системы, создавший задачу
+    };
+    lastUpdateInformation: {
+        updatedAt: string; // required - дата изменения задачи
+        updatedBy: string; // required - ldap или идентификатор системы, обновивший задачу
+    };
+}
+
+export interface IMasterPlan {
+    id: number; // required - идентификатор мастер плана в БД
+    version: number; // required - версия мастер плана
+    qualityModelId: string; // required - номер модели качества
+    // required - бизнес юнит на который распространяется мастер план
+    bu: {
+        id: number; // идентификатор бизнес юнита
+        code: string; // код бизнес юнита
+    };
+    creationInformation: {
+        createdAt: string; // required - дата создания мастер плана
+        createdBy: string; // required - ldap или идентификатор системы, создавший мастер план
+    };
+    lastUpdateInfomation: {
+        updatedAt: string; // required - дата изменения мастер плана
+        updatedBy: string; // required - ldap или идентификатор системы, обновивший мастер план
+    };
+    // задачи, которые необходимо выполнить для листинга товара
+    tasks: IMasterPlanTask[];
+}
+
 export interface IModelDetailsResponse {
     id: number; // required - номер модели качества
     qualityModelLabel: string; // required - короткое название модели качества
@@ -202,61 +269,7 @@ export interface IModelDetailsResponse {
         };
     }[];
     // required, ссылка на мастер планы, связанные с моделью качества
-    masterPlanIds: {
-        id: number; // required - идентификатор мастер плана в БД
-        version: number; // required - версия мастер плана
-        qualityModelId: string; // required - номер модели качества
-        // required - бизнес юнит на который распространяется мастер план
-        bu: {
-            id: number; // идентификатор бизнес юнита
-            code: string; // код бизнес юнита
-        };
-        creationInformation: {
-            createdAt: string; // required - дата создания мастер плана
-            createdBy: string; // required - ldap или идентификатор системы, создавший мастер план
-        };
-        lastUpdateInfomation: {
-            updatedAt: string; // required - дата изменения мастер плана
-            updatedBy: string; // required - ldap или идентификатор системы, обновивший мастер план
-        };
-        // задачи, которые необходимо выполнить для листинга товара
-        tasks: {
-            id: number; // required - идентификатор задачи в БД
-            categoryTypeId: number; // required, - тип задачи из категории (содержит ссылку на категорию, к которой относится)
-            version: number; // required - версия задачи
-            regulatoryType: string; // required - тип плана ENUM: [DISTRIBUTOR, IMPORTER, MANUFACTURER] (поставщик, СТМ, дистрибьютор)
-            // otional, законодательное требование для протоколов сертификационных испытаний (из отдельной таблички)
-            linkedRegulations: {
-                id: number; // required, идентификатор связанного законодательного требования
-                name: string; // required, название связанного законодательного требования
-                region: string[]; // requried, регион распространения законодательного требования
-            }[];
-            // required, - документы, необходимые в рамках квалификационного и сертификационного сбора
-            packagingMaterialDocumentType: {
-                id: number; // required, идентификатор в базе
-                name: string; // required, название документа
-            }[];
-            manualProcessing: boolean; // required, флаг показывающий, что задача на поставщика будет создана вручную или автоматически
-            taskRequired: boolean; // required, флаг показывающий влияние задачи на статус сертификации товара
-            responsible: {
-                type: string; // required, ENUM ['SUPPLIER','QE', 'SQM', 'SERVICE_PROVIDER'] - тип ответственного за выполнение задачи
-                externalId?: string; // optional - ответственный за выполнение задачи, назначается только для Service Provider
-            };
-            approver: {
-                type: string; // required, ENUM ['SUPPLIER', 'QE', 'SQM', 'SERVICE_PROVIDER'] - категория подтверждающего выполнение задачи
-                externalId?: string; // optional - подтверждающий выполнение задачи
-            }[];
-            documentTemplates?: number[]; // optional - id шаблона документа, запрашиваемого в рамках задачи
-            creationInformation: {
-                createdAt: string; // required - дата создания задачи
-                createdBy: string; // required - ldap или идентификатор системы, создавший задачу
-            };
-            lastUpdateInfomation: {
-                updatedAt: string; // required - дата изменения задачи
-                updatedBy: string; // required - ldap или идентификатор системы, обновивший задачу
-            };
-        }[];
-    }[];
+    masterPlanIds: IMasterPlan[];
     creationInformation: {
         createdAt: string; // required - дата создания модели качества
         createdBy: string; // required - ldap или идентификатор системы, создавший модель качества
