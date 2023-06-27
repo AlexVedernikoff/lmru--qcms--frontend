@@ -59,7 +59,7 @@ const modelsApi = createApi({
         }),
         updateQualityModel: builder.mutation<IUpdateQualityModelResponse, IUpdateQualityModelParams>({
             query: queryArg => ({
-                url: `/v1/update-quality-model/${queryArg.id}`,
+                url: `update-quality-model/${queryArg.id}`,
                 method: 'PATCH',
                 body: queryArg.body,
                 headers: {
@@ -71,7 +71,7 @@ const modelsApi = createApi({
         }),
         updateMasterPlanTasks: builder.mutation<IUpdateMasterPlanTasksResponse, IUpdateMasterPlanTasksParams>({
             query: queryArg => ({
-                url: `/v1/update-master-plan-tasks/${queryArg.id}`,
+                url: `update-master-plan-tasks/${queryArg.id}`,
                 method: 'POST',
                 body: queryArg.body,
                 headers: {securityCode: queryArg.securityCode},
@@ -79,7 +79,7 @@ const modelsApi = createApi({
         }),
         createMasterPlanTasks: builder.mutation<IUpdateMasterPlanTasksResponse, IUpdateMasterPlanTasksParams>({
             query: queryArg => ({
-                url: `/v1/create-master-plan-tasks/${queryArg.id}`,
+                url: `create-master-plan-tasks/${queryArg.id}`,
                 method: 'POST',
                 body: queryArg.body,
                 headers: {securityCode: queryArg.securityCode},

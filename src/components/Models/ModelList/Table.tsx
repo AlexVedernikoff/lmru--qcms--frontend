@@ -5,11 +5,11 @@ import {Grid, Label, RegularButton, Typography} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {MODELS_ROUTES} from '../../../../common/consts';
-import CustomTable from '../../../Common/CustomTable';
-import NomenclatureRow from '../../Common/NomenclatureRow';
-import {IModelItem, IModelsResponse} from '../../../../common/types/models';
-import {TWithReactKey} from '../../../../common/clientModels';
+import {MODELS_ROUTES} from '../../../common/consts';
+import CustomTable from '../../Common/CustomTable';
+import NomenclatureRow from '../Common/NomenclatureRow';
+import {IModelItem, IModelsResponse} from '../../../common/types/models';
+import {TWithReactKey} from '../../../common/clientModels';
 
 type TDataType = TWithReactKey<IModelItem>;
 
