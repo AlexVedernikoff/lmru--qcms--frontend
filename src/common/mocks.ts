@@ -15,7 +15,7 @@ import {
     ITaskListItem,
 } from './clientModels';
 import {IProvidersResponse} from './types/providers';
-import {ITaskAwaitingDocument, ITaskUploadedDocument} from './types/taskDetails';
+import {ITaskAwaitingDocument} from './types/taskDetails';
 
 export const PLAN_REQUIREMENT_TABLE_ITEMS: TWithReactKey<IMasterPlanRequirementTableItem>[] = [
     {
@@ -493,25 +493,6 @@ export const TASK_AWAITING_DOCUMENT_ITEMS: TWithReactKey<ITaskAwaitingDocument>[
         linkedRegulations: [],
         // template: 'RU.77.01.34.015.E.002397.11.15.pdf',
         // comment: 'Комментарий',
-    },
-];
-
-export const TASK_UPLOADED_DOCUMENT_ITEMS: TWithReactKey<ITaskUploadedDocument>[] = [
-    {
-        key: 1,
-        type: 'Свидетельство о государственной регистрации',
-        // documentMask: 'ЕАЭС RU C-CN.XXXX.A.XXXXX/XX',
-        status: 'Согласовано',
-        // documentName: 'RU.77.01.34.015.E.002397.11.15.pdf',
-        // lotDocumentFlag: false,
-        // uploadDate: '19.01.2021 10:56',
-        // issueDate: '19.01.2021 10:56',
-        // expiryDate: '02.01.2020',
-        // uploaderName: 'Сидоренкова Екатерина',
-
-        id: 1,
-        version: 1,
-        template: false,
     },
 ];
 

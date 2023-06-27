@@ -1,29 +1,43 @@
 import {Dropdown, DropdownItem, Grid, IconButton, RegularButton} from 'fronton-react';
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-// import {ITaskUploadedDocument} from '../../../../../../common/clientModels';
 import DownloadIcon from '../../../../../Icons/DownloadIcon';
 import {CustomSwitch} from '../../../../../Common/Switch/CustomSwitch';
 import {TrashIcon} from '@fronton/icons-react';
 import {ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
+import {convertDateFromServer} from '../../../../../../utils/convertDateFromServer';
 
 export interface IDataType extends ITaskUploadedDocument {
     key: React.Key;
 }
 
-const downloadDocument = () => {
-    //TODO доделать скачивание файла корректно
-    fetch('https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/109', {
+const downloadDocument = (id: number) => {
+    let fileName: string | null | undefined = '';
+
+    fetch(`https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/${id}`, {
         headers: {
             securityCode: 'security_code',
         },
     })
         .then(response => {
+            if (String(response.status)[0] === '4') {
+                alert(`Ошибка! Файла с id = ${id} не существует.`);
+                return;
+            }
+
+            fileName = response.headers.get('Content-Disposition')?.split("'").slice(-1)[0];
             return response.blob();
         })
         .then(blob => {
-            var file = window.URL.createObjectURL(blob);
-            window.location.assign(file);
+            if (blob != null) {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName as string;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            }
         });
 };
 
@@ -40,7 +54,7 @@ export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): Colu
     },
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.documentMask'),
-        dataIndex: 'documentMask',
+        dataIndex: 'mask',
         width: 240,
     },
     {
@@ -64,43 +78,47 @@ export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): Colu
     },
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.documentName'),
-        dataIndex: 'documentName',
+        dataIndex: 'id',
         width: 240,
-        render: d => (
+        render: text => (
             <RegularButton
                 variant="pseudo"
                 iconRight={<DownloadIcon />}
                 onClick={() => {
-                    downloadDocument();
+                    downloadDocument(Number(text));
                 }}
             />
         ),
     },
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.partial'),
-        dataIndex: 'partial',
+        dataIndex: 'lotDocumentFlag',
         width: 240,
         render: d => <CustomSwitch checked={d} handleChange={() => {}} name="" />,
     },
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.uploadDate'),
-        dataIndex: 'uploadDate',
+        dataIndex: 'creationInformation',
         width: 240,
+        render: d => <div>{convertDateFromServer(d?.createdAt)}</div>,
     },
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.startDate'),
-        dataIndex: 'startDate',
+        dataIndex: 'issueDate',
         width: 240,
+        render: d => <div>{convertDateFromServer(d)}</div>,
     },
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.endDate'),
-        dataIndex: 'endDate',
+        dataIndex: 'expireDate',
         width: 240,
+        render: d => <div>{convertDateFromServer(d)}</div>,
     },
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.uploaderName'),
-        dataIndex: 'uploaderName',
+        dataIndex: 'creationInformation',
         width: 240,
+        render: d => <div>{d?.createdBy}</div>,
     },
     {
         title: undefined,

@@ -49,14 +49,14 @@ const TaskDetailsProduct: React.FC<PropsTaskDetails> = props => {
 
             <br />
 
-            {taskDetails.documents.uploadedDocuments[0]?.productInfoDetails && (
+            {taskDetails?.documents?.uploadedDocuments[0]?.productInfoDetails && (
                 <div>
                     <Typography variant="s" size="body_long" color="text-minor">
                         {t('TaskDetails.DetailsProduct.EAN')}
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {taskDetails.documents.uploadedDocuments[0]?.productInfoDetails[0].ean}
+                        {taskDetails?.documents?.uploadedDocuments[0]?.productInfoDetails[0].ean}
                     </Typography>
                 </div>
             )}
