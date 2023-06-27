@@ -23,6 +23,7 @@ interface IqStatuses {
 
 interface IDataType extends IqStatuses {
     key: React.Key;
+    status?: string;
 }
 
 enum EBlockers {
@@ -67,8 +68,18 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
     useEffect(() => {
         if (details?.qualityStatuses && details?.qualityStatuses?.length > 0) {
-            console.log(details?.qualityStatuses);
-            const arrQRowsVal = details.qualityStatuses.map((el: any, i: number) => ({...el, id: i}));
+            const arrQRowsVal = details.qualityStatuses.map((el: any, i: number) => {
+                const mapping = qaulityStatusSectionMapping(el);
+
+                return {
+                    id: `${i}`,
+                    bu: mapping.buCode,
+                    statuses: arrQstatusesRu,
+                    blockOrders: mapping.blockedForOrders,
+                    blockSellings: mapping.blockedForSellings,
+                    blockPublics: mapping.blockedForPublics,
+                };
+            });
 
             setTableData(arrQRowsVal);
         }
@@ -87,29 +98,10 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     const [chosenValue, setChosenValue] = useState<string>('Отсутствующие данные о качестве');
 
     const handleSelect = (record: IDataType) => (value: string | null) => {
-        console.log(value);
-        value &&
-            setTableData(prevState =>
-                prevState.map((el: any) => (el.id === record.id ? {...el, statuses: value} : el))
-            );
+        if (value) {
+            setTableData(prevState => prevState.map((el: any) => (el.id === record.id ? {...el, status: value} : el)));
+        }
     };
-
-    let STATUSES: IqStatuses[] = [];
-
-    // if (details?.qualityStatuses.length !== 0) {
-    //     STATUSES = details?.qualityStatuses.map((qStatus: any, i: number) => {
-    //         const mapping = qaulityStatusSectionMapping(qStatus);
-
-    //         return {
-    //             id: `${i}`,
-    //             bu: mapping.buCode,
-    //             statuses: arrQstatusesRu,
-    //             blockOrders: mapping.blockedForOrders,
-    //             blockSellings: mapping.blockedForSellings,
-    //             blockPublics: mapping.blockedForPublics,
-    //         };
-    //     });
-    // }
 
     const attr_columns = useMemo<ColumnsType<IDataType>>(
         () => [
@@ -120,25 +112,27 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             {
                 title: 'Статус качества',
                 dataIndex: 'statuses',
-                render: (statuses: string[], record: IDataType) => (
-                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
-                        <Dropdown
-                            size="m"
-                            closeOnSelect
-                            placeholder={t('Common.Select')}
-                            value={chosenValue}
-                            onSelect={handleSelect(record)}
-                        >
-                            {statuses.map((status, i) => (
-                                <DropdownItem text={status} value={status} key={i} />
-                            ))}
-                        </Dropdown>
+                render: (statuses: string[], record: IDataType) =>
+                    record &&
+                    statuses?.length > 0 && (
+                        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
+                            <Dropdown
+                                size="m"
+                                closeOnSelect
+                                placeholder={t('Common.Select')}
+                                value={record.status}
+                                onSelect={handleSelect(record)}
+                            >
+                                {statuses.map((status, i) => (
+                                    <DropdownItem text={status} value={status} key={i} />
+                                ))}
+                            </Dropdown>
 
-                        <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
-                            <HistoryBackIcon />
-                        </RegularButton>
-                    </div>
-                ),
+                            <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
+                                <HistoryBackIcon />
+                            </RegularButton>
+                        </div>
+                    ),
             },
             {
                 title: 'Блокировка заказов',
