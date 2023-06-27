@@ -102,11 +102,9 @@
             "applyAction": "Выполнить",
             "actions": {
                 "addComment": "Добавить комментарий",
-                "block": "Заблокировать",
-                "unBlock": "Разблокировать",
-                "resendData": "Переотправить данные",
-                "changeQualityStatus": "Изменить статус качества",
-                "addTasks": "Добавить задачи"
+                "addTasks": "Добавить задачи",
+                "addDocument": "Добавление документа",
+                "blockOrUnBlock": "Заблокировать/Разблокировать"
             }
         },
         "Table": {
