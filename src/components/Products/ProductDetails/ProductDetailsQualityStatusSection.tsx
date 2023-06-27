@@ -85,17 +85,24 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         }
     }, [details?.qualityStatuses]);
 
-    const [isBlockOrder, setIsBlockOrder] = useState(false);
-    const [isBlockSellings, setIsBlockSellings] = useState(false);
-    const [isBlockPublics, setIsBlockPublics] = useState(false);
-
-    const handleChange = (value: string) => {
-        value === EBlockers.BlockOrders && setIsBlockOrder(!isBlockOrder);
-        value === EBlockers.BlockSellings && setIsBlockSellings(!isBlockSellings);
-        value === EBlockers.BlockPublics && setIsBlockPublics(!isBlockPublics);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const handleChange = (record: IDataType, value: string) => {
+        if (value === EBlockers.BlockOrders) {
+            setTableData(prevState =>
+                prevState.map((el: any) => (el.id === record.id ? {...el, blockOrders: !el.blockOrders} : el))
+            );
+        }
+        if (value === EBlockers.BlockSellings) {
+            setTableData(prevState =>
+                prevState.map((el: any) => (el.id === record.id ? {...el, isBlockSellings: !el.isBlockSellings} : el))
+            );
+        }
+        if (value === EBlockers.BlockPublics) {
+            setTableData(prevState =>
+                prevState.map((el: any) => (el.id === record.id ? {...el, BlockPublics: !el.BlockPublics} : el))
+            );
+        }
     };
-
-    const [chosenValue, setChosenValue] = useState<string>('Отсутствующие данные о качестве');
 
     const handleSelect = (record: IDataType) => (value: string | null) => {
         if (value) {
@@ -140,9 +147,9 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 render: (record: IDataType) => (
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                         <CustomSwitch
-                            handleChange={() => handleChange(EBlockers.BlockOrders)}
+                            handleChange={() => handleChange(record, EBlockers.BlockOrders)}
                             name=""
-                            checked={isBlockOrder}
+                            checked={record.blockOrders}
                         />
                         <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
                             <HistoryBackIcon />
@@ -156,9 +163,9 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 render: (record: IDataType) => (
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                         <CustomSwitch
-                            handleChange={() => handleChange(EBlockers.BlockSellings)}
+                            handleChange={() => handleChange(record, EBlockers.BlockSellings)}
                             name=""
-                            checked={isBlockSellings}
+                            checked={record.blockSellings}
                         />
                         <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
                             <HistoryBackIcon />
@@ -172,9 +179,9 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 render: (record: IDataType) => (
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                         <CustomSwitch
-                            handleChange={() => handleChange(EBlockers.BlockPublics)}
+                            handleChange={() => handleChange(record, EBlockers.BlockPublics)}
                             name=""
-                            checked={isBlockPublics}
+                            checked={record.blockPublics}
                         />
                         <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
                             <HistoryBackIcon />
@@ -183,7 +190,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 ),
             },
         ],
-        [t, chosenValue, isBlockOrder, handleChange, isBlockSellings, isBlockPublics]
+        [t, handleChange]
     );
 
     // const attr_data = useMemo<IDataType[]>(() => STATUSES.map(d => ({...d, key: d.id})), []);
