@@ -17,11 +17,12 @@ export type TDataType = TWithReactKey<IWithModelItem>;
 
 interface IProps {
     onPageChange: (page: number, size: number) => void;
+    onProductsSelect: (products: IWithModelItem[]) => void;
     tableData: IWithModelResponse;
     isLoading: boolean;
 }
 
-const ProductsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => {
+const ProductsTable: React.FC<IProps> = ({onPageChange, onProductsSelect, tableData, isLoading}) => {
     const navigate = useNavigate();
     const {t} = useTranslation('products');
     // const {productsList} = props;
@@ -69,17 +70,12 @@ const ProductsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) =
     );
     const rowSelection = useMemo<TableRowSelection<TDataType>>(
         () => ({
-            type: 'checkbox',
-            onChange: (selectedRowKeys: React.Key[], selectedRows: RawTable[]) => {
-                // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            onChange: selectedProductsIds => {
+                const selectedProducts = tableData.content.filter(({id}) => selectedProductsIds.includes(id));
+                onProductsSelect(selectedProducts);
             },
-            // getCheckboxProps: (record: IDataType) => ({
-            //     disabled: record.qualityStatus === '2',
-            //     name: record.qualityStatus,
-            // }),
-            fixed: 'left',
         }),
-        []
+        [tableData, onProductsSelect]
     );
 
     return (

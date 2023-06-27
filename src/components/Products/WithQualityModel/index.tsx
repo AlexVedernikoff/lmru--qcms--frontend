@@ -4,9 +4,12 @@ import ProductsTable from './ProductsTable';
 import styles from '../../Common.module.css';
 import withModelApi from './withModelApi';
 import {useState} from 'react';
-import {IWithModelParams} from '../../../common/types/withModel';
+import {IWithModelItem, IWithModelParams} from '../../../common/types/withModel';
+import ProductsActionsForm, {ProductsActions} from './ProductsActionsForm';
 
 const ProductsWithQualityModel: React.FC = () => {
+    const [selectedProducts, setSelectedProducts] = useState<IWithModelItem[]>([]);
+
     const [page, setPage] = useState<Pick<IWithModelParams['body'], 'pageSize' | 'pageIndex'>>({
         pageSize: 10,
         pageIndex: 0,
@@ -80,6 +83,14 @@ const ProductsWithQualityModel: React.FC = () => {
         setPage({pageIndex: pageIndex - 1, pageSize});
     };
 
+    // TODO: доработать функцию в следующем ПР.
+    const handleProductsActionFormSubmit = (products: IWithModelItem[], action: ProductsActions) => {
+        switch (action) {
+            default:
+                console.log(products, action);
+        }
+    };
+
     return (
         <Grid rowGap={16}>
             <Grid rowGap={16}>
@@ -87,7 +98,13 @@ const ProductsWithQualityModel: React.FC = () => {
             </Grid>
 
             <Grid rowGap={16} className={styles.panel}>
-                <ProductsTable tableData={data!} onPageChange={handlePageChange} isLoading={isLoading} />
+                <ProductsActionsForm products={selectedProducts} onSubmit={handleProductsActionFormSubmit} />
+                <ProductsTable
+                    onProductsSelect={setSelectedProducts}
+                    tableData={data!}
+                    onPageChange={handlePageChange}
+                    isLoading={isLoading}
+                />
             </Grid>
         </Grid>
     );

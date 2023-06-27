@@ -96,6 +96,19 @@
             "TNVD": "ТНВЭД",
             "businessLicenseNumber": "Номер бизнес лицензии"
         },
+        "Actions": {
+            "chooseActionLabel": "Действия",
+            "chooseActionPlaceholder": "Выберите",
+            "applyAction": "Выполнить",
+            "actions": {
+                "addComment": "Добавить комментарий",
+                "block": "Заблокировать",
+                "unBlock": "Разблокировать",
+                "resendData": "Переотправить данные",
+                "changeQualityStatus": "Изменить статус качества",
+                "addTasks": "Добавить задачи"
+            }
+        },
         "Table": {
             "Columns": {
                 "providerStatus": "Статус поставщика",

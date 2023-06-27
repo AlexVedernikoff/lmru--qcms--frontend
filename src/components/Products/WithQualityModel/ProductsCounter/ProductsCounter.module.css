@@ -1,0 +1,35 @@
+.root {
+    position: relative;
+    background-color: rgba(70, 76, 92, 1);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.label {
+    display: flex;
+    position: absolute;
+    left: 27px;
+    top: 0;
+    background-color: white;
+    padding: 2px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.value {
+    height: 16px;
+    min-width: 16px;
+    background-color: rgba(230, 97, 94, 1);
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    font-weight: 500;
+    padding: 0 2px;
+}
