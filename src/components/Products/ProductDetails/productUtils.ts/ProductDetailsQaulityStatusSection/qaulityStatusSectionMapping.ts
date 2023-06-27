@@ -1,35 +1,20 @@
+import {EQualityStatusesEng, EQualityStatusesRu} from '../../ProductDetailsQualityStatusSection';
+
 const getQualityStatus = (qualityStatusFromServer?: string) => {
-    enum EQualityStatusEng {
-        MissingData = 'MISSING_DATA',
-        QualificationInProgress = 'QUALIFICATION_IN_PROGRESS',
-        DocumentCollection = 'DOCUMENT_COLLECTION',
-        Certified = 'CERTIFIED',
-        NotCertified = 'NOT_CERTIFIED',
-        TemporarilyAllowed = 'TEMPORARILY_ALLOWED',
-    }
-
-    enum EQualityStatusRu {
-        MissingData = 'Отсутствуют данные о качестве',
-        QualificationInProgress = 'Квалификация',
-        DocumentCollection = 'Сбор документации',
-        Certified = 'Сертифицирован',
-        NotCertified = 'Не сертифицирован',
-        TemporarilyAllowed = 'Временно сертифицирован',
-    }
-
     const statusMissingData =
-        qualityStatusFromServer === EQualityStatusEng.MissingData ? EQualityStatusRu.MissingData : '';
+        qualityStatusFromServer === EQualityStatusesEng.MissingData ? EQualityStatusesRu.MissingData : '';
     const statusQualificationInProgress =
-        qualityStatusFromServer === EQualityStatusEng.QualificationInProgress
-            ? EQualityStatusRu.QualificationInProgress
+        qualityStatusFromServer === EQualityStatusesEng.QualificationInProgress
+            ? EQualityStatusesRu.QualificationInProgress
             : '';
     const statusDocumentCollection =
-        qualityStatusFromServer === EQualityStatusEng.DocumentCollection ? EQualityStatusRu.DocumentCollection : '';
-    const statusCertified = qualityStatusFromServer === EQualityStatusEng.Certified ? EQualityStatusRu.Certified : '';
+        qualityStatusFromServer === EQualityStatusesEng.DocumentCollection ? EQualityStatusesRu.DocumentCollection : '';
+    const statusCertified =
+        qualityStatusFromServer === EQualityStatusesEng.Certified ? EQualityStatusesRu.Certified : '';
     const statusNotCertified =
-        qualityStatusFromServer === EQualityStatusEng.NotCertified ? EQualityStatusRu.NotCertified : '';
+        qualityStatusFromServer === EQualityStatusesEng.NotCertified ? EQualityStatusesRu.NotCertified : '';
     const statusTemporarilyAllowed =
-        qualityStatusFromServer === EQualityStatusEng.TemporarilyAllowed ? EQualityStatusRu.TemporarilyAllowed : '';
+        qualityStatusFromServer === EQualityStatusesEng.TemporarilyAllowed ? EQualityStatusesRu.TemporarilyAllowed : '';
 
     if (statusMissingData) {
         return statusMissingData;
@@ -48,19 +33,24 @@ const getQualityStatus = (qualityStatusFromServer?: string) => {
     }
 };
 
-export const qaulityStatusSectionMapping = (details: any) => {
-    const buCode = details?.qualityStatuses?.buCode;
-    const qualityStatus = getQualityStatus(details?.qualityStatuses?.qualityStatus);
-    const blockedForOrder = details?.qualityStatuses?.blockedForOrder;
-    const blockedForSelling = details?.qualityStatuses?.blockedForSelling;
-    const blockedForPublication = details?.qualityStatuses?.blockedForPublication;
+export const qaulityStatusSectionMapping = (qStatus?: any) => {
+    const buCode =
+        qStatus?.buCode && qStatus.buCode === 9
+            ? 'Леруа Мерлен Россия'
+            : qStatus?.buCode && qStatus.buCode === 2
+            ? 'Леруа Мерлен Казахстан'
+            : qStatus?.buCode;
+    const qualityStatus = getQualityStatus(qStatus?.qualityStatus);
+    const blockedForOrders = qStatus?.blockedForOrder;
+    const blockedForSellings = qStatus?.blockedForSelling;
+    const blockedForPublics = qStatus?.blockedForPublication;
     // const comment =  details?.qualityAction?.publicComments?.comment;
 
     return {
         buCode,
         qualityStatus,
-        blockedForOrder,
-        blockedForSelling,
-        blockedForPublication,
+        blockedForOrders,
+        blockedForSellings,
+        blockedForPublics,
     };
 };

@@ -4,7 +4,7 @@ import CustomTable from '../../Common/CustomTable';
 import styles from '../../Common.module.css';
 
 import {ColumnsType} from 'antd/es/table';
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import HistoryBackIcon from '../../Icons/HistoryBackIcon';
 import {CustomSwitch} from '../../Common/Switch/CustomSwitch';
 import {useGetDetailsForProductsQuery} from './productDetailsApi';
@@ -31,12 +31,48 @@ enum EBlockers {
     BlockPublics = 'blockPublics',
 }
 
+export enum EQualityStatusesEng {
+    MissingData = 'MISSING_DATA',
+    QualificationInProgress = 'QUALIFICATION_IN_PROGRESS',
+    DocumentCollection = 'DOCUMENT_COLLECTION',
+    Certified = 'CERTIFIED',
+    NotCertified = 'NOT_CERTIFIED',
+    TemporarilyAllowed = 'TEMPORARILY_ALLOWED',
+}
+
+export enum EQualityStatusesRu {
+    MissingData = 'Отсутствуют данные о качестве',
+    QualificationInProgress = 'Квалификация',
+    DocumentCollection = 'Сбор документации',
+    Certified = 'Сертифицирован',
+    NotCertified = 'Не сертифицирован',
+    TemporarilyAllowed = 'Временно сертифицирован',
+}
+
+const arrQstatusesRu = [
+    EQualityStatusesRu.MissingData,
+    EQualityStatusesRu.QualificationInProgress,
+    EQualityStatusesRu.DocumentCollection,
+    EQualityStatusesRu.Certified,
+    EQualityStatusesRu.NotCertified,
+    EQualityStatusesRu.TemporarilyAllowed,
+];
+
 const ProductDetailsQualityStatusSection: React.FC = () => {
     const {t} = useTranslation('products');
 
     const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
 
-    const mapping = qaulityStatusSectionMapping(details);
+    const [tableData, setTableData] = useState<any[]>([]);
+
+    useEffect(() => {
+        if (details?.qualityStatuses && details?.qualityStatuses?.length > 0) {
+            console.log(details?.qualityStatuses);
+            const arrQRowsVal = details.qualityStatuses.map((el: any, i: number) => ({...el, id: i}));
+
+            setTableData(arrQRowsVal);
+        }
+    }, [details?.qualityStatuses]);
 
     const [isBlockOrder, setIsBlockOrder] = useState(false);
     const [isBlockSellings, setIsBlockSellings] = useState(false);
@@ -50,21 +86,30 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
     const [chosenValue, setChosenValue] = useState<string>('Отсутствующие данные о качестве');
 
-    const handleSelect = (value: string | null) => {
+    const handleSelect = (record: IDataType) => (value: string | null) => {
         console.log(value);
-        value && setChosenValue(value);
+        value &&
+            setTableData(prevState =>
+                prevState.map((el: any) => (el.id === record.id ? {...el, statuses: value} : el))
+            );
     };
 
-    const STATUSES: IqStatuses[] = [
-        {
-            id: '77777',
-            bu: 'Леруа Мерлен Россия',
-            statuses: ['Отсутствующие данные о качестве', 'второе значение'],
-            blockOrders: false,
-            blockSellings: false,
-            blockPublics: false,
-        },
-    ];
+    let STATUSES: IqStatuses[] = [];
+
+    // if (details?.qualityStatuses.length !== 0) {
+    //     STATUSES = details?.qualityStatuses.map((qStatus: any, i: number) => {
+    //         const mapping = qaulityStatusSectionMapping(qStatus);
+
+    //         return {
+    //             id: `${i}`,
+    //             bu: mapping.buCode,
+    //             statuses: arrQstatusesRu,
+    //             blockOrders: mapping.blockedForOrders,
+    //             blockSellings: mapping.blockedForSellings,
+    //             blockPublics: mapping.blockedForPublics,
+    //         };
+    //     });
+    // }
 
     const attr_columns = useMemo<ColumnsType<IDataType>>(
         () => [
@@ -82,7 +127,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                             closeOnSelect
                             placeholder={t('Common.Select')}
                             value={chosenValue}
-                            onSelect={handleSelect}
+                            onSelect={handleSelect(record)}
                         >
                             {statuses.map((status, i) => (
                                 <DropdownItem text={status} value={status} key={i} />
@@ -144,10 +189,10 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 ),
             },
         ],
-        [t, chosenValue, isBlockOrder, isBlockSellings, isBlockPublics]
+        [t, chosenValue, isBlockOrder, handleChange, isBlockSellings, isBlockPublics]
     );
 
-    const attr_data = useMemo<IDataType[]>(() => STATUSES.map(d => ({...d, key: d.id})), []);
+    // const attr_data = useMemo<IDataType[]>(() => STATUSES.map(d => ({...d, key: d.id})), []);
 
     return (
         <Grid className={styles.panel} rowGap={16} columnGap={16}>
@@ -160,7 +205,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                         {t('ProductDetails.QualityStatusSection.Table.Empty')}
                     </Typography>
 
-                    <CustomTable columns={attr_columns} dataSource={attr_data} pagination={false} size="small" />
+                    <CustomTable columns={attr_columns} dataSource={tableData} pagination={false} size="small" />
                 </Grid>
             </Grid>
 
