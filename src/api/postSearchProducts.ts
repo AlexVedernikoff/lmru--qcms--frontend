@@ -13,14 +13,29 @@ export const postSearchProducts = createApi({
         },
     }),
     endpoints: builder => ({
+        postQSearchProducts: builder.query<ISearchProductsResponse, ISearchProductsRequest>({
+            query: body => ({
+                url: 'search-quality-actions',
+                method: 'POST',
+                body: {
+                    pageIndex: 0,
+                    pageSize: 20,
+                    ...body,
+                },
+            }),
+        }),
         postSearchProds: builder.mutation<ISearchProductsResponse, ISearchProductsRequest>({
             query: body => ({
                 url: 'search-products',
                 method: 'POST',
-                body: body,
+                body: {
+                    pageIndex: 0,
+                    pageSize: 1,
+                    ...body,
+                },
             }),
         }),
     }),
 });
 
-export const {usePostSearchProdsMutation} = postSearchProducts;
+export const {usePostQSearchProductsQuery, usePostSearchProdsMutation} = postSearchProducts;

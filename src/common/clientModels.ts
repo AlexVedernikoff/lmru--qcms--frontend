@@ -172,6 +172,8 @@ export interface IItemListTodo {
     value: number;
     valueImportant?: number;
     icon?: IconComponent | React.FC;
+    isLoading?: boolean;
+    isError?: boolean;
 }
 
 export interface ITaskAwaitingDocument {

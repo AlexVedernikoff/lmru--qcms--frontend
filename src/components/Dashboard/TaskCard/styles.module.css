@@ -43,6 +43,11 @@
     height: 180px;
 }
 
+.cardImageEmptyBlock {
+    width: 180px;
+    height: 220px;
+}
+
 .cardTaskCount {
     font-size: 48px !important;
     height: 124px;
@@ -55,4 +60,19 @@
 .allTasks {
     cursor: pointer;
     padding-bottom: 20px;
+}
+
+.cardTaskLoader {
+    margin-bottom: 62px;
+}
+
+.cardTaskErrorBlock {
+    margin-top: var(--space-375);
+    display: flex;
+    align-items: center;
+}
+
+.cardTaskErrorText {
+    width: 140px;
+    padding-left: 10px;
 }

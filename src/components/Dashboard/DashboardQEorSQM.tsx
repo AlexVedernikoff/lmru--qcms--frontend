@@ -1,15 +1,20 @@
 import {CardTodo} from './CardTodo';
 import {useTranslation} from 'react-i18next';
-import TaskCard from './TaskCard';
-import AllTasks from './Illustrations/AllTasks';
 import {Grid} from 'fronton-react';
+import AllTasks from './Illustrations/AllTasks';
+import TaskCard from './TaskCard';
 import AllTasksIcon from '../Icons/AllTasksIcon';
 import {usePostSearchQualityActionsQuery} from '../../api/postSearchQualityActions';
 import {USER_EXTERNAL_ID} from '../../common/mocks';
+import {useQEorSQMItems} from './hooks/useQEorSQMItems';
 import get from 'lodash/get';
-import {useKeyUserItems} from './hooks/useKeyUserItems';
+import {EUserRole} from '../../common/roles';
 
-export const DashboardKeyUser = () => {
+interface IProps {
+    userRole: EUserRole;
+}
+
+export const DashboardQEorSQM: React.FC<IProps> = ({userRole}) => {
     const {t} = useTranslation('dashboard');
 
     const {
@@ -20,13 +25,14 @@ export const DashboardKeyUser = () => {
         searchBy: {
             responsible: [
                 {
+                    type: userRole,
                     externalId: USER_EXTERNAL_ID,
                 },
             ],
         },
     });
 
-    const {items} = useKeyUserItems();
+    const {items} = useQEorSQMItems({userRole});
 
     return (
         <Grid columns="repeat(5, auto)" gap={24}>

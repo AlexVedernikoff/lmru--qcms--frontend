@@ -2,6 +2,8 @@ import styles from './styles.module.css';
 import AddTodoIcon from '../../Icons/AddTodoIcon';
 import {useTranslation} from 'react-i18next';
 import {IItemListTodo} from '../../../common/clientModels';
+import {Loader} from 'fronton-react';
+import {WarningCircleIcon} from '@fronton/icons-react';
 
 interface Props {
     items: IItemListTodo[];
@@ -30,7 +32,16 @@ export const CardTodo = (props: Props) => {
                                     <div className={item.valueImportant ? styles.importantValue : undefined}>
                                         {item.valueImportant}
                                     </div>
-                                    <div>{item.value}</div>
+                                    {item.isLoading && <Loader variant="primary" size="s" />}
+                                    {item.isError && (
+                                        <WarningCircleIcon
+                                            size="m"
+                                            type="outline"
+                                            color="attention-primary"
+                                            className={styles.errorIcon}
+                                        />
+                                    )}
+                                    {!item.isError && !item.isLoading && <div>{item.value}</div>}
                                 </div>
                             </li>
                         );

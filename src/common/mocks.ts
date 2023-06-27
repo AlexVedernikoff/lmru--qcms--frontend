@@ -142,8 +142,8 @@ export const PRODUCT_TABLE_WITHOUT_MODELS_ITEMS: TWithReactKey<IProductTableWith
         productCode: 10042132,
         productName: 'ШПАТЛ.ФИНИШ.СУПЕРМЕЛК.15КГ.ETS2 SEMIN',
         params: `
-            Эко маркировка товаров-Не применимо 
-            Минимальный процент содержания вторичного сырья в продукте (%)-0 
+            Эко маркировка товаров-Не применимо
+            Минимальный процент содержания вторичного сырья в продукте (%)-0
             Перечень веществ, опасных в концентрации более 0,1% по массе-Не определено
             Минимальная доля вторичного материала в упаковке (в %)-0
         `,
@@ -352,10 +352,10 @@ export const PROVIDER_PRODUCTS_TABLE_ITEMS: TWithReactKey<IProviderProductsTable
         SupplierBindingStatus: 'Активный',
         SupplierLink: 'PE18-32',
         EAN: '123456',
-        ComplianceStatusBU: `Леруа Мерлен 
-        Леруа Мерлен 
-        Леруа Мерлен 
-        Леруа Мерлен 
+        ComplianceStatusBU: `Леруа Мерлен
+        Леруа Мерлен
+        Леруа Мерлен
+        Леруа Мерлен
         Леруа Мерлен`,
     },
     {
@@ -365,10 +365,10 @@ export const PROVIDER_PRODUCTS_TABLE_ITEMS: TWithReactKey<IProviderProductsTable
         SupplierBindingStatus: 'Активный',
         SupplierLink: 'PE18-32',
         EAN: '123456',
-        ComplianceStatusBU: `Леруа Мерлен 
-        Леруа Мерлен 
-        Леруа Мерлен 
-        Леруа Мерлен 
+        ComplianceStatusBU: `Леруа Мерлен
+        Леруа Мерлен
+        Леруа Мерлен
+        Леруа Мерлен
         Леруа Мерлен`,
     },
 ];
@@ -514,3 +514,5 @@ export const TASK_UPLOADED_DOCUMENT_ITEMS: TWithReactKey<ITaskUploadedDocument>[
         template: false,
     },
 ];
+
+export const USER_EXTERNAL_ID: string = '60070707';

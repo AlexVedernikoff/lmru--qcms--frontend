@@ -1,6 +1,8 @@
+import {IPageable} from './common';
+
 export interface ISearchProductsRequest {
-    pageIndex: number;
-    pageSize: number;
+    pageIndex?: number;
+    pageSize?: number;
     sortField?: string;
     sortDirection?: string;
     searchBy: SearchBy;
@@ -50,7 +52,7 @@ interface ProductModelNomenclatureReq {
 }
 
 export interface ISearchProductsResponse {
-    pageable: Pageable;
+    pageable: IPageable;
     content: Content[];
     pageIndex: number;
     pageSize: number;
@@ -133,11 +135,4 @@ interface History {
     statusUpdatedAt: Date;
     statusUpdatedBy: string;
     comment: string;
-}
-
-interface Pageable {
-    pageSize: number;
-    pageIndex: number;
-    totalPages: number;
-    totalElements: number;
 }

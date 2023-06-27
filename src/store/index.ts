@@ -7,12 +7,13 @@ import {getManagementNomenclature} from '../api/getManagementNomenclature';
 import {getPermissiveDocuments} from '../api/getPermissiveDocuments';
 import {getProductModelNomenclature} from '../api/getProductModelNomenclature';
 import {getSupplierDetails} from '../api/getSupplierDetails';
-import {postSearchProducts} from '../api/postSearchProducts';
 import {postSearchQualityDocuments} from '../api/postSearchQualityDocuments';
 import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
 import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
 import {providersApi} from '../components/Providers/services';
 import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
+import {postSearchProducts} from '../api/postSearchProducts';
+import {postSearchQualityActions} from '../api/postSearchQualityActions';
 
 const rootReducer = {
     [getManagementNomenclature.reducerPath]: getManagementNomenclature.reducer,
@@ -22,6 +23,7 @@ const rootReducer = {
     [modelsApi.reducerPath]: modelsApi.reducer,
     [postSearchProducts.reducerPath]: postSearchProducts.reducer,
     [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
+    [postSearchQualityActions.reducerPath]: postSearchQualityActions.reducer,
     [providersApi.reducerPath]: providersApi.reducer,
     [taskDetailsApi.reducerPath]: taskDetailsApi.reducer,
     [withModelApi.reducerPath]: withModelApi.reducer,
@@ -43,6 +45,7 @@ const makeStore = () =>
                 getManagementNomenclature.middleware,
                 getPermissiveDocuments.middleware,
                 getProductModelNomenclature.middleware,
+                postSearchQualityActions.middleware,
                 getSupplierDetails.middleware,
                 modelsApi.middleware,
                 postSearchProducts.middleware,
