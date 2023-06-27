@@ -2,18 +2,19 @@ import {configureStore, ThunkAction, Action, combineReducers} from '@reduxjs/too
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {setupListeners} from '@reduxjs/toolkit/dist/query';
 import modelsApi from '../components/Models/modelsApi';
+import tasksApi from '../components/Tasks/tasksApi';
 import withModelApi from '../components/Products/WithQualityModel/withModelApi';
 import {getManagementNomenclature} from '../api/getManagementNomenclature';
 import {getPermissiveDocuments} from '../api/getPermissiveDocuments';
 import {getProductModelNomenclature} from '../api/getProductModelNomenclature';
 import {getSupplierDetails} from '../api/getSupplierDetails';
+import {postSearchProducts} from '../api/postSearchProducts';
+import {postSearchQualityActions} from '../api/postSearchQualityActions';
 import {postSearchQualityDocuments} from '../api/postSearchQualityDocuments';
 import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
 import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
 import {providersApi} from '../components/Providers/services';
 import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
-import {postSearchProducts} from '../api/postSearchProducts';
-import {postSearchQualityActions} from '../api/postSearchQualityActions';
 
 const rootReducer = {
     [getManagementNomenclature.reducerPath]: getManagementNomenclature.reducer,
@@ -22,10 +23,11 @@ const rootReducer = {
     [getSupplierDetails.reducerPath]: getSupplierDetails.reducer,
     [modelsApi.reducerPath]: modelsApi.reducer,
     [postSearchProducts.reducerPath]: postSearchProducts.reducer,
-    [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
     [postSearchQualityActions.reducerPath]: postSearchQualityActions.reducer,
+    [postSearchQualityDocuments.reducerPath]: postSearchQualityDocuments.reducer,
     [providersApi.reducerPath]: providersApi.reducer,
     [taskDetailsApi.reducerPath]: taskDetailsApi.reducer,
+    [tasksApi.reducerPath]: tasksApi.reducer,
     [withModelApi.reducerPath]: withModelApi.reducer,
     productsDocumentsFilters: productsDocumentsFilters.reducer,
     productsDocumentsTableData: productsDocumentsTableData.reducer,
@@ -45,13 +47,14 @@ const makeStore = () =>
                 getManagementNomenclature.middleware,
                 getPermissiveDocuments.middleware,
                 getProductModelNomenclature.middleware,
-                postSearchQualityActions.middleware,
                 getSupplierDetails.middleware,
                 modelsApi.middleware,
                 postSearchProducts.middleware,
+                postSearchQualityActions.middleware,
                 postSearchQualityDocuments.middleware,
                 providersApi.middleware,
                 taskDetailsApi.middleware,
+                tasksApi.middleware,
                 withModelApi.middleware
             ),
         devTools: process.env.NODE_ENV === 'development',
