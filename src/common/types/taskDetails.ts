@@ -59,6 +59,7 @@ export interface ITaskUploadedDocument {
         updatedAt: string; // required, время создания задачи
         updatedBy: string; // required, ldap или идентификатор системы, обновившей задачу
     };
+    fileName: string;
 }
 
 export interface ITaskDetails {
@@ -162,6 +163,7 @@ export interface ITaskUpdateInfoParams {
             comment: string; // requried, текст комментария
             createdBy: string; // required, пользователь, новый комментарий
         }[];
+        publicComment: string;
     }[];
 }
 
