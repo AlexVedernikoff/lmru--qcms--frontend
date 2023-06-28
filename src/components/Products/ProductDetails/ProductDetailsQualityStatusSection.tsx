@@ -1,19 +1,19 @@
-import {BackofficeStatus, Grid, Textarea, Typography, Dropdown, DropdownItem, RegularButton} from 'fronton-react';
+import {BackofficeStatus, Grid, Textarea, Typography, RegularButton} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import CustomTable from '../../Common/CustomTable';
 import styles from '../../Common.module.css';
 
 import {ColumnsType} from 'antd/es/table';
 import {useEffect, useMemo, useState} from 'react';
-import HistoryBackIcon from '../../Icons/HistoryBackIcon';
-import {CustomSwitch} from '../../Common/Switch/CustomSwitch';
+
 import {useGetDetailsForProductsQuery} from './productDetailsApi';
 
 import {productId, securityCode} from './mockProductDetails';
 import {qaulityStatusSectionMapping} from './productUtils.ts/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
 import {IDataDeatailsQstatus} from '../../../common/types/productDetails';
+import {prepareQstatusesColumns} from './productUtils.ts/ProductDetailsQaulityStatusSection/prepareQstatusesColumns';
 
-enum EBlockers {
+export enum EBlockers {
     BlockOrders = 'blockOrders',
     BlockSellings = 'blockSellings',
     BlockPublics = 'blockPublics',
@@ -72,86 +72,8 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     };
 
     const attr_columns = useMemo<ColumnsType<IDataDeatailsQstatus>>(
-        () => [
-            {
-                title: 'BU',
-                dataIndex: 'bu',
-            },
-            {
-                title: 'Статус качества',
-                dataIndex: 'statuses',
-                render: (statuses: string[], record: IDataDeatailsQstatus) =>
-                    record &&
-                    statuses?.length > 0 && (
-                        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
-                            <Dropdown
-                                size="m"
-                                closeOnSelect
-                                // placeholder={t('Common.Select')}
-                                value={record.status}
-                                onSelect={handleSelect(record)}
-                            >
-                                {statuses.map((status, i) => (
-                                    <DropdownItem text={status} value={status} key={i} />
-                                ))}
-                            </Dropdown>
-
-                            <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
-                                <HistoryBackIcon />
-                            </RegularButton>
-                        </div>
-                    ),
-            },
-            {
-                title: 'Блокировка заказов',
-                dataIndex: 'blockOrders',
-                render: (_statuses: string[], record: IDataDeatailsQstatus) => (
-                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
-                        <CustomSwitch
-                            handleChange={() => handleChange(record, EBlockers.BlockOrders)}
-                            name=""
-                            checked={record.blockOrders}
-                        />
-                        <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
-                            <HistoryBackIcon />
-                        </RegularButton>
-                    </div>
-                ),
-            },
-            {
-                title: 'Блокировка продажи',
-                dataIndex: 'blockSellings',
-                render: (_statuses: string[], record: IDataDeatailsQstatus) => (
-                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
-                        <CustomSwitch
-                            handleChange={() => handleChange(record, EBlockers.BlockSellings)}
-                            name=""
-                            checked={record.blockSellings}
-                        />
-                        <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
-                            <HistoryBackIcon />
-                        </RegularButton>
-                    </div>
-                ),
-            },
-            {
-                title: 'Блокировка публицкации',
-                dataIndex: 'blockPublics',
-                render: (_statuses: string[], record: IDataDeatailsQstatus) => (
-                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
-                        <CustomSwitch
-                            handleChange={() => handleChange(record, EBlockers.BlockPublics)}
-                            name=""
-                            checked={record.blockPublics}
-                        />
-                        <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
-                            <HistoryBackIcon />
-                        </RegularButton>
-                    </div>
-                ),
-            },
-        ],
-        [handleChange]
+        () => prepareQstatusesColumns(handleSelect, handleChange),
+        []
     );
 
     return (
