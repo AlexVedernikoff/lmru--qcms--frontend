@@ -27,9 +27,11 @@ export const prepareUpdateBody = (tableData: any, commonProductFields: any) => {
     });
 
     const result = {
-        updatedBy: 'mock user',
+        updatedBy: 'mock user2',
         products,
     };
+
+    console.log('result', result);
 
     return result;
 };

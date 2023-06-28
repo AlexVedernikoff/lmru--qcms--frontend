@@ -16,15 +16,6 @@ export enum EQualityStatusesRu {
     TemporarilyAllowed = 'Временно сертифицирован',
 }
 
-const arrQstatusesRu = [
-    EQualityStatusesRu.MissingData,
-    EQualityStatusesRu.QualificationInProgress,
-    EQualityStatusesRu.DocumentCollection,
-    EQualityStatusesRu.Certified,
-    EQualityStatusesRu.NotCertified,
-    EQualityStatusesRu.TemporarilyAllowed,
-];
-
 const getQualityStatus = (qualityStatusFromServer?: string) => {
     const statusMissingData =
         qualityStatusFromServer === EQualityStatusesEng.MissingData ? EQualityStatusesRu.MissingData : '';
@@ -58,6 +49,15 @@ const getQualityStatus = (qualityStatusFromServer?: string) => {
     }
 };
 
+const arrQstatusesRu = [
+    EQualityStatusesRu.MissingData,
+    EQualityStatusesRu.QualificationInProgress,
+    EQualityStatusesRu.DocumentCollection,
+    EQualityStatusesRu.Certified,
+    EQualityStatusesRu.NotCertified,
+    EQualityStatusesRu.TemporarilyAllowed,
+];
+
 export const qaulityStatusSectionMapping = (qStatus?: any) => {
     const buCode =
         qStatus?.buCode && qStatus.buCode === 9
@@ -66,6 +66,8 @@ export const qaulityStatusSectionMapping = (qStatus?: any) => {
             ? 'Леруа Мерлен Казахстан'
             : qStatus?.buCode;
     const qualityStatus = {ru: getQualityStatus(qStatus?.qualityStatus), eng: qStatus?.qualityStatus};
+    console.log('qualityStatus', qualityStatus);
+
     const blockedForOrders = qStatus?.blockedForOrder;
     const blockedForSellings = qStatus?.blockedForSelling;
     const blockedForPublics = qStatus?.blockedForPublication;

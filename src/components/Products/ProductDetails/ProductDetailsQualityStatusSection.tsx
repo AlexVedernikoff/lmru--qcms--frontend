@@ -6,7 +6,7 @@ import styles from '../../Common.module.css';
 import {ColumnsType} from 'antd/es/table';
 import {useEffect, useMemo, useState} from 'react';
 
-import {useGetDetailsForProductsQuery} from './productDetailsApi';
+import {useGetDetailsForProductsQuery, usePostUpdateProductMutation} from './productDetailsApi';
 
 import {productId, securityCode} from './mockProductDetails';
 import {qaulityStatusSectionMapping} from './productUtils.ts/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
@@ -23,6 +23,8 @@ export enum EBlockers {
 const ProductDetailsQualityStatusSection: React.FC = () => {
     const {t} = useTranslation('products');
 
+    const [postUpdateProduct] = usePostUpdateProductMutation();
+
     const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
 
     const [tableData, setTableData] = useState<any[]>([]);
@@ -32,6 +34,8 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         if (details?.qualityStatuses && details?.qualityStatuses?.length > 0) {
             const arrQRowsVal = details.qualityStatuses.map((el: any, i: number) => {
                 const mapping = qaulityStatusSectionMapping(el);
+
+                console.log('useEffect сработал');
 
                 return {
                     id: `${i}`,
@@ -98,13 +102,17 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         );
     };
 
-    const updateChangesOnServer = () => {
+    const updateChangesOnServer = async () => {
         const commonProductFields = {
             productId,
             productWithSubstances: details?.productWithSubstances,
             qualityModelId: details?.qualityModelId,
         };
         const body = prepareUpdateBody(tableData, commonProductFields);
+
+        const response = await postUpdateProduct({body, securityCode}).unwrap();
+        console.log('response', response);
+        // setTableData(response[0])
     };
 
     const attr_columns = useMemo<ColumnsType<IDataDeatailsQstatus>>(

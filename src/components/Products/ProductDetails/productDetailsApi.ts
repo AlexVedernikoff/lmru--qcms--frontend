@@ -5,11 +5,14 @@ const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/';
 
 const serviceUrl = {
     getDetailsForProducts: 'product-quality/v1/products',
+    updateProduct: 'product-quality/products:send-quality-message',
 };
 
 export const productDetailsApi = createApi({
     reducerPath: 'productDetailsApi',
     baseQuery: fetchBaseQuery({baseUrl: hostUrl}),
+    tagTypes: ['Details'],
+
     endpoints: builder => ({
         getDetailsForProducts: builder.query<any, IQualityProductDetailsParams>({
             query: params => ({
@@ -21,8 +24,20 @@ export const productDetailsApi = createApi({
                     securityCode: params.securityCode,
                 },
             }),
+            providesTags: ['Details'],
+        }),
+        postUpdateProduct: builder.mutation<any, any>({
+            query: params => ({
+                method: 'POST',
+                url: serviceUrl.updateProduct,
+                body: params.body,
+                headers: {
+                    securityCode: params.securityCode,
+                },
+            }),
+            invalidatesTags: ['Details'],
         }),
     }),
 });
 
-export const {useGetDetailsForProductsQuery} = productDetailsApi;
+export const {useGetDetailsForProductsQuery, usePostUpdateProductMutation} = productDetailsApi;
