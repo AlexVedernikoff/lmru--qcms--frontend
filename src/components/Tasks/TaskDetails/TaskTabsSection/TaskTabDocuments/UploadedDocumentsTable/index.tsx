@@ -8,9 +8,11 @@ import {ITaskUploadedDocument} from '../../../../../../common/types/taskDetails'
 import styles from './styles.module.css';
 import {RegularButton} from 'fronton-react';
 import DownloadIcon from '../../../../../Icons/DownloadIcon';
+import {useParams} from 'react-router-dom';
 
 const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
     const {t} = useTranslation('tasks');
+    const {id} = useParams();
     const [drag, setDrag] = useState(false);
     const [, setResponseLoadDocuments] = useState();
     const filePicker = useRef<HTMLInputElement | null>(null);
@@ -62,7 +64,7 @@ const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
                         supplierRMSCode: 'string',
                         supplierName: 'string',
                         supplierTaxIdentifier: 'string',
-                        qualityActionId: 2,
+                        qualityActionId: Number(id),
                         productManagementNomenclature: {
                             departmentId: 0,
                             subdepartmentId: 0,
@@ -124,7 +126,7 @@ const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
                         supplierRMSCode: 'string',
                         supplierName: 'string',
                         supplierTaxIdentifier: 'string',
-                        qualityActionId: 2,
+                        qualityActionId: Number(id),
                         productManagementNomenclature: {
                             departmentId: 0,
                             subdepartmentId: 0,

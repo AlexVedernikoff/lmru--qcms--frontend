@@ -36,6 +36,7 @@ const TaskDetails: React.FC = () => {
     const {t} = useTranslation('tasks');
     const {id} = useParams();
     const {data: taskDetails} = useGetTaskDetailsQuery(id!);
+
     const initialValue = {
         updatedBy: '',
         qualityActions: [],
@@ -66,8 +67,9 @@ const TaskDetails: React.FC = () => {
             ],
             updatedBy: 'Alex',
         };
+
         setPost(initialValue1);
-    }, [taskDetails]);
+    }, [taskDetails, post]);
 
     let title = '';
 
