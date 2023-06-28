@@ -1,4 +1,4 @@
-import {Dropdown, DropdownItem, RegularButton} from 'fronton-react';
+import {Dropdown, DropdownItem, RegularButton, Input} from 'fronton-react';
 import {IDataDeatailsQstatus} from '../../../../../common/types/productDetails';
 import HistoryBackIcon from '../../../../Icons/HistoryBackIcon';
 import {CustomSwitch} from '../../../../Common/Switch/CustomSwitch';
@@ -6,8 +6,13 @@ import {EBlockers} from '../../ProductDetailsQualityStatusSection';
 
 type HandleSelectType = (record: IDataDeatailsQstatus) => (value: string | null) => void;
 type HandleChangeType = (record: IDataDeatailsQstatus, value: string) => void;
+type HandleStatusComment = (record: IDataDeatailsQstatus, comment: string) => void;
 
-export const prepareQstatusesColumns = (handleSelect: HandleSelectType, handleChange: HandleChangeType) => {
+export const prepareQstatusesColumns = (
+    handleSelect: HandleSelectType,
+    handleChange: HandleChangeType,
+    handleStatusComment: HandleStatusComment
+) => {
     return [
         {
             title: 'BU',
@@ -19,17 +24,33 @@ export const prepareQstatusesColumns = (handleSelect: HandleSelectType, handleCh
             render: (statuses: string[], record: IDataDeatailsQstatus) =>
                 record &&
                 statuses?.length > 0 && (
-                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
-                        <Dropdown size="m" closeOnSelect value={record.status} onSelect={handleSelect(record)}>
-                            {statuses.map((status, i) => (
-                                <DropdownItem text={status} value={status} key={i} />
-                            ))}
-                        </Dropdown>
+                    <>
+                        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
+                            <Dropdown size="m" closeOnSelect value={record.status} onSelect={handleSelect(record)}>
+                                {statuses.map((status, i) => (
+                                    <DropdownItem text={status} value={status} key={i} />
+                                ))}
+                            </Dropdown>
 
-                        <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
-                            <HistoryBackIcon />
-                        </RegularButton>
-                    </div>
+                            <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
+                                <HistoryBackIcon />
+                            </RegularButton>
+                        </div>
+
+                        {record.isStatusCommentOpened && (
+                            <Input
+                                inputSize="m"
+                                autoComplete="off"
+                                // label="Комментарий для статуса качества"
+                                // name={'approvedBy'}
+                                placeholder="Комментарий для статуса качества"
+                                value={record.statusComment}
+                                onChange={e => {
+                                    handleStatusComment(record, e.target.value);
+                                }}
+                            />
+                        )}
+                    </>
                 ),
         },
         {

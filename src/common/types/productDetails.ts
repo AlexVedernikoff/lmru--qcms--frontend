@@ -201,6 +201,8 @@ interface IqStatuses {
     blockSellings: boolean;
     blockPublics: boolean;
     status?: string;
+    isStatusCommentOpened: boolean;
+    statusComment: string;
 }
 
 export interface IDataDeatailsQstatus extends IqStatuses {

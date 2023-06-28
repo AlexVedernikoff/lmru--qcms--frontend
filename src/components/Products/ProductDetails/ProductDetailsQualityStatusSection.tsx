@@ -39,6 +39,8 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                     blockSellings: mapping.blockedForSellings,
                     blockPublics: mapping.blockedForPublics,
                     status: mapping.qualityStatus,
+                    isStatusCommentOpened: false,
+                    statusComment: '',
                 };
             });
 
@@ -67,12 +69,29 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
     const handleSelect = (record: IDataDeatailsQstatus) => (value: string | null) => {
         if (value) {
-            setTableData(prevState => prevState.map((el: any) => (el.id === record.id ? {...el, status: value} : el)));
+            setTableData(prevState =>
+                prevState.map((el: any) => {
+                    const prevVal = el.status;
+                    if (el.id === record.id && prevVal !== value) {
+                        return {...el, status: value, isStatusCommentOpened: true};
+                    } else {
+                        return el;
+                    }
+                })
+            );
         }
     };
 
+    const handleStatusComment = (record: IDataDeatailsQstatus, comment: string) => {
+        console.log('record', record);
+        console.log('comment', comment);
+        setTableData(prevState =>
+            prevState.map((el: any) => (el.id === record.id ? {...el, statusComment: comment} : el))
+        );
+    };
+
     const attr_columns = useMemo<ColumnsType<IDataDeatailsQstatus>>(
-        () => prepareQstatusesColumns(handleSelect, handleChange),
+        () => prepareQstatusesColumns(handleSelect, handleChange, handleStatusComment),
         []
     );
 
