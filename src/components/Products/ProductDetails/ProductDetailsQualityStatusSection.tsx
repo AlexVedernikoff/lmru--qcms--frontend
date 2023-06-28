@@ -25,6 +25,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
 
     const [tableData, setTableData] = useState<any[]>([]);
+    const [isChangesInData, setIsChangesInData] = useState(false);
 
     useEffect(() => {
         if (details?.qualityStatuses && details?.qualityStatuses?.length > 0) {
@@ -98,13 +99,16 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 el.id === record.id
                     ? {
                           ...el,
-                          statusComment: '',
+                          statusComment: record.statusComment,
                           isStatusCommentOpened: false,
                       }
                     : el
             )
         );
+        setIsChangesInData(true);
     };
+
+    const updateChangesToServer = () => {};
 
     const attr_columns = useMemo<ColumnsType<IDataDeatailsQstatus>>(
         () => prepareQstatusesColumns(handleSelect, handleChange, handleStatusComment, handleSaveStatusComment),
@@ -130,7 +134,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 <Typography variant="h3">{t('ProductDetails.QualityStatusSection.Comments')}</Typography>
                 <Textarea />
             </Grid>
-            <RegularButton>Отправить</RegularButton>
+            <RegularButton disabled={!isChangesInData}>Отправить</RegularButton>
         </Grid>
     );
 };
