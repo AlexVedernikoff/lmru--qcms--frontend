@@ -14,7 +14,7 @@ export const getManagementNomenclature = createApi({
     }),
     endpoints: builder => ({
         getManagementNomenclature: builder.query<IManagementNomenclatureResponse[], void>({
-            query: () => 'search-service/nomeclature',
+            query: () => 'search-service/nomenclature',
         }),
     }),
 });
