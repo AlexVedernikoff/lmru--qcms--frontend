@@ -3,8 +3,7 @@ import {useTranslation} from 'react-i18next';
 import CustomTable from '../../Common/CustomTable';
 import styles from '../../Common.module.css';
 
-import {ColumnsType} from 'antd/es/table';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import {useLazyGetDetailsForProductsQuery, usePostUpdateProductMutation} from './productDetailsApi';
 
@@ -29,9 +28,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
     const [postUpdateProduct] = usePostUpdateProductMutation();
 
-    // const {data: details} = useLazyGetDetailsForProductsQuery({productId, securityCode});
     const [getDetailsForProductsQuery] = useLazyGetDetailsForProductsQuery();
-    // const details = getDetailsForProductsQuery({productId, securityCode})
 
     const [details, setDetails] = useState<ProductDetails>();
     const [tableData, setTableData] = useState<IDataDeatailsQstatus[]>([]);
@@ -39,7 +36,6 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     const [isDiscardChanges, setIsDiscardChanges] = useState(false);
 
     useEffect(() => {
-        console.log('use');
         setIsDiscardChanges(false);
 
         getDetailsForProductsQuery({productId, securityCode}).then(data => setDetails(data.data));
@@ -185,7 +181,6 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     };
 
     const discardChanges = () => {
-        // getDetailsForProductsQuery({productId, securityCode}).then(data => setDetails(data.data));
         setDetails(undefined);
         setIsDiscardChanges(true);
         setIsChangesInData(false);
