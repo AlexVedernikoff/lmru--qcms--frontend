@@ -1,0 +1,127 @@
+{
+    "Title": "Suppliers",
+    "Buttons": {
+        "Apply": "Apply",
+        "Search": "Search",
+        "Clear": "Clear",
+        "More": "More",
+        "Less": "Less",
+        "AddModel": "Add model"
+    },
+    "Common": {
+        "Yes": "Yes",
+        "No": "No",
+        "Select": "Select",
+        "Input": "Input"
+    },
+    "ProviderDetails": {
+        "MainData": {
+            "Title": "Primary",
+            "Category": "Category",
+            "RMSCode": "Supplier code",
+            "Country": "BU",
+            "BusinessLicense": "Business license",
+            "CodeSSM": "Temporary code",
+            "INN": "Tax identifier",
+            "TopAVS": "Top-AVS",
+            "SupplierInternationalProcurement": "Internatioanl purchases supplier",
+            "TemporaryPermission": "Temporary permission",
+            "ExNameSupplier": "Ex-name of the supplier",
+            "SupplierStatus": "Supplier status",
+            "VendorLevelMonitoring": "Supplier level for monitoring",
+            "NonConformity": "Non conformity",
+            "NrustKiller": "Trust killer",
+            "FailureRateInspections": "PDI failure rate",
+            "Status": "Status",
+            "BillingCountry": "Invoicing country",
+            "SupplyDepartment": "Sourcing office"
+        },
+        "ProductData": {
+            "ProfileComplete": "Profile to complete",
+            "Platform": "Platform",
+            "QE": "QE",
+            "You": "Are you",
+            "YouProvide": "Do you provide:",
+            "AvailabilitySTMProduct": "MDH product supplier",
+            "SupplierOneFactory": "Are you a manufacturer supplier with only one factory?"
+        },
+        "ProviderTabs": {
+            "ProjectCommand": {
+                "Title": "Project team",
+                "userServiceNumber": "User identificator",
+                "surname": "Surname",
+                "name": "Name",
+                "email": "Email address",
+                "activityTypeCode": "Profession code"
+            },
+            "Contacts": {
+                "Title": "Contacts",
+                "surname": "Surname",
+                "name": "Name",
+                "email": "Email address",
+                "telephone": "Phone",
+                "mobile": "Mobile Phone",
+                "type": "Type"
+            },
+            "Products": {
+                "Title": "Products",
+                "name": "Name",
+                "code": "Code",
+                "SupplierBindingStatus": "Supplier status",
+                "SupplierLink": " Supplier link",
+                "EAN": "EAN",
+                "ComplianceStatusBU": "BU status"
+            }
+        }
+    },
+    "ProvidersList": {
+        "Filters": {
+            "filter": "Filter",
+            "dates": "Dates",
+            "providerName": "Supplier name",
+            "platform": "Platform responsible for self-assessment",
+            "qualityAssessment": "Quality self-assessment",
+            "databasePotentialSuppliers": "Potential supplier database",
+            "referenceDatabaseSuppliers": "Referenced supplier database",
+            "supplierRegistrationStatus": "Registration status",
+            "reference": "Link",
+            "billingCountry": "Invoicing country",
+            "countryLocationSupplier": "Supplier base country location",
+            "SQMResponsibleSelfAssessment": "SQM responsible for self-assessment",
+            "qualityManager": "QE responsible for smart monitoring",
+            "country": "BU",
+            "assessmentQualityTechnicalAudit": "Technical self-assessment",
+            "environmentalAuditQualityAssessment": "Ecological self-assessment",
+            "dateSearch": "Search by date",
+            "withoutIQ": "Without QE",
+            "withoutAssignedQE": "Without assigned QE for IQ monitoring"
+        },
+        "DetailFilters": {
+            "relatedProducts": "Related products",
+            "managementNomenclature": "Management nomenclature",
+            "productModelNomenclature": "Nomenclature",
+            "qualityModel": "Quality model",
+            "certificationStatus": "Certification status",
+            "сharacteristic": "Сharacteristic",
+            "meaning": "Value",
+            "withCTMProduct": "With MDH",
+            "productDistributorOnly": "Product distributor only",
+            "withoutСontact": "Without contract",
+            "actions": "Actions",
+            "type": "Type",
+            "selfAssessmentStatus": "Self assessment status",
+            "platform": "Platform",
+            "qualityEngineer": "Action Quality Engineer",
+            "contractor": "Provider",
+            "PendingСreation": "Awaiting creation"
+        },
+        "Table": {
+            "Columns": {
+                "providerName": "(Supplier) Name",
+                "providerCode": "(Supplier) Code",
+                "providerCertified": "(Supplier) Certified",
+                "providerWoodProducts": "(Supplier) Wood products"
+            }
+        }
+    }
+}

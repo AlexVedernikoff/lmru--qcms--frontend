@@ -1,0 +1,22 @@
+{
+    "Title": "Dashboard",
+    "TaskCard": {
+        "AllTasks": "All actions",
+        "OverdueTasks": "Overdue tasks",
+        "NewTasks": "New actions",
+        "DocUpdates": "Documentation to update",
+        "Rejected": "Rejected",
+        "ReCheck": "Repeate check"
+    },
+    "List": {
+        "Title": "To do",
+        "ReChecking": "Re-checking",
+        "QualifyingTasksLaunch": "Qualification tasks",
+        "TransferDocuments": "Transfer of documents",
+        "ProductsWithErrors": "Products with errors",
+        "ProductsWithoutQualityModels": "Products without a quality model",
+        "CertificationTasksLaunch": "Certification tasks",
+        "AdditionalQualificationProducts": "Products for additional qualification",
+        "TasksAwaitingValidation": "Actions awaiting validation"
+    }
+}
