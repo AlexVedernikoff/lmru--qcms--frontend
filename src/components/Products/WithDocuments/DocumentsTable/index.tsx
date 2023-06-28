@@ -39,18 +39,18 @@ const DocumentsTable = () => {
                     key: el.id,
                     documentNumber: el.id,
                     type: el.type,
-                    productCode: el.productsDetails[0]?.productCode || ' ',
-                    EAN: el.productsDetails[0]?.ean || ' ',
-                    TNVED: el.productsDetails[0]?.productTNVEDCode || ' ',
-                    name: el.productsDetails[0]?.productTNVEDCode || ' ',
+                    productCode: el.productsDetails ? el.productsDetails[0]?.productCode : 'нет данных',
+                    EAN: el.productsDetails ? el.productsDetails[0]?.ean : 'нет данных',
+                    TNVED: el.productsDetails ? el.productsDetails[0]?.productTNVEDCode : 'нет данных',
+                    name: el.productsDetails ? el.productsDetails[0]?.productTNVEDCode : 'нет данных',
                     releaseDate: el.issueDate || ' ',
                     endDate: el.expireDate || ' ',
                     status: el.status,
-                    confirmationStatus: el.productsDetails[0]?.approvingStatus || ' ',
+                    confirmationStatus: el.productsDetails ? el.productsDetails[0]?.approvingStatus : 'нет данных',
                     uploadDate: el.creationInformation.createdAt || ' ',
-                    nameSupplier: el.productsDetails[0]?.supplierName || ' ',
-                    supplieroCodeRMS: el.productsDetails[0]?.supplierRMSCode || ' ',
-                    INN: el.productsDetails[0]?.supplierTaxIdentifier || ' ',
+                    nameSupplier: el.productsDetails ? el.productsDetails[0]?.supplierName : 'нет данных',
+                    supplieroCodeRMS: el.productsDetails ? el.productsDetails[0]?.supplierRMSCode : 'нет данных',
+                    INN: el.productsDetails ? el.productsDetails[0]?.supplierTaxIdentifier : 'нет данных',
                     businessLicenseNumber: 0,
                     SSMCode: 0,
                     role: el.creationInformation.createdBy.Role || ' ',
@@ -70,7 +70,7 @@ const DocumentsTable = () => {
                 width: 64,
                 render: (_value: string, record: IDataType) => (
                     <RegularButton
-                        data-id={record.productCode.toString()}
+                        data-id={record.productCode?.toString()}
                         onClick={() => {}}
                         href=""
                         rel=""
