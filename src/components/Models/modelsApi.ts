@@ -6,6 +6,10 @@ import {
     TModelNomenclatureResponse,
     IModelDetailsResponse,
     IModelDetailsParams,
+    IUpdateMasterPlanTasksResponse,
+    IUpdateMasterPlanTasksParams,
+    IUpdateQualityModelResponse,
+    IUpdateQualityModelParams,
 } from '../../common/types/models';
 
 const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/';
@@ -51,6 +55,34 @@ const modelsApi = createApi({
                     'Content-Type': 'application/json',
                     securityCode: params.securityCode,
                 },
+            }),
+        }),
+        updateQualityModel: builder.mutation<IUpdateQualityModelResponse, IUpdateQualityModelParams>({
+            query: queryArg => ({
+                url: `update-quality-model/${queryArg.id}`,
+                method: 'PATCH',
+                body: queryArg.body,
+                headers: {
+                    Application: queryArg.application,
+                    Accept: queryArg.accept,
+                    securityCode: queryArg.securityCode,
+                },
+            }),
+        }),
+        updateMasterPlanTasks: builder.mutation<IUpdateMasterPlanTasksResponse, IUpdateMasterPlanTasksParams>({
+            query: queryArg => ({
+                url: `update-master-plan-tasks/${queryArg.id}`,
+                method: 'POST',
+                body: queryArg.body,
+                headers: {securityCode: queryArg.securityCode},
+            }),
+        }),
+        createMasterPlanTasks: builder.mutation<IUpdateMasterPlanTasksResponse, IUpdateMasterPlanTasksParams>({
+            query: queryArg => ({
+                url: `create-master-plan-tasks/${queryArg.id}`,
+                method: 'POST',
+                body: queryArg.body,
+                headers: {securityCode: queryArg.securityCode},
             }),
         }),
     }),

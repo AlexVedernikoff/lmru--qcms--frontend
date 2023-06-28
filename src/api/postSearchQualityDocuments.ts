@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {IQualityDocumentsRequest} from '../common/types/searchQualityDocuments';
+import {IQualityDocumentsRequest, IQualityDocumentsResponse} from '../common/types/searchQualityDocuments';
 
 const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/';
 
@@ -13,14 +13,29 @@ export const postSearchQualityDocuments = createApi({
         },
     }),
     endpoints: builder => ({
+        postQSearchQualityDocs: builder.query<IQualityDocumentsResponse, IQualityDocumentsRequest>({
+            query: body => ({
+                url: 'search-quality-documents',
+                method: 'POST',
+                body: {
+                    pageIndex: 0,
+                    pageSize: 20,
+                    ...body,
+                },
+            }),
+        }),
         postSearchQualityDocs: builder.mutation<any, IQualityDocumentsRequest>({
             query: body => ({
                 url: 'search-quality-documents',
                 method: 'POST',
-                body: body,
+                body: {
+                    pageIndex: 0,
+                    pageSize: 1,
+                    ...body,
+                },
             }),
         }),
     }),
 });
 
-export const {usePostSearchQualityDocsMutation} = postSearchQualityDocuments;
+export const {usePostQSearchQualityDocsQuery, usePostSearchQualityDocsMutation} = postSearchQualityDocuments;

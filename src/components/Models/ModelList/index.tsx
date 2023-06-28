@@ -18,12 +18,12 @@ const ModelList: React.FC = () => {
     });
 
     const [searchBy, setSearchBy] = useState<IModelsParams['body']['searchBy']>({
-        labels: [],
+        // labels: [],
         qualityModelLabel: undefined,
         assignedApprovers: [],
         calculatedRisk: undefined,
-        linkedToNomenclature: false,
-        linkedToEngineer: false,
+        // linkedToNomenclature: false,
+        // linkedToEngineer: false,
         forMixtures: false,
         productRiskLevel: undefined,
         personLevelRiskForCorrectUsage: undefined,
@@ -35,9 +35,11 @@ const ModelList: React.FC = () => {
         productModelNomenclatureSubDepartmentCode: undefined,
         productModelNomeclatureConsolidationCode: undefined,
         productModelNomenclatureModelCode: undefined,
+        lastUpdatedAt: undefined,
+        needApprove: undefined,
     });
 
-    const {data, isLoading} = modelsApi.useGetModelsQuery({
+    const {data, isLoading, isFetching} = modelsApi.useGetModelsQuery({
         header: {
             securityCode: 'security_code',
         },
@@ -75,10 +77,12 @@ const ModelList: React.FC = () => {
             calculatedRisk: filters.calculatedRisk,
             // linkedToNomenclature: false,
             // linkedToEngineer: false,
-            forMixtures: filters.forMixtures,
+            forMixtures: filters.forMixtures ? true : undefined,
             productRiskLevel: filters.productRiskLevel ? parseInt(filters.productRiskLevel, 10) : undefined,
             sustainabilityRisk: filters.sustainabilityRisk ? parseInt(filters.sustainabilityRisk, 10) : undefined,
             regulatoryRisk: filters.regulatoryRisk ? parseInt(filters.regulatoryRisk, 10) : undefined,
+            lastUpdatedAt: filters.latestChanges ? parseInt(filters.latestChanges, 10) : undefined,
+            needApprove: filters.needApprove ? true : undefined,
         }));
     };
 
@@ -93,7 +97,7 @@ const ModelList: React.FC = () => {
             </Grid>
 
             <Grid rowGap={16} className={styles.panel}>
-                <ModelsTable onPageChange={handlePageChange} tableData={data!} isLoading={isLoading} />
+                <ModelsTable onPageChange={handlePageChange} tableData={data!} isLoading={isLoading || isFetching} />
             </Grid>
         </Grid>
     );

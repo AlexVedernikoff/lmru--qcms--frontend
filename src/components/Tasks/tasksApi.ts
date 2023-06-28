@@ -8,7 +8,7 @@ const serviceUrl = {
 };
 
 const tasksApi = createApi({
-    reducerPath: 'modelsApi',
+    reducerPath: 'tasksApi',
     baseQuery: fetchBaseQuery({baseUrl: hostUrl}),
     endpoints: builder => ({
         getTasks: builder.query<ITaskListResponse, ITaskListParams>({

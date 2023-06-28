@@ -1,30 +1,31 @@
 import {useCallback, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ColumnsType} from 'antd/es/table';
-import {IDataType, getTasksTableColumns} from './TableColumns';
+import {getTasksTableColumns} from './TableColumns';
 import CustomTable from '../../../../../Common/CustomTable';
-import {TASK_TASKS_TABLE_ITEMS} from '../../../../../../common/mocks';
 import {TableRowSelection} from 'antd/es/table/interface';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {Grid, RegularButton} from 'fronton-react';
 import {PropsTaskDetails} from '../../../TaskDetails';
+import {ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
 
 const TasksTable: React.FC<PropsTaskDetails> = props => {
     const {t} = useTranslation('tasks');
-
+    const {taskDetails} = props;
+    const uploadedDocuments = taskDetails.documents.uploadedDocuments;
     const handleViewProductDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(e => {
         //TODO добавить детализацию
     }, []);
 
-    const columns = useMemo<ColumnsType<IDataType>>(
+    const columns = useMemo<ColumnsType<ITaskUploadedDocument>>(
         () => [
             {
                 title: '',
                 dataIndex: undefined,
                 width: 64,
-                render: (_value: string, record: IDataType) => (
+                render: (_value: string, record: ITaskUploadedDocument) => (
                     <RegularButton
-                        data-id={record.taskNumber.toString()}
+                        data-id={record.id.toString()}
                         onClick={handleViewProductDetails}
                         href=""
                         rel=""
@@ -41,14 +42,17 @@ const TasksTable: React.FC<PropsTaskDetails> = props => {
         ],
         [handleViewProductDetails, t]
     );
-    // TODO убрать моки
-    const data = useMemo<IDataType[]>(() => TASK_TASKS_TABLE_ITEMS, []);
 
-    const rowSelection = useMemo<TableRowSelection<IDataType>>(
+    const data = useMemo<ITaskUploadedDocument[]>(
+        () => (uploadedDocuments || []).map(d => ({...d, key: d.id})),
+        [uploadedDocuments]
+    );
+
+    const rowSelection = useMemo<TableRowSelection<ITaskUploadedDocument>>(
         () => ({
             type: 'checkbox',
-            onChange: (selectedRowKeys: React.Key[], selectedRows: IDataType[]) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            onChange: (selectedRowKeys: React.Key[], selectedRows: ITaskUploadedDocument[]) => {
+                // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             },
             // getCheckboxProps: (record: IDataType) => ({
             //     disabled: record.qualityStatus === '2',

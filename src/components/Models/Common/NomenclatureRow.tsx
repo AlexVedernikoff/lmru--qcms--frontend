@@ -1,56 +1,62 @@
 import {useMemo} from 'react';
 import {Grid, Typography, Caption} from 'fronton-react';
 import {ChevronRightIcon} from '@fronton/icons-react';
-import {IModelItem} from '../../../common/types/models';
 
 interface IProps {
-    data: Pick<
-        IModelItem,
-        | 'productModelNomenclatureDepartmentCode'
-        | 'productModelNomenclatureSubDepartmentCode'
-        | 'productModelNomenclatureConsolidationCode'
-        | 'productModelNomenclatureModelCode'
-    >;
+    code: {
+        department: string | undefined;
+        subdepartment: string | undefined;
+        consolidation: string | undefined;
+        model: string | undefined;
+    };
+    name?: {
+        department: string | undefined;
+        subdepartment: string | undefined;
+        consolidation: string | undefined;
+        model: string | undefined;
+    };
 }
 
-const NomenclatureRow: React.FC<IProps> = ({
-    data: {
-        productModelNomenclatureDepartmentCode,
-        productModelNomenclatureSubDepartmentCode,
-        productModelNomenclatureConsolidationCode,
-        productModelNomenclatureModelCode,
-    },
-}) => {
+const NomenclatureRow: React.FC<IProps> = ({code, name}) => {
     const departments = useMemo(
         () => [
-            productModelNomenclatureDepartmentCode,
-            productModelNomenclatureSubDepartmentCode,
-            productModelNomenclatureConsolidationCode,
-            productModelNomenclatureModelCode,
+            [code.department, name?.department],
+            [code.subdepartment, name?.subdepartment],
+            [code.consolidation, name?.consolidation],
+            [code.model, name?.model],
         ],
         [
-            productModelNomenclatureDepartmentCode,
-            productModelNomenclatureSubDepartmentCode,
-            productModelNomenclatureConsolidationCode,
-            productModelNomenclatureModelCode,
+            code.department,
+            code.subdepartment,
+            code.consolidation,
+            code.model,
+            name?.department,
+            name?.subdepartment,
+            name?.consolidation,
+            name?.model,
         ]
     );
 
-    if (!departments.length) {
+    const hasData = useMemo<boolean>(
+        () => [code.department, code.subdepartment, code.consolidation, code.model].filter(v => !!v).length > 0,
+        [code.consolidation, code.department, code.model, code.subdepartment]
+    );
+
+    if (!hasData) {
         return <div />;
     }
 
     return (
         <Grid columns={`repeat(${(departments.length || 1) * 2 - 1}, 1fr)`} columnGap={12}>
-            {departments.map((d, i) => {
+            {departments.map(([code, name], i) => {
                 const showChevron = departments.length > 1 && i !== departments.length - 1;
                 return (
-                    <Grid key={i} columns={`repeat(${showChevron ? 2 : 1}, 1fr)`} alignItems="center" columnGap={12}>
+                    <Grid key={i} columns={`repeat(${showChevron ? 2 : 1}, 1fr)`} alignItems="center" columnGap={16}>
                         <Grid columns="1fr">
                             <Typography variant="s" size="body_long">
-                                {d}
+                                {name}
                             </Typography>
-                            <Caption message={d} />
+                            <Caption message={code} />
                         </Grid>
                         {showChevron && <ChevronRightIcon />}
                     </Grid>

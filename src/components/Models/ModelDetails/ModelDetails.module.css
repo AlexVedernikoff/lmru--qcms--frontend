@@ -3,12 +3,17 @@
     margin-top: 2px;
 }
 
-.unurgentChip {
+.criticalChip {
+    composes: chip;
+    background: var(--attention-primary);
+}
+
+.majorChip {
     composes: chip;
     background: var(--accent-primary);
 }
 
-.successChip {
+.minorChip {
     composes: chip;
     background: var(--success-primary);
 }

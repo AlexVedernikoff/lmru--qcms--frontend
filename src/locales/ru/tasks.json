@@ -107,6 +107,14 @@
             "Reject": "Отклонить",
             "Approve": "Согласовать"
         },
+        "Actions": {
+            "chooseActionLabel": "Действия",
+            "chooseActionPlaceholder": "Выберите",
+            "applyAction": "Выполнить",
+            "actions": {
+                "updateStatusDocuments": "Обновить статус документа"
+            }
+        },
         "Documents": {
             "Title": "Документы",
             "AwaitedDocuments": {

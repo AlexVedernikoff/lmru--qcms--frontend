@@ -1,45 +1,79 @@
-import {useMemo} from 'react';
+import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Grid, Typography} from 'fronton-react';
+import {Grid, RegularButton, Typography} from 'fronton-react';
+import {PlusIcon, TrashIcon} from '@fronton/icons-react';
+import {useParams} from 'react-router-dom';
 import CardView from '../../Common/CardView';
+import modelsApi from '../modelsApi';
 import MasterPlanTable from './MasterPlanTable';
+import MasterPlanAddModal from './MasterPlanAddModal';
 
-const infoLink = 'https://localhost:3000/';
-const mock = new Array(5).fill(infoLink);
+interface IProps {
+    planIndex: number;
+}
 
-const MasterPlanRequirements: React.FC = () => {
+const MasterPlanRequirements: React.FC<IProps> = ({planIndex}) => {
     const {t} = useTranslation('models');
+    const {id = ''} = useParams();
+    const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
 
-    const requirementText = useMemo(
-        () => [
-            <Typography key={'1'} variant="s" size="body_accent" color="attention-primary">
-                {t('ModelDetails.MasterPlan.Requirement.Option.PackingInformation')}
-            </Typography>,
-            <Typography key={'2'} variant="s" size="body_accent">
-                {t('ModelDetails.MasterPlan.Requirement.Option.Empty')}
-            </Typography>,
-        ],
-        [t]
-    );
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleCardClose = () => {};
 
+    const handleSaveClick = () => {};
+
+    const handleAddClick = () => {
+        setIsOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsOpen(false);
+    };
+
+    const handleDeleteClick = () => {};
+
     return (
         <Grid rowGap={24}>
-            <Grid columns="1fr 1fr 1fr" columnGap={24} rowGap={24}>
-                {mock.map((link, index) => (
+            <Grid columns="1fr auto">
+                <div />
+                <div>
+                    <RegularButton onClick={handleSaveClick} variant="pseudo" iconLeft={<PlusIcon />}>
+                        {t('Buttons.Save')}
+                    </RegularButton>
+                    <RegularButton onClick={handleAddClick} variant="pseudo" iconLeft={<PlusIcon />}>
+                        {t('Buttons.Add')}
+                    </RegularButton>
+                    <RegularButton onClick={handleDeleteClick} variant="pseudo" iconLeft={<TrashIcon />}>
+                        {t('Buttons.Delete')}
+                    </RegularButton>
+                </div>
+            </Grid>
+
+            <Grid columns="auto auto auto" columnGap={24} rowGap={24}>
+                {details?.regulatoryReferences?.map((data, index) => (
                     <CardView
                         key={index}
-                        header={t('ModelDetails.MasterPlan.Requirement.Type.Required')}
+                        header={
+                            data.required
+                                ? t('ModelDetails.MasterPlan.Requirement.Type.Required')
+                                : t('ModelDetails.MasterPlan.Requirement.Type.Optional')
+                        }
                         onClose={handleCardClose}
-                        infoLink={link}
+                        infoLink={data.hyperlink}
                     >
-                        {requirementText}
+                        <Typography variant="s" size="body_accent">
+                            {data.title}
+                        </Typography>
                     </CardView>
                 ))}
             </Grid>
 
-            <MasterPlanTable />
+            {!!details?.masterPlanIds?.[planIndex]?.id && (
+                <MasterPlanTable data={details?.masterPlanIds?.[planIndex]} />
+            )}
+
+            <MasterPlanAddModal isOpen={isOpen} onClose={handleModalClose} />
         </Grid>
     );
 };

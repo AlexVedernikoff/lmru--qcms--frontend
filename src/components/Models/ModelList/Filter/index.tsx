@@ -8,6 +8,8 @@ import modelsApi from '../../modelsApi';
 import {skipToken} from '@reduxjs/toolkit/dist/query';
 import {TreeSelect} from 'antd';
 
+import s from './AdditionalFilter.module.css';
+
 export interface IFilterFormState {
     qualityModel?: string;
     modelNameOrCode?: string;
@@ -23,14 +25,14 @@ export interface IFilterFormState {
     linkedToNomenclature?: boolean;
     linkedToEngineer?: boolean;
     forMixtures?: boolean;
-    isVerificationRequired?: boolean;
+    needApprove?: boolean;
     hasManyProducts?: boolean;
     withoutPlan?: string;
-    latestChanges?: string;
     productModelNomenclatureDepartmentCode?: string[];
     productModelNomenclatureSubDepartmentCode?: string[];
     productModelNomenclatureConsolidationCode?: string[];
     productModelNomenclatureModelCode?: string[];
+    latestChanges?: string;
 }
 
 interface IProps {
@@ -48,16 +50,16 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
     const treeData = useMemo(
         () =>
             nomenclature.map(el => ({
-                title: el.code,
+                title: el.nameRu || el.code,
                 value: `department ${el.code}`,
                 children: el.subdepartments.map(subDep => ({
-                    title: subDep.code,
+                    title: subDep.nameRu || subDep.code,
                     value: `subdepartment ${subDep.code}`,
                     children: subDep.modelConsolidationGroups.map(modCon => ({
-                        title: modCon.code,
+                        title: modCon.nameRu || modCon.code,
                         value: `consolidation ${modCon.code}`,
                         children: modCon?.models?.map(mod => ({
-                            title: mod.code,
+                            title: modCon.nameRu || modCon.code,
                             value: `model ${mod.code}`,
                         })),
                     })),
@@ -67,40 +69,40 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
     );
 
     const handleProductModelChange = (value: string[]) => {
-        setFormState({...formState, productModel: value.length > 0 ? value : undefined});
+        let formNewState: IFilterFormState = {...formState, productModel: value.length > 0 ? [...value] : undefined};
 
         for (const selected of value) {
             const [type, code] = selected.split(' ');
             switch (type) {
                 case 'department':
-                    setFormState({
-                        ...formState,
+                    formNewState = {
+                        ...formNewState,
                         productModelNomenclatureDepartmentCode: nomenclature
                             .filter(v => v.code === code)
                             .map(v => v.code),
-                    });
+                    };
                     break;
                 case 'subdepartment':
-                    setFormState({
-                        ...formState,
+                    formNewState = {
+                        ...formNewState,
                         productModelNomenclatureSubDepartmentCode: nomenclature
                             .flatMap(v => v.subdepartments.filter(s => s.code === code))
                             .map(v => v.code),
-                    });
+                    };
                     break;
                 case 'consolidation':
-                    setFormState({
-                        ...formState,
+                    formNewState = {
+                        ...formNewState,
                         productModelNomenclatureConsolidationCode: nomenclature
                             .flatMap(v =>
                                 v.subdepartments.flatMap(s => s.modelConsolidationGroups.filter(c => c.code === code))
                             )
                             .map(v => v.code),
-                    });
+                    };
                     break;
                 case 'model':
-                    setFormState({
-                        ...formState,
+                    formNewState = {
+                        ...formNewState,
                         productModelNomenclatureModelCode: nomenclature
                             .flatMap(v =>
                                 v.subdepartments.flatMap(s =>
@@ -108,10 +110,12 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
                                 )
                             )
                             .map(v => v.code),
-                    });
+                    };
                     break;
             }
         }
+
+        setFormState(formNewState);
     };
 
     const handleShowMoreFiltersClick = () => {
@@ -133,7 +137,7 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
-            <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline" rowGap={48}>
+            <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="start" rowGap={48}>
                 <Grid columnGap={16} columns="1fr" alignItems="center" rowGap={25}>
                     <Input
                         inputSize="m"
@@ -170,6 +174,7 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
 
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap={14}>
                     <TreeSelect
+                        className={s.treeSelect}
                         size="large"
                         treeData={treeData}
                         value={formState.productModel}

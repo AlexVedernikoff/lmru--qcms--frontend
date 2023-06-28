@@ -1,61 +1,86 @@
-import {Checkbox, DatePickerRange, Dropdown, DropdownItem, Grid, Typography} from 'fronton-react';
+import {DatePickerRange, Dropdown, DropdownItem, Grid} from 'fronton-react';
 import {useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
 import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
+import CustomCheckbox from '../../../Common/CustomCheckbox/CustomCheckbox';
+import {TFilterFormState} from '.';
 
-const AdditionalFilter: React.FC = () => {
+interface IProps {
+    formState: TFilterFormState;
+    setFormState: (state: TFilterFormState) => void;
+}
+
+const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
     const {t} = useTranslation('tasks');
 
-    const handleSelect = (value: string | null) => {};
+    const handleSelect = (name: keyof TFilterFormState) => (value: string | null) => {
+        setFormState({...formState, [name]: formState[name] === value ? undefined : value!});
+    };
+
+    const handleCheck = (value: boolean | undefined, name: string) => {
+        setFormState({...formState, [name]: value});
+    };
 
     const renderDropdown = useCallback(
-        (text: string) => (
+        (text: string, name: string) => (
             <Dropdown
                 size="m"
                 closeOnSelect
                 placeholder={t('Common.Select')}
                 label={text}
                 value={undefined}
-                onSelect={handleSelect}
+                onSelect={handleSelect(name as keyof TFilterFormState)}
             >
                 <DropdownItem text="test" value={'test'} />
             </Dropdown>
         ),
-        [t]
-    );
-
-    const renderCheckbox = useCallback(
-        (text: string) => (
-            <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="center">
-                <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="center" alignContent="center">
-                    <Checkbox checked={false} label={t('Common.Yes')} />
-                    <Checkbox checked={false} label={t('Common.No')} />
-                </Grid>
-                <Typography variant="s" size="body_short">
-                    {text}
-                </Typography>
-            </Grid>
-        ),
+        // @ts-ignore-next-line
         [t]
     );
 
     return (
         <Grid columnGap={24} columns="repeat(3, 1fr)" alignItems="baseline">
             <Grid rowGap={24} columns="1fr" alignItems="baseline">
-                {renderDropdown(t('TaskList.Filters.qualityStatus'))}
-                {renderDropdown(t('TaskList.Filters.regularStatus'))}
-                {renderDropdown(t('TaskList.Filters.qualityModel'))}
-                {renderDropdown(t('TaskList.Filters.characteristics'))}
-                {renderDropdown(t('TaskList.Filters.characteristicValue'))}
+                {renderDropdown(t('TaskList.Filters.qualityStatus'), 'qualityStatus')}
+                {renderDropdown(t('TaskList.Filters.regularStatus'), 'regularStatus')}
+                {renderDropdown(t('TaskList.Filters.qualityModel'), 'qualityModel')}
+                {renderDropdown(t('TaskList.Filters.characteristics'), 'characteristics')}
+                {renderDropdown(t('TaskList.Filters.characteristicValue'), 'characteristicValue')}
             </Grid>
 
             <Grid rowGap={24} columns="1fr" alignItems="baseline">
-                {renderDropdown(t('TaskList.Filters.gamma'))}
-                {renderCheckbox(t('TaskList.Filters.fromProject'))}
-                {renderCheckbox(t('TaskList.Filters.withProviderActiveLink'))}
-                {renderCheckbox(t('TaskList.Filters.withoutTransfer'))}
-                {renderCheckbox(t('TaskList.Filters.containsSubstanceLimit'))}
-                {renderDropdown(t('TaskList.Filters.containsSubstance'))}
+                {renderDropdown(t('TaskList.Filters.gamma'), 'gamma')}
+                <Grid columnGap={16} rowGap={24} columns="120px 1fr" alignItems="center" alignContent="center">
+                    <CustomCheckbox
+                        name="fromProject"
+                        onChange={handleCheck}
+                        // @ts-ignore-next-line
+                        value={formState.fromProject as boolean}
+                        label={t('TaskList.Filters.fromProject')}
+                    />
+                    <CustomCheckbox
+                        name="withProviderActiveLink"
+                        onChange={handleCheck}
+                        // @ts-ignore-next-line
+                        value={formState.withProviderActiveLink as boolean}
+                        label={t('TaskList.Filters.withProviderActiveLink')}
+                    />
+                    <CustomCheckbox
+                        name="withoutTransfer"
+                        onChange={handleCheck}
+                        // @ts-ignore-next-line
+                        value={formState.withoutTransfer as boolean}
+                        label={t('TaskList.Filters.withoutTransfer')}
+                    />
+                    <CustomCheckbox
+                        name="containsSubstanceLimit"
+                        onChange={handleCheck}
+                        // @ts-ignore-next-line
+                        value={formState.containsSubstanceLimit as boolean}
+                        label={t('TaskList.Filters.containsSubstanceLimit')}
+                    />
+                </Grid>
+                {renderDropdown(t('TaskList.Filters.containsSubstance'), 'containsSubstance')}
 
                 <CustomSwitch
                     checked={false}
@@ -65,9 +90,9 @@ const AdditionalFilter: React.FC = () => {
             </Grid>
 
             <Grid rowGap={24} columns="1fr" alignItems="baseline">
-                {renderDropdown(t('TaskList.Filters.searchByDate'))}
+                {renderDropdown(t('TaskList.Filters.searchByDate'), 'searchByDate')}
                 <DatePickerRange onChange={() => {}} label={t('TaskList.Filters.dates')} size="s" />
-                {renderDropdown(t('TaskList.Filters.country'))}
+                {renderDropdown(t('TaskList.Filters.country'), 'country')}
             </Grid>
         </Grid>
     );

@@ -1,17 +1,17 @@
 import {useState} from 'react';
-import {Grid, RegularButton, Dropdown, DropdownItem, Loader} from 'fronton-react';
+import {Grid, RegularButton, Dropdown, DropdownItem} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import commonStyles from '../../Common.module.css';
-import Filter from './Filter';
-import Table from './Table';
 import {ITaskListParams} from '../../../common/types/tasks';
+import commonStyles from '../../Common.module.css';
+import Filter, {TFilterFormState} from './Filter';
+import Table from './Table';
 import tasksApi from '../tasksApi';
 import styles from './styles.module.css';
 
 const TaskList: React.FC = () => {
     const {t} = useTranslation('tasks');
 
-    const [page] = useState<Pick<ITaskListParams['body'], 'pageSize' | 'pageIndex'>>({
+    const [page, setPage] = useState<Pick<ITaskListParams['body'], 'pageSize' | 'pageIndex'>>({
         pageSize: 10,
         pageIndex: 0,
     });
@@ -21,19 +21,29 @@ const TaskList: React.FC = () => {
         sortDirection: 'DESC',
     });
 
-    const [searchBy] = useState<ITaskListParams['body']['searchBy']>({});
+    const [searchBy, setSearchBy] = useState<ITaskListParams['body']['searchBy']>({});
 
-    const {isLoading} = tasksApi.useGetTasksQuery({
+    const {data, isLoading, isFetching} = tasksApi.endpoints.getTasks.useQuery({
         header: {securityCode: 'security_code'},
         body: {...page, ...sort, searchBy},
     });
 
     const handleSelect = () => {};
 
+    const handleFiltersSubmit = (filters: TFilterFormState) => {
+        setSearchBy(p => ({
+            ...p,
+            ...filters,
+        }));
+    };
+
+    const handlePageChange = (pageIndex: number, pageSize: number) => {
+        setPage({pageIndex: pageIndex - 1, pageSize});
+    };
+
     return (
         <Grid rowGap={16}>
-            <Filter />
-            {isLoading && <Loader />}
+            <Filter onSubmit={handleFiltersSubmit} />
             <Grid rowGap={16} className={commonStyles.panel}>
                 <div className={styles.actionsBlock}>
                     <Dropdown
@@ -51,7 +61,7 @@ const TaskList: React.FC = () => {
                     <RegularButton size="m">{t('Common.Run')}</RegularButton>
                 </div>
 
-                <Table />
+                <Table onPageChange={handlePageChange} tableData={data!} isLoading={isLoading || isFetching} />
             </Grid>
         </Grid>
     );

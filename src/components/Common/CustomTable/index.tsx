@@ -56,7 +56,7 @@ function CustomTable<T extends object>(props: TableProps<T>) {
                     <Grid columns="1fr 1fr">
                         <span />
                         <Pagination
-                            currentPage={props.pagination?.current!}
+                            currentPage={props.pagination?.current || 1}
                             item={item => (
                                 <PaginationItem onClick={handleChangePage} data-item={item}>
                                     {item}

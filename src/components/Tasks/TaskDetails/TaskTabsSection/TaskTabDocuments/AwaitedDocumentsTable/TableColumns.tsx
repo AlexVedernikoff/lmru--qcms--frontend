@@ -10,22 +10,17 @@ export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): Colu
     return [
         {
             title: t('TaskTabs.Documents.AwaitedDocuments.Field.documentName'),
-            dataIndex: 'documentName',
-            width: 240,
-        },
-        {
-            title: t('TaskTabs.Documents.AwaitedDocuments.Field.documentType'),
             dataIndex: 'type',
             width: 240,
         },
         {
-            title: t('TaskTabs.Documents.AwaitedDocuments.Field.template'),
-            dataIndex: 'template',
+            title: t('TaskTabs.Documents.AwaitedDocuments.Field.documentType'),
+            dataIndex: 'requirementType',
             width: 240,
         },
         {
-            title: t('TaskTabs.Documents.AwaitedDocuments.Field.comment'),
-            dataIndex: 'comment',
+            title: t('TaskTabs.Documents.AwaitedDocuments.Field.template'),
+            dataIndex: 'templateId',
             width: 240,
         },
     ];

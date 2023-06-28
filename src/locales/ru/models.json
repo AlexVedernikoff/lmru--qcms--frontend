@@ -1,8 +1,12 @@
 {
     "Title": "Модели качества",
     "Buttons": {
+        "Add": "Добавить",
         "Apply": "Применить",
+        "Edit": "Редактировать",
+        "Delete": "Удалить",
         "Search": "Поиск",
+        "Save": "Сохранить",
         "Clear": "Очистить",
         "More": "Больше",
         "Less": "Меньше",
@@ -38,7 +42,9 @@
         "RiskLevel": {
             "Title": "Уровень риска",
             "Field": {
-                "unurgent": "Не очень важный"
+                "minor": "Не очень важный",
+                "major": "Важный",
+                "critical": "Критический"
             }
         },
         "Description": {
@@ -74,7 +80,21 @@
                 }
             },
             "Table": {
+                "Options": {
+                    "Person": {
+                        "DISTRIBUTOR": "Дистрибьютер",
+                        "IMPORTER": "Импортер",
+                        "MANUFACTURER": "Производитель"
+                    },
+                    "Role": {
+                        "SUPPLIER": "Поставщик",
+                        "QE": "QE",
+                        "SQM": "SQM",
+                        "SERVICE_PROVIDER": "Подрядчик"
+                    }
+                },
                 "Columns": {
+                    "status": "Статус поставщика",
                     "category": "Категория",
                     "type": "Тип",
                     "legal": "Cвязанные законодательные требования",
@@ -118,7 +138,7 @@
             "riskHealth": "Риск для здоровья",
             "risk": "Риск",
             "latestChanges": "Изменено за последние (дней)",
-            "isVerificationRequired": "Требуется проверка",
+            "needApprove": "Требуется проверка",
             "isChemical": "Относится к категории химии",
             "hasManyProducts": "Не менее одного товара",
             "filter": "Фильтр"

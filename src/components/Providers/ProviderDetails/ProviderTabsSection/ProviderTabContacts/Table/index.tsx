@@ -1,4 +1,5 @@
 import {useMemo} from 'react';
+import {useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {ColumnsType} from 'antd/es/table';
 import {IDataType, getContactsTableColumns} from './TableColumns';
@@ -7,7 +8,9 @@ import {useGetSupplierDetsQuery} from '../../../../../../api/getSupplierDetails'
 import {ISupplierDetailsResponse} from '../../../../../../common/types/supplierDetails';
 
 const ContactsTable: React.FC = () => {
-    const supplierId = 1;
+    const {t} = useTranslation('providers');
+    const {id: supplierId = ''} = useParams();
+
     const {data: supplierDetails = []} = useGetSupplierDetsQuery(supplierId);
     const {supplierContacts} = supplierDetails as ISupplierDetailsResponse;
     const data: IDataType[] = supplierContacts
@@ -24,8 +27,6 @@ const ContactsTable: React.FC = () => {
               };
           })
         : [];
-
-    const {t} = useTranslation('providers');
 
     const columns = useMemo<ColumnsType<IDataType>>(() => [...getContactsTableColumns(t)], [t]);
 

@@ -85,12 +85,29 @@
     "WithModels": {
         "Filters": {
             "productCode": "Код товара",
-            "nomenclature": "Номенклатура",
+            "supplierCode": "Код поставщика",
+            "nomenclature": "Номенклатура товарной модели",
             "qualityStatus": "Статус качества",
             "qualityModel": "Модель качества",
             "providerName": "Наименование поставщика",
+            "productName": "Наименование товара",
             "providerStatus": "Статус поставщика",
-            "filter": "Фильтр"
+            "filter": "Фильтр",
+            "INN": "ИНН",
+            "EAN": "EAN",
+            "TNVD": "ТНВЭД",
+            "businessLicenseNumber": "Номер бизнес лицензии"
+        },
+        "Actions": {
+            "chooseActionLabel": "Действия",
+            "chooseActionPlaceholder": "Выберите",
+            "applyAction": "Выполнить",
+            "actions": {
+                "addComment": "Добавить комментарий",
+                "addTasks": "Добавить задачи",
+                "addDocument": "Добавление документа",
+                "blockOrUnBlock": "Заблокировать/Разблокировать"
+            }
         },
         "Table": {
             "Columns": {

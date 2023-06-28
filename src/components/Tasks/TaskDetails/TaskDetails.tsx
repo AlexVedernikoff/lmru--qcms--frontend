@@ -14,6 +14,7 @@ import {
     FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/dist/query';
 import {MutationTrigger} from '@reduxjs/toolkit/dist/query/react/buildHooks';
+import {useParams} from 'react-router-dom';
 
 export type PropsTaskDetails = {
     taskDetails: ITaskDetails;
@@ -33,7 +34,8 @@ export type PropsTaskDetails = {
 
 const TaskDetails: React.FC = () => {
     const {t} = useTranslation('tasks');
-    const {data: taskDetails} = useGetTaskDetailsQuery(1);
+    const {id} = useParams();
+    const {data: taskDetails} = useGetTaskDetailsQuery(id!);
 
     const initialValue = {
         updatedBy: '',
@@ -43,11 +45,31 @@ const TaskDetails: React.FC = () => {
     const [updateInfoTask] = useUpdateInfoTaskMutation();
     useEffect(() => {
         const initialValue1 = {
-            updatedBy: '',
-            qualityActions: [{id: 23, actionStatus: taskDetails?.actionStatus, conclusion: taskDetails?.conclusion}],
+            qualityActions: [
+                {
+                    id: 2,
+                    actionStatus: 'DRAFT',
+                    conclusion: 'string',
+                    approvers: [
+                        {
+                            type: 'SUPPLIER',
+                            externalId: 'string',
+                        },
+                    ],
+                    responsible: [
+                        {
+                            type: 'SUPPLIER',
+                            externalId: 'string',
+                        },
+                    ],
+                    publicComment: 'string',
+                },
+            ],
+            updatedBy: 'Alex',
         };
+
         setPost(initialValue1);
-    }, [taskDetails]);
+    }, [taskDetails, post]);
 
     let title = '';
 

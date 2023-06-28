@@ -1,36 +1,30 @@
 import {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Grid, Typography} from 'fronton-react';
-import DashboardProviderRole from './DashboardProviderRole';
+import DashboardSupplierRole from './DashboardSupplierRole';
 import DashboardServiceProviderRole from './DashboardServiceProviderRole';
 import {DashboardKeyUser} from './DashboardKeyUser';
-import {DashboardQE} from './DashboardQE';
+import {EUserRole} from '../../common/roles';
+import {DashboardQEorSQM} from './DashboardQEorSQM';
 
-enum EUserRole {
-    PROVIDER = 'provider',
-    SERVICE_PROVIDER = 'service_provider',
-    SQM = 'sqm',
-    QE = 'QE',
-    KEY_USER = 'key_user',
-}
-
-let role: EUserRole;
+let role: EUserRole = EUserRole.SUPPLIER;
 
 const Dashboard: React.FC = () => {
     const {t} = useTranslation('dashboard');
 
     const item = useMemo(() => {
         switch (role) {
-            case EUserRole.PROVIDER:
-                return <DashboardProviderRole />;
+            case EUserRole.SUPPLIER:
+                return <DashboardSupplierRole />;
             case EUserRole.SERVICE_PROVIDER:
                 return <DashboardServiceProviderRole />;
             case EUserRole.KEY_USER:
                 return <DashboardKeyUser />;
             case EUserRole.QE:
-                return <DashboardQE />;
+            case EUserRole.SQM:
+                return <DashboardQEorSQM userRole={role} />;
             default:
-                return <DashboardProviderRole />;
+                return <DashboardKeyUser />;
         }
     }, []);
 

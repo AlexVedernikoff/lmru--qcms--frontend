@@ -22,17 +22,24 @@ export interface ITaskListItem {
 }
 
 export interface IMasterPlanRequirementTableItem {
+    status: string;
     category: string;
     type: string;
-    legal: string;
-    documents: string;
-    origin: string;
-    process: string;
+    legal: {
+        id: string;
+        name: string;
+    }[];
+    documents: {
+        id: string;
+        name: string;
+    }[];
+    origin: {
+        id: string;
+        name: string;
+    }[];
+    process: boolean;
     responsiblePerson: string;
-    approvingPerson: {
-        type: string;
-        place: string;
-    };
+    approvingPerson: string;
     documentTemplate: string;
     taskRequirement: boolean;
 }
@@ -120,10 +127,10 @@ export interface IProviderContactsTableItem {
 
 export interface IProviderProductsTableItem {
     name: string;
-    code: number;
+    code: string;
     SupplierBindingStatus: string;
     SupplierLink: string;
-    EAN: number;
+    EAN: string;
     ComplianceStatusBU: string;
 }
 
@@ -172,6 +179,8 @@ export interface IItemListTodo {
     value: number;
     valueImportant?: number;
     icon?: IconComponent | React.FC;
+    isLoading?: boolean;
+    isError?: boolean;
 }
 
 export interface ITaskAwaitingDocument {

@@ -1,4 +1,5 @@
 import {Checkbox, Grid, Typography} from 'fronton-react';
+import {useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 import classes from './styles.module.css';
@@ -6,7 +7,8 @@ import {useGetSupplierDetsQuery} from '../../../../api/getSupplierDetails';
 
 const ProviderDetailsProfile: React.FC = () => {
     const {t} = useTranslation('providers');
-    const supplierId = 1;
+    const {id: supplierId = ''} = useParams();
+
     const {data: supplierDetails} = useGetSupplierDetsQuery(supplierId);
 
     return (

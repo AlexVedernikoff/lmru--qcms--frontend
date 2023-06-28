@@ -5,12 +5,22 @@ import {RegularButton} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {PRODUCT_TABLE_WITHOUT_MODELS_ITEMS} from '../../../../common/mocks';
 import {PRODUCTS_ROUTES} from '../../../../common/consts';
-import {IDataType, getTableColumns} from './TableColumns';
+import {getProductTableColumns} from './TableColumns';
 import CustomTable from '../../../Common/CustomTable';
+import {TWithReactKey} from '../../../../common/clientModels';
+import {IProduct, IProductsResponse} from '../../../../common/types/products';
 
-const ProductsTable: React.FC = () => {
+interface IProps {
+    onPageChange: (page: number, size: number) => void;
+    onProductsSelect: (products: IProduct[]) => void;
+    tableData: IProductsResponse;
+    isLoading: boolean;
+}
+
+export type TDataType = TWithReactKey<IProduct>;
+
+const ProductsTable: React.FC<IProps> = ({onPageChange, onProductsSelect, tableData, isLoading}) => {
     const {t} = useTranslation('products');
     const navigate = useNavigate();
 
@@ -24,15 +34,15 @@ const ProductsTable: React.FC = () => {
         [navigate]
     );
 
-    const columns = useMemo<ColumnsType<IDataType>>(
+    const columns = useMemo<ColumnsType<TDataType>>(
         () => [
             {
                 title: '',
                 dataIndex: undefined,
                 width: 64,
-                render: (_value: string, record: IDataType) => (
+                render: (_value: string, record: TDataType) => (
                     <RegularButton
-                        data-id={record.productCode.toString()}
+                        data-id={record.id}
                         onClick={handleViewProductDetails}
                         href=""
                         rel=""
@@ -45,38 +55,41 @@ const ProductsTable: React.FC = () => {
                 ),
                 fixed: 'left',
             },
-            ...getTableColumns(t),
+            ...getProductTableColumns(t),
         ],
         [handleViewProductDetails, t]
     );
 
-    const data = useMemo<IDataType[]>(() => PRODUCT_TABLE_WITHOUT_MODELS_ITEMS, []);
+    const dataSource = useMemo<TDataType[]>(
+        () => (tableData?.content || []).map(d => ({...d, key: d.id})),
+        [tableData]
+    );
 
-    const rowSelection = useMemo<TableRowSelection<IDataType>>(
+    const rowSelection = useMemo<TableRowSelection<TDataType>>(
         () => ({
-            type: 'checkbox',
-            onChange: (selectedRowKeys: React.Key[], selectedRows: IDataType[]) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            onChange: selectedProductsIds => {
+                const selectedProducts = tableData.content.filter(({id}) => selectedProductsIds.includes(id));
+                onProductsSelect(selectedProducts);
             },
-            // getCheckboxProps: (record: IDataType) => ({
-            //     disabled: record.qualityStatus === '2',
-            //     name: record.qualityStatus,
-            // }),
-            fixed: 'left',
         }),
-        []
+        [tableData, onProductsSelect]
     );
 
     return (
         <CustomTable
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={data}
-            scroll={{x: true}}
+            dataSource={dataSource}
+            scroll={{x: 400}}
             tableLayout="fixed"
             size="small"
             bordered
-            pagination={{}}
+            pagination={{
+                pageSize: tableData?.pageable?.pageSize,
+                total: tableData?.pageable?.totalElements,
+                current: tableData?.pageable?.pageIndex + 1,
+                onChange: onPageChange,
+            }}
         />
     );
 };

@@ -1,38 +1,118 @@
-import {Grid, Typography, RadioGroup, Radio} from 'fronton-react';
-import {useTranslation} from 'react-i18next';
-import ModelsIcon from '../../Icons/ModelsIcon';
+import {Grid} from 'fronton-react';
 import styles from '../../Common.module.css';
-import ProductsFilter from './ProductsFilter';
+import ProductsFilter, {FilterType, IFilterFormState} from './ProductsFilter';
 import ProductsTable from './ProductsTable';
+import ProductsSelectQualityModelForm from './ProductsSelectQualityModelForm';
+import {useState} from 'react';
+import withoutModelApi from './withoutModelApi';
+import {IProduct, IProductsRequest, IProductsResponse} from '../../../common/types/products';
 
 const ProductsWithoutQualityModel: React.FC = () => {
-    const {t} = useTranslation('products');
+    const [selectedProducts, setSelectedProducts] = useState<IProduct[]>([]);
+
+    const [page, setPage] = useState<Pick<IProductsRequest['body'], 'pageSize' | 'pageIndex'>>({
+        pageSize: 10,
+        pageIndex: 0,
+    });
+
+    const [sort] = useState<Pick<IProductsRequest['body'], 'sortField' | 'sortDirection'>>({
+        // sortField: 'createdAt',
+        sortDirection: 'DESC',
+    });
+
+    const [searchBy, setSearchBy] = useState<IProductsRequest['body']['searchBy']>({});
+
+    const getProductsQuery = withoutModelApi.useGetProductsQuery({
+        header: {
+            securityCode: 'security_code',
+        },
+        body: {
+            ...page,
+            ...sort,
+            searchBy,
+        },
+    });
+
+    const [productsWithQualityModelIds, setProductsWithQualityModelIds] = useState<number[]>([]); // Айдишики тех продуктов, которым назначили модель качества.
+
+    const [updateProductsQualityModelId] = withoutModelApi.useUpdateProductsMutation();
+
+    const handleFiltersSubmit = (filters: IFilterFormState) => {
+        setSearchBy(p => ({
+            ...p,
+            productModelNomenclature:
+                filters.productModelNomenclatureDepartmentCode ||
+                filters.productModelNomenclatureSubDepartmentCode ||
+                filters.productModelNomenclatureConsolidationCode ||
+                filters.productModelNomenclatureModelCode
+                    ? [
+                          {
+                              productModelNomenclatureDepartmentCode: filters.productModelNomenclatureDepartmentCode,
+                              productModelNomenclatureSubDepartmentCode:
+                                  filters.productModelNomenclatureSubDepartmentCode,
+                              productModelNomenclatureConsolidationCode:
+                                  filters.productModelNomenclatureConsolidationCode,
+                              productModelNomenclatureModelCode: filters.productModelNomenclatureModelCode,
+                          },
+                      ]
+                    : undefined,
+            project: filters.project ? true : undefined,
+            regulatoryStatus: filters.regulatoryStatus ? filters.regulatoryStatus : undefined,
+            supplierName:
+                filters.filterType === FilterType.SupplierName && filters.filterString
+                    ? filters.filterString
+                    : undefined,
+            supplierTaxIdentifier:
+                filters.filterType === FilterType.SupplierTaxIdentifier && filters.filterString
+                    ? filters.filterString
+                    : undefined,
+            supplierCode:
+                filters.filterType === FilterType.SupplierCode && filters.filterString
+                    ? filters.filterString
+                    : undefined,
+        }));
+    };
+
+    const handlePageChange = (pageIndex: number, pageSize: number) => {
+        setPage({pageIndex: pageIndex - 1, pageSize});
+    };
+
+    const handleQualityModelSelectSubmit = (qualityModelId: string) => {
+        const selectedProductsIds = selectedProducts.map(({id}) => id);
+        setProductsWithQualityModelIds(prevState => [...prevState, ...selectedProductsIds]);
+        updateProductsQualityModelId({
+            header: {
+                securityCode: 'security_code',
+            },
+            body: {
+                updatedBy: 'Matvey',
+                products: selectedProductsIds.map(id => ({id, qualityModelId})),
+            },
+        });
+    };
+
+    const tableData: IProductsResponse = {
+        content: getProductsQuery.data?.content.filter(({id}) => !productsWithQualityModelIds.includes(id)) || [],
+        pageable: getProductsQuery.data?.pageable || {
+            pageSize: 0,
+            pageIndex: 0,
+            totalPages: 0,
+            totalElements: 0,
+        },
+    };
 
     return (
         <Grid rowGap={16}>
-            <ProductsFilter />
+            <ProductsFilter onSubmit={handleFiltersSubmit} />
 
             <Grid rowGap={16} className={styles.panel}>
-                <Typography variant="h3">
-                    {'11_Краски Подготовка основания Грунтовка стен и аксессуары Шпаклевка'}
-                </Typography>
-
-                <Grid rowGap={4}>
-                    <Grid columns="24px 1fr" columnGap={12}>
-                        <ModelsIcon color="black" />
-
-                        <Typography variant="l" size="body_long">
-                            {t('WithoutModels.Table.SelectModel')}
-                        </Typography>
-                    </Grid>
-
-                    <RadioGroup name="group" onChange={() => {}} value={null}>
-                        <Radio label="Coat in powder Form" value="1" />
-                        <Radio label="Шпатлевка в виде пасты и порошка" value="2" />
-                    </RadioGroup>
-                </Grid>
-
-                <ProductsTable />
+                <ProductsSelectQualityModelForm products={selectedProducts} onSubmit={handleQualityModelSelectSubmit} />
+                <ProductsTable
+                    onProductsSelect={setSelectedProducts}
+                    tableData={tableData}
+                    onPageChange={handlePageChange}
+                    isLoading={getProductsQuery.isLoading}
+                />
             </Grid>
         </Grid>
     );

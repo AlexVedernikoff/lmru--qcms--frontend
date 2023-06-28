@@ -10,21 +10,23 @@ const TaskDetailsComments: React.FC<Required<PropsTaskDetails>> = props => {
     const {setPost, updateInfoTask, initialValue, post} = props;
     const [text, setText] = useState('');
 
-    const updateInfo = async () => {
-        if (post.qualityActions[0].actionStatus === 'AWAITING_DOCUMENT_LOADING') {
-            post.qualityActions[0].actionStatus = 'AWAITING_RESOLUTION';
-        } else if (post.qualityActions[0].actionStatus === 'RETURNED_AWAITING_DOCUMENT_LOADING') {
-            post.qualityActions[0].actionStatus = 'RETURNED_AWAITING_RESOLUTION';
-        } else {
-            delete post.qualityActions[0].actionStatus;
-        }
+    const updateInfo = async (text: string) => {
+        // TODO уточнить реализацию
+        // if (post.qualityActions[0].actionStatus === 'AWAITING_DOCUMENT_LOADING') {
+        //     post.qualityActions[0].actionStatus = 'AWAITING_RESOLUTION';
+        // } else if (post.qualityActions[0].actionStatus === 'RETURNED_AWAITING_DOCUMENT_LOADING') {
+        //     post.qualityActions[0].actionStatus = 'RETURNED_AWAITING_RESOLUTION';
+        // } else {
+        //     delete post.qualityActions[0].actionStatus;
+        // }
+        const res = Object.assign({}, post, {
+            qualityActions: [{...post.qualityActions[0], publicComment: text}],
+        });
         try {
-            await updateInfoTask({
-                ...post,
-            }).unwrap();
+            await updateInfoTask(res).unwrap();
             setPost(initialValue);
         } catch {
-            console.log('ERROR');
+            // console.log('ERROR');
         }
     };
 
@@ -38,7 +40,6 @@ const TaskDetailsComments: React.FC<Required<PropsTaskDetails>> = props => {
                         placeholder={t('TaskDetails.DetailsComments.Comments')}
                         onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
                             setText(e.target.value);
-                            post.qualityActions[0].publicComments = [{comment: e.target.value.trim(), createdBy: 'w'}]; //скорее всего перезатрет
                         }}
                     />
                     <IconButton
@@ -56,7 +57,7 @@ const TaskDetailsComments: React.FC<Required<PropsTaskDetails>> = props => {
                 <br />
                 <RegularButton
                     onClick={() => {
-                        updateInfo();
+                        updateInfo(text);
                     }}
                     disabled={!text}
                     size="m"

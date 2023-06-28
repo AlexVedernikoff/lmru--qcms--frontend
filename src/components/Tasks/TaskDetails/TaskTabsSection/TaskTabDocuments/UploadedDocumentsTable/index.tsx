@@ -3,22 +3,27 @@ import {useTranslation} from 'react-i18next';
 import {ColumnsType} from 'antd/es/table';
 import {getTableColumns} from './TableColumns';
 import CustomTable from '../../../../../Common/CustomTable';
-import {TASK_UPLOADED_DOCUMENT_ITEMS} from '../../../../../../common/mocks';
 import {PropsTaskDetails} from '../../../TaskDetails';
 import {ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
 import styles from './styles.module.css';
 import {RegularButton} from 'fronton-react';
 import DownloadIcon from '../../../../../Icons/DownloadIcon';
+import {useParams} from 'react-router-dom';
 
 const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
     const {t} = useTranslation('tasks');
+    const {id} = useParams();
     const [drag, setDrag] = useState(false);
-    const [responseLoadDocuments, setResponseLoadDocuments] = useState();
+    const [, setResponseLoadDocuments] = useState();
     const filePicker = useRef<HTMLInputElement | null>(null);
-    // const { taskDetails } = props;
+    const {taskDetails} = props;
     const columns = useMemo<ColumnsType<ITaskUploadedDocument>>(() => getTableColumns(t), [t]);
+    const uploadedDocuments = taskDetails.documents.uploadedDocuments;
 
-    const data = useMemo<ITaskUploadedDocument[]>(() => TASK_UPLOADED_DOCUMENT_ITEMS, []);
+    const data = useMemo<ITaskUploadedDocument[]>(
+        () => (uploadedDocuments || []).map(d => ({...d, key: d.id})),
+        [uploadedDocuments]
+    );
 
     const dragStartHandler = (e: DragEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -35,10 +40,47 @@ const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
         const {files} = e.dataTransfer;
         if (!files.length) return;
         const formData = new FormData();
-        formData.append('file', files[0]);
+        formData.append('file1', files[0]);
         formData.append(
             'documentMetaData',
-            JSON.stringify({type: 'string', lotDocumentFlag: true, isTemplate: true, createdBy: 'string'})
+            JSON.stringify({
+                type: 'test al',
+                isTemplate: false,
+                createdBy: 'string',
+                mask: 'string',
+                isForLot: false,
+                issueDate: '2023-06-27',
+                expireDate: '2023-06-27',
+                rosAccreditationApproveStatus: 'string',
+                productsDetails: [
+                    {
+                        approvingStatus: 'APPROVED',
+                        productId: 0,
+                        productDescription: 'string',
+                        productCode: 'string',
+                        productTNVEDCode: 'string',
+                        ean: 'string',
+                        supplierId: 0,
+                        supplierRMSCode: 'string',
+                        supplierName: 'string',
+                        supplierTaxIdentifier: 'string',
+                        qualityActionId: Number(id),
+                        productManagementNomenclature: {
+                            departmentId: 0,
+                            subdepartmentId: 0,
+                            typeId: 0,
+                            subtypeId: 0,
+                        },
+                        productModelNomenclature: {
+                            departmentId: 'string',
+                            subdepartmentId: 'string',
+                            consolidationId: 'string',
+                            codeId: 'string',
+                        },
+                        buCodes: ['string'],
+                    },
+                ],
+            })
         );
         const res = await fetch(
             'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/create-quality-document',
@@ -56,22 +98,50 @@ const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
         setDrag(false);
     };
 
-    // TODO переписать позже +  получаем 500 +попробовать загрузить норм xls и заполнить documnentMetaData + считать данные и обновить на странице
-
-    const handleChange = async (e: {target: {files: any}}) => {
-        console.log(e.target.files, ' files');
+    const handleChange = async (e: {target: {files: FileList | null}}) => {
         if (!e.target.files) return;
         const formData = new FormData();
-        const files = [...e.target.files];
-        formData.append('file', files[0]);
+        const {files} = e.target;
+        formData.append('file1', files[0]);
         formData.append(
             'documentMetaData',
             JSON.stringify({
-                type: 'string',
-                lotDocumentFlag: true,
-                isTemplate: true,
+                type: 'test al',
+                isTemplate: false,
                 createdBy: 'string',
-                isForLot: true,
+                mask: 'string',
+                isForLot: false,
+                issueDate: '2023-06-27',
+                expireDate: '2023-06-27',
+                rosAccreditationApproveStatus: 'string',
+                productsDetails: [
+                    {
+                        approvingStatus: 'APPROVED',
+                        productId: 0,
+                        productDescription: 'string',
+                        productCode: 'string',
+                        productTNVEDCode: 'string',
+                        ean: 'string',
+                        supplierId: 0,
+                        supplierRMSCode: 'string',
+                        supplierName: 'string',
+                        supplierTaxIdentifier: 'string',
+                        qualityActionId: Number(id),
+                        productManagementNomenclature: {
+                            departmentId: 0,
+                            subdepartmentId: 0,
+                            typeId: 0,
+                            subtypeId: 0,
+                        },
+                        productModelNomenclature: {
+                            departmentId: 'string',
+                            subdepartmentId: 'string',
+                            consolidationId: 'string',
+                            codeId: 'string',
+                        },
+                        buCodes: ['string'],
+                    },
+                ],
             })
         );
         const res = await fetch(
@@ -91,7 +161,7 @@ const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
     const handlePick = () => {
         filePicker.current?.click();
     };
-    console.log(responseLoadDocuments, 'response');
+
     return (
         <>
             <CustomTable

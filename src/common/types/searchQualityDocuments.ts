@@ -1,8 +1,10 @@
+import {IPageable} from './common';
+
 export interface IQualityDocumentsRequest {
-    pageIndex: number;
-    pageSize: number;
+    pageIndex?: number;
+    pageSize?: number;
     sortField?: string;
-    sortDirection: string;
+    sortDirection?: string;
     searchBy: SearchBy;
 }
 
@@ -37,4 +39,9 @@ interface DatesClass {
     dateType: string;
     startDate: string;
     endDate: string;
+}
+
+export interface IQualityDocumentsResponse {
+    pageable: IPageable;
+    content: any[];
 }

@@ -3,7 +3,6 @@ import {
     IProductTableWithoutModelsItem,
     IProviderContactsTableItem,
     IModelTableItem,
-    IMasterPlanRequirementTableItem,
     IProviderTableItem,
     IProviderCommandTableItem,
     IProviderProductsTableItem,
@@ -15,26 +14,7 @@ import {
     ITaskListItem,
 } from './clientModels';
 import {IProvidersResponse} from './types/providers';
-import {ITaskAwaitingDocument, ITaskUploadedDocument} from './types/taskDetails';
-
-export const PLAN_REQUIREMENT_TABLE_ITEMS: TWithReactKey<IMasterPlanRequirementTableItem>[] = [
-    {
-        key: '1',
-        category: 'Квалификация - Сбор документов',
-        type: 'Тестирование',
-        legal: 'Federal_Law_No_2300_I_1992 (Law on Consumer Rights Protection)  Россия',
-        documents: 'Документы из регулирующих положений',
-        origin: 'QUALIF_CERTIF_COLLECT_TEST_ALL MODEL_RPL_n°2',
-        process: 'Автоматический',
-        responsiblePerson: 'Подрядчик',
-        approvingPerson: {
-            type: 'QE',
-            place: 'Платформа Россия',
-        },
-        documentTemplate: '',
-        taskRequirement: false,
-    },
-];
+import {ITaskAwaitingDocument} from './types/taskDetails';
 
 export const MODEL_TABLE_ITEMS: TWithReactKey<IModelTableItem>[] = [
     {
@@ -142,8 +122,8 @@ export const PRODUCT_TABLE_WITHOUT_MODELS_ITEMS: TWithReactKey<IProductTableWith
         productCode: 10042132,
         productName: 'ШПАТЛ.ФИНИШ.СУПЕРМЕЛК.15КГ.ETS2 SEMIN',
         params: `
-            Эко маркировка товаров-Не применимо 
-            Минимальный процент содержания вторичного сырья в продукте (%)-0 
+            Эко маркировка товаров-Не применимо
+            Минимальный процент содержания вторичного сырья в продукте (%)-0
             Перечень веществ, опасных в концентрации более 0,1% по массе-Не определено
             Минимальная доля вторичного материала в упаковке (в %)-0
         `,
@@ -348,27 +328,27 @@ export const PROVIDER_PRODUCTS_TABLE_ITEMS: TWithReactKey<IProviderProductsTable
     {
         key: 1,
         name: 'AXTON PRIMER',
-        code: 123456,
+        code: '123456',
         SupplierBindingStatus: 'Активный',
         SupplierLink: 'PE18-32',
-        EAN: 123456,
-        ComplianceStatusBU: `Леруа Мерлен 
-        Леруа Мерлен 
-        Леруа Мерлен 
-        Леруа Мерлен 
+        EAN: '123456',
+        ComplianceStatusBU: `Леруа Мерлен
+        Леруа Мерлен
+        Леруа Мерлен
+        Леруа Мерлен
         Леруа Мерлен`,
     },
     {
         key: 2,
         name: 'AXTON PRIMER',
-        code: 123456,
+        code: '123456',
         SupplierBindingStatus: 'Активный',
         SupplierLink: 'PE18-32',
-        EAN: 123456,
-        ComplianceStatusBU: `Леруа Мерлен 
-        Леруа Мерлен 
-        Леруа Мерлен 
-        Леруа Мерлен 
+        EAN: '123456',
+        ComplianceStatusBU: `Леруа Мерлен
+        Леруа Мерлен
+        Леруа Мерлен
+        Леруа Мерлен
         Леруа Мерлен`,
     },
 ];
@@ -496,21 +476,4 @@ export const TASK_AWAITING_DOCUMENT_ITEMS: TWithReactKey<ITaskAwaitingDocument>[
     },
 ];
 
-export const TASK_UPLOADED_DOCUMENT_ITEMS: TWithReactKey<ITaskUploadedDocument>[] = [
-    {
-        key: 1,
-        type: 'Свидетельство о государственной регистрации',
-        // documentMask: 'ЕАЭС RU C-CN.XXXX.A.XXXXX/XX',
-        status: 'Согласовано',
-        // documentName: 'RU.77.01.34.015.E.002397.11.15.pdf',
-        // lotDocumentFlag: false,
-        // uploadDate: '19.01.2021 10:56',
-        // issueDate: '19.01.2021 10:56',
-        // expiryDate: '02.01.2020',
-        // uploaderName: 'Сидоренкова Екатерина',
-
-        id: 1,
-        version: 1,
-        template: false,
-    },
-];
+export const USER_EXTERNAL_ID: string = '60070707';

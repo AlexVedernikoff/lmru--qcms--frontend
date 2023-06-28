@@ -67,7 +67,7 @@ const ProvidersTable: React.FC<Props> = props => {
         () => ({
             type: 'checkbox',
             onChange: (selectedRowKeys: React.Key[], selectedRows: RawTable[]) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             },
             // getCheckboxProps: (record: IDataType) => ({
             //     disabled: record.qualityStatus === '2',

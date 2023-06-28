@@ -5,11 +5,11 @@ import {Grid, Label, RegularButton, Typography} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {MODELS_ROUTES} from '../../../../common/consts';
-import CustomTable from '../../../Common/CustomTable';
-import NomenclatureRow from '../../Common/NomenclatureRow';
-import {IModelItem, IModelsResponse} from '../../../../common/types/models';
-import {TWithReactKey} from '../../../../common/clientModels';
+import {MODELS_ROUTES} from '../../../common/consts';
+import CustomTable from '../../Common/CustomTable';
+import NomenclatureRow from '../Common/NomenclatureRow';
+import {IModelItem, IModelsResponse} from '../../../common/types/models';
+import {TWithReactKey} from '../../../common/clientModels';
 
 type TDataType = TWithReactKey<IModelItem>;
 
@@ -120,11 +120,11 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
                 } = record;
                 return (
                     <NomenclatureRow
-                        data={{
-                            productModelNomenclatureDepartmentCode,
-                            productModelNomenclatureSubDepartmentCode,
-                            productModelNomenclatureConsolidationCode,
-                            productModelNomenclatureModelCode,
+                        code={{
+                            department: productModelNomenclatureDepartmentCode,
+                            subdepartment: productModelNomenclatureSubDepartmentCode,
+                            consolidation: productModelNomenclatureConsolidationCode,
+                            model: productModelNomenclatureModelCode,
                         }}
                     />
                 );
@@ -154,7 +154,7 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
         () => ({
             type: 'checkbox',
             onChange: (selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             },
             fixed: 'left',
         }),
@@ -174,7 +174,7 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
             pagination={{
                 pageSize: tableData?.pageable?.pageSize,
                 total: tableData?.pageable?.totalElements,
-                current: tableData?.pageable?.pageIndex + 1,
+                current: (tableData?.pageable?.pageIndex || 0) + 1,
                 onChange: onPageChange,
             }}
         />
