@@ -38,7 +38,8 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                     blockOrders: mapping.blockedForOrders,
                     blockSellings: mapping.blockedForSellings,
                     blockPublics: mapping.blockedForPublics,
-                    status: mapping.qualityStatus,
+                    curentStatus: mapping.qualityStatus,
+                    prevStatus: mapping.qualityStatus,
                     isStatusCommentOpened: false,
                     statusComment: '',
                 };
@@ -71,9 +72,11 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         if (value) {
             setTableData(prevState =>
                 prevState.map((el: any) => {
-                    const prevVal = el.status;
+                    const prevVal = el.prevStatus;
                     if (el.id === record.id && prevVal !== value) {
-                        return {...el, status: value, isStatusCommentOpened: true};
+                        return {...el, curentStatus: value, isStatusCommentOpened: true, statusComment: ''};
+                    } else if (el.id === record.id && prevVal === value) {
+                        return {...el, curentStatus: value, isStatusCommentOpened: false, statusComment: ''};
                     } else {
                         return el;
                     }
@@ -83,15 +86,19 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     };
 
     const handleStatusComment = (record: IDataDeatailsQstatus, comment: string) => {
-        console.log('record', record);
-        console.log('comment', comment);
+        // console.log('record', record);
+        // console.log('comment', comment);
         setTableData(prevState =>
             prevState.map((el: any) => (el.id === record.id ? {...el, statusComment: comment} : el))
         );
     };
 
+    const handleSaveStatusComment = (comment: string) => {
+        console.log('comment', comment);
+    };
+
     const attr_columns = useMemo<ColumnsType<IDataDeatailsQstatus>>(
-        () => prepareQstatusesColumns(handleSelect, handleChange, handleStatusComment),
+        () => prepareQstatusesColumns(handleSelect, handleChange, handleStatusComment, handleSaveStatusComment),
         []
     );
 
