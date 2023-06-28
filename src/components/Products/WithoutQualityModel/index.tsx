@@ -5,7 +5,7 @@ import ProductsTable from './ProductsTable';
 import ProductsSelectQualityModelForm from './ProductsSelectQualityModelForm';
 import {useState} from 'react';
 import withoutModelApi from './withoutModelApi';
-import {IProduct, IProductsRequest} from '../../../common/types/products';
+import {IProduct, IProductsRequest, IProductsResponse} from '../../../common/types/products';
 
 const ProductsWithoutQualityModel: React.FC = () => {
     const [selectedProducts, setSelectedProducts] = useState<IProduct[]>([]);
@@ -22,7 +22,7 @@ const ProductsWithoutQualityModel: React.FC = () => {
 
     const [searchBy, setSearchBy] = useState<IProductsRequest['body']['searchBy']>({});
 
-    const getModelsQuery = withoutModelApi.useGetProductsQuery({
+    const getProductsQuery = withoutModelApi.useGetProductsQuery({
         header: {
             securityCode: 'security_code',
         },
@@ -32,6 +32,8 @@ const ProductsWithoutQualityModel: React.FC = () => {
             searchBy,
         },
     });
+
+    const [productsWithQualityModelIds, setProductsWithQualityModelIds] = useState<number[]>([]); // Айдишики тех продуктов, которым назначили модель качества.
 
     const [updateProductsQualityModelId] = withoutModelApi.useUpdateProductsMutation();
 
@@ -76,15 +78,27 @@ const ProductsWithoutQualityModel: React.FC = () => {
     };
 
     const handleQualityModelSelectSubmit = (qualityModelId: string) => {
+        const selectedProductsIds = selectedProducts.map(({id}) => id);
+        setProductsWithQualityModelIds(prevState => [...prevState, ...selectedProductsIds]);
         updateProductsQualityModelId({
             header: {
                 securityCode: 'security_code',
             },
             body: {
                 updatedBy: 'Matvey',
-                products: selectedProducts.map(({id}) => ({id, qualityModelId})),
+                products: selectedProductsIds.map(id => ({id, qualityModelId})),
             },
         });
+    };
+
+    const tableData: IProductsResponse = {
+        content: getProductsQuery.data?.content.filter(({id}) => !productsWithQualityModelIds.includes(id)) || [],
+        pageable: getProductsQuery.data?.pageable || {
+            pageSize: 0,
+            pageIndex: 0,
+            totalPages: 0,
+            totalElements: 0,
+        },
     };
 
     return (
@@ -95,9 +109,9 @@ const ProductsWithoutQualityModel: React.FC = () => {
                 <ProductsSelectQualityModelForm products={selectedProducts} onSubmit={handleQualityModelSelectSubmit} />
                 <ProductsTable
                     onProductsSelect={setSelectedProducts}
-                    tableData={getModelsQuery.data!}
+                    tableData={tableData}
                     onPageChange={handlePageChange}
-                    isLoading={getModelsQuery.isLoading}
+                    isLoading={getProductsQuery.isLoading}
                 />
             </Grid>
         </Grid>
