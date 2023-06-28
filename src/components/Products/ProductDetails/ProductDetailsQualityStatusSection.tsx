@@ -50,32 +50,32 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     }, [details?.qualityStatuses]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const handleChange = (record: IDataDeatailsQstatus, value: string) => {
+    const handleChange = (recordId: string, value: string) => {
         if (value === EBlockers.BlockOrders) {
             setTableData(prevState =>
-                prevState.map((el: any) => (el.id === record.id ? {...el, blockOrders: !el.blockOrders} : el))
+                prevState.map((el: any) => (el.id === recordId ? {...el, blockOrders: !el.blockOrders} : el))
             );
         }
         if (value === EBlockers.BlockSellings) {
             setTableData(prevState =>
-                prevState.map((el: any) => (el.id === record.id ? {...el, blockSellings: !el.blockSellings} : el))
+                prevState.map((el: any) => (el.id === recordId ? {...el, blockSellings: !el.blockSellings} : el))
             );
         }
         if (value === EBlockers.BlockPublics) {
             setTableData(prevState =>
-                prevState.map((el: any) => (el.id === record.id ? {...el, blockPublics: !el.blockPublics} : el))
+                prevState.map((el: any) => (el.id === recordId ? {...el, blockPublics: !el.blockPublics} : el))
             );
         }
     };
 
-    const handleSelect = (record: IDataDeatailsQstatus) => (value: string | null) => {
+    const handleSelect = (recordId: string) => (value: string | null) => {
         if (value) {
             setTableData(prevState =>
                 prevState.map((el: any) => {
                     const prevVal = el.prevStatus;
-                    if (el.id === record.id && prevVal !== value) {
+                    if (el.id === recordId && prevVal !== value) {
                         return {...el, curentStatus: value, isStatusCommentOpened: true, statusComment: ''};
-                    } else if (el.id === record.id && prevVal === value) {
+                    } else if (el.id === recordId && prevVal === value) {
                         return {...el, curentStatus: value, isStatusCommentOpened: false, statusComment: ''};
                     } else {
                         return el;
@@ -85,16 +85,25 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         }
     };
 
-    const handleStatusComment = (record: IDataDeatailsQstatus, comment: string) => {
-        // console.log('record', record);
-        // console.log('comment', comment);
+    const handleStatusComment = (recordId: string, comment: string) => {
         setTableData(prevState =>
-            prevState.map((el: any) => (el.id === record.id ? {...el, statusComment: comment} : el))
+            prevState.map((el: any) => (el.id === recordId ? {...el, statusComment: comment} : el))
         );
     };
 
-    const handleSaveStatusComment = (comment: string) => {
-        console.log('comment', comment);
+    const handleSaveStatusComment = (record: IDataDeatailsQstatus) => {
+        console.log('comment', record.statusComment);
+        setTableData(prevState =>
+            prevState.map((el: any) =>
+                el.id === record.id
+                    ? {
+                          ...el,
+                          statusComment: '',
+                          isStatusCommentOpened: false,
+                      }
+                    : el
+            )
+        );
     };
 
     const attr_columns = useMemo<ColumnsType<IDataDeatailsQstatus>>(

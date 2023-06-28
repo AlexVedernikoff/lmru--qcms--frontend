@@ -4,10 +4,10 @@ import HistoryBackIcon from '../../../../Icons/HistoryBackIcon';
 import {CustomSwitch} from '../../../../Common/Switch/CustomSwitch';
 import {EBlockers} from '../../ProductDetailsQualityStatusSection';
 
-type HandleSelectType = (record: IDataDeatailsQstatus) => (value: string | null) => void;
-type HandleChangeType = (record: IDataDeatailsQstatus, value: string) => void;
-type HandleStatusComment = (record: IDataDeatailsQstatus, comment: string) => void;
-type HandleSaveStatusComment = (comment: string) => void;
+type HandleSelectType = (recordId: string) => (value: string | null) => void;
+type HandleChangeType = (recordId: string, value: string) => void;
+type HandleStatusComment = (recordId: string, comment: string) => void;
+type HandleSaveStatusComment = (record: IDataDeatailsQstatus) => void;
 
 export const prepareQstatusesColumns = (
     handleSelect: HandleSelectType,
@@ -32,7 +32,7 @@ export const prepareQstatusesColumns = (
                                 size="m"
                                 closeOnSelect
                                 value={record.curentStatus}
-                                onSelect={handleSelect(record)}
+                                onSelect={handleSelect(record.id)}
                             >
                                 {statuses.map((status, i) => (
                                     <DropdownItem text={status} value={status} key={i} />
@@ -54,12 +54,12 @@ export const prepareQstatusesColumns = (
                                     placeholder="Комментарий для статуса качества"
                                     value={record.statusComment}
                                     onChange={e => {
-                                        handleStatusComment(record, e.target.value);
+                                        handleStatusComment(record.id, e.target.value);
                                     }}
                                 />
                                 <RegularButton
                                     disabled={record.statusComment ? false : true}
-                                    onClick={() => handleSaveStatusComment(record.statusComment)}
+                                    onClick={() => handleSaveStatusComment(record)}
                                 >
                                     сохранить
                                 </RegularButton>
@@ -74,7 +74,7 @@ export const prepareQstatusesColumns = (
             render: (_statuses: string[], record: IDataDeatailsQstatus) => (
                 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                     <CustomSwitch
-                        handleChange={() => handleChange(record, EBlockers.BlockOrders)}
+                        handleChange={() => handleChange(record.id, EBlockers.BlockOrders)}
                         name=""
                         checked={record.blockOrders}
                     />
@@ -90,7 +90,7 @@ export const prepareQstatusesColumns = (
             render: (_statuses: string[], record: IDataDeatailsQstatus) => (
                 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                     <CustomSwitch
-                        handleChange={() => handleChange(record, EBlockers.BlockSellings)}
+                        handleChange={() => handleChange(record.id, EBlockers.BlockSellings)}
                         name=""
                         checked={record.blockSellings}
                     />
@@ -106,7 +106,7 @@ export const prepareQstatusesColumns = (
             render: (_statuses: string[], record: IDataDeatailsQstatus) => (
                 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                     <CustomSwitch
-                        handleChange={() => handleChange(record, EBlockers.BlockPublics)}
+                        handleChange={() => handleChange(record.id, EBlockers.BlockPublics)}
                         name=""
                         checked={record.blockPublics}
                     />
