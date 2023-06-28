@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {IQualityProductDetailsParams} from '../../../common/types/productDetails';
+import {IQualityProductDetailsParams, ProductDetails} from '../../../common/types/productDetails';
 
 const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/';
 
@@ -14,7 +14,7 @@ export const productDetailsApi = createApi({
     tagTypes: ['Details'],
 
     endpoints: builder => ({
-        getDetailsForProducts: builder.query<any, IQualityProductDetailsParams>({
+        getDetailsForProducts: builder.query<ProductDetails, IQualityProductDetailsParams>({
             query: params => ({
                 method: 'GET',
                 url: `${serviceUrl.getDetailsForProducts}/${params.productId}`,
@@ -26,7 +26,7 @@ export const productDetailsApi = createApi({
             }),
             providesTags: ['Details'],
         }),
-        postUpdateProduct: builder.mutation<any, any>({
+        postUpdateProduct: builder.mutation<ProductDetails, IQualityProductDetailsParams>({
             query: params => ({
                 method: 'POST',
                 url: serviceUrl.updateProduct,

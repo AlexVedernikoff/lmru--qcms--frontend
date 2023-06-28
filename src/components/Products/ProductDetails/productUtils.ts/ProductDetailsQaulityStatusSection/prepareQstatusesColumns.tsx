@@ -59,7 +59,7 @@ export const prepareQstatusesColumns = (
                     <CustomSwitch
                         handleChange={() => handleChange(record.id, EBlockers.BlockOrders)}
                         name=""
-                        checked={record.blockOrders}
+                        checked={record?.blockOrders ? record.blockOrders : false}
                     />
                     <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
                         <HistoryBackIcon />
@@ -75,7 +75,7 @@ export const prepareQstatusesColumns = (
                     <CustomSwitch
                         handleChange={() => handleChange(record.id, EBlockers.BlockSellings)}
                         name=""
-                        checked={record.blockSellings}
+                        checked={record?.blockSellings ? record.blockSellings : false}
                     />
                     <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
                         <HistoryBackIcon />
@@ -91,7 +91,7 @@ export const prepareQstatusesColumns = (
                     <CustomSwitch
                         handleChange={() => handleChange(record.id, EBlockers.BlockPublics)}
                         name=""
-                        checked={record.blockPublics}
+                        checked={record?.blockPublics ? record.blockPublics : false}
                     />
                     <RegularButton data-id={record.id} href="" rel="" aria-label="" variant="pseudo" iconOnly>
                         <HistoryBackIcon />

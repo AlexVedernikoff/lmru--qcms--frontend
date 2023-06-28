@@ -1,3 +1,5 @@
+import {QualityStatus} from '../../../../../common/types/productDetails';
+
 export enum EQualityStatusesEng {
     MissingData = 'MISSING_DATA',
     MissingDate = 'MISSING_DATE',
@@ -56,8 +58,6 @@ export const getQualityStatus = (lang: string, qualityStatus?: string) => {
             return '';
         }
     } else {
-        console.log('qualityStatus', qualityStatus);
-
         const statusMissingDataEng =
             qualityStatus === EQualityStatusesRu.MissingData ? EQualityStatusesEng.MissingData : '';
         const statusQualificationInProgressEng =
@@ -99,7 +99,7 @@ const arrQstatusesRu = [
     EQualityStatusesRu.TemporarilyAllowed,
 ];
 
-export const qaulityStatusSectionMapping = (qStatus?: any) => {
+export const qaulityStatusSectionMapping = (qStatus?: QualityStatus) => {
     const buCodeText =
         qStatus?.buCode && qStatus.buCode === 9
             ? 'Леруа Мерлен Россия'
@@ -108,14 +108,10 @@ export const qaulityStatusSectionMapping = (qStatus?: any) => {
             : qStatus?.buCode;
     const buCode = qStatus?.buCode;
     const qualityStatus = {ru: getQualityStatus(ELanguages.RU, qStatus?.qualityStatus), eng: qStatus?.qualityStatus};
-    console.log('qualityStatus', qualityStatus);
 
     const blockedForOrders = qStatus?.blockedForOrder;
     const blockedForSellings = qStatus?.blockedForSelling;
     const blockedForPublics = qStatus?.blockedForPublication;
-    const qualityModelId = qStatus?.qualityModelId;
-
-    // const comment =  details?.qualityAction?.publicComments?.comment;
 
     return {
         buCode,
@@ -125,6 +121,5 @@ export const qaulityStatusSectionMapping = (qStatus?: any) => {
         blockedForSellings,
         blockedForPublics,
         arrQstatusesRu,
-        qualityModelId,
     };
 };

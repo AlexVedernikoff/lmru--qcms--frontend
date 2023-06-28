@@ -1,6 +1,7 @@
 import {TFunction} from 'i18next';
+import {ProductDetails} from '../../../../../../common/types/productDetails';
 
-const getRiskOption = (t: TFunction, details: any) => {
+const getRiskOption = (t: TFunction, details: ProductDetails) => {
     enum ERiskOptions {
         Minor = 'MINOR',
         Major = 'MAJOR',

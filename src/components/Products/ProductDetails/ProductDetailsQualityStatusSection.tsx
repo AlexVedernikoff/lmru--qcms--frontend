@@ -14,7 +14,7 @@ import {
     getQualityStatus,
     qaulityStatusSectionMapping,
 } from './productUtils.ts/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
-import {IDataDeatailsQstatus} from '../../../common/types/productDetails';
+import {IDataDeatailsQstatus, IUpdateBodyReq} from '../../../common/types/productDetails';
 import {prepareQstatusesColumns} from './productUtils.ts/ProductDetailsQaulityStatusSection/prepareQstatusesColumns';
 import {prepareUpdateBody} from './productUtils.ts/prepareUpdateBody';
 
@@ -31,15 +31,13 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
     const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
 
-    const [tableData, setTableData] = useState<any[]>([]);
+    const [tableData, setTableData] = useState<IDataDeatailsQstatus[]>([]);
     const [isChangesInData, setIsChangesInData] = useState(false);
 
     useEffect(() => {
         if (details?.qualityStatuses && details?.qualityStatuses?.length > 0) {
-            const arrQRowsVal = details.qualityStatuses.map((el: any, i: number) => {
+            const arrQRowsVal: IDataDeatailsQstatus[] = details.qualityStatuses.map((el, i: number) => {
                 const mapping = qaulityStatusSectionMapping(el);
-
-                console.log('useEffect сработал');
 
                 return {
                     id: `${i}`,
@@ -64,27 +62,25 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     const handleChange = (recordId: string, value: string) => {
         if (value === EBlockers.BlockOrders) {
             setTableData(prevState =>
-                prevState.map((el: any) => (el.id === recordId ? {...el, blockOrders: !el.blockOrders} : el))
+                prevState.map(el => (el.id === recordId ? {...el, blockOrders: !el.blockOrders} : el))
             );
         }
         if (value === EBlockers.BlockSellings) {
             setTableData(prevState =>
-                prevState.map((el: any) => (el.id === recordId ? {...el, blockSellings: !el.blockSellings} : el))
+                prevState.map(el => (el.id === recordId ? {...el, blockSellings: !el.blockSellings} : el))
             );
         }
         if (value === EBlockers.BlockPublics) {
             setTableData(prevState =>
-                prevState.map((el: any) => (el.id === recordId ? {...el, blockPublics: !el.blockPublics} : el))
+                prevState.map(el => (el.id === recordId ? {...el, blockPublics: !el.blockPublics} : el))
             );
         }
     };
 
     const handleSelect = (recordId: string) => (value: string | null) => {
         if (value) {
-            console.log('val', getQualityStatus(ELanguages.ENG, value));
-
             setTableData(prevState =>
-                prevState.map((el: any) => {
+                prevState.map(el => {
                     if (el.id === recordId) {
                         setIsChangesInData(true);
                         return {
@@ -103,7 +99,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
     const handleStatusComment = (recordId: string, comment: string) => {
         setTableData(prevState =>
-            prevState.map((el: any) => {
+            prevState.map(el => {
                 if (el.id === recordId) {
                     setIsChangesInData(true);
                     return {...el, statusComment: comment};
@@ -120,11 +116,9 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             productWithSubstances: details?.productWithSubstances,
             qualityModelId: details?.qualityModelId,
         };
-        const body = prepareUpdateBody(tableData, commonProductFields);
+        const body: IUpdateBodyReq = prepareUpdateBody(tableData, commonProductFields);
 
-        const response = await postUpdateProduct({body, securityCode}).unwrap();
-        console.log('response', response);
-        // setTableData(response[0])
+        await postUpdateProduct({body, securityCode}).unwrap();
     };
 
     const attr_columns = useMemo<ColumnsType<IDataDeatailsQstatus>>(
