@@ -16,7 +16,7 @@ export const prepareQstatusesColumns = (
     return [
         {
             title: 'BU',
-            dataIndex: 'bu',
+            dataIndex: 'buCodeText',
         },
         {
             title: 'Статус качества',
