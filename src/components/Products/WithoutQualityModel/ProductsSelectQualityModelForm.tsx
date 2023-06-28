@@ -49,7 +49,7 @@ export const ProductsSelectQualityModelForm: React.FC<Props> = ({products, onSub
     return (
         <Grid rowGap={16}>
             <Typography variant="h3">
-                {'11_Краски Подготовка основания Грунтовка стен и аксессуары Шпаклевка'}
+                {'11_Краски Подготовка основания Грунтовка стен и аксессуары Шпатлёвка'}
             </Typography>
 
             <Grid columns="24px 1fr" columnGap={12}>
