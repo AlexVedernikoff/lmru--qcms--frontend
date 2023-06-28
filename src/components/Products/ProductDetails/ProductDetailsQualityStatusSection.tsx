@@ -39,8 +39,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                     blockOrders: mapping.blockedForOrders,
                     blockSellings: mapping.blockedForSellings,
                     blockPublics: mapping.blockedForPublics,
-                    curentStatus: mapping.qualityStatus,
-                    prevStatus: mapping.qualityStatus,
+                    status: mapping.qualityStatus,
                     isStatusCommentOpened: false,
                     statusComment: '',
                 };
@@ -73,11 +72,9 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         if (value) {
             setTableData(prevState =>
                 prevState.map((el: any) => {
-                    const prevVal = el.prevStatus;
-                    if (el.id === recordId && prevVal !== value) {
-                        return {...el, curentStatus: value, isStatusCommentOpened: true, statusComment: ''};
-                    } else if (el.id === recordId && prevVal === value) {
-                        return {...el, curentStatus: value, isStatusCommentOpened: false, statusComment: ''};
+                    if (el.id === recordId) {
+                        setIsChangesInData(true);
+                        return {...el, status: value, isStatusCommentOpened: true};
                     } else {
                         return el;
                     }
@@ -88,30 +85,21 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
     const handleStatusComment = (recordId: string, comment: string) => {
         setTableData(prevState =>
-            prevState.map((el: any) => (el.id === recordId ? {...el, statusComment: comment} : el))
+            prevState.map((el: any) => {
+                if (el.id === recordId) {
+                    setIsChangesInData(true);
+                    return {...el, statusComment: comment};
+                } else {
+                    return el;
+                }
+            })
         );
     };
 
-    const handleSaveStatusComment = (record: IDataDeatailsQstatus) => {
-        console.log('comment', record.statusComment);
-        setTableData(prevState =>
-            prevState.map((el: any) =>
-                el.id === record.id
-                    ? {
-                          ...el,
-                          statusComment: record.statusComment,
-                          isStatusCommentOpened: false,
-                      }
-                    : el
-            )
-        );
-        setIsChangesInData(true);
-    };
-
-    const updateChangesToServer = () => {};
+    const updateChangesOnServer = () => {};
 
     const attr_columns = useMemo<ColumnsType<IDataDeatailsQstatus>>(
-        () => prepareQstatusesColumns(handleSelect, handleChange, handleStatusComment, handleSaveStatusComment),
+        () => prepareQstatusesColumns(handleSelect, handleChange, handleStatusComment),
         []
     );
 
@@ -134,7 +122,9 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 <Typography variant="h3">{t('ProductDetails.QualityStatusSection.Comments')}</Typography>
                 <Textarea />
             </Grid>
-            <RegularButton disabled={!isChangesInData}>Отправить</RegularButton>
+            <RegularButton disabled={!isChangesInData} onClick={updateChangesOnServer}>
+                Отправить
+            </RegularButton>
         </Grid>
     );
 };

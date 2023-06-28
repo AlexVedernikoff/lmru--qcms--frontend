@@ -7,13 +7,11 @@ import {EBlockers} from '../../ProductDetailsQualityStatusSection';
 type HandleSelectType = (recordId: string) => (value: string | null) => void;
 type HandleChangeType = (recordId: string, value: string) => void;
 type HandleStatusComment = (recordId: string, comment: string) => void;
-type HandleSaveStatusComment = (record: IDataDeatailsQstatus) => void;
 
 export const prepareQstatusesColumns = (
     handleSelect: HandleSelectType,
     handleChange: HandleChangeType,
-    handleStatusComment: HandleStatusComment,
-    handleSaveStatusComment: HandleSaveStatusComment
+    handleStatusComment: HandleStatusComment
 ) => {
     return [
         {
@@ -28,12 +26,7 @@ export const prepareQstatusesColumns = (
                 statuses?.length > 0 && (
                     <>
                         <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
-                            <Dropdown
-                                size="m"
-                                closeOnSelect
-                                value={record.curentStatus}
-                                onSelect={handleSelect(record.id)}
-                            >
+                            <Dropdown size="m" closeOnSelect value={record.status} onSelect={handleSelect(record.id)}>
                                 {statuses.map((status, i) => (
                                     <DropdownItem text={status} value={status} key={i} />
                                 ))}
@@ -45,25 +38,17 @@ export const prepareQstatusesColumns = (
                         </div>
 
                         {record.isStatusCommentOpened && (
-                            <div style={{display: 'grid', gridTemplateColumns: '0.8fr 0.2fr'}}>
-                                <Input
-                                    inputSize="m"
-                                    autoComplete="off"
-                                    // label="Комментарий для статуса качества"
-                                    // name={'approvedBy'}
-                                    placeholder="Комментарий для статуса качества"
-                                    value={record.statusComment}
-                                    onChange={e => {
-                                        handleStatusComment(record.id, e.target.value);
-                                    }}
-                                />
-                                <RegularButton
-                                    disabled={record.statusComment ? false : true}
-                                    onClick={() => handleSaveStatusComment(record)}
-                                >
-                                    сохранить
-                                </RegularButton>
-                            </div>
+                            <Input
+                                inputSize="m"
+                                autoComplete="off"
+                                // label="Комментарий для статуса качества"
+                                // name={'approvedBy'}
+                                placeholder="Комментарий для статуса качества"
+                                value={record.statusComment}
+                                onChange={e => {
+                                    handleStatusComment(record.id, e.target.value);
+                                }}
+                            />
                         )}
                     </>
                 ),
