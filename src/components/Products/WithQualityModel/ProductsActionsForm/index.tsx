@@ -1,9 +1,9 @@
 import {Dropdown, DropdownItem, Grid, RegularButton} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import ProductsCounter from '../ProductsCounter';
-import {IWithModelItem} from '../../../../common/types/withModel';
 import {useState} from 'react';
 import ModalWindowsGroup from '../ModalWindowsGroup';
+import {IProduct} from '../../../../common/types/products';
 
 import s from './ProductsActionsForm.module.css';
 
@@ -15,7 +15,7 @@ export enum ProductsActions {
 }
 
 interface Props {
-    products: IWithModelItem[];
+    products: IProduct[];
 }
 
 const ProductsActionsForm: React.FC<Props> = ({products}) => {

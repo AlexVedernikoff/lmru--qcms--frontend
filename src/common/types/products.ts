@@ -1,4 +1,8 @@
-interface IWithModelBodyParams {
+interface IProductsRequestHeader {
+    securityCode: string;
+}
+
+interface IProductsRequestBody {
     pageIndex: number; // required, номер страницы
     pageSize: number; // required, количество элементов на странице
     sortField?: string; // optional, поле для сортировки
@@ -48,16 +52,12 @@ interface IWithModelBodyParams {
     };
 }
 
-interface IWithModelHeaderParams {
-    securityCode: string;
+export interface IProductsRequest {
+    header: IProductsRequestHeader;
+    body: IProductsRequestBody;
 }
 
-export interface IWithModelParams {
-    header: IWithModelHeaderParams;
-    body: IWithModelBodyParams;
-}
-
-export interface IWithModelItem {
+export interface IProduct {
     id: number; // required, идентификатор записи в БД
     code: string; // required, код продукта для BU
     version: number; // required, версия документа
@@ -166,19 +166,23 @@ export interface IWithModelItem {
     };
 }
 
-export interface IWithModelResponse {
+export interface IProductsResponse {
     pageable: {
         pageSize: number; // required, количество элементов на странице
         pageIndex: number; // required, номер страницы
         totalPages: number; // required, кол-во страниц
         totalElements: number; // required, общее кол-во элементов
     };
-    content: IWithModelItem[];
+    content: IProduct[];
 }
 
-export interface IWithModelNomenclatureParams {
+export interface IProductsNomenclatureRequestHeader {
     securityCode: string;
     application?: string;
+}
+
+export interface IProductsNomenclatureRequest {
+    header: IProductsNomenclatureRequestHeader;
 }
 
 interface INomenclatureBasic {

@@ -4,6 +4,7 @@ import {setupListeners} from '@reduxjs/toolkit/dist/query';
 import modelsApi from '../components/Models/modelsApi';
 import tasksApi from '../components/Tasks/tasksApi';
 import withModelApi from '../components/Products/WithQualityModel/withModelApi';
+import withoutModelApi from '../components/Products/WithoutQualityModel/withoutModelApi';
 import {getManagementNomenclature} from '../api/getManagementNomenclature';
 import {getPermissiveDocuments} from '../api/getPermissiveDocuments';
 import {getProductModelNomenclature} from '../api/getProductModelNomenclature';
@@ -29,6 +30,7 @@ const rootReducer = {
     [taskDetailsApi.reducerPath]: taskDetailsApi.reducer,
     [tasksApi.reducerPath]: tasksApi.reducer,
     [withModelApi.reducerPath]: withModelApi.reducer,
+    [withoutModelApi.reducerPath]: withoutModelApi.reducer,
     productsDocumentsFilters: productsDocumentsFilters.reducer,
     productsDocumentsTableData: productsDocumentsTableData.reducer,
 };
@@ -55,7 +57,8 @@ const makeStore = () =>
                 providersApi.middleware,
                 taskDetailsApi.middleware,
                 tasksApi.middleware,
-                withModelApi.middleware
+                withModelApi.middleware,
+                withoutModelApi.middleware
             ),
         devTools: process.env.NODE_ENV === 'development',
     });

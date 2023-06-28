@@ -1,11 +1,11 @@
 import {Modal, ModalContent, ModalFooter, ModalHeader} from 'fronton-react';
-import {IWithModelItem} from '../../../../common/types/withModel';
 import {useTranslation} from 'react-i18next';
+import {IProduct} from '../../../../common/types/products';
 
 interface Props {
     show: boolean;
     onClose: () => void;
-    products: IWithModelItem[];
+    products: IProduct[];
 }
 
 const ProductsAddCommentModalWindow: React.FC<Props> = ({show, onClose, products}) => {

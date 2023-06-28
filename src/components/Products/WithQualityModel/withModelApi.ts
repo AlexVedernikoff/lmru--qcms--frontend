@@ -1,41 +1,41 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {
-    IWithModelNomenclatureParams,
-    IWithModelParams,
-    IWithModelResponse,
+    IProductsNomenclatureRequest,
+    IProductsRequest,
+    IProductsResponse,
     TModelNomenclatureResponse,
-} from '../../../common/types/withModel';
+} from '../../../common/types/products';
 
 const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/';
 
 const serviceUrl = {
     getProducts: 'search-products',
-    getModelNomenclature: 'product-model-nomenclature',
+    getProductsNomenclature: 'product-model-nomenclature',
 };
 
 const withModelApi = createApi({
     reducerPath: 'withModelApi',
     baseQuery: fetchBaseQuery({baseUrl: hostUrl}),
     endpoints: builder => ({
-        getModels: builder.query<IWithModelResponse, IWithModelParams>({
-            query: params => ({
+        getProducts: builder.query<IProductsResponse, IProductsRequest>({
+            query: request => ({
                 method: 'POST',
                 url: serviceUrl.getProducts,
-                body: params.body,
+                body: request.body,
                 headers: {
-                    securityCode: params.header.securityCode,
+                    securityCode: request.header.securityCode,
                 },
             }),
         }),
-        getModelNomenclature: builder.query<TModelNomenclatureResponse, IWithModelNomenclatureParams>({
-            query: params => ({
+        getProductsNomenclature: builder.query<TModelNomenclatureResponse, IProductsNomenclatureRequest>({
+            query: request => ({
                 method: 'GET',
-                url: serviceUrl.getModelNomenclature,
+                url: serviceUrl.getProductsNomenclature,
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    Application: params.application,
-                    securityCode: params.securityCode,
+                    Application: request.header.application,
+                    securityCode: request.header.securityCode,
                 },
             }),
         }),

@@ -8,17 +8,17 @@ import {TableRowSelection} from 'antd/es/table/interface';
 import {PRODUCTS_ROUTES} from '../../../../common/consts';
 import {getProductTableColumns} from './ProductTableColumns';
 import CustomTable from '../../../Common/CustomTable';
-import {IWithModelItem, IWithModelResponse} from '../../../../common/types/withModel';
 import {TWithReactKey} from '../../../../common/clientModels';
+import {IProduct, IProductsResponse} from '../../../../common/types/products';
 
-export type RawTable = Pick<IWithModelItem, 'id'>;
+export type RawTable = Pick<IProduct, 'id'>;
 
-export type TDataType = TWithReactKey<IWithModelItem>;
+export type TDataType = TWithReactKey<IProduct>;
 
 interface IProps {
     onPageChange: (page: number, size: number) => void;
-    onProductsSelect: (products: IWithModelItem[]) => void;
-    tableData: IWithModelResponse;
+    onProductsSelect: (products: IProduct[]) => void;
+    tableData: IProductsResponse;
     isLoading: boolean;
 }
 

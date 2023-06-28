@@ -1,5 +1,5 @@
+import {IProduct} from '../../../../common/types/products';
 import {ProductsActions} from '../ProductsActionsForm';
-import {IWithModelItem} from '../../../../common/types/withModel';
 import ProductsAddCommentModalWindow from '../ProductsAddCommentModalWindow';
 import ProductsAddDocumentModalWindow from '../ProductsAddDocumentModalWindow';
 import ProductsAddTasksModalWindow from '../ProductsAddTasksModalWindow';
@@ -7,7 +7,7 @@ import ProductsBlockOrUnBlockModalWindow from '../ProductsBlockOrUnBlockModalWin
 
 interface Props {
     onClose: () => void;
-    products: IWithModelItem[];
+    products: IProduct[];
     action: ProductsActions | null;
 }
 

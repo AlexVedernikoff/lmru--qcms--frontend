@@ -46,7 +46,11 @@ interface IProps {
 
 const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
     const {t} = useTranslation('products');
-    const {data: nomenclature = []} = withModelApi.useGetModelNomenclatureQuery({securityCode: 'security_code'});
+    const {data: nomenclature = []} = withModelApi.useGetProductsNomenclatureQuery({
+        header: {
+            securityCode: 'security_code',
+        },
+    });
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
     const [formState, setFormState] = useState<IFilterFormState>({});
 

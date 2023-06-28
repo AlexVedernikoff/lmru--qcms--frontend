@@ -1,11 +1,11 @@
 import {useTranslation} from 'react-i18next';
-import {IWithModelItem} from '../../../../common/types/withModel';
 import {Modal, ModalContent, ModalFooter, ModalHeader} from 'fronton-react';
+import {IProduct} from '../../../../common/types/products';
 
 interface Props {
     show: boolean;
     onClose: () => void;
-    products: IWithModelItem[];
+    products: IProduct[];
 }
 
 const ProductsBlockOrUnBlockModalWindow: React.FC<Props> = ({show, onClose, products}) => {

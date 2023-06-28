@@ -4,25 +4,25 @@ import ProductsTable from './ProductsTable';
 import styles from '../../Common.module.css';
 import withModelApi from './withModelApi';
 import {useState} from 'react';
-import {IWithModelItem, IWithModelParams} from '../../../common/types/withModel';
 import ProductsActionsForm from './ProductsActionsForm';
+import {IProduct, IProductsRequest} from '../../../common/types/products';
 
 const ProductsWithQualityModel: React.FC = () => {
-    const [selectedProducts, setSelectedProducts] = useState<IWithModelItem[]>([]);
+    const [selectedProducts, setSelectedProducts] = useState<IProduct[]>([]);
 
-    const [page, setPage] = useState<Pick<IWithModelParams['body'], 'pageSize' | 'pageIndex'>>({
+    const [page, setPage] = useState<Pick<IProductsRequest['body'], 'pageSize' | 'pageIndex'>>({
         pageSize: 10,
         pageIndex: 0,
     });
 
-    const [sort] = useState<Pick<IWithModelParams['body'], 'sortField' | 'sortDirection'>>({
+    const [sort] = useState<Pick<IProductsRequest['body'], 'sortField' | 'sortDirection'>>({
         // sortField: 'createdAt',
         sortDirection: 'DESC',
     });
 
-    const [searchBy, setSearchBy] = useState<IWithModelParams['body']['searchBy']>({});
+    const [searchBy, setSearchBy] = useState<IProductsRequest['body']['searchBy']>({});
 
-    const {data, isLoading} = withModelApi.useGetModelsQuery({
+    const {data, isLoading} = withModelApi.useGetProductsQuery({
         header: {
             securityCode: 'security_code',
         },
