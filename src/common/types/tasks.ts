@@ -1,36 +1,42 @@
 import {IPageable} from './common';
 
+interface IResponsible {
+    type?: 'SUPPLIER' | 'SERVICE_PROVIDER' | 'QE' | 'SQM';
+    externalId?: string;
+}
+
+interface IDates {
+    dateType?: 'APPROVAL_DATE' | 'REALISATIONDUE_DATE' | 'UPDATED' | 'CREATED';
+    startDate?: string;
+    endDate?: string;
+}
+
+interface ISearchBy {
+    productCode?: string;
+    productName?: string;
+    ean?: string;
+    supplierRMSCode?: string;
+    supplierName?: string;
+    supplierTaxIdentifier?: string;
+    actionStatuses?: string[];
+    awaitedDocumentTypes?: string[];
+    responsible?: IResponsible[];
+    qualityActionId?: number;
+    categotyName?: string;
+    categoryTypeNames?: string[];
+    conclusions?: string[];
+    isForUpdate?: boolean;
+    productRange?: string;
+    dates?: IDates;
+    productQualityModel?: string;
+}
+
 interface ITaskListBody {
     pageIndex: number;
     pageSize: number;
-    sortField?: string;
-    sortDirection?: 'ASC' | 'DESC';
-    searchBy?: {
-        productCode?: string;
-        productName?: string;
-        ean?: string;
-        supplierRMSCode?: string;
-        supplierName?: string;
-        supplierTaxIdentifier?: string;
-        actionStatuses?: string[];
-        awaitedDocumentTypes?: string[];
-        responsible?: {
-            type?: 'SUPPLIER' | 'SERVICE_PROVIDER' | 'QE' | 'SQM';
-            externalId?: string;
-        }[];
-        qualityActionId?: number;
-        categotyName?: string;
-        categoryTypeNames?: string[];
-        conclusions?: string[];
-        isForUpdate?: boolean;
-        productRange?: string;
-        dates?: {
-            dateType: 'APPROVAL_DATE' | 'REALISATIONDUE_DATE' | 'UPDATED' | 'CREATED';
-            startDate: string;
-            endDate: string;
-        };
-        productQualityModel?: string;
-    };
+    sortField: string;
+    sortDirection: 'ASC' | 'DESC';
+    searchBy: ISearchBy;
 }
 
 export interface ITaskListParams {

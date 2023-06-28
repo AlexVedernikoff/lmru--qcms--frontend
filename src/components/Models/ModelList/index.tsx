@@ -39,7 +39,7 @@ const ModelList: React.FC = () => {
         needApprove: undefined,
     });
 
-    const {data, isLoading} = modelsApi.useGetModelsQuery({
+    const {data, isLoading, isFetching} = modelsApi.useGetModelsQuery({
         header: {
             securityCode: 'security_code',
         },
@@ -97,7 +97,7 @@ const ModelList: React.FC = () => {
             </Grid>
 
             <Grid rowGap={16} className={styles.panel}>
-                <ModelsTable onPageChange={handlePageChange} tableData={data!} isLoading={isLoading} />
+                <ModelsTable onPageChange={handlePageChange} tableData={data!} isLoading={isLoading || isFetching} />
             </Grid>
         </Grid>
     );

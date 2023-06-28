@@ -9,6 +9,7 @@ import {TASKS_ROUTES} from '../../../common/consts';
 import CustomTable from '../../Common/CustomTable';
 import {TWithReactKey} from '../../../common/clientModels';
 import {ITaskListResponse} from '../../../common/types/tasks';
+import {convertDateFromServer} from '../../../utils/convertDateFromServer';
 
 type TDataType = TWithReactKey<ITaskListResponse['content'][number]>;
 
@@ -48,7 +49,7 @@ const Table: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => {
                         variant="pseudo"
                         iconOnly
                     >
-                        {record.publicComments.length > 0 ? <ChatTextIcon /> : <ChatIcon />}
+                        {record.publicComments?.length > 0 ? <ChatTextIcon /> : <ChatIcon />}
                     </RegularButton>
                 ),
                 fixed: 'left',
@@ -138,32 +139,36 @@ const Table: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => {
                 width: 240,
                 render: (v: TDataType['product']) => v.ean,
             },
-            // {
-            //     title: t('TaskList.Table.Columns.awaitedDocuments'),
-            //     dataIndex: 'documents',
-            //     width: 240,
-            //     render: (v: TDataType['documents']) => v.awaitedDocuments.map(d => d.templateId).join(', '),
-            // },
-            // {
-            //     title: t('TaskList.Table.Columns.taskCategory'),
-            //     dataIndex: 'taskCategory',
-            //     width: 240,
-            // },
-            // {
-            //     title: t('TaskList.Table.Columns.creationDate'),
-            //     dataIndex: 'creationDate',
-            //     width: 240,
-            // },
-            // {
-            //     title: t('TaskList.Table.Columns.confirmationEndDate'),
-            //     dataIndex: 'confirmationEndDate',
-            //     width: 240,
-            // },
-            // {
-            //     title: t('TaskList.Table.Columns.responsibleContractor'),
-            //     dataIndex: 'responsibleContractor',
-            //     width: 240,
-            // },
+            {
+                title: t('TaskList.Table.Columns.awaitedDocuments'),
+                dataIndex: 'documents',
+                width: 240,
+                render: (v: TDataType['documents']) => v.awaitedDocuments?.map(d => d.templateId).join(', '),
+            },
+            {
+                title: t('TaskList.Table.Columns.taskCategory'),
+                dataIndex: 'categoryName',
+                width: 240,
+                render: (v: TDataType['categoryName']) => v,
+            },
+            {
+                title: t('TaskList.Table.Columns.creationDate'),
+                dataIndex: 'creationInformation',
+                width: 240,
+                render: (v: TDataType['creationInformation']) => convertDateFromServer(v.createdAt),
+            },
+            {
+                title: t('TaskList.Table.Columns.confirmationEndDate'),
+                dataIndex: 'conclusion',
+                width: 240,
+                render: (v: TDataType['conclusion']) => v,
+            },
+            {
+                title: t('TaskList.Table.Columns.responsibleContractor'),
+                dataIndex: 'responsible',
+                width: 240,
+                render: (v: TDataType['responsible']) => v[0].type,
+            },
         ],
         [handleViewDetails, t]
     );
