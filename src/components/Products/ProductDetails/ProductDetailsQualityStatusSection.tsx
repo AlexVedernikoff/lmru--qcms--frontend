@@ -16,7 +16,7 @@ import {
 } from './productUtils.ts/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
 import {IDataDeatailsQstatus, IUpdateBodyReq} from '../../../common/types/productDetails';
 import {prepareQstatusesColumns} from './productUtils.ts/ProductDetailsQaulityStatusSection/prepareQstatusesColumns';
-import {prepareUpdateBody} from './productUtils.ts/prepareUpdateBody';
+import {prepareUpdateBody} from './productUtils.ts/ProductDetailsQaulityStatusSection/prepareUpdateBody';
 
 export enum EBlockers {
     BlockOrders = 'blockOrders',
@@ -45,8 +45,14 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                     buCodeText: mapping.buCodeText,
                     statuses: mapping.arrQstatusesRu,
                     blockOrders: mapping.blockedForOrders,
+                    blockOrdersComment: '',
+                    isBlockOrderOpened: false,
                     blockSellings: mapping.blockedForSellings,
+                    blockSellingsComment: '',
+                    isBlockSellingsOpened: false,
                     blockPublics: mapping.blockedForPublics,
+                    blockPublicsComment: '',
+                    isBlockPublicsOpened: false,
                     ruStatus: mapping.qualityStatus.ru,
                     engStatus: mapping.qualityStatus.eng,
                     isStatusCommentOpened: false,
@@ -58,21 +64,67 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         }
     }, [details?.qualityStatuses]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleChange = (recordId: string, value: string) => {
+        setIsChangesInData(true);
+
         if (value === EBlockers.BlockOrders) {
             setTableData(prevState =>
-                prevState.map(el => (el.id === recordId ? {...el, blockOrders: !el.blockOrders} : el))
+                prevState.map(el =>
+                    el.id === recordId ? {...el, blockOrders: !el.blockOrders, isBlockOrderOpened: true} : el
+                )
             );
         }
         if (value === EBlockers.BlockSellings) {
             setTableData(prevState =>
-                prevState.map(el => (el.id === recordId ? {...el, blockSellings: !el.blockSellings} : el))
+                prevState.map(el =>
+                    el.id === recordId ? {...el, blockSellings: !el.blockSellings, isBlockSellingsOpened: true} : el
+                )
             );
         }
         if (value === EBlockers.BlockPublics) {
             setTableData(prevState =>
-                prevState.map(el => (el.id === recordId ? {...el, blockPublics: !el.blockPublics} : el))
+                prevState.map(el =>
+                    el.id === recordId ? {...el, blockPublics: !el.blockPublics, isBlockPublicsOpened: true} : el
+                )
+            );
+        }
+    };
+
+    const handleBlockersComments = (recordId: string, comment: string, value: string) => {
+        if (value === EBlockers.BlockOrders) {
+            setTableData(prevState =>
+                prevState.map(el => {
+                    if (el.id === recordId) {
+                        setIsChangesInData(true);
+                        return {...el, blockOrdersComment: comment};
+                    } else {
+                        return el;
+                    }
+                })
+            );
+        }
+        if (value === EBlockers.BlockSellings) {
+            setTableData(prevState =>
+                prevState.map(el => {
+                    if (el.id === recordId) {
+                        setIsChangesInData(true);
+                        return {...el, blockSellingsComment: comment};
+                    } else {
+                        return el;
+                    }
+                })
+            );
+        }
+        if (value === EBlockers.BlockPublics) {
+            setTableData(prevState =>
+                prevState.map(el => {
+                    if (el.id === recordId) {
+                        setIsChangesInData(true);
+                        return {...el, blockPublicsComment: comment};
+                    } else {
+                        return el;
+                    }
+                })
             );
         }
     };
@@ -122,7 +174,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     };
 
     const attr_columns = useMemo<ColumnsType<IDataDeatailsQstatus>>(
-        () => prepareQstatusesColumns(handleSelect, handleChange, handleStatusComment),
+        () => prepareQstatusesColumns(handleSelect, handleChange, handleStatusComment, handleBlockersComments),
         []
     );
 

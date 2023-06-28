@@ -1,4 +1,4 @@
-import {ICommonProductFields, IDataDeatailsQstatus} from '../../../../common/types/productDetails';
+import {ICommonProductFields, IDataDeatailsQstatus} from '../../../../../common/types/productDetails';
 
 export const prepareUpdateBody = (tableData: IDataDeatailsQstatus[], commonProductFields: ICommonProductFields) => {
     const products = tableData.map(tableRow => {
@@ -14,15 +14,15 @@ export const prepareUpdateBody = (tableData: IDataDeatailsQstatus[], commonProdu
                 },
                 orderBlocking: {
                     blockedForOrdering: tableRow?.blockOrders,
-                    orderBlockComment: 'string',
+                    orderBlockComment: tableRow.blockOrdersComment,
                 },
                 publicationBlocking: {
                     blockedForPublication: tableRow?.blockPublics,
-                    publicationBlockComment: 'string',
+                    publicationBlockComment: tableRow.blockPublicsComment,
                 },
                 sellingBlocking: {
                     blockedForSelling: tableRow?.blockSellings,
-                    sellingBlockComment: 'string',
+                    sellingBlockComment: tableRow.blockSellingsComment,
                 },
             },
         };

@@ -257,8 +257,14 @@ interface IqStatuses {
     buCodeText?: string | number;
     statuses: string[];
     blockOrders?: boolean;
+    blockOrdersComment: string;
+    isBlockOrderOpened: boolean;
     blockSellings?: boolean;
+    blockSellingsComment: string;
+    isBlockSellingsOpened: boolean;
     blockPublics?: boolean;
+    blockPublicsComment: string;
+    isBlockPublicsOpened: boolean;
     ruStatus?: string;
     engStatus?: string;
     isStatusCommentOpened: boolean;
