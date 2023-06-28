@@ -65,10 +65,12 @@ export const qaulityStatusSectionMapping = (qStatus?: any) => {
             : qStatus?.buCode && qStatus.buCode === 2
             ? 'Леруа Мерлен Казахстан'
             : qStatus?.buCode;
-    const qualityStatus = getQualityStatus(qStatus?.qualityStatus);
+    const qualityStatus = {ru: getQualityStatus(qStatus?.qualityStatus), eng: qStatus?.qualityStatus};
     const blockedForOrders = qStatus?.blockedForOrder;
     const blockedForSellings = qStatus?.blockedForSelling;
     const blockedForPublics = qStatus?.blockedForPublication;
+    const qualityModelId = qStatus?.qualityModelId;
+
     // const comment =  details?.qualityAction?.publicComments?.comment;
 
     return {
@@ -78,5 +80,6 @@ export const qaulityStatusSectionMapping = (qStatus?: any) => {
         blockedForSellings,
         blockedForPublics,
         arrQstatusesRu,
+        qualityModelId,
     };
 };

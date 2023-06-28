@@ -26,7 +26,7 @@ export const prepareQstatusesColumns = (
                 statuses?.length > 0 && (
                     <>
                         <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
-                            <Dropdown size="m" closeOnSelect value={record.status} onSelect={handleSelect(record.id)}>
+                            <Dropdown size="m" closeOnSelect value={record.ruStatus} onSelect={handleSelect(record.id)}>
                                 {statuses.map((status, i) => (
                                     <DropdownItem text={status} value={status} key={i} />
                                 ))}
@@ -41,8 +41,6 @@ export const prepareQstatusesColumns = (
                             <Input
                                 inputSize="m"
                                 autoComplete="off"
-                                // label="Комментарий для статуса качества"
-                                // name={'approvedBy'}
                                 placeholder="Комментарий для статуса качества"
                                 value={record.statusComment}
                                 onChange={e => {

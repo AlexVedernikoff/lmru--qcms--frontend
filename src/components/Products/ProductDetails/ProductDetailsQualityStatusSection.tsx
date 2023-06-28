@@ -12,6 +12,7 @@ import {productId, securityCode} from './mockProductDetails';
 import {qaulityStatusSectionMapping} from './productUtils.ts/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
 import {IDataDeatailsQstatus} from '../../../common/types/productDetails';
 import {prepareQstatusesColumns} from './productUtils.ts/ProductDetailsQaulityStatusSection/prepareQstatusesColumns';
+import {prepareUpdateBody} from './productUtils.ts/prepareUpdateBody';
 
 export enum EBlockers {
     BlockOrders = 'blockOrders',
@@ -39,7 +40,8 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                     blockOrders: mapping.blockedForOrders,
                     blockSellings: mapping.blockedForSellings,
                     blockPublics: mapping.blockedForPublics,
-                    status: mapping.qualityStatus,
+                    ruStatus: mapping.qualityStatus.ru,
+                    engStatus: mapping.qualityStatus.eng,
                     isStatusCommentOpened: false,
                     statusComment: '',
                 };
@@ -74,7 +76,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 prevState.map((el: any) => {
                     if (el.id === recordId) {
                         setIsChangesInData(true);
-                        return {...el, status: value, isStatusCommentOpened: true};
+                        return {...el, ruStatus: value, isStatusCommentOpened: true};
                     } else {
                         return el;
                     }
@@ -96,7 +98,14 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         );
     };
 
-    const updateChangesOnServer = () => {};
+    const updateChangesOnServer = () => {
+        const commonProductFields = {
+            productId,
+            productWithSubstances: details?.productWithSubstances,
+            qualityModelId: details?.qualityModelId,
+        };
+        const body = prepareUpdateBody(tableData, commonProductFields);
+    };
 
     const attr_columns = useMemo<ColumnsType<IDataDeatailsQstatus>>(
         () => prepareQstatusesColumns(handleSelect, handleChange, handleStatusComment),

@@ -200,7 +200,8 @@ interface IqStatuses {
     blockOrders: boolean;
     blockSellings: boolean;
     blockPublics: boolean;
-    status?: string;
+    ruStatus?: string;
+    engStatus?: string;
     isStatusCommentOpened: boolean;
     statusComment: string;
 }
