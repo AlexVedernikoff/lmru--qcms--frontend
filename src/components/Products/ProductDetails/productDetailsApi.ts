@@ -40,4 +40,5 @@ export const productDetailsApi = createApi({
     }),
 });
 
-export const {useGetDetailsForProductsQuery, usePostUpdateProductMutation} = productDetailsApi;
+export const {useLazyGetDetailsForProductsQuery, useGetDetailsForProductsQuery, usePostUpdateProductMutation} =
+    productDetailsApi;

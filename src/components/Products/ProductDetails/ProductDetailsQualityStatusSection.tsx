@@ -6,7 +6,7 @@ import styles from '../../Common.module.css';
 import {ColumnsType} from 'antd/es/table';
 import {useEffect, useMemo, useState} from 'react';
 
-import {useGetDetailsForProductsQuery, usePostUpdateProductMutation} from './productDetailsApi';
+import {useLazyGetDetailsForProductsQuery, usePostUpdateProductMutation} from './productDetailsApi';
 
 import {productId, securityCode} from './mockProductDetails';
 import {
@@ -14,7 +14,7 @@ import {
     getQualityStatus,
     qaulityStatusSectionMapping,
 } from './productUtils.ts/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
-import {IDataDeatailsQstatus, IUpdateBodyReq} from '../../../common/types/productDetails';
+import {IDataDeatailsQstatus, IUpdateBodyReq, ProductDetails} from '../../../common/types/productDetails';
 import {prepareQstatusesColumns} from './productUtils.ts/ProductDetailsQaulityStatusSection/prepareQstatusesColumns';
 import {prepareUpdateBody} from './productUtils.ts/ProductDetailsQaulityStatusSection/prepareUpdateBody';
 
@@ -29,10 +29,21 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
     const [postUpdateProduct] = usePostUpdateProductMutation();
 
-    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
+    // const {data: details} = useLazyGetDetailsForProductsQuery({productId, securityCode});
+    const [getDetailsForProductsQuery] = useLazyGetDetailsForProductsQuery();
+    // const details = getDetailsForProductsQuery({productId, securityCode})
 
+    const [details, setDetails] = useState<ProductDetails>();
     const [tableData, setTableData] = useState<IDataDeatailsQstatus[]>([]);
     const [isChangesInData, setIsChangesInData] = useState(false);
+    const [isDiscardChanges, setIsDiscardChanges] = useState(false);
+
+    useEffect(() => {
+        console.log('use');
+        setIsDiscardChanges(false);
+
+        getDetailsForProductsQuery({productId, securityCode}).then(data => setDetails(data.data));
+    }, [getDetailsForProductsQuery, isDiscardChanges]);
 
     useEffect(() => {
         if (details?.qualityStatuses && details?.qualityStatuses?.length > 0) {
@@ -173,9 +184,18 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         await postUpdateProduct({body, securityCode}).unwrap();
     };
 
-    const attr_columns = useMemo<ColumnsType<IDataDeatailsQstatus>>(
-        () => prepareQstatusesColumns(handleSelect, handleChange, handleStatusComment, handleBlockersComments),
-        []
+    const discardChanges = () => {
+        // getDetailsForProductsQuery({productId, securityCode}).then(data => setDetails(data.data));
+        setDetails(undefined);
+        setIsDiscardChanges(true);
+        setIsChangesInData(false);
+    };
+
+    const attr_columns = prepareQstatusesColumns(
+        handleSelect,
+        handleChange,
+        handleStatusComment,
+        handleBlockersComments
     );
 
     return (
@@ -199,6 +219,9 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             </Grid>
             <RegularButton disabled={!isChangesInData} onClick={updateChangesOnServer}>
                 Отправить
+            </RegularButton>
+            <RegularButton variant="alert" disabled={!isChangesInData} onClick={discardChanges}>
+                Сбросить изменения
             </RegularButton>
         </Grid>
     );
