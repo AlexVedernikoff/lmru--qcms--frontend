@@ -20,7 +20,6 @@ const serviceUrl = {
 const withoutModelApi = createApi({
     reducerPath: 'withoutModelApi',
     baseQuery: fetchBaseQuery({baseUrl: hostUrl}),
-    // tagTypes: ['Products'],
     endpoints: builder => ({
         getProducts: builder.query<IProductsResponse, IProductsRequest>({
             query: request => ({
@@ -31,7 +30,6 @@ const withoutModelApi = createApi({
                     securityCode: request.header.securityCode,
                 },
             }),
-            // providesTags: ['Products'],
         }),
         getQualityModels: builder.query<IQualityModelsResponse, IQualityModelsRequest>({
             query: request => ({
@@ -68,7 +66,6 @@ const withoutModelApi = createApi({
                 },
                 body: request.body,
             }),
-            // invalidatesTags: ['Products'],
         }),
     }),
 });
