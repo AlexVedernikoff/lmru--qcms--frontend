@@ -1,4 +1,29 @@
-import {EQualityStatusesEng, EQualityStatusesRu} from '../../ProductDetailsQualityStatusSection';
+export enum EQualityStatusesEng {
+    MissingData = 'MISSING_DATA',
+    QualificationInProgress = 'QUALIFICATION_IN_PROGRESS',
+    DocumentCollection = 'DOCUMENT_COLLECTION',
+    Certified = 'CERTIFIED',
+    NotCertified = 'NOT_CERTIFIED',
+    TemporarilyAllowed = 'TEMPORARILY_ALLOWED',
+}
+
+export enum EQualityStatusesRu {
+    MissingData = 'Отсутствуют данные о качестве',
+    QualificationInProgress = 'Квалификация',
+    DocumentCollection = 'Сбор документации',
+    Certified = 'Сертифицирован',
+    NotCertified = 'Не сертифицирован',
+    TemporarilyAllowed = 'Временно сертифицирован',
+}
+
+const arrQstatusesRu = [
+    EQualityStatusesRu.MissingData,
+    EQualityStatusesRu.QualificationInProgress,
+    EQualityStatusesRu.DocumentCollection,
+    EQualityStatusesRu.Certified,
+    EQualityStatusesRu.NotCertified,
+    EQualityStatusesRu.TemporarilyAllowed,
+];
 
 const getQualityStatus = (qualityStatusFromServer?: string) => {
     const statusMissingData =
@@ -52,5 +77,6 @@ export const qaulityStatusSectionMapping = (qStatus?: any) => {
         blockedForOrders,
         blockedForSellings,
         blockedForPublics,
+        arrQstatusesRu,
     };
 };

@@ -192,3 +192,17 @@ export interface History {
     statusUpdatedBy: string;
     comment: string;
 }
+
+interface IqStatuses {
+    id: string;
+    bu: string;
+    statuses: string[];
+    blockOrders: boolean;
+    blockSellings: boolean;
+    blockPublics: boolean;
+    status?: string;
+}
+
+export interface IDataDeatailsQstatus extends IqStatuses {
+    key: React.Key;
+}

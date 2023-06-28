@@ -11,53 +11,13 @@ import {useGetDetailsForProductsQuery} from './productDetailsApi';
 
 import {productId, securityCode} from './mockProductDetails';
 import {qaulityStatusSectionMapping} from './productUtils.ts/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
-
-interface IqStatuses {
-    id: string;
-    bu: string;
-    statuses: string[];
-    blockOrders: boolean;
-    blockSellings: boolean;
-    blockPublics: boolean;
-}
-
-interface IDataType extends IqStatuses {
-    key: React.Key;
-    status?: string;
-}
+import {IDataDeatailsQstatus} from '../../../common/types/productDetails';
 
 enum EBlockers {
     BlockOrders = 'blockOrders',
     BlockSellings = 'blockSellings',
     BlockPublics = 'blockPublics',
 }
-
-export enum EQualityStatusesEng {
-    MissingData = 'MISSING_DATA',
-    QualificationInProgress = 'QUALIFICATION_IN_PROGRESS',
-    DocumentCollection = 'DOCUMENT_COLLECTION',
-    Certified = 'CERTIFIED',
-    NotCertified = 'NOT_CERTIFIED',
-    TemporarilyAllowed = 'TEMPORARILY_ALLOWED',
-}
-
-export enum EQualityStatusesRu {
-    MissingData = 'Отсутствуют данные о качестве',
-    QualificationInProgress = 'Квалификация',
-    DocumentCollection = 'Сбор документации',
-    Certified = 'Сертифицирован',
-    NotCertified = 'Не сертифицирован',
-    TemporarilyAllowed = 'Временно сертифицирован',
-}
-
-const arrQstatusesRu = [
-    EQualityStatusesRu.MissingData,
-    EQualityStatusesRu.QualificationInProgress,
-    EQualityStatusesRu.DocumentCollection,
-    EQualityStatusesRu.Certified,
-    EQualityStatusesRu.NotCertified,
-    EQualityStatusesRu.TemporarilyAllowed,
-];
 
 const ProductDetailsQualityStatusSection: React.FC = () => {
     const {t} = useTranslation('products');
@@ -74,7 +34,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 return {
                     id: `${i}`,
                     bu: mapping.buCode,
-                    statuses: arrQstatusesRu,
+                    statuses: mapping.arrQstatusesRu,
                     blockOrders: mapping.blockedForOrders,
                     blockSellings: mapping.blockedForSellings,
                     blockPublics: mapping.blockedForPublics,
@@ -87,41 +47,31 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     }, [details?.qualityStatuses]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const handleChange = (record: IDataType, value: string) => {
+    const handleChange = (record: IDataDeatailsQstatus, value: string) => {
         if (value === EBlockers.BlockOrders) {
-            console.log('EBlockers', EBlockers.BlockOrders);
-            console.log('value', value);
-            console.log(record);
-
             setTableData(prevState =>
                 prevState.map((el: any) => (el.id === record.id ? {...el, blockOrders: !el.blockOrders} : el))
             );
         }
         if (value === EBlockers.BlockSellings) {
-            console.log('EBlockers', EBlockers.BlockSellings);
-            console.log('value', value);
-            console.log(record);
             setTableData(prevState =>
                 prevState.map((el: any) => (el.id === record.id ? {...el, blockSellings: !el.blockSellings} : el))
             );
         }
         if (value === EBlockers.BlockPublics) {
-            console.log('EBlockers', EBlockers.BlockPublics);
-            console.log('value', value);
-            console.log(record);
             setTableData(prevState =>
                 prevState.map((el: any) => (el.id === record.id ? {...el, blockPublics: !el.blockPublics} : el))
             );
         }
     };
 
-    const handleSelect = (record: IDataType) => (value: string | null) => {
+    const handleSelect = (record: IDataDeatailsQstatus) => (value: string | null) => {
         if (value) {
             setTableData(prevState => prevState.map((el: any) => (el.id === record.id ? {...el, status: value} : el)));
         }
     };
 
-    const attr_columns = useMemo<ColumnsType<IDataType>>(
+    const attr_columns = useMemo<ColumnsType<IDataDeatailsQstatus>>(
         () => [
             {
                 title: 'BU',
@@ -130,7 +80,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             {
                 title: 'Статус качества',
                 dataIndex: 'statuses',
-                render: (statuses: string[], record: IDataType) =>
+                render: (statuses: string[], record: IDataDeatailsQstatus) =>
                     record &&
                     statuses?.length > 0 && (
                         <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
@@ -155,7 +105,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             {
                 title: 'Блокировка заказов',
                 dataIndex: 'blockOrders',
-                render: (_statuses: string[], record: IDataType) => (
+                render: (_statuses: string[], record: IDataDeatailsQstatus) => (
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                         <CustomSwitch
                             handleChange={() => handleChange(record, EBlockers.BlockOrders)}
@@ -171,7 +121,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             {
                 title: 'Блокировка продажи',
                 dataIndex: 'blockSellings',
-                render: (_statuses: string[], record: IDataType) => (
+                render: (_statuses: string[], record: IDataDeatailsQstatus) => (
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                         <CustomSwitch
                             handleChange={() => handleChange(record, EBlockers.BlockSellings)}
@@ -187,7 +137,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             {
                 title: 'Блокировка публицкации',
                 dataIndex: 'blockPublics',
-                render: (_statuses: string[], record: IDataType) => (
+                render: (_statuses: string[], record: IDataDeatailsQstatus) => (
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                         <CustomSwitch
                             handleChange={() => handleChange(record, EBlockers.BlockPublics)}
@@ -201,10 +151,8 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 ),
             },
         ],
-        [t, handleChange]
+        [handleChange]
     );
-
-    // const attr_data = useMemo<IDataType[]>(() => STATUSES.map(d => ({...d, key: d.id})), []);
 
     return (
         <Grid className={styles.panel} rowGap={16} columnGap={16}>
