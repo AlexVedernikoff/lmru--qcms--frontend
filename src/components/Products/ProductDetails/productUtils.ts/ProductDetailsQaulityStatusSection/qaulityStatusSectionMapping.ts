@@ -1,5 +1,6 @@
 export enum EQualityStatusesEng {
     MissingData = 'MISSING_DATA',
+    MissingDate = 'MISSING_DATE',
     QualificationInProgress = 'QUALIFICATION_IN_PROGRESS',
     DocumentCollection = 'DOCUMENT_COLLECTION',
     Certified = 'CERTIFIED',
@@ -16,36 +17,76 @@ export enum EQualityStatusesRu {
     TemporarilyAllowed = 'Временно сертифицирован',
 }
 
-const getQualityStatus = (qualityStatusFromServer?: string) => {
-    const statusMissingData =
-        qualityStatusFromServer === EQualityStatusesEng.MissingData ? EQualityStatusesRu.MissingData : '';
-    const statusQualificationInProgress =
-        qualityStatusFromServer === EQualityStatusesEng.QualificationInProgress
-            ? EQualityStatusesRu.QualificationInProgress
-            : '';
-    const statusDocumentCollection =
-        qualityStatusFromServer === EQualityStatusesEng.DocumentCollection ? EQualityStatusesRu.DocumentCollection : '';
-    const statusCertified =
-        qualityStatusFromServer === EQualityStatusesEng.Certified ? EQualityStatusesRu.Certified : '';
-    const statusNotCertified =
-        qualityStatusFromServer === EQualityStatusesEng.NotCertified ? EQualityStatusesRu.NotCertified : '';
-    const statusTemporarilyAllowed =
-        qualityStatusFromServer === EQualityStatusesEng.TemporarilyAllowed ? EQualityStatusesRu.TemporarilyAllowed : '';
+export enum ELanguages {
+    RU = 'ru',
+    ENG = 'eng',
+}
 
-    if (statusMissingData) {
-        return statusMissingData;
-    } else if (statusQualificationInProgress) {
-        return statusQualificationInProgress;
-    } else if (statusDocumentCollection) {
-        return statusDocumentCollection;
-    } else if (statusCertified) {
-        return statusCertified;
-    } else if (statusNotCertified) {
-        return statusNotCertified;
-    } else if (statusTemporarilyAllowed) {
-        return statusTemporarilyAllowed;
+export const getQualityStatus = (lang: string, qualityStatus?: string) => {
+    if (lang === 'ru') {
+        const statusMissingDataRu =
+            qualityStatus === EQualityStatusesEng.MissingData || qualityStatus === EQualityStatusesEng.MissingDate
+                ? EQualityStatusesRu.MissingData
+                : '';
+        const statusQualificationInProgressRu =
+            qualityStatus === EQualityStatusesEng.QualificationInProgress
+                ? EQualityStatusesRu.QualificationInProgress
+                : '';
+        const statusDocumentCollectionRu =
+            qualityStatus === EQualityStatusesEng.DocumentCollection ? EQualityStatusesRu.DocumentCollection : '';
+        const statusCertifiedRu = qualityStatus === EQualityStatusesEng.Certified ? EQualityStatusesRu.Certified : '';
+        const statusNotCertifiedRu =
+            qualityStatus === EQualityStatusesEng.NotCertified ? EQualityStatusesRu.NotCertified : '';
+        const statusTemporarilyAllowedRu =
+            qualityStatus === EQualityStatusesEng.TemporarilyAllowed ? EQualityStatusesRu.TemporarilyAllowed : '';
+
+        if (statusMissingDataRu) {
+            return statusMissingDataRu;
+        } else if (statusQualificationInProgressRu) {
+            return statusQualificationInProgressRu;
+        } else if (statusDocumentCollectionRu) {
+            return statusDocumentCollectionRu;
+        } else if (statusCertifiedRu) {
+            return statusCertifiedRu;
+        } else if (statusNotCertifiedRu) {
+            return statusNotCertifiedRu;
+        } else if (statusTemporarilyAllowedRu) {
+            return statusTemporarilyAllowedRu;
+        } else {
+            return '';
+        }
     } else {
-        return '';
+        console.log('qualityStatus', qualityStatus);
+
+        const statusMissingDataEng =
+            qualityStatus === EQualityStatusesRu.MissingData ? EQualityStatusesEng.MissingData : '';
+        const statusQualificationInProgressEng =
+            qualityStatus === EQualityStatusesRu.QualificationInProgress
+                ? EQualityStatusesEng.QualificationInProgress
+                : '';
+        const statusDocumentCollectionEng =
+            qualityStatus === EQualityStatusesRu.DocumentCollection ? EQualityStatusesEng.DocumentCollection : '';
+        const statusCertifiedEng = qualityStatus === EQualityStatusesRu.Certified ? EQualityStatusesEng.Certified : '';
+        const statusNotCertifiedEng =
+            qualityStatus === EQualityStatusesRu.NotCertified ? EQualityStatusesEng.NotCertified : '';
+        const statusTemporarilyAllowedEng =
+            qualityStatus === EQualityStatusesRu.TemporarilyAllowed ? EQualityStatusesEng.TemporarilyAllowed : '';
+
+        if (statusMissingDataEng) {
+            return statusMissingDataEng;
+        } else if (statusQualificationInProgressEng) {
+            return statusQualificationInProgressEng;
+        } else if (statusDocumentCollectionEng) {
+            return statusDocumentCollectionEng;
+        } else if (statusCertifiedEng) {
+            return statusCertifiedEng;
+        } else if (statusNotCertifiedEng) {
+            return statusNotCertifiedEng;
+        } else if (statusTemporarilyAllowedEng) {
+            return statusTemporarilyAllowedEng;
+        } else {
+            return '';
+        }
     }
 };
 
@@ -59,13 +100,14 @@ const arrQstatusesRu = [
 ];
 
 export const qaulityStatusSectionMapping = (qStatus?: any) => {
-    const buCode =
+    const buCodeText =
         qStatus?.buCode && qStatus.buCode === 9
             ? 'Леруа Мерлен Россия'
             : qStatus?.buCode && qStatus.buCode === 2
             ? 'Леруа Мерлен Казахстан'
             : qStatus?.buCode;
-    const qualityStatus = {ru: getQualityStatus(qStatus?.qualityStatus), eng: qStatus?.qualityStatus};
+    const buCode = qStatus?.buCode;
+    const qualityStatus = {ru: getQualityStatus(ELanguages.RU, qStatus?.qualityStatus), eng: qStatus?.qualityStatus};
     console.log('qualityStatus', qualityStatus);
 
     const blockedForOrders = qStatus?.blockedForOrder;
@@ -77,6 +119,7 @@ export const qaulityStatusSectionMapping = (qStatus?: any) => {
 
     return {
         buCode,
+        buCodeText,
         qualityStatus,
         blockedForOrders,
         blockedForSellings,

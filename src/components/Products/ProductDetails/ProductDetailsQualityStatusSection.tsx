@@ -9,7 +9,11 @@ import {useEffect, useMemo, useState} from 'react';
 import {useGetDetailsForProductsQuery, usePostUpdateProductMutation} from './productDetailsApi';
 
 import {productId, securityCode} from './mockProductDetails';
-import {qaulityStatusSectionMapping} from './productUtils.ts/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
+import {
+    ELanguages,
+    getQualityStatus,
+    qaulityStatusSectionMapping,
+} from './productUtils.ts/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
 import {IDataDeatailsQstatus} from '../../../common/types/productDetails';
 import {prepareQstatusesColumns} from './productUtils.ts/ProductDetailsQaulityStatusSection/prepareQstatusesColumns';
 import {prepareUpdateBody} from './productUtils.ts/prepareUpdateBody';
@@ -40,6 +44,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 return {
                     id: `${i}`,
                     bu: mapping.buCode,
+                    buCodeText: mapping.buCodeText,
                     statuses: mapping.arrQstatusesRu,
                     blockOrders: mapping.blockedForOrders,
                     blockSellings: mapping.blockedForSellings,
@@ -76,11 +81,18 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
     const handleSelect = (recordId: string) => (value: string | null) => {
         if (value) {
+            console.log('val', getQualityStatus(ELanguages.ENG, value));
+
             setTableData(prevState =>
                 prevState.map((el: any) => {
                     if (el.id === recordId) {
                         setIsChangesInData(true);
-                        return {...el, ruStatus: value, isStatusCommentOpened: true};
+                        return {
+                            ...el,
+                            ruStatus: value,
+                            engStatus: getQualityStatus(ELanguages.ENG, value),
+                            isStatusCommentOpened: true,
+                        };
                     } else {
                         return el;
                     }

@@ -195,7 +195,8 @@ export interface History {
 
 interface IqStatuses {
     id: string;
-    bu: string;
+    bu: number;
+    buCodeText: string;
     statuses: string[];
     blockOrders: boolean;
     blockSellings: boolean;
