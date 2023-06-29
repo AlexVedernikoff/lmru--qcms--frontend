@@ -50,36 +50,36 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
 
             <Grid rowGap={24} columns="1fr" alignItems="baseline">
                 {renderDropdown(t('TaskList.Filters.gamma'), 'gamma')}
-                <Grid columnGap={16} rowGap={24} columns="120px 1fr" alignItems="center" alignContent="center">
-                    <CustomCheckbox
-                        name="fromProject"
-                        onChange={handleCheck}
-                        // @ts-ignore-next-line
-                        value={formState.fromProject as boolean}
-                        label={t('TaskList.Filters.fromProject')}
-                    />
-                    <CustomCheckbox
-                        name="withProviderActiveLink"
-                        onChange={handleCheck}
-                        // @ts-ignore-next-line
-                        value={formState.withProviderActiveLink as boolean}
-                        label={t('TaskList.Filters.withProviderActiveLink')}
-                    />
-                    <CustomCheckbox
-                        name="withoutTransfer"
-                        onChange={handleCheck}
-                        // @ts-ignore-next-line
-                        value={formState.withoutTransfer as boolean}
-                        label={t('TaskList.Filters.withoutTransfer')}
-                    />
-                    <CustomCheckbox
-                        name="containsSubstanceLimit"
-                        onChange={handleCheck}
-                        // @ts-ignore-next-line
-                        value={formState.containsSubstanceLimit as boolean}
-                        label={t('TaskList.Filters.containsSubstanceLimit')}
-                    />
-                </Grid>
+
+                <CustomCheckbox
+                    name="fromProject"
+                    onChange={handleCheck}
+                    // @ts-ignore-next-line
+                    value={formState.fromProject as boolean}
+                    label={t('TaskList.Filters.fromProject')}
+                />
+                <CustomCheckbox
+                    name="withProviderActiveLink"
+                    onChange={handleCheck}
+                    // @ts-ignore-next-line
+                    value={formState.withProviderActiveLink as boolean}
+                    label={t('TaskList.Filters.withProviderActiveLink')}
+                />
+                <CustomCheckbox
+                    name="withoutTransfer"
+                    onChange={handleCheck}
+                    // @ts-ignore-next-line
+                    value={formState.withoutTransfer as boolean}
+                    label={t('TaskList.Filters.withoutTransfer')}
+                />
+                <CustomCheckbox
+                    name="containsSubstanceLimit"
+                    onChange={handleCheck}
+                    // @ts-ignore-next-line
+                    value={formState.containsSubstanceLimit as boolean}
+                    label={t('TaskList.Filters.containsSubstanceLimit')}
+                />
+
                 {renderDropdown(t('TaskList.Filters.containsSubstance'), 'containsSubstance')}
 
                 <CustomSwitch

@@ -1,5 +1,6 @@
 import {useState, useEffect, FC} from 'react';
-import {Grid, Typography} from 'fronton-react';
+import {useTranslation} from 'react-i18next';
+import {Checkbox} from 'fronton-react';
 import styles from './styles.module.css';
 
 interface IProps {
@@ -10,6 +11,8 @@ interface IProps {
 }
 
 const CustomCheckbox: FC<IProps> = ({name, value, onChange, label}) => {
+    const {t} = useTranslation('checkbox');
+
     const [flagYes, setFlagYes] = useState(false);
     const [flagNo, setFlagNo] = useState(false);
 
@@ -27,8 +30,8 @@ const CustomCheckbox: FC<IProps> = ({name, value, onChange, label}) => {
         }
     }, [value]);
 
-    const handleYesChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-        if (e.target.checked) {
+    const handleYesChange = (next: boolean) => {
+        if (next) {
             setFlagYes(true);
             onChange(true, name);
         } else {
@@ -37,8 +40,8 @@ const CustomCheckbox: FC<IProps> = ({name, value, onChange, label}) => {
         }
     };
 
-    const handleNoChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-        if (e.target.checked) {
+    const handleNoChange = (next: boolean) => {
+        if (next) {
             setFlagNo(true);
             onChange(false, name);
         } else {
@@ -48,36 +51,11 @@ const CustomCheckbox: FC<IProps> = ({name, value, onChange, label}) => {
     };
 
     return (
-        <>
-            <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="center" alignContent="baseline">
-                <label className={styles.label}>
-                    <input
-                        className={styles.input}
-                        type="checkbox"
-                        name="yes"
-                        onChange={handleYesChange}
-                        checked={flagYes}
-                    />
-                    Да
-                </label>
-                <label className={styles.label}>
-                    <input
-                        className={styles.input}
-                        type="checkbox"
-                        name="no"
-                        onChange={handleNoChange}
-                        checked={flagNo}
-                    />
-                    Нет
-                </label>
-            </Grid>
-
-            {!!label && (
-                <Typography variant="s" size="body_short">
-                    {label}
-                </Typography>
-            )}
-        </>
+        <div className={styles.wrapper}>
+            <Checkbox onChange={handleYesChange} checked={flagYes} label={t('yes')} name="yes" />
+            <Checkbox onChange={handleNoChange} checked={flagNo} label={t('no')} name="no" />
+            {!!label && <div className={styles.label}>{label}</div>}
+        </div>
     );
 };
 
