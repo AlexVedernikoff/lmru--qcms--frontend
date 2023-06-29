@@ -103,6 +103,7 @@
             "chooseActionPlaceholder": "Выберите",
             "applyAction": "Выполнить",
             "actions": {
+                "sendQualityStatusMessage": "Выполнить запрос в дефиницию",
                 "addComment": "Добавить комментарий",
                 "addTasks": "Добавить задачи",
                 "addDocument": "Добавление документа",
