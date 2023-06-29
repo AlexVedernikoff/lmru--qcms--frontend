@@ -59,7 +59,7 @@ const TaskList: React.FC = () => {
                         onSelect={handleSelect}
                     >
                         <DropdownItem text="Изменение утверждающего" value={'APPR'} />
-                        <DropdownItem text="Изменение исполнителя" value={'EXEC'} />
+                        {/* <DropdownItem text="Изменение исполнителя" value={'EXEC'} /> */}
                     </Dropdown>
 
                     <RegularButton
