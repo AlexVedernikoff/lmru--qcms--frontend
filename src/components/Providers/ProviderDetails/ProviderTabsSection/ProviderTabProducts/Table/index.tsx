@@ -17,10 +17,10 @@ const ContactsTable: React.FC = () => {
     useEffect(() => {
         if (supplierDetails?.supplierRMSCode) {
             searchProducts({
-                pageIndex: 1,
-                pageSize: 1,
+                pageIndex: 0,
+                pageSize: 10,
                 searchBy: {
-                    code: supplierDetails?.supplierRMSCode,
+                    supplierCode: supplierDetails?.supplierRMSCode,
                 },
             });
         }
