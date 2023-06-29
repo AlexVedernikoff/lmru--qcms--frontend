@@ -5,9 +5,7 @@ import {ColumnsType} from 'antd/es/table';
 import HistoryBackIcon from '../../../Icons/HistoryBackIcon';
 import styles from '../../../Common.module.css';
 import CustomTable from '../../../Common/CustomTable';
-
 import {useGetDetailsForProductsQuery} from '../productDetailsApi';
-
 import {productId, securityCode} from '../mockProductDetails';
 import {productDetailsAttributesMapping} from '../productUtils.ts/ProductDetailsInfoSection/ProductDetailsAttributes/ProductDetailsAttributesMapping';
 
@@ -29,14 +27,17 @@ const ProductDetailsAttributes: React.FC = () => {
 
     const mapping = productDetailsAttributesMapping(details);
 
-    const ATTRIBUTES: IAttributes[] = [
-        {
-            id: '123123',
-            available: mapping.featureMultipleValue,
-            characteristics: mapping.featureName,
-            type: mapping.featureValues,
-        },
-    ];
+    const ATTRIBUTES: IAttributes[] = useMemo(
+        () => [
+            {
+                id: '123123',
+                available: mapping.featureMultipleValue,
+                characteristics: mapping.featureName,
+                type: mapping.featureValues,
+            },
+        ],
+        [mapping]
+    );
 
     const attr_columns = useMemo<ColumnsType<IDataType>>(
         () => [
@@ -75,7 +76,7 @@ const ProductDetailsAttributes: React.FC = () => {
         [t]
     );
 
-    const attr_data = useMemo<IDataType[]>(() => ATTRIBUTES.map(d => ({...d, key: d.id})), []);
+    const attr_data = useMemo<IDataType[]>(() => ATTRIBUTES.map(d => ({...d, key: d.id})), [ATTRIBUTES]);
 
     return (
         <Grid className={styles.sectionItem} rowGap={16} columnGap={16}>

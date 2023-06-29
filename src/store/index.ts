@@ -62,7 +62,7 @@ const makeStore = () =>
                 getPermissiveDocuments.middleware,
                 getProductModelNomenclature.middleware,
                 postSearchQualityDocuments.middleware,
-                productDetailsApi.middleware
+                productDetailsApi.middleware,
                 tasksApi.middleware,
                 withModelApi.middleware,
                 withoutModelApi.middleware
