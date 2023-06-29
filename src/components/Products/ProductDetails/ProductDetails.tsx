@@ -4,7 +4,7 @@ import ProductDetailsInfoSection from './ProductDetailsInfoSection';
 import ProductDetailsQualityStatusSection from './ProductDetailsQualityStatusSection';
 
 const ProductDetails: React.FC = () => {
-    const {id} = useParams();
+    const {id = ''} = useParams();
 
     const title = `WEBER.TON MICRO V 0000 25 KG - ${id} - Леруа Мерлен Россия`;
 

@@ -6,6 +6,11 @@ import HistoryBackIcon from '../../../Icons/HistoryBackIcon';
 import styles from '../../../Common.module.css';
 import CustomTable from '../../../Common/CustomTable';
 
+import {useGetDetailsForProductsQuery} from '../productDetailsApi';
+
+import {productId, securityCode} from '../mockProductDetails';
+import {productDetailsAttributesMapping} from '../productUtils.ts/ProductDetailsInfoSection/ProductDetailsAttributes/ProductDetailsAttributesMapping';
+
 interface IAttributes {
     id: string;
     characteristics: string;
@@ -13,21 +18,25 @@ interface IAttributes {
     type: string;
 }
 
-const ATTRIBUTES: IAttributes[] = [
-    {
-        id: '123123',
-        available: true,
-        characteristics: 'Аэрозоль',
-        type: 'required',
-    },
-];
-
 interface IDataType extends IAttributes {
     key: React.Key;
 }
 
 const ProductDetailsAttributes: React.FC = () => {
     const {t} = useTranslation('products');
+
+    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
+
+    const mapping = productDetailsAttributesMapping(details);
+
+    const ATTRIBUTES: IAttributes[] = [
+        {
+            id: '123123',
+            available: mapping.featureMultipleValue,
+            characteristics: mapping.featureName,
+            type: mapping.featureValues,
+        },
+    ];
 
     const attr_columns = useMemo<ColumnsType<IDataType>>(
         () => [

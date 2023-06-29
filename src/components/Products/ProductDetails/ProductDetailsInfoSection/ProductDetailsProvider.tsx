@@ -2,8 +2,14 @@ import {Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 
+import {productId, securityCode} from '../mockProductDetails';
+
+import {useGetDetailsForProductsQuery} from '../productDetailsApi';
+
 const ProductDetailsProvider: React.FC = () => {
     const {t} = useTranslation('products');
+
+    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
 
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">
@@ -15,7 +21,7 @@ const ProductDetailsProvider: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {'1000771901 - ООО "Сен-Гобен Строительная Продукция Рус"'}
+                    {details?.supplierCode}
                 </Typography>
             </div>
 

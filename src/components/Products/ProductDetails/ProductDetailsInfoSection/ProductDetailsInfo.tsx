@@ -1,9 +1,14 @@
 import {Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
+import {useGetDetailsForProductsQuery} from '../productDetailsApi';
+
+import {productId, securityCode} from '../mockProductDetails';
 
 const ProductDetailsInfo: React.FC = () => {
     const {t} = useTranslation('products');
+
+    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
 
     return (
         <Grid className={styles.sectionItem} rowGap={16} columnGap={16} columns="1fr" rows="36px">
@@ -15,7 +20,7 @@ const ProductDetailsInfo: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {t('ProductDetails.Info.InfoDetails.Field.link')}
+                    {details?.range}
                 </Typography>
             </div>
         </Grid>

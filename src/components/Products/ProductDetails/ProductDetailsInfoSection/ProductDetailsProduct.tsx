@@ -2,8 +2,17 @@ import {Checkbox, Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 
+import {useGetDetailsForProductsQuery} from '../productDetailsApi';
+
+import {productId, securityCode} from '../mockProductDetails';
+
+import {productDetailsProductMapping} from '../productUtils.ts/ProductDetailsInfoSection/ProductDetailsProduct/productDetailsProductMapping';
+
 const ProductDetailsProduct: React.FC = () => {
     const {t} = useTranslation('products');
+
+    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
+    const mapping = productDetailsProductMapping(t, details);
 
     return (
         <Grid className={styles.sectionItem} rowGap={24} columnGap={24}>
@@ -16,7 +25,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {'87334230'}
+                        {mapping.code}
                     </Typography>
                 </div>
 
@@ -26,7 +35,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {'4607141437762'}
+                        {mapping.ean}
                     </Typography>
                 </div>
 
@@ -36,7 +45,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {'3209100009'}
+                        {mapping.customId}
                     </Typography>
                 </div>
             </Grid>
@@ -48,7 +57,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {t('ProductDetails.Info.Product.RiskOptions.minor')}
+                        {mapping.riskOption}
                     </Typography>
                 </div>
 
@@ -59,7 +68,7 @@ const ProductDetailsProduct: React.FC = () => {
                     <br />
                     {/* <LinkButton> */}
                     <Typography variant="s" size="body_short">
-                        {'Decorative plaster in paste form'}
+                        {mapping.qualityModel}
                     </Typography>
                     {/* </LinkButton> */}
                 </div>
@@ -71,20 +80,18 @@ const ProductDetailsProduct: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {
-                        '11_Краски / Фасадная краска Штукатурка и широкая облицовка фасада / Декоративная штукатурка для наружных работ'
-                    }
+                    {mapping.productModelValueStr}
                 </Typography>
             </div>
 
             <div>
-                <Checkbox checked={false} label={t('ProductDetails.Info.Product.Field.isChemical')} />
+                <Checkbox checked={mapping.isChemical} label={t('ProductDetails.Info.Product.Field.isChemical')} />
             </div>
 
             <Grid rowGap={4} columns="165px 250px 200px 1fr">
-                <Checkbox checked={false} label={t('ProductDetails.Info.Product.Field.STM')} />
-                <Checkbox checked={false} label={t('ProductDetails.Info.Product.Field.intImport')} />
-                <Checkbox checked={false} label={t('ProductDetails.Info.Product.Field.fromProject')} />
+                <Checkbox checked={mapping.isSTM} label={t('ProductDetails.Info.Product.Field.STM')} />
+                <Checkbox checked={mapping.isImport} label={t('ProductDetails.Info.Product.Field.intImport')} />
+                <Checkbox checked={mapping.isFromProject} label={t('ProductDetails.Info.Product.Field.fromProject')} />
             </Grid>
         </Grid>
     );
