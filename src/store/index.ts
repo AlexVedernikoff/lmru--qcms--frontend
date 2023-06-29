@@ -14,9 +14,9 @@ import {postSearchQualityActions} from '../api/postSearchQualityActions';
 import {postSearchQualityDocuments} from '../api/postSearchQualityDocuments';
 import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
 import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
-import {providersApi} from '../components/Providers/services';
 import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
 import {productDetailsApi} from '../components/Products/ProductDetails/productDetailsApi';
+import {providersApi} from '../components/Providers/services';
 
 const rootReducer = {
     [getManagementNomenclature.reducerPath]: getManagementNomenclature.reducer,

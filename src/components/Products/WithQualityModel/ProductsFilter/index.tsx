@@ -2,7 +2,7 @@ import {useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react';
 import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
-import ProductsAdditionalFilter from './ProductsAdditionalFilter';
+import ProductsAdditionalFilter, {EDateType} from './ProductsAdditionalFilter';
 import styles from '../../../Common.module.css';
 import {TreeSelect} from 'antd';
 import withModelApi from '../withModelApi';
@@ -38,6 +38,16 @@ export interface IFilterFormState {
     status?: string;
     regulatoryStatus?: string;
     isProductWithSubstance?: boolean;
+    startDate?: string;
+    endDate?: string;
+    dateType?: EDateType;
+
+    fromProject?: boolean;
+    withoutTransfer?: boolean;
+    dataForProduct?: boolean;
+    waitingQualification?: boolean;
+    waitingCertification?: boolean;
+    activeProducts?: boolean;
 }
 
 interface IProps {
@@ -54,9 +64,9 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
     const [formState, setFormState] = useState<IFilterFormState>({});
 
-    const [filterSupplier, setFilterSupplier] = useState<string>();
+    const [filterSupplier, setFilterSupplier] = useState<string>('supplierName');
     const [inputFilterSupplier, setInputFilterSupplier] = useState<string>();
-    const [filterProduct, setFilterProduct] = useState<string>();
+    const [filterProduct, setFilterProduct] = useState<string>('code');
     const [inputFilterProduct, setInputFilterProduct] = useState<string>();
 
     const treeData = useMemo(
@@ -143,9 +153,7 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
     const handleClear: React.MouseEventHandler<HTMLButtonElement> = _e => {
         setFormState({});
         setInputFilterSupplier(undefined);
-        setFilterSupplier(undefined);
         setInputFilterProduct(undefined);
-        setFilterProduct(undefined);
         onSubmit(formState);
     };
 
@@ -211,7 +219,6 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
                             setInputFilterProduct(value);
                             handleInputChange(e, value);
                         }}
-                        // onChange={(e, value) => setInputFilter(value)}
                     />
                 </Grid>
 

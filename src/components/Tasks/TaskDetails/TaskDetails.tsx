@@ -69,7 +69,7 @@ const TaskDetails: React.FC = () => {
         };
 
         setPost(initialValue1);
-    }, [taskDetails, post]);
+    }, [taskDetails]);
 
     let title = '';
 

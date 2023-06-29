@@ -7,7 +7,7 @@ import {useState} from 'react';
 
 const TaskDetailsComments: React.FC<Required<PropsTaskDetails>> = props => {
     const {t} = useTranslation('tasks');
-    const {setPost, updateInfoTask, initialValue, post} = props;
+    const {updateInfoTask, post} = props;
     const [text, setText] = useState('');
 
     const updateInfo = async (text: string) => {
@@ -24,7 +24,6 @@ const TaskDetailsComments: React.FC<Required<PropsTaskDetails>> = props => {
         });
         try {
             await updateInfoTask(res).unwrap();
-            setPost(initialValue);
         } catch {
             // console.log('ERROR');
         }

@@ -76,6 +76,13 @@ const ProductsWithQualityModel: React.FC = () => {
                 filters.isProductWithSubstance === true || filters.isProductWithSubstance === false
                     ? filters.isProductWithSubstance
                     : undefined,
+            dates: filters.dateType
+                ? {
+                      dateType: filters.dateType,
+                      startDate: filters.startDate,
+                      endDate: filters.endDate,
+                  }
+                : undefined,
         }));
     };
 

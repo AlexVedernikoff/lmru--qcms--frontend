@@ -1,7 +1,6 @@
 import {DatePicker, Dropdown, DropdownItem, Grid, Input, Typography} from 'fronton-react';
 import {IFilterFormState} from '.';
 import CustomCheckbox from '../../../Common/CustomCheckbox/CustomCheckbox';
-import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import React from 'react';
 
@@ -11,9 +10,15 @@ interface IProps {
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement>, value: string) => void;
 }
 
+export enum EDateType {
+    createDate = 'CREATED',
+    updateDate = 'UPDATED',
+    issueDate = 'ISSUE',
+    expireDate = 'EXPIRY',
+}
+
 const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, handleInputChange}) => {
     const {t} = useTranslation('products');
-    const [filterSearchDate, setFilterSearchDate] = useState<string>();
 
     const handleSelect = (name: string) => (value: string | null) => {
         setFormState({...formState, [name]: value!});
@@ -23,6 +28,10 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
         if (name) {
             setFormState({...formState, [name]: value});
         }
+    };
+
+    const onHandleFilterChange = (e: IFilterFormState, k?: string) => {
+        setFormState({...formState, ...e});
     };
 
     return (
@@ -72,8 +81,8 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
 
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
                     <CustomCheckbox
-                        name=""
-                        value={formState.project}
+                        name="fromProject"
+                        value={formState.fromProject}
                         onChange={handleCheckboxChange}
                         label="Из проекта"
                     />
@@ -81,8 +90,8 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
 
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
                     <CustomCheckbox
-                        name=""
-                        value={formState.project}
+                        name="withoutTransfer"
+                        value={formState.withoutTransfer}
                         onChange={handleCheckboxChange}
                         label="Без трансфера"
                     />
@@ -93,8 +102,8 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
                 <Typography variant="h3">Подробная информация</Typography>
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
                     <CustomCheckbox
-                        name=""
-                        value={formState.project}
+                        name="activeProducts"
+                        value={formState.activeProducts}
                         onChange={handleCheckboxChange}
                         label="Активные товары"
                     />
@@ -114,24 +123,24 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
                 </Grid>
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
                     <CustomCheckbox
-                        name=""
-                        value={formState.project}
+                        name="dataForProduct"
+                        value={formState.dataForProduct}
                         onChange={handleCheckboxChange}
                         label="Отсутствуют данные о товаре"
                     />
                 </Grid>
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
                     <CustomCheckbox
-                        name=""
-                        value={formState.project}
+                        name="waitingQualification"
+                        value={formState.waitingQualification}
                         onChange={handleCheckboxChange}
                         label="Ожидают запуска квалификации"
                     />
                 </Grid>
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
                     <CustomCheckbox
-                        name=""
-                        value={formState.project}
+                        name="waitingCertification"
+                        value={formState.waitingCertification}
                         onChange={handleCheckboxChange}
                         label="Ожидают запуска сертификации"
                     />
@@ -190,10 +199,10 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
                     closeOnSelect
                     placeholder={t('Common.Select')}
                     label={'Поиск по дате'}
-                    value={filterSearchDate}
+                    value={formState.dateType}
                     onSelect={function changeSelect(value) {
-                        // console.log(value, 'VALUE');
-                        value && setFilterSearchDate(value);
+                        const dateType = value as EDateType;
+                        onHandleFilterChange({...formState, dateType});
                     }}
                 >
                     <DropdownItem text={'Дата создания'} value={'CREATED'} />
@@ -202,10 +211,27 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
                     <DropdownItem text={'Дата окончания действия'} value={'EXPIRY'} />
                 </Dropdown>
                 <DatePicker
-                    onChange={() => {}}
+                    date={[formState.startDate!, formState.endDate!]}
+                    mode="range"
+                    view="double"
+                    onChange={function noRefCheck(e) {
+                        const datesArr = [formState.startDate, formState.endDate];
+                        const datesArrRemoveEmpty = datesArr.filter(el => el);
+
+                        if (datesArrRemoveEmpty.length < 2) {
+                            datesArrRemoveEmpty.push(e.slice(-1)[0]);
+                        } else {
+                            datesArrRemoveEmpty.splice(0, datesArrRemoveEmpty.length);
+                            datesArrRemoveEmpty.push(e[0]);
+                        }
+                        datesArrRemoveEmpty.sort();
+                        onHandleFilterChange({
+                            startDate: datesArrRemoveEmpty[0],
+                            endDate: datesArrRemoveEmpty[1],
+                        });
+                    }}
                     datePlaceholder="ДД/ММ/ГГГГ -ДД/ММ/ГГГГ"
                     label={'Даты'}
-                    dateMask={'ДД/ММ/ГГГГ -ДД/ММ/ГГГГ'}
                 />
 
                 <Dropdown

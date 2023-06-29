@@ -2,6 +2,7 @@ import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
 import {IProductTableWithModelsItem} from '../../../../common/clientModels';
 import {TDataType} from '.';
+import {convertDateFromServer} from '../../../../utils/convertDateFromServer';
 
 export interface IDataType extends IProductTableWithModelsItem {
     key: React.Key;
@@ -73,8 +74,9 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
     },
     {
         title: t('WithModels.Table.Columns.productDataCompleteness'),
-        dataIndex: 'comment',
+        dataIndex: 'qualityStatuses',
         width: 340,
+        render: text => <div>{text[0]?.qualityStatus?.comment}</div>,
     },
     {
         title: t('WithModels.Table.Columns.productTopAVS'),
@@ -86,7 +88,7 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
         title: t('WithModels.Table.Columns.productCreationDate'),
         dataIndex: 'creationInformation',
         width: 160,
-        render: text => <div>{text?.createdAt}</div>, //тестовые данные не возвращают это поле, пока сделала необязательным
+        render: text => <div>{convertDateFromServer(text?.createdAt)}</div>, //тестовые данные не возвращают это поле, пока сделала необязательным
     },
     {
         title: t('WithModels.Table.Columns.productActionsBy'),
@@ -112,22 +114,17 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
     },
     {
         title: t('WithModels.Table.Columns.departmentName'),
-        dataIndex: 'productManagement',
+        dataIndex: 'productManagementNomenclature',
         width: 300,
-        render: text => <div>{text?.deparmentName}</div>,
+        render: text => <div>{text?.departmentId}</div>,
     },
     {
         title: t('WithModels.Table.Columns.nomenclature'),
         dataIndex: 'productModelNomenclature',
-        width: 1100,
+        width: 500,
         render: text => (
             <div>
-                modelDepartmentId: {text.modelDepartmentId} <br />
-                modelSubDepartmentId: {text.modelSubDepartmentId}
-                <br />
-                modelConsolidationId: {text.modelConsolidationId}
-                <br />
-                modelCodeId: {text.modelCodeId}
+                {text.modelDepartmentId},{text.modelSubDepartmentId},{text.modelConsolidationId},{text.modelCodeId}
             </div>
         ),
     },
