@@ -48,21 +48,27 @@ const ProductsSetQualityModelForm: React.FC<Props> = ({searchBy, productManageme
     const [productsWithQualityModelIds, setProductsWithQualityModelIds] = useState<number[]>([]); // Айдишики тех продуктов, которым назначили модель качества.
 
     // К сожалению, метод для получения списка товаров иногда возвращает объект, содержащий в себе массив товаров, а иногда - пустой массив. Поэтому, пока ребята не починят бэк, приходится использовать "!Array.isArray".
-    const tableData: IProductsResponse =
-        getProductsQuery.data && !Array.isArray(getProductsQuery.data)
-            ? {
-                  content: getProductsQuery.data.content.filter(({id}) => !productsWithQualityModelIds.includes(id)),
-                  pageable: getProductsQuery.data.pageable,
-              }
-            : {
-                  content: [],
-                  pageable: {
-                      pageSize: 0,
-                      pageIndex: 0,
-                      totalPages: 0,
-                      totalElements: 0,
-                  },
-              };
+    const isIProductsResponse = (data: any): data is IProductsResponse => {
+        if (data && !Array.isArray(data)) {
+            return true;
+        }
+        return false;
+    };
+
+    const tableData: IProductsResponse = isIProductsResponse(getProductsQuery.data)
+        ? {
+              content: getProductsQuery.data.content.filter(({id}) => !productsWithQualityModelIds.includes(id)),
+              pageable: getProductsQuery.data.pageable,
+          }
+        : {
+              content: [],
+              pageable: {
+                  pageSize: 0,
+                  pageIndex: 0,
+                  totalPages: 0,
+                  totalElements: 0,
+              },
+          };
 
     const [updateProductsQualityModelId] = withoutModelApi.useUpdateProductsMutation();
 
@@ -79,6 +85,10 @@ const ProductsSetQualityModelForm: React.FC<Props> = ({searchBy, productManageme
             },
         });
     };
+
+    if (!isIProductsResponse(getProductsQuery.data) || !getProductsQuery.data.pageable.totalPages) {
+        return null;
+    }
 
     return (
         <Grid rowGap={16} className={styles.panel}>
