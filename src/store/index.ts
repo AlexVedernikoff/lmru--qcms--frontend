@@ -13,6 +13,7 @@ import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
 import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
 import {providersApi} from '../components/Providers/services';
 import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
+import {suppliersFilter} from './slices/suppliersFilterSlice';
 
 const rootReducer = {
     [getManagementNomenclature.reducerPath]: getManagementNomenclature.reducer,
@@ -27,6 +28,7 @@ const rootReducer = {
     [withModelApi.reducerPath]: withModelApi.reducer,
     productsDocumentsFilters: productsDocumentsFilters.reducer,
     productsDocumentsTableData: productsDocumentsTableData.reducer,
+    suppliersFilter: suppliersFilter.reducer,
 };
 
 const createReducer = (injectedReducers = {}) =>

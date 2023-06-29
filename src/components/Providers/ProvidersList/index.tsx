@@ -11,6 +11,8 @@ const ProvidersList: React.FC = () => {
         pageSize: 1,
     });
 
+    console.log('providers = ', providers);
+
     const {data: modelNomenclature} = useGetProductModelNomenclatureQuery();
     const {data: managementNomenclature} = useGetManagementNomenclatureQuery();
 
