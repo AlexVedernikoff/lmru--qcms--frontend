@@ -1,4 +1,4 @@
-import {useCallback, useMemo} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {RegularButton} from 'fronton-react';
@@ -10,18 +10,22 @@ import CustomTable from '../../Common/CustomTable';
 import {TWithReactKey} from '../../../common/clientModels';
 import {ITaskListResponse} from '../../../common/types/tasks';
 import {convertDateFromServer} from '../../../utils/convertDateFromServer';
+import TaskListActionModal from './TaskListActionModal';
 
 type TDataType = TWithReactKey<ITaskListResponse['content'][number]>;
 
 interface IProps {
     onPageChange: (page: number, size: number) => void;
+    onActionClose: () => void;
     tableData: ITaskListResponse;
     isLoading: boolean;
+    isActionOpen: boolean;
 }
 
-const Table: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => {
+const Table: React.FC<IProps> = ({onPageChange, tableData, isLoading, isActionOpen, onActionClose}) => {
     const navigate = useNavigate();
     const {t} = useTranslation('tasks');
+    const [selected, setSelected] = useState<TDataType[]>([]);
 
     const handleViewDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
         e => {
@@ -181,35 +185,34 @@ const Table: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => {
     const rowSelection = useMemo<TableRowSelection<TDataType>>(
         () => ({
             type: 'checkbox',
-            onChange: (selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
-                // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            onChange: (_selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
+                setSelected(selectedRows);
             },
-            // getCheckboxProps: (record: IDataType) => ({
-            //     disabled: record.qualityStatus === '2',
-            //     name: record.qualityStatus,
-            // }),
             fixed: 'left',
         }),
         []
     );
 
     return (
-        <CustomTable
-            loading={isLoading}
-            rowSelection={rowSelection}
-            columns={columns}
-            dataSource={dataSource}
-            scroll={{x: 400}}
-            tableLayout="fixed"
-            size="small"
-            bordered
-            pagination={{
-                pageSize: tableData?.pageable?.pageSize,
-                total: tableData?.pageable?.totalElements,
-                current: (tableData?.pageable?.pageIndex || 0) + 1,
-                onChange: onPageChange,
-            }}
-        />
+        <>
+            <CustomTable
+                loading={isLoading}
+                rowSelection={rowSelection}
+                columns={columns}
+                dataSource={dataSource}
+                scroll={{x: 400}}
+                tableLayout="fixed"
+                size="small"
+                bordered
+                pagination={{
+                    pageSize: tableData?.pageable?.pageSize,
+                    total: tableData?.pageable?.totalElements,
+                    current: (tableData?.pageable?.pageIndex || 0) + 1,
+                    onChange: onPageChange,
+                }}
+            />
+            <TaskListActionModal dataList={selected} isOpen={isActionOpen} onClose={onActionClose} />
+        </>
     );
 };
 
