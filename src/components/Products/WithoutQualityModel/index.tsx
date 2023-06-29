@@ -1,41 +1,13 @@
 import {Grid} from 'fronton-react';
-import styles from '../../Common.module.css';
 import ProductsFilter, {FilterType, IFilterFormState} from './ProductsFilter';
-import ProductsTable from './ProductsTable';
-import ProductsSelectQualityModelForm from './ProductsSelectQualityModelForm';
 import {useState} from 'react';
-import withoutModelApi from './withoutModelApi';
-import {IProduct, IProductsRequest, IProductsResponse} from '../../../common/types/products';
+import {IProductsRequest} from '../../../common/types/products';
+import ProductsSetQualityModelForm from './ProductsSetQualityModelForm';
+
+export const productManagementNomenclatureDepartmentIdValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
 const ProductsWithoutQualityModel: React.FC = () => {
-    const [selectedProducts, setSelectedProducts] = useState<IProduct[]>([]);
-
-    const [page, setPage] = useState<Pick<IProductsRequest['body'], 'pageSize' | 'pageIndex'>>({
-        pageSize: 10,
-        pageIndex: 0,
-    });
-
-    const [sort] = useState<Pick<IProductsRequest['body'], 'sortField' | 'sortDirection'>>({
-        // sortField: 'createdAt',
-        sortDirection: 'DESC',
-    });
-
     const [searchBy, setSearchBy] = useState<IProductsRequest['body']['searchBy']>({});
-
-    const getProductsQuery = withoutModelApi.useGetProductsQuery({
-        header: {
-            securityCode: 'security_code',
-        },
-        body: {
-            ...page,
-            ...sort,
-            searchBy,
-        },
-    });
-
-    const [productsWithQualityModelIds, setProductsWithQualityModelIds] = useState<number[]>([]); // Айдишики тех продуктов, которым назначили модель качества.
-
-    const [updateProductsQualityModelId] = withoutModelApi.useUpdateProductsMutation();
 
     const handleFiltersSubmit = (filters: IFilterFormState) => {
         setSearchBy(p => ({
@@ -73,47 +45,17 @@ const ProductsWithoutQualityModel: React.FC = () => {
         }));
     };
 
-    const handlePageChange = (pageIndex: number, pageSize: number) => {
-        setPage({pageIndex: pageIndex - 1, pageSize});
-    };
-
-    const handleQualityModelSelectSubmit = (qualityModelId: string) => {
-        const selectedProductsIds = selectedProducts.map(({id}) => id);
-        setProductsWithQualityModelIds(prevState => [...prevState, ...selectedProductsIds]);
-        updateProductsQualityModelId({
-            header: {
-                securityCode: 'security_code',
-            },
-            body: {
-                updatedBy: 'Matvey',
-                products: selectedProductsIds.map(id => ({id, qualityModelId})),
-            },
-        });
-    };
-
-    const tableData: IProductsResponse = {
-        content: getProductsQuery.data?.content.filter(({id}) => !productsWithQualityModelIds.includes(id)) || [],
-        pageable: getProductsQuery.data?.pageable || {
-            pageSize: 0,
-            pageIndex: 0,
-            totalPages: 0,
-            totalElements: 0,
-        },
-    };
-
     return (
         <Grid rowGap={16}>
             <ProductsFilter onSubmit={handleFiltersSubmit} />
 
-            <Grid rowGap={16} className={styles.panel}>
-                <ProductsSelectQualityModelForm products={selectedProducts} onSubmit={handleQualityModelSelectSubmit} />
-                <ProductsTable
-                    onProductsSelect={setSelectedProducts}
-                    tableData={tableData}
-                    onPageChange={handlePageChange}
-                    isLoading={getProductsQuery.isLoading}
+            {productManagementNomenclatureDepartmentIdValues.map(productManagementNomenclatureDepartmentId => (
+                <ProductsSetQualityModelForm
+                    key={productManagementNomenclatureDepartmentId}
+                    productManagementNomenclatureDepartmentId={productManagementNomenclatureDepartmentId}
+                    searchBy={searchBy}
                 />
-            </Grid>
+            ))}
         </Grid>
     );
 };
