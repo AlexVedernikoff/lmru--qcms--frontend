@@ -4,10 +4,12 @@ import ProductsCounter from '../ProductsCounter';
 import {useState} from 'react';
 import ModalWindowsGroup from '../ModalWindowsGroup';
 import {IProduct} from '../../../../common/types/products';
+import withModelApi from '../withModelApi';
 
 import s from './ProductsActionsForm.module.css';
 
 export enum ProductsActions {
+    SendQualityStatusMessage = 'SendQualityStatusMessage',
     AddComment = 'AddComment',
     AddTasks = 'AddTasks',
     AddDocument = 'AddDocument',
@@ -30,8 +32,38 @@ const ProductsActionsForm: React.FC<Props> = ({products}) => {
 
     const isSubmitButtonDisabled = !products.length || !action;
 
+    const [productsSendQualityStatusMessage] = withModelApi.useProductsSendQualityStatusMessageMutation();
+
+    const handleSendQualityStatusMessageSubmit = () => {
+        const productsIds = products.map(({id}) => id);
+        productsSendQualityStatusMessage({
+            header: {
+                securityCode: 'security_code',
+            },
+            body: {
+                ids: productsIds,
+            },
+        })
+            .unwrap()
+            .then(
+                () => {
+                    alert('Запрос успешно отправлен!');
+                },
+                () => {
+                    alert('Не удалось отправить запрос, повторите попытку позже.');
+                }
+            );
+    };
+
     const handleSubmit = () => {
-        setSubmitedAction(action);
+        if (isSubmitButtonDisabled) return;
+        switch (action) {
+            case ProductsActions.SendQualityStatusMessage:
+                handleSendQualityStatusMessageSubmit();
+                break;
+            default:
+                setSubmitedAction(action);
+        }
     };
 
     const handleModalClose = () => {
@@ -58,6 +90,10 @@ const ProductsActionsForm: React.FC<Props> = ({products}) => {
                         value={action || undefined}
                         onSelect={handleActionSelect}
                     >
+                        <DropdownItem
+                            text={t('WithModels.Actions.actions.sendQualityStatusMessage')}
+                            value={ProductsActions.SendQualityStatusMessage}
+                        />
                         <DropdownItem
                             text={t('WithModels.Actions.actions.addComment')}
                             value={ProductsActions.AddComment}

@@ -5,12 +5,17 @@ import {
     IProductsResponse,
     TModelNomenclatureResponse,
 } from '../../../common/types/products';
+import {
+    IProductsSendQualityMessageResponse,
+    IProductsSendQualityMessageRequest,
+} from '../../../common/types/productsSendQualityStatusMessage';
 
-const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/';
+const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/';
 
 const serviceUrl = {
-    getProducts: 'search-products',
-    getProductsNomenclature: 'product-model-nomenclature',
+    getProducts: 'v1/search-products',
+    getProductsNomenclature: 'v1/product-model-nomenclature',
+    productsSendQualityStatusMessage: 'send-quality-status-message',
 };
 
 const withModelApi = createApi({
@@ -37,6 +42,21 @@ const withModelApi = createApi({
                     Application: request.header.application,
                     securityCode: request.header.securityCode,
                 },
+            }),
+        }),
+        productsSendQualityStatusMessage: builder.mutation<
+            IProductsSendQualityMessageResponse,
+            IProductsSendQualityMessageRequest
+        >({
+            query: request => ({
+                method: 'POST',
+                url: serviceUrl.productsSendQualityStatusMessage,
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    securityCode: request.header.securityCode,
+                },
+                body: request.body,
             }),
         }),
     }),
