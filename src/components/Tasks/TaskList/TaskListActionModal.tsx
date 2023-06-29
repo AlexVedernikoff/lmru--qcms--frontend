@@ -40,8 +40,8 @@ const TaskListActionModal: React.FC<IProps> = ({isOpen, onClose, dataList}) => {
         onClose();
     };
 
-    const handleSave = () => {
-        updateTasks({
+    const handleSave = async () => {
+        await updateTasks({
             header: {
                 securityCode: 'security_code',
             },
@@ -51,6 +51,7 @@ const TaskListActionModal: React.FC<IProps> = ({isOpen, onClose, dataList}) => {
                 updatedBy: 'currentUser',
             },
         });
+        onClose();
     };
 
     return (
@@ -75,7 +76,7 @@ const TaskListActionModal: React.FC<IProps> = ({isOpen, onClose, dataList}) => {
                     <Input
                         inputSize="m"
                         autoComplete="off"
-                        label={t('TaskList.Filters.taskStatus')}
+                        label={'Утверждающий'}
                         name={'user'}
                         placeholder=""
                         value={user}
