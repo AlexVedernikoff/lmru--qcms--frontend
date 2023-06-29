@@ -30,7 +30,7 @@ export const postSearchProducts = createApi({
                 method: 'POST',
                 body: {
                     pageIndex: 0,
-                    pageSize: 1,
+                    pageSize: 10,
                     ...body,
                 },
             }),
