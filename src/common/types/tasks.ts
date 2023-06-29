@@ -116,3 +116,33 @@ export interface ITaskListResponse {
     pageable: IPageable;
     content: ITaskListItem[];
 }
+
+interface ITaskActionApprover {
+    type: string;
+    externalId: string;
+}
+
+interface ITaskActionResponsible {
+    type: string;
+    externalId: string;
+}
+
+interface ITaskActionQualityAction {
+    id: number;
+    actionStatus: string;
+    conclusion: string;
+    approvers: ITaskActionApprover[];
+    responsible: ITaskActionResponsible[];
+    publicComment: string;
+}
+
+export interface ITaskActionParams {
+    header: {
+        securityCode: string;
+    };
+    body: {
+        qualityActions: ITaskActionQualityAction[];
+        updatedBy: string;
+    };
+}
+export interface ITaskActionResponse {}

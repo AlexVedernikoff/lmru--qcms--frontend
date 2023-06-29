@@ -11,6 +11,9 @@ import styles from './styles.module.css';
 const TaskList: React.FC = () => {
     const {t} = useTranslation('tasks');
 
+    const [action, setAction] = useState<string | undefined>();
+    const [open, setOpen] = useState(false);
+
     const [page, setPage] = useState<Pick<ITaskListParams['body'], 'pageSize' | 'pageIndex'>>({
         pageSize: 10,
         pageIndex: 0,
@@ -28,7 +31,9 @@ const TaskList: React.FC = () => {
         body: {...page, ...sort, searchBy},
     });
 
-    const handleSelect = () => {};
+    const handleSelect = (v: string | null) => {
+        setAction(v || undefined);
+    };
 
     const handleFiltersSubmit = (filters: TFilterFormState) => {
         setSearchBy(p => ({
@@ -50,18 +55,32 @@ const TaskList: React.FC = () => {
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
-                        value={undefined}
+                        value={action}
                         onSelect={handleSelect}
                     >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text="Изменение утверждающего" value={'APPR'} />
+                        <DropdownItem text="Изменение исполнителя" value={'EXEC'} />
                     </Dropdown>
 
-                    <RegularButton size="m">{t('Common.Run')}</RegularButton>
+                    <RegularButton
+                        size="m"
+                        onClick={() => {
+                            if (action === 'APPR') {
+                                setOpen(true);
+                            }
+                        }}
+                    >
+                        {t('Common.Run')}
+                    </RegularButton>
                 </div>
 
-                <Table onPageChange={handlePageChange} tableData={data!} isLoading={isLoading || isFetching} />
+                <Table
+                    onPageChange={handlePageChange}
+                    tableData={data!}
+                    isLoading={isLoading || isFetching}
+                    isActionOpen={open}
+                    onActionClose={() => setOpen(false)}
+                />
             </Grid>
         </Grid>
     );
