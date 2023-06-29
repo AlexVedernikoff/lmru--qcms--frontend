@@ -9,6 +9,8 @@ import dashboard_en from './en/dashboard.json';
 import providers_ru from './ru/providers.json';
 import providers_en from './en/providers.json';
 import sidebar_ru from './ru/sidebar.json';
+import checkbox_ru from './ru/checkbox.json';
+import checkbox_en from './en/checkbox.json';
 
 const resources = {
     en: {
@@ -18,6 +20,7 @@ const resources = {
         tasks: tasks_en,
         sidebar: sidebar_ru,
         dashboard: dashboard_en,
+        checkbox: checkbox_en,
     },
     ru: {
         products: products_ru,
@@ -26,6 +29,7 @@ const resources = {
         tasks: tasks_ru,
         sidebar: sidebar_ru,
         dashboard: dashboard_ru,
+        checkbox: checkbox_ru,
     },
 };
 

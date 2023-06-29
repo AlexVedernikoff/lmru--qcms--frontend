@@ -79,72 +79,60 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
                     onChange={handleInputChange}
                 />
 
-                <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <CustomCheckbox
-                        name="fromProject"
-                        value={formState.fromProject}
-                        onChange={handleCheckboxChange}
-                        label="Из проекта"
-                    />
-                </Grid>
+                <CustomCheckbox
+                    name="fromProject"
+                    value={formState.fromProject}
+                    onChange={handleCheckboxChange}
+                    label="Из проекта"
+                />
 
-                <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <CustomCheckbox
-                        name="withoutTransfer"
-                        value={formState.withoutTransfer}
-                        onChange={handleCheckboxChange}
-                        label="Без трансфера"
-                    />
-                </Grid>
+                <CustomCheckbox
+                    name="withoutTransfer"
+                    value={formState.withoutTransfer}
+                    onChange={handleCheckboxChange}
+                    label="Без трансфера"
+                />
             </Grid>
 
             <Grid rowGap={16} columns="1fr" alignItems="baseline">
                 <Typography variant="h3">Подробная информация</Typography>
-                <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <CustomCheckbox
-                        name="activeProducts"
-                        value={formState.activeProducts}
-                        onChange={handleCheckboxChange}
-                        label="Активные товары"
-                    />
-                </Grid>
+                <CustomCheckbox
+                    name="activeProducts"
+                    value={formState.activeProducts}
+                    onChange={handleCheckboxChange}
+                    label="Активные товары"
+                />
 
-                <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <CustomCheckbox name="mdd" value={formState.mdd} onChange={handleCheckboxChange} label="СТМ" />
-                </Grid>
+                <CustomCheckbox name="mdd" value={formState.mdd} onChange={handleCheckboxChange} label="СТМ" />
 
-                <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <CustomCheckbox
-                        name="import"
-                        value={formState.import}
-                        onChange={handleCheckboxChange}
-                        label="Международный импорт"
-                    />
-                </Grid>
-                <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <CustomCheckbox
-                        name="dataForProduct"
-                        value={formState.dataForProduct}
-                        onChange={handleCheckboxChange}
-                        label="Отсутствуют данные о товаре"
-                    />
-                </Grid>
-                <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <CustomCheckbox
-                        name="waitingQualification"
-                        value={formState.waitingQualification}
-                        onChange={handleCheckboxChange}
-                        label="Ожидают запуска квалификации"
-                    />
-                </Grid>
-                <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <CustomCheckbox
-                        name="waitingCertification"
-                        value={formState.waitingCertification}
-                        onChange={handleCheckboxChange}
-                        label="Ожидают запуска сертификации"
-                    />
-                </Grid>
+                <CustomCheckbox
+                    name="import"
+                    value={formState.import}
+                    onChange={handleCheckboxChange}
+                    label="Международный импорт"
+                />
+
+                <CustomCheckbox
+                    name="dataForProduct"
+                    value={formState.dataForProduct}
+                    onChange={handleCheckboxChange}
+                    label="Отсутствуют данные о товаре"
+                />
+
+                <CustomCheckbox
+                    name="waitingQualification"
+                    value={formState.waitingQualification}
+                    onChange={handleCheckboxChange}
+                    label="Ожидают запуска квалификации"
+                />
+
+                <CustomCheckbox
+                    name="waitingCertification"
+                    value={formState.waitingCertification}
+                    onChange={handleCheckboxChange}
+                    label="Ожидают запуска сертификации"
+                />
+
                 <Dropdown
                     size="m"
                     closeOnSelect
@@ -169,14 +157,14 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
                     <DropdownItem text="test" value={'test'} />
                     <DropdownItem text="test" value={'test'} />
                 </Dropdown>
-                <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
-                    <CustomCheckbox
-                        name="isProductWithSubstance"
-                        value={formState.isProductWithSubstance}
-                        onChange={handleCheckboxChange}
-                        label="Относится к категории химии"
-                    />
-                </Grid>
+
+                <CustomCheckbox
+                    name="isProductWithSubstance"
+                    value={formState.isProductWithSubstance}
+                    onChange={handleCheckboxChange}
+                    label="Относится к категории химии"
+                />
+
                 <Dropdown
                     size="m"
                     closeOnSelect

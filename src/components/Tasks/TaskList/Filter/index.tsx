@@ -185,14 +185,13 @@ const Filter: React.FC<IProps> = ({onSubmit}) => {
                         value={formState.categoryTypeNames?.[0]}
                         onChange={handleInputChange}
                     />
-                    <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="center">
-                        <CustomCheckbox
-                            name="isForUpdate"
-                            onChange={handleCheck}
-                            value={formState.isForUpdate}
-                            label={t('TaskList.Filters.isUpdating')}
-                        />
-                    </Grid>
+
+                    <CustomCheckbox
+                        name="isForUpdate"
+                        onChange={handleCheck}
+                        value={formState.isForUpdate}
+                        label={t('TaskList.Filters.isUpdating')}
+                    />
                 </Grid>
             </Grid>
 
