@@ -24,7 +24,7 @@ const ProductDetailsDates: React.FC = () => {
                         {t('ProductDetails.Info.Dates.Field.creationDate')}
                     </Typography>
                     <br />
-                    <Typography variant="s" size="body_short">
+                    <Typography variant="s" size="body_short" style={{whiteSpace: 'pre-line', wordBreak: 'break-word'}}>
                         {createdAt}
                     </Typography>
                 </div>

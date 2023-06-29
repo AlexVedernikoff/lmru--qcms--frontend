@@ -178,6 +178,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         const body: IUpdateBodyReq = prepareUpdateBody(tableData, commonProductFields);
 
         await postUpdateProduct({body, securityCode}).unwrap();
+        setIsChangesInData(false);
     };
 
     const discardChanges = () => {
@@ -208,10 +209,10 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 </Grid>
             </Grid>
 
-            <Grid rowGap={16} columnGap={16} columns="1fr">
+            {/* <Grid rowGap={16} columnGap={16} columns="1fr">
                 <Typography variant="h3">{t('ProductDetails.QualityStatusSection.Comments')}</Typography>
                 <Textarea />
-            </Grid>
+            </Grid> */}
             <RegularButton disabled={!isChangesInData} onClick={updateChangesOnServer}>
                 Отправить
             </RegularButton>

@@ -1,7 +1,7 @@
 import {TFunction} from 'i18next';
 import {ProductDetails} from '../../../../../../common/types/productDetails';
 
-const getRiskOption = (t: TFunction, details: ProductDetails) => {
+const getRiskOption = (t: TFunction, calculatedRisk?: string) => {
     enum ERiskOptions {
         Minor = 'MINOR',
         Major = 'MAJOR',
@@ -12,7 +12,7 @@ const getRiskOption = (t: TFunction, details: ProductDetails) => {
     const major = t('ProductDetails.Info.Product.RiskOptions.major');
     const critical = t('ProductDetails.Info.Product.RiskOptions.critical');
 
-    const gottenRiskOption = details?.qualityModel?.productGroupRisks?.calculatedRisk;
+    const gottenRiskOption = calculatedRisk;
     const riskMinor = gottenRiskOption === ERiskOptions.Minor ? minor : '';
     const riskMajor = gottenRiskOption === ERiskOptions.Major ? major : '';
     const riskCritical = gottenRiskOption === ERiskOptions.Critical ? critical : '';
@@ -28,10 +28,10 @@ const getRiskOption = (t: TFunction, details: ProductDetails) => {
     }
 };
 
-export const productDetailsProductMapping = (t: TFunction, details: any) => {
+export const productDetailsProductMapping = (t: TFunction, details?: ProductDetails) => {
     const customId = details?.customId;
-    const riskOption = getRiskOption(t, details);
-    const qualityModel = details?.qualityAction?.product?.qualityModel;
+    const riskOption = getRiskOption(t, details?.qualityModel?.productGroupRisks?.calculatedRisk);
+    const qualityModel = details?.qualityModelId;
     const regulatoryStatus = details?.regulatoryStatus;
     const productModelNomenclature = details?.qualityModel?.productModelNomenclature;
     const areAllNomenclature =
@@ -44,10 +44,10 @@ ${productModelNomenclature?.modelConsolidationName} / ${productModelNomenclature
 
     const code = details?.code;
     const ean = details?.ean;
-    const isChemical = details?.qualityModel?.qualityModelForMixtures;
-    const isSTM = details?.mdd;
-    const isImport = details?.import;
-    const isFromProject = details?.project;
+    const isChemical = details?.qualityModel?.qualityModelForMixtures ? true : false;
+    const isSTM = details?.mdd ? true : false;
+    const isImport = details?.import ? true : false;
+    const isFromProject = details?.project ? true : false;
 
     return {
         customId,

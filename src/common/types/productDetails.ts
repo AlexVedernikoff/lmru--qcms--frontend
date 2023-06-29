@@ -194,7 +194,7 @@ export interface QualityModel {
     qualityModelDescription: string;
     productGroupRisks: ProductGroupRisks;
     regulatoryReferenceIds: number[];
-    masterPlanIds: any[];
+    masterPlanIds: number[];
     creationInformation: CreationInformation;
     lastUpdateInformation: LastUpdateInformation;
 }
