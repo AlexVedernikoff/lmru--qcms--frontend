@@ -8,9 +8,10 @@ import {IProduct} from '../../../common/types/products';
 interface Props {
     products: IProduct[];
     onSubmit: (qualityModelId: string) => void;
+    title: string;
 }
 
-export const ProductsSelectQualityModelForm: React.FC<Props> = ({products, onSubmit}) => {
+export const ProductsSelectQualityModelForm: React.FC<Props> = ({products, onSubmit, title}) => {
     const {t} = useTranslation('products');
 
     const [selectedQualityModelId, setSelectedQualityModelId] = useState<string | null>(null);
@@ -34,23 +35,34 @@ export const ProductsSelectQualityModelForm: React.FC<Props> = ({products, onSub
         }
     };
 
+    const getProductModelNomenclatureModelCode = () => {
+        const productModelNomenclatureModelCode = products.reduce<string[]>((accumulator, product) => {
+            if (product.productModelNomenclature?.modelCodeId) {
+                return [...accumulator, product.productModelNomenclature?.modelCodeId];
+            }
+            return accumulator;
+        }, []);
+        if (!productModelNomenclatureModelCode.length) return;
+        return productModelNomenclatureModelCode;
+    };
+
     const getQualityModelsQuery = withoutModelApi.useGetQualityModelsQuery({
         header: {
             securityCode: 'security_code',
         },
         body: {
-            searchBy: {},
             pageIndex: 0,
             pageSize: 100,
+            searchBy: {
+                productModelNomenclatureModelCode: getProductModelNomenclatureModelCode(),
+            },
         },
     });
     const qualityModels = getQualityModelsQuery.data?.content || [];
 
     return (
         <Grid rowGap={16}>
-            <Typography variant="h3">
-                {'11_Краски Подготовка основания Грунтовка стен и аксессуары Шпатлёвка'}
-            </Typography>
+            <Typography variant="h3">{title}</Typography>
 
             <Grid columns="24px 1fr" columnGap={12}>
                 <ModelsIcon color="black" />
