@@ -11,6 +11,7 @@ import providers_en from './en/providers.json';
 import sidebar_ru from './ru/sidebar.json';
 import checkbox_ru from './ru/checkbox.json';
 import checkbox_en from './en/checkbox.json';
+import files_ru from './ru/files.json';
 
 const resources = {
     en: {
@@ -21,6 +22,7 @@ const resources = {
         sidebar: sidebar_ru,
         dashboard: dashboard_en,
         checkbox: checkbox_en,
+        files: files_ru,
     },
     ru: {
         products: products_ru,
@@ -30,6 +32,7 @@ const resources = {
         sidebar: sidebar_ru,
         dashboard: dashboard_ru,
         checkbox: checkbox_ru,
+        files: files_ru,
     },
 };
 
