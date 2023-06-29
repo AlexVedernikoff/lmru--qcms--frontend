@@ -39,9 +39,9 @@ const DashboardSupplierRole: React.FC = () => {
             responsible: baseQualityActionsResponsible,
             actionStatuses: ['AWAITING_DOCUMENT_LOADING', 'AWAITING_RESOLUTION'],
             dates: {
-                dateType: 'REALISATIONDUE_DATE',
-                startDate: currentDate.toISOString(),
-                endDate: currentDate.toISOString(),
+                dateType: 'REALISATION_DUE_DATE',
+                startDate: currentDate.toLocaleDateString("fr-CA"),
+                endDate: currentDate.toLocaleDateString("fr-CA")
             },
         },
     });

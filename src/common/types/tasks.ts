@@ -6,7 +6,7 @@ interface IResponsible {
 }
 
 interface IDates {
-    dateType?: 'APPROVAL_DATE' | 'REALISATIONDUE_DATE' | 'UPDATED' | 'CREATED';
+    dateType?: 'APPROVAL_DATE' | 'REALISATION_DUE_DATE' | 'UPDATED' | 'CREATED';
     startDate?: string;
     endDate?: string;
 }
