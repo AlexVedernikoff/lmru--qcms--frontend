@@ -23,6 +23,7 @@ export interface SearchBy {
     categoryTypeNames: string[];
     conclusions: string[];
     isForUpdate: boolean;
+    isOverdue: boolean;
     productRange: string;
     dates: DatesClass;
     productQualityModel: string;
