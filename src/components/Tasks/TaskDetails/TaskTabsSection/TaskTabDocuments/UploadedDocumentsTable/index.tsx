@@ -5,7 +5,7 @@ import {getTableColumns} from './TableColumns';
 import CustomTable from '../../../../../Common/CustomTable';
 import {PropsTaskDetails} from '../../../TaskDetails';
 import {ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
-import FilesUploaderForm from '../../../../../Common/FilesUploaderForm';
+import FileImmediatelyUploadForm from '../../../../../Common/FileImmediatelyUploadForm';
 
 const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
     const {t} = useTranslation('tasks');
@@ -28,7 +28,15 @@ const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
                 size="small"
                 bordered
             />
-            <FilesUploaderForm />
+            <FileImmediatelyUploadForm
+                documentMetadata={{
+                    type: 'test al',
+                    isTemplate: false,
+                    isForLot: false,
+                    createdBy: 'string',
+                    productsDetails: [],
+                }}
+            />
         </>
     );
 };
