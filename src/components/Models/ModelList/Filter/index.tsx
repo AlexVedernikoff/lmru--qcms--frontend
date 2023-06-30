@@ -137,53 +137,47 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
-            <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="start" rowGap={48}>
-                <Grid columnGap={16} columns="1fr" alignItems="center" rowGap={25}>
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('ModelList.Filters.qualityModel')}
-                        name={'qualityModel'}
-                        placeholder=""
-                        value={formState.qualityModel}
-                        onChange={handleInputChange}
-                    />
+            <Grid gap={16} columns="repeat(3, 1fr)" alignItems="start">
+                <Input
+                    inputSize="m"
+                    autoComplete="off"
+                    label={t('ModelList.Filters.qualityModel')}
+                    name={'qualityModel'}
+                    placeholder=""
+                    value={formState.qualityModel}
+                    onChange={handleInputChange}
+                />
 
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('ModelList.Filters.modelNameOrCode')}
-                        name={'modelNameOrCode'}
-                        placeholder=""
-                        value={formState.modelNameOrCode}
-                        onChange={handleInputChange}
-                    />
-                </Grid>
+                <Input
+                    inputSize="m"
+                    autoComplete="off"
+                    label={t('ModelList.Filters.QE')}
+                    name={'QE'}
+                    placeholder=""
+                    value={formState.QE}
+                    onChange={handleInputChange}
+                />
 
-                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap={25}>
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('ModelList.Filters.QE')}
-                        name={'QE'}
-                        placeholder=""
-                        value={formState.QE}
-                        onChange={handleInputChange}
-                    />
-                </Grid>
+                <TreeSelect
+                    className={s.treeSelect}
+                    size="large"
+                    treeData={treeData}
+                    value={formState.productModel}
+                    onChange={handleProductModelChange}
+                    placeholder={t('ModelList.Filters.productModel')}
+                    showCheckedStrategy="SHOW_PARENT"
+                    treeCheckable
+                />
 
-                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap={14}>
-                    <TreeSelect
-                        className={s.treeSelect}
-                        size="large"
-                        treeData={treeData}
-                        value={formState.productModel}
-                        onChange={handleProductModelChange}
-                        placeholder={t('ModelList.Filters.productModel')}
-                        showCheckedStrategy="SHOW_PARENT"
-                        treeCheckable
-                    />
-                </Grid>
+                <Input
+                    inputSize="m"
+                    autoComplete="off"
+                    label={t('ModelList.Filters.modelNameOrCode')}
+                    name={'modelNameOrCode'}
+                    placeholder=""
+                    value={formState.modelNameOrCode}
+                    onChange={handleInputChange}
+                />
             </Grid>
 
             {isMoreFiltersActive && (
