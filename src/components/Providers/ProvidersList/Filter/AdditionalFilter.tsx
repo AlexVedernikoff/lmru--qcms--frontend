@@ -1,30 +1,24 @@
-import {Checkbox, Dropdown, DropdownItem, Grid, Typography, Input, DatePicker} from 'fronton-react';
+import {Checkbox, Dropdown, DropdownItem, Grid, Typography, Input} from 'fronton-react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-// import {useState} from 'react';
-import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
+// import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
 import {IModelNomenclature} from '../../../../common/types/providers';
-import {TreeSelect} from 'antd';
-import {useGetProductModelNomenclatureQuery} from '../../../../api/getProductModelNomenclature';
-import {useGetManagementNomenclatureQuery} from '../../../../api/getManagementNomenclature';
-import {IProductModelNomenclatureResponse} from '../../../../common/types/productModelNomenclature';
-import {IManagementNomenclatureResponse} from '../../../../common/types/productManagementNomenclature';
+// import {useGetProductModelNomenclatureQuery} from '../../../../api/getProductModelNomenclature';
+// import {useGetManagementNomenclatureQuery} from '../../../../api/getManagementNomenclature';
+// import {IProductModelNomenclatureResponse} from '../../../../common/types/productModelNomenclature';
+// import {IManagementNomenclatureResponse} from '../../../../common/types/productManagementNomenclature';
 import {TRootState} from '../../../../store/index';
 import {setSuppliersFilter, ISuppliersFilter} from '../../../../store/slices/suppliersFilterSlice';
+import {СustomTreeSelect} from '../../../Common/CustomTreeSelect';
 
 type Props = {
     modelNomenclature: IModelNomenclature | undefined;
     handleFiltersAdditional: (filters: string[]) => void;
 };
 
-const {SHOW_PARENT} = TreeSelect;
-
 const AdditionalFilter: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const {t} = useTranslation('providers');
-
-    const {data: productModelNomenclature = []} = useGetProductModelNomenclatureQuery();
-    const {data: managementNomenclature = []} = useGetManagementNomenclatureQuery();
 
     const suppliersFilterState: ISuppliersFilter = useSelector((state: TRootState) => state.suppliersFilter);
 
@@ -46,73 +40,94 @@ const AdditionalFilter: React.FC<Props> = props => {
         'productManagementNomenclatureSubtypeId',
     ];
 
-    const productNomenclatureData = productModelNomenclature.map((el: IProductModelNomenclatureResponse) => {
-        return {
-            title: el.nameRu,
-            value: `${modNomKeys[0]} ${el.code}`,
-            children: el.subdepartments.map(subDep => {
-                return {
-                    title: subDep.nameRu,
-                    value: `${modNomKeys[1]} ${subDep.code}`,
-                    children: subDep.modelConsolidationGroups.map(modCon => {
-                        return {
-                            title: modCon.nameRu,
-                            value: `${modNomKeys[2]} ${modCon.code}`,
-                            children: modCon.models
-                                ? modCon.models.map(mod => {
-                                      return {
-                                          title: mod.nameRu,
-                                          value: `${modNomKeys[3]} ${mod.code}`,
-                                      };
-                                  })
-                                : undefined,
-                        };
-                    }),
-                };
-            }),
-        };
-    });
+    // const productNomenclatureData = productModelNomenclature.map((el: IProductModelNomenclatureResponse) => {
+    //     return {
+    //         title: el.nameRu,
+    //         value: `${modNomKeys[0]} ${el.code}`,
+    //         children: el.subdepartments.map(subDep => {
+    //             return {
+    //                 title: subDep.nameRu,
+    //                 value: `${modNomKeys[1]} ${subDep.code}`,
+    //                 children: subDep.modelConsolidationGroups.map(modCon => {
+    //                     return {
+    //                         title: modCon.nameRu,
+    //                         value: `${modNomKeys[2]} ${modCon.code}`,
+    //                         children: modCon.models
+    //                             ? modCon.models.map(mod => {
+    //                                   return {
+    //                                       title: mod.nameRu,
+    //                                       value: `${modNomKeys[3]} ${mod.code}`,
+    //                                   };
+    //                               })
+    //                             : undefined,
+    //                     };
+    //                 }),
+    //             };
+    //         }),
+    //     };
+    // });
 
-    const managementNomenclatureData = managementNomenclature.map((el: IManagementNomenclatureResponse) => {
-        return {
-            title: el.name,
-            value: `${manNomLeys[0]} ${el.id}`,
-            children: el.subDepartments.map(subDep => {
-                return {
-                    title: subDep.name,
-                    value: `${manNomLeys[1]} ${subDep.id}`,
-                    children: subDep.types
-                        ? subDep.types.map(modCon => {
-                              return {
-                                  title: modCon.name,
-                                  value: `${manNomLeys[2]} ${modCon.id}`,
-                                  children: modCon.subTypes
-                                      ? modCon.subTypes.map(mod => {
-                                            return {
-                                                title: mod.name,
-                                                value: `${manNomLeys[3]} ${mod.id}`,
-                                            };
-                                        })
-                                      : undefined,
-                              };
-                          })
-                        : undefined,
-                };
-            }),
-        };
-    });
+    // const managementNomenclatureData = managementNomenclature.map((el: IManagementNomenclatureResponse) => {
+    //     return {
+    //         title: el.name,
+    //         value: `${manNomLeys[0]} ${el.id}`,
+    //         children: el.subDepartments.map(subDep => {
+    //             return {
+    //                 title: subDep.name,
+    //                 value: `${manNomLeys[1]} ${subDep.id}`,
+    //                 children: subDep.types
+    //                     ? subDep.types.map(modCon => {
+    //                           return {
+    //                               title: modCon.name,
+    //                               value: `${manNomLeys[2]} ${modCon.id}`,
+    //                               children: modCon.subTypes
+    //                                   ? modCon.subTypes.map(mod => {
+    //                                         return {
+    //                                             title: mod.name,
+    //                                             value: `${manNomLeys[3]} ${mod.id}`,
+    //                                         };
+    //                                     })
+    //                                   : undefined,
+    //                           };
+    //                       })
+    //                     : undefined,
+    //             };
+    //         }),
+    //     };
+    // });
 
     const treeSelectValue = (keys: string[]) =>
         keys.reduce((acc: string[], key) => {
-            const idsArr: string[] = productsDocumentsFiltersState[key as keyof IFilters] as string[];
+            const idsArr: string[] = suppliersFilterState[key as keyof ISuppliersFilter] as string[];
             if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
             return acc;
         }, []);
 
-    const modelNomenclatureValue = treeSelectValue(modNomKeys);
+    // function treeSelectValue<T = string>(keys: string[], state: T) {
+    //     return keys.reduce((acc: string[], key) => {
+    //         const idsArr: string[] = state[key] as string[];
+    //         if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
+    //         return acc;
+    //     }, []);
+    // }
+    // keys: string[] //обобщить функцию дженериком?
+
+    // function treeSelectValue<T>(keys: string[], state: T) {
+    //     return keys.reduce((acc: string[], key) => {
+    //         const idsArr: string[] = state[key as keyof T] as string[];
+    //         if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
+    //         return acc;
+    //     }, []);
+    // }
+
+    // const modelNomenclatureValue = treeSelectValue<ISuppliersFilter>(modNomKeys, suppliersFilterState); // передать через пропсы?
+    // const managementNomenclatureValue = treeSelectValue<ISuppliersFilter>(manNomLeys, suppliersFilterState);
+
+    const modelNomenclatureValue = treeSelectValue(modNomKeys); // передать через пропсы?
     const managementNomenclatureValue = treeSelectValue(manNomLeys);
 
     const onTreeChange = (newValue: any, keys: any) => {
+        // передать через пропсы? у каждого эта функция, меняющая стейт, своя.
         const initialAcc = keys.reduce((acc: any, key: any) => {
             acc[key] = [];
             return acc;
@@ -135,31 +150,31 @@ const AdditionalFilter: React.FC<Props> = props => {
         }
     };
 
-    const tPropsProdNom = {
-        treeData: productNomenclatureData,
-        value: modelNomenclatureValue,
-        onChange: (val: any) => onTreeChange(val, modNomKeys),
-        treeCheckable: true,
-        showCheckedStrategy: SHOW_PARENT,
-        placeholder: t('WithDocuments.DetailFilters.ProductModelNomenclature'),
-        style: {
-            width: '100%',
-        },
-    };
+    // const tPropsProdNom = {
+    //     treeData: productNomenclatureData,
+    //     value: modelNomenclatureValue,
+    //     onChange: (val: any) => onTreeChange(val, modNomKeys),
+    //     treeCheckable: true,
+    //     showCheckedStrategy: SHOW_PARENT,
+    //     placeholder: t('ProvidersList.DetailFilters.productModelNomenclature'),
+    //     style: {
+    //         width: '100%',
+    //     },
+    // };
 
-    const tPropsManNom = {
-        treeData: managementNomenclatureData,
-        value: managementNomenclatureValue,
-        onChange: (val: any) => onTreeChange(val, manNomLeys),
-        treeCheckable: true,
-        showCheckedStrategy: SHOW_PARENT,
-        placeholder: t('WithDocuments.DetailFilters.ManagementNomenclature'),
-        style: {
-            width: '100%',
-        },
-    };
+    // const tPropsManNom = {
+    //     treeData: managementNomenclatureData,
+    //     value: managementNomenclatureValue,
+    //     onChange: (val: any) => onTreeChange(val, manNomLeys),
+    //     treeCheckable: true,
+    //     showCheckedStrategy: SHOW_PARENT,
+    //     placeholder: t('ProvidersList.DetailFilters.managementNomenclature'),
+    //     style: {
+    //         width: '100%',
+    //     },
+    // };
 
-    const {} = suppliersFilterState;
+    const {qualityRating} = suppliersFilterState;
 
     // const {modelNomenclature, handleFiltersAdditional} = props;
     // const [checked, setChecked] = useState(false);
@@ -181,62 +196,43 @@ const AdditionalFilter: React.FC<Props> = props => {
                 <Typography variant="l" size="body_accent">
                     {t('ProvidersList.DetailFilters.relatedProducts')}
                 </Typography>
-                <Input
-                    inputSize="m"
-                    autoComplete="off"
-                    label={t('ProvidersList.DetailFilters.managementNomenclature')}
-                    placeholder={t('Common.Input')}
-                    value={undefined}
-                    onChange={handleInputChange}
+                {/**************** Фильтр "11 Номенклатура товарной модели" *****************/}
+                <СustomTreeSelect
+                    type={'product'}
+                    nomenclatureValue={modelNomenclatureValue}
+                    handleChange={onTreeChange}
                 />
+                {/**************** Фильтр "12 Управленческая номенклатура" *****************/}
+                <СustomTreeSelect
+                    type={'management'}
+                    nomenclatureValue={managementNomenclatureValue}
+                    handleChange={onTreeChange}
+                />
+                {/* <TreeSelect {...tPropsManNom} /> */}
+                {/**************** Экспериментальный кастомный компонент *****************/}
+                {/* <СustomTreeSelect
+                    type={'product'}
+                    nomenclatureValue={managementNomenclatureValue}
+                    handleChange={onTreeChange}
+                /> */}
 
-                {modelNomenclature && (
-                    <TreeSelect
-                        showSearch
-                        style={{width: '100%'}}
-                        value={value}
-                        dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
-                        placeholder={t('ProvidersList.DetailFilters.productModelNomenclature')}
-                        allowClear
-                        treeCheckable
-                        showCheckedStrategy={SHOW_PARENT}
-                        treeDefaultExpandAll
-                        onChange={onChange}
-                        treeData={modelNomenclature.map((el, i) => {
-                            return {
-                                value: `modelDepartmentId ${el.code}`,
-                                title: el.code,
-                                children: el.subdepartments.map((el, i) => {
-                                    return {
-                                        value: `modelSubDepartmentId ${el.code}`,
-                                        title: el.code,
-                                        children: el.modelConsolidationGroups.map((el, i) => {
-                                            return {
-                                                value: `modelConsolidationId ${el.code}`,
-                                                title: el.code,
-                                                children: el.models?.map((el, i) => {
-                                                    return {
-                                                        value: `modelCodeId ${el.code}`,
-                                                        title: el.code,
-                                                    };
-                                                }),
-                                            };
-                                        }),
-                                    };
-                                }),
-                            };
-                        })}
-                    />
-                )}
+                {/* modelNomenclatureValue = treeSelectValue(modNomKeys); // передать через пропсы?
+    const managementNomenclatureValue = treeSelectValue(manNomLeys); */}
+
+                {/**************** Фильтр "07 Модель качества" *****************/}
 
                 <Input
                     inputSize="m"
                     autoComplete="off"
                     label={t('ProvidersList.DetailFilters.qualityModel')}
                     placeholder={t('Common.Input')}
-                    value={undefined}
-                    onChange={handleInputChange}
+                    value={qualityRating}
+                    onChange={e => {
+                        onHandleFilterChange(e.target.value, 'qualityRating');
+                    }}
                 />
+
+                {/**************** Фильтр "" *****************/}
 
                 <Dropdown
                     size="m"
@@ -244,7 +240,7 @@ const AdditionalFilter: React.FC<Props> = props => {
                     placeholder={t('Common.Select')}
                     label={t('ProvidersList.DetailFilters.certificationStatus')}
                     value={undefined}
-                    onSelect={handleSelect}
+                    // // onSelect={handleSelect}
                 >
                     <DropdownItem text="test" value={'test'} />
                     <DropdownItem text="test" value={'test'} />
@@ -260,7 +256,7 @@ const AdditionalFilter: React.FC<Props> = props => {
                     placeholder={t('Common.Select')}
                     label={t('ProvidersList.DetailFilters.сharacteristic')}
                     value={undefined}
-                    onSelect={handleSelect}
+                    // // onSelect={handleSelect}
                 >
                     <DropdownItem text="test" value={'test'} />
                     <DropdownItem text="test" value={'test'} />
@@ -273,7 +269,7 @@ const AdditionalFilter: React.FC<Props> = props => {
                     placeholder={t('Common.Select')}
                     label={t('ProvidersList.DetailFilters.meaning')}
                     value={undefined}
-                    onSelect={handleSelect}
+                    // // onSelect={handleSelect}
                 >
                     <DropdownItem text="test" value={'test'} />
                     <DropdownItem text="test" value={'test'} />
@@ -310,7 +306,7 @@ const AdditionalFilter: React.FC<Props> = props => {
             </Grid>
 
             <Grid rowGap={24} columns="fr" alignItems="baseline">
-                <Typography variant="l" size="body_accent">
+                {/* <Typography variant="l" size="body_accent">
                     {t('ProvidersList.DetailFilters.actions')}
                 </Typography>
                 <Dropdown
@@ -319,7 +315,7 @@ const AdditionalFilter: React.FC<Props> = props => {
                     placeholder={t('Common.Select')}
                     label={t('ProvidersList.DetailFilters.type')}
                     value={undefined}
-                    onSelect={handleSelect}
+                    // onSelect={handleSelect}
                 >
                     <DropdownItem text="test" value={'test'} />
                     <DropdownItem text="test" value={'test'} />
@@ -332,7 +328,7 @@ const AdditionalFilter: React.FC<Props> = props => {
                     placeholder={t('Common.Select')}
                     label={t('ProvidersList.DetailFilters.selfAssessmentStatus')}
                     value={undefined}
-                    onSelect={handleSelect}
+                    // // onSelect={handleSelect}
                 >
                     <DropdownItem text="test" value={'test'} />
                     <DropdownItem text="test" value={'test'} />
@@ -345,7 +341,7 @@ const AdditionalFilter: React.FC<Props> = props => {
                     placeholder={t('Common.Select')}
                     label={t('ProvidersList.DetailFilters.platform')}
                     value={undefined}
-                    onSelect={handleSelect}
+                    // onSelect={handleSelect}
                 >
                     <DropdownItem text="test" value={'test'} />
                     <DropdownItem text="test" value={'test'} />
@@ -358,23 +354,23 @@ const AdditionalFilter: React.FC<Props> = props => {
                     placeholder={t('Common.Select')}
                     label={t('ProvidersList.DetailFilters.qualityEngineer')}
                     value={undefined}
-                    onSelect={handleSelect}
+                    // onSelect={handleSelect}
                 >
                     <DropdownItem text="test" value={'test'} />
                     <DropdownItem text="test" value={'test'} />
                     <DropdownItem text="test" value={'test'} />
-                </Dropdown>
+                </Dropdown> */}
             </Grid>
 
             <Grid rowGap={24} columns="fr" alignItems="baseline">
-                <div></div>
+                {/* <div></div>
                 <Dropdown
                     size="m"
                     closeOnSelect
                     placeholder={t('Common.Select')}
                     label={t('ProvidersList.DetailFilters.contractor')}
                     value={undefined}
-                    onSelect={handleSelect}
+                    // onSelect={handleSelect}
                 >
                     <DropdownItem text="test" value={'test'} />
                     <DropdownItem text="test" value={'test'} />
@@ -387,7 +383,7 @@ const AdditionalFilter: React.FC<Props> = props => {
                     placeholder={t('Common.Select')}
                     label={t('ProvidersList.Filters.dateSearch')}
                     value={undefined}
-                    onSelect={handleSelect}
+                    // onSelect={handleSelect}
                 >
                     <DropdownItem text="test" value={'test'} />
                     <DropdownItem text="test" value={'test'} />
@@ -402,10 +398,10 @@ const AdditionalFilter: React.FC<Props> = props => {
                 />
 
                 <CustomSwitch
-                    handleChange={handleChange}
-                    checked={checked}
+                    handleChange={() => {}}
+                    checked={true}
                     name={t('ProvidersList.DetailFilters.PendingСreation')}
-                />
+                /> */}
             </Grid>
         </Grid>
     );
