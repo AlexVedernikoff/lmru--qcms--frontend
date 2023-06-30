@@ -9,7 +9,7 @@ const ProductDetailsInfo: React.FC = () => {
     const {t} = useTranslation('products');
 
     const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
-    console.log('details?.range', details?.range);
+    // console.log('details?.range', details?.range);
 
     return (
         <Grid className={styles.sectionItem} rowGap={16} columnGap={16} columns="1fr" rows="36px">
