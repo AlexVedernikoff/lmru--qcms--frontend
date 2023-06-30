@@ -134,6 +134,15 @@
                 "departmentName": "Наименование отдела",
                 "nomenclature": "Номенклатура"
             }
+        },
+        "blockOrUnBlockModalWindow": {
+            "buCodeLabel": "BU",
+            "blockedForOrderingLabel": "Блокировка заказов",
+            "blockedForSellingLabel": "Блокировка продажи",
+            "blockedForPublicationLabel": "Блокировка публикации",
+            "blockCommentLabel": "Комментарий",
+            "closeModalButton": "Отменить",
+            "submitButton": "Добавить"
         }
     },
     "WithoutModels": {

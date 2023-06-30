@@ -6,7 +6,6 @@ import withModelApi from './withModelApi';
 import {useState} from 'react';
 import ProductsActionsForm from './ProductsActionsForm';
 import {IProduct, IProductsRequest} from '../../../common/types/products';
-import FilesUploaderForm from '../../Common/FilesUploaderForm';
 
 const ProductsWithQualityModel: React.FC = () => {
     const [selectedProducts, setSelectedProducts] = useState<IProduct[]>([]);
@@ -92,24 +91,21 @@ const ProductsWithQualityModel: React.FC = () => {
     };
 
     return (
-        <>
+        <Grid rowGap={16}>
             <Grid rowGap={16}>
-                <Grid rowGap={16}>
-                    <ProductsFilter onSubmit={handleFiltersSubmit} />
-                </Grid>
-
-                <Grid className={styles.panel}>
-                    <ProductsActionsForm products={selectedProducts} />
-                    <ProductsTable
-                        onProductsSelect={setSelectedProducts}
-                        tableData={data!}
-                        onPageChange={handlePageChange}
-                        isLoading={isLoading}
-                    />
-                </Grid>
+                <ProductsFilter onSubmit={handleFiltersSubmit} />
             </Grid>
-            <FilesUploaderForm />
-        </>
+
+            <Grid className={styles.panel}>
+                <ProductsActionsForm products={selectedProducts} />
+                <ProductsTable
+                    onProductsSelect={setSelectedProducts}
+                    tableData={data!}
+                    onPageChange={handlePageChange}
+                    isLoading={isLoading}
+                />
+            </Grid>
+        </Grid>
     );
 };
 
