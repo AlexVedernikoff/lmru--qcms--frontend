@@ -34,18 +34,16 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
     );
 
     return (
-        <Grid columnGap={24} columns="repeat(3, 1fr)" alignItems="baseline">
-            <Grid rowGap={24} columns="1fr" alignItems="baseline">
-                {renderDropdown(t('TaskList.Filters.qualityStatus'), 'qualityStatus')}
-                {renderDropdown(t('TaskList.Filters.regularStatus'), 'regularStatus')}
-                {renderDropdown(t('TaskList.Filters.qualityModel'), 'qualityModel')}
-                {renderDropdown(t('TaskList.Filters.characteristics'), 'characteristics')}
-                {renderDropdown(t('TaskList.Filters.characteristicValue'), 'characteristicValue')}
-            </Grid>
+        <Grid gap={16} columns="repeat(3, 1fr)" alignItems="baseline">
+            {renderDropdown(t('TaskList.Filters.qualityStatus'), 'qualityStatus')}
+            {renderDropdown(t('TaskList.Filters.regularStatus'), 'regularStatus')}
+            {renderDropdown(t('TaskList.Filters.qualityModel'), 'qualityModel')}
+            {renderDropdown(t('TaskList.Filters.characteristics'), 'characteristics')}
+            {renderDropdown(t('TaskList.Filters.characteristicValue'), 'characteristicValue')}
 
-            <Grid rowGap={24} columns="1fr" alignItems="baseline">
-                {renderDropdown(t('TaskList.Filters.gamma'), 'gamma')}
+            {renderDropdown(t('TaskList.Filters.gamma'), 'gamma')}
 
+            <Grid gap={16} columns="1fr" alignItems="baseline">
                 <CustomCheckbox
                     name="fromProject"
                     onChange={handleCheck}
@@ -74,9 +72,11 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                     value={formState.containsSubstanceLimit as boolean}
                     label={t('TaskList.Filters.containsSubstanceLimit')}
                 />
+            </Grid>
 
+            <Grid gap={16} columns="1fr" alignItems="baseline">
+                {renderDropdown(t('TaskList.Filters.country'), 'country')}
                 {renderDropdown(t('TaskList.Filters.containsSubstance'), 'containsSubstance')}
-
                 <CustomSwitch
                     checked={false}
                     handleChange={() => {}}
@@ -84,10 +84,9 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                 />
             </Grid>
 
-            <Grid rowGap={24} columns="1fr" alignItems="baseline">
+            <Grid gap={16} columns="1fr" alignItems="baseline">
                 {renderDropdown(t('TaskList.Filters.searchByDate'), 'searchByDate')}
                 <DatePickerRange onChange={() => {}} label={t('TaskList.Filters.dates')} size="s" />
-                {renderDropdown(t('TaskList.Filters.country'), 'country')}
             </Grid>
         </Grid>
     );

@@ -73,18 +73,17 @@ const Filter: React.FC<IProps> = ({onSubmit}) => {
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
-            <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline" rowGap={48}>
-                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap={24}>
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('TaskList.Filters.productCode')}
-                        name={'productCode'}
-                        placeholder=""
-                        value={formState.productCode}
-                        onChange={handleInputChange}
-                    />
-                    {/* <Input
+            <Grid gap={16} columns="repeat(3, 1fr)" alignItems="baseline">
+                <Input
+                    inputSize="m"
+                    autoComplete="off"
+                    label={t('TaskList.Filters.productCode')}
+                    name={'productCode'}
+                    placeholder=""
+                    value={formState.productCode}
+                    onChange={handleInputChange}
+                />
+                {/* <Input
                         inputSize="m"
                         autoComplete="off"
                         label={t('TaskList.Filters.responsibleContractor')}
@@ -93,24 +92,22 @@ const Filter: React.FC<IProps> = ({onSubmit}) => {
                         value={formState.productCode}
                         onChange={handleInputChange}
                     /> */}
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={t('TaskList.Filters.QE')}
-                        value={formState.responsible?.[0]?.type}
-                        onSelect={handleSelect('responsible')}
-                    >
-                        <DropdownItem text="Поставщик" value={'SUPPLIER'} />
-                        <DropdownItem text="QE" value={'QE'} />
-                        <DropdownItem text="SQM" value={'SQM'} />
-                        <DropdownItem text="Подрядчик" value={'SERVICE_PROVIDER'} />
-                    </Dropdown>
-                    {/* <CustomSwitch checked={formState.fromAnother} handleChange={() => {}} name={'Actions from another platform'} /> */}
-                </Grid>
+                <Dropdown
+                    size="m"
+                    closeOnSelect
+                    placeholder={t('Common.Select')}
+                    label={t('TaskList.Filters.QE')}
+                    value={formState.responsible?.[0]?.type}
+                    onSelect={handleSelect('responsible')}
+                >
+                    <DropdownItem text="Поставщик" value={'SUPPLIER'} />
+                    <DropdownItem text="QE" value={'QE'} />
+                    <DropdownItem text="SQM" value={'SQM'} />
+                    <DropdownItem text="Подрядчик" value={'SERVICE_PROVIDER'} />
+                </Dropdown>
+                {/* <CustomSwitch checked={formState.fromAnother} handleChange={() => {}} name={'Actions from another platform'} /> */}
 
-                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap={24}>
-                    {/* <Input
+                {/* <Input
                         inputSize="m"
                         autoComplete="off"
                         label={t('TaskList.Filters.QE')}
@@ -119,25 +116,25 @@ const Filter: React.FC<IProps> = ({onSubmit}) => {
                         value={formState.responsible?.[0]?.type}
                         onChange={handleInputChange}
                     /> */}
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('TaskList.Filters.taskStatus')}
-                        name={'actionStatuses'}
-                        placeholder=""
-                        value={formState.actionStatuses?.[0]!}
-                        onChange={handleInputChange}
-                    />
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('TaskList.Filters.providerName')}
-                        name={'supplierName'}
-                        placeholder=""
-                        value={formState.supplierName}
-                        onChange={handleInputChange}
-                    />
-                    {/* <Input
+                <Input
+                    inputSize="m"
+                    autoComplete="off"
+                    label={t('TaskList.Filters.taskStatus')}
+                    name={'actionStatuses'}
+                    placeholder=""
+                    value={formState.actionStatuses?.[0]!}
+                    onChange={handleInputChange}
+                />
+                <Input
+                    inputSize="m"
+                    autoComplete="off"
+                    label={t('TaskList.Filters.providerName')}
+                    name={'supplierName'}
+                    placeholder=""
+                    value={formState.supplierName}
+                    onChange={handleInputChange}
+                />
+                {/* <Input
                         inputSize="m"
                         autoComplete="off"
                         label={t('TaskList.Filters.contractor')}
@@ -146,53 +143,50 @@ const Filter: React.FC<IProps> = ({onSubmit}) => {
                         value={formState.responsible?.[0]?.type}
                         onChange={handleInputChange}
                     /> */}
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('TaskList.Filters.conclusion')}
-                        name={'conclusions'}
-                        placeholder=""
-                        value={formState.conclusions?.[0]}
-                        onChange={handleInputChange}
-                    />
-                </Grid>
+                <Input
+                    inputSize="m"
+                    autoComplete="off"
+                    label={t('TaskList.Filters.conclusion')}
+                    name={'conclusions'}
+                    placeholder=""
+                    value={formState.conclusions?.[0]}
+                    onChange={handleInputChange}
+                />
 
-                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap={12}>
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('TaskList.Filters.documentType')}
-                        name={'awaitedDocumentTypes'}
-                        placeholder=""
-                        value={formState.awaitedDocumentTypes?.[0]!}
-                        onChange={handleInputChange}
-                    />
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('TaskList.Filters.taskNumber')}
-                        name={'qualityActionId'}
-                        placeholder=""
-                        value={formState.qualityActionId?.toString()}
-                        onChange={handleInputChange}
-                    />
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('TaskList.Filters.taskType')}
-                        name={'categoryTypeNames'}
-                        placeholder=""
-                        value={formState.categoryTypeNames?.[0]}
-                        onChange={handleInputChange}
-                    />
+                <Input
+                    inputSize="m"
+                    autoComplete="off"
+                    label={t('TaskList.Filters.documentType')}
+                    name={'awaitedDocumentTypes'}
+                    placeholder=""
+                    value={formState.awaitedDocumentTypes?.[0]!}
+                    onChange={handleInputChange}
+                />
+                <Input
+                    inputSize="m"
+                    autoComplete="off"
+                    label={t('TaskList.Filters.taskNumber')}
+                    name={'qualityActionId'}
+                    placeholder=""
+                    value={formState.qualityActionId?.toString()}
+                    onChange={handleInputChange}
+                />
+                <Input
+                    inputSize="m"
+                    autoComplete="off"
+                    label={t('TaskList.Filters.taskType')}
+                    name={'categoryTypeNames'}
+                    placeholder=""
+                    value={formState.categoryTypeNames?.[0]}
+                    onChange={handleInputChange}
+                />
 
-                    <CustomCheckbox
-                        name="isForUpdate"
-                        onChange={handleCheck}
-                        value={formState.isForUpdate}
-                        label={t('TaskList.Filters.isUpdating')}
-                    />
-                </Grid>
+                <CustomCheckbox
+                    name="isForUpdate"
+                    onChange={handleCheck}
+                    value={formState.isForUpdate}
+                    label={t('TaskList.Filters.isUpdating')}
+                />
             </Grid>
 
             {isMoreFiltersActive && <AdditionalFilter formState={formState} setFormState={setFormState} />}

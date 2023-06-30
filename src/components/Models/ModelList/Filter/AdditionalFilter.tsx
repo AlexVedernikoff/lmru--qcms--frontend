@@ -28,8 +28,8 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
     };
 
     return (
-        <Grid columnGap={24} columns="repeat(3, 1fr)" alignItems="baseline">
-            <Grid rowGap={24} columns="1fr" alignItems="baseline">
+        <Grid gap={16} columns="repeat(3, 1fr)" alignItems="baseline">
+            <Grid rowGap={16} columns="1fr">
                 {/* <Dropdown
                     size="m"
                     closeOnSelect
@@ -52,6 +52,7 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                 >
                     {riskLevels}
                 </Dropdown> */}
+
                 <Input
                     inputSize="m"
                     autoComplete="off"
@@ -62,62 +63,24 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                     onChange={handleInputChange}
                     type="number"
                 />
-
-                <Grid rowGap={18} columns="1fr">
-                    <Checkbox
-                        onChange={handleCheckbox('needApprove')}
-                        checked={formState.needApprove!}
-                        label={t('ModelList.Filters.needApprove')}
-                    />
-                    {/* <Checkbox
+                <Checkbox
+                    onChange={handleCheckbox('needApprove')}
+                    checked={formState.needApprove!}
+                    label={t('ModelList.Filters.needApprove')}
+                />
+                {/* <Checkbox
                         onChange={handleCheckbox('hasManyProducts')}
                         checked={formState.hasManyProducts!}
                         label={t('ModelList.Filters.hasManyProducts')}
                     /> */}
-                    <Checkbox
-                        onChange={handleCheckbox('forMixtures')}
-                        checked={formState.forMixtures!}
-                        label={t('ModelList.Filters.isChemical')}
-                    />
-                </Grid>
+                <Checkbox
+                    onChange={handleCheckbox('forMixtures')}
+                    checked={formState.forMixtures!}
+                    label={t('ModelList.Filters.isChemical')}
+                />
             </Grid>
 
-            <Grid rowGap={24} columns="1fr" alignItems="baseline">
-                <Dropdown
-                    size="m"
-                    closeOnSelect
-                    placeholder={t('Common.Select')}
-                    label={t('ModelList.Filters.riskByProductUsageNegative')}
-                    value={formState.personLevelRiskForNonCorrectUsage!}
-                    onSelect={handleSelect('personLevelRiskForNonCorrectUsage')}
-                >
-                    {riskLevels}
-                </Dropdown>
-
-                <Dropdown
-                    size="m"
-                    closeOnSelect
-                    placeholder={t('Common.Select')}
-                    label={t('ModelList.Filters.riskEnvironment')}
-                    value={formState.sustainabilityRisk!}
-                    onSelect={handleSelect('sustainabilityRisk')}
-                >
-                    {riskLevels}
-                </Dropdown>
-
-                <Dropdown
-                    size="m"
-                    closeOnSelect
-                    placeholder={t('Common.Select')}
-                    label={t('ModelList.Filters.riskByProductUsagePositive')}
-                    value={formState.personLevelRiskForCorrectUsage!}
-                    onSelect={handleSelect('personLevelRiskForCorrectUsage')}
-                >
-                    {riskLevels}
-                </Dropdown>
-            </Grid>
-
-            <Grid rowGap={24} columns="1fr" alignItems="baseline">
+            <Grid rowGap={16} columns="1fr">
                 <Dropdown
                     size="m"
                     closeOnSelect
@@ -135,14 +98,49 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                     size="m"
                     closeOnSelect
                     placeholder={t('Common.Select')}
+                    label={t('ModelList.Filters.riskEnvironment')}
+                    value={formState.sustainabilityRisk!}
+                    onSelect={handleSelect('sustainabilityRisk')}
+                >
+                    {riskLevels}
+                </Dropdown>
+
+                <Dropdown
+                    size="m"
+                    closeOnSelect
+                    placeholder={t('Common.Select')}
                     label={t('ModelList.Filters.riskProperty')}
                     value={formState.productRiskLevel!}
                     onSelect={handleSelect('productRiskLevel')}
                 >
                     {riskLevels}
                 </Dropdown>
+            </Grid>
 
-                <Grid rowGap={24} columnGap={24} columns="1fr 1fr" alignItems="baseline">
+            <Grid rowGap={16} columns="1fr">
+                <Dropdown
+                    size="m"
+                    closeOnSelect
+                    placeholder={t('Common.Select')}
+                    label={t('ModelList.Filters.riskByProductUsageNegative')}
+                    value={formState.personLevelRiskForNonCorrectUsage!}
+                    onSelect={handleSelect('personLevelRiskForNonCorrectUsage')}
+                >
+                    {riskLevels}
+                </Dropdown>
+
+                <Dropdown
+                    size="m"
+                    closeOnSelect
+                    placeholder={t('Common.Select')}
+                    label={t('ModelList.Filters.riskByProductUsagePositive')}
+                    value={formState.personLevelRiskForCorrectUsage!}
+                    onSelect={handleSelect('personLevelRiskForCorrectUsage')}
+                >
+                    {riskLevels}
+                </Dropdown>
+
+                <Grid gap={24} columns="1fr 1fr">
                     <Dropdown
                         size="m"
                         closeOnSelect
