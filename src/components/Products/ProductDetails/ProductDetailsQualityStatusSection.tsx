@@ -1,12 +1,9 @@
-import {BackofficeStatus, Grid, Textarea, Typography, RegularButton} from 'fronton-react';
+import {useEffect, useState} from 'react';
+import {BackofficeStatus, Grid, Typography, RegularButton} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import CustomTable from '../../Common/CustomTable';
 import styles from '../../Common.module.css';
-
-import {useEffect, useState} from 'react';
-
 import {useLazyGetDetailsForProductsQuery, usePostUpdateProductMutation} from './productDetailsApi';
-
 import {productId, securityCode} from './mockProductDetails';
 import {
     ELanguages,

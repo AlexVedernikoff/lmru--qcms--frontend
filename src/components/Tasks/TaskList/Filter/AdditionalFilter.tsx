@@ -1,5 +1,4 @@
 import {DatePickerRange, Dropdown, DropdownItem, Grid} from 'fronton-react';
-import {useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
 import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
 import CustomCheckbox from '../../../Common/CustomCheckbox/CustomCheckbox';
@@ -21,21 +20,17 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
         setFormState({...formState, [name]: value});
     };
 
-    const renderDropdown = useCallback(
-        (text: string, name: string) => (
-            <Dropdown
-                size="m"
-                closeOnSelect
-                placeholder={t('Common.Select')}
-                label={text}
-                value={undefined}
-                onSelect={handleSelect(name as keyof TFilterFormState)}
-            >
-                <DropdownItem text="test" value={'test'} />
-            </Dropdown>
-        ),
-        // @ts-ignore-next-line
-        [t]
+    const renderDropdown = (text: string, name: string) => (
+        <Dropdown
+            size="m"
+            closeOnSelect
+            placeholder={t('Common.Select')}
+            label={text}
+            value={undefined}
+            onSelect={handleSelect(name as keyof TFilterFormState)}
+        >
+            <DropdownItem text="test" value={'test'} />
+        </Dropdown>
     );
 
     return (

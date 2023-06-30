@@ -18,13 +18,11 @@ const ModelList: React.FC = () => {
     });
 
     const [searchBy, setSearchBy] = useState<IModelsParams['body']['searchBy']>({
-        // labels: [],
+        labels: undefined,
         qualityModelLabel: undefined,
-        assignedApprovers: [],
+        assignedApprovers: undefined,
         calculatedRisk: undefined,
-        // linkedToNomenclature: false,
-        // linkedToEngineer: false,
-        forMixtures: false,
+        forMixtures: undefined,
         productRiskLevel: undefined,
         personLevelRiskForCorrectUsage: undefined,
         personLevelRiskForNonCorrectUsage: undefined,
@@ -39,21 +37,25 @@ const ModelList: React.FC = () => {
         needApprove: undefined,
     });
 
-    const {data, isLoading, isFetching} = modelsApi.useGetModelsQuery({
-        header: {
-            securityCode: 'security_code',
+    const {data, isLoading, isFetching} = modelsApi.useGetModelsQuery(
+        {
+            header: {
+                securityCode: 'security_code',
+            },
+            body: {
+                ...page,
+                ...sort,
+                searchBy,
+            },
         },
-        body: {
-            ...page,
-            ...sort,
-            searchBy,
-        },
-    });
+        {refetchOnMountOrArgChange: true}
+    );
 
     const handleFiltersSubmit = (filters: IFilterFormState) => {
         setSearchBy(p => ({
             ...p,
             qualityModelLabel: filters.qualityModel,
+            modelNameOrCode: filters.modelNameOrCode,
             productModelNomenclatureDepartmentCode: filters.productModelNomenclatureDepartmentCode?.length
                 ? filters.productModelNomenclatureDepartmentCode
                 : undefined,
@@ -75,14 +77,12 @@ const ModelList: React.FC = () => {
                 : undefined,
             healthRisk: filters.healthRisk ? parseInt(filters.healthRisk, 10) : undefined,
             calculatedRisk: filters.calculatedRisk,
-            // linkedToNomenclature: false,
-            // linkedToEngineer: false,
-            forMixtures: filters.forMixtures ? true : undefined,
+            forMixtures: filters.forMixtures || undefined,
             productRiskLevel: filters.productRiskLevel ? parseInt(filters.productRiskLevel, 10) : undefined,
             sustainabilityRisk: filters.sustainabilityRisk ? parseInt(filters.sustainabilityRisk, 10) : undefined,
             regulatoryRisk: filters.regulatoryRisk ? parseInt(filters.regulatoryRisk, 10) : undefined,
             lastUpdatedAt: filters.latestChanges ? parseInt(filters.latestChanges, 10) : undefined,
-            needApprove: filters.needApprove ? true : undefined,
+            needApprove: filters.needApprove || undefined,
         }));
     };
 
