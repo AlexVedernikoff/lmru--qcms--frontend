@@ -69,7 +69,9 @@ const Filter: React.FC<IProps> = ({onSubmit}) => {
         setFormState({...formState, [name]: prevValue === value ? undefined : newValue});
     };
 
-    const handleCheck = (value: boolean | undefined, name: string) => {};
+    const handleCheck = (value: boolean | undefined, name: string) => {
+        setFormState(p => ({...p, [name]: value}));
+    };
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>

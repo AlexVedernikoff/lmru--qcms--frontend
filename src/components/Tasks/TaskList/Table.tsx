@@ -1,31 +1,39 @@
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {RegularButton} from 'fronton-react';
 import {ChatIcon, ChatTextIcon, MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
-import {TableRowSelection} from 'antd/es/table/interface';
 import {TASKS_ROUTES} from '../../../common/consts';
 import CustomTable from '../../Common/CustomTable';
-import {TWithReactKey} from '../../../common/clientModels';
 import {ITaskListResponse} from '../../../common/types/tasks';
 import {convertDateFromServer} from '../../../utils/convertDateFromServer';
-import TaskListActionModal from './TaskListActionModal';
-
-type TDataType = TWithReactKey<ITaskListResponse['content'][number]>;
+import ActionModal from './ActionModal';
+import {EModalVariant, TDataType} from './types';
 
 interface IProps {
     onPageChange: (page: number, size: number) => void;
     onActionClose: () => void;
     tableData: ITaskListResponse;
     isLoading: boolean;
+    action: EModalVariant | undefined;
     isActionOpen: boolean;
+    selectedRows: TDataType[];
+    setSelectedRows: (selectedRowKeys: React.Key[], selectedRows: TDataType[]) => void;
 }
 
-const Table: React.FC<IProps> = ({onPageChange, tableData, isLoading, isActionOpen, onActionClose}) => {
+const Table: React.FC<IProps> = ({
+    onPageChange,
+    tableData,
+    isLoading,
+    isActionOpen,
+    onActionClose,
+    selectedRows,
+    setSelectedRows,
+    action,
+}) => {
     const navigate = useNavigate();
     const {t} = useTranslation('tasks');
-    const [selected, setSelected] = useState<TDataType[]>([]);
 
     const handleViewDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
         e => {
@@ -182,22 +190,15 @@ const Table: React.FC<IProps> = ({onPageChange, tableData, isLoading, isActionOp
         [tableData?.content]
     );
 
-    const rowSelection = useMemo<TableRowSelection<TDataType>>(
-        () => ({
-            type: 'checkbox',
-            onChange: (_selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
-                setSelected(selectedRows);
-            },
-            fixed: 'left',
-        }),
-        []
-    );
-
     return (
         <>
             <CustomTable
                 loading={isLoading}
-                rowSelection={rowSelection}
+                rowSelection={{
+                    type: 'checkbox',
+                    onChange: setSelectedRows,
+                    fixed: 'left',
+                }}
                 columns={columns}
                 dataSource={dataSource}
                 scroll={{x: 400}}
@@ -211,7 +212,9 @@ const Table: React.FC<IProps> = ({onPageChange, tableData, isLoading, isActionOp
                     onChange: onPageChange,
                 }}
             />
-            <TaskListActionModal dataList={selected} isOpen={isActionOpen} onClose={onActionClose} />
+            {!!action && (
+                <ActionModal dataList={selectedRows} isOpen={isActionOpen} onClose={onActionClose} variant={action} />
+            )}
         </>
     );
 };

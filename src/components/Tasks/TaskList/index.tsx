@@ -7,12 +7,14 @@ import Filter, {TFilterFormState} from './Filter';
 import Table from './Table';
 import tasksApi from '../tasksApi';
 import styles from './styles.module.css';
+import {EModalVariant, TDataType} from './types';
 
 const TaskList: React.FC = () => {
     const {t} = useTranslation('tasks');
 
-    const [action, setAction] = useState<string | undefined>();
+    const [action, setAction] = useState<EModalVariant | undefined>(undefined);
     const [open, setOpen] = useState(false);
+    const [selected, setSelected] = useState<TDataType[]>([]);
 
     const [page, setPage] = useState<Pick<ITaskListParams['body'], 'pageSize' | 'pageIndex'>>({
         pageSize: 10,
@@ -26,13 +28,20 @@ const TaskList: React.FC = () => {
 
     const [searchBy, setSearchBy] = useState<ITaskListParams['body']['searchBy']>({});
 
-    const {data, isLoading, isFetching} = tasksApi.endpoints.getTasks.useQuery({
-        header: {securityCode: 'security_code'},
-        body: {...page, ...sort, searchBy},
-    });
+    const {data, isLoading, isFetching} = tasksApi.endpoints.getTasks.useQuery(
+        {
+            header: {securityCode: 'security_code'},
+            body: {...page, ...sort, searchBy},
+        },
+        {refetchOnMountOrArgChange: true}
+    );
+
+    const handleSelectRows = (_selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
+        setSelected(selectedRows);
+    };
 
     const handleSelect = (v: string | null) => {
-        setAction(v || undefined);
+        setAction((v as unknown as EModalVariant) || undefined);
     };
 
     const handleFiltersSubmit = (filters: TFilterFormState) => {
@@ -42,8 +51,12 @@ const TaskList: React.FC = () => {
         }));
     };
 
-    const handlePageChange = (pageIndex: number, pageSize: number) => {
-        setPage({pageIndex: pageIndex - 1, pageSize});
+    const handlePageChange = (pageNumber: number = 1, pageSize: number) => {
+        setPage({pageIndex: pageNumber - 1, pageSize});
+    };
+
+    const handleRunAction = () => {
+        setOpen(true);
     };
 
     return (
@@ -55,20 +68,19 @@ const TaskList: React.FC = () => {
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
-                        value={action}
+                        value={action as unknown as string}
                         onSelect={handleSelect}
+                        disabled={isLoading || isFetching}
+                        className={styles.actionsSelect}
                     >
-                        <DropdownItem text="Изменение утверждающего" value={'APPR'} />
-                        {/* <DropdownItem text="Изменение исполнителя" value={'EXEC'} /> */}
+                        <DropdownItem text="Изменение утверждающего" value={EModalVariant.approver} />
+                        <DropdownItem text="Изменение исполнителя" value={EModalVariant.assignee} />
                     </Dropdown>
 
                     <RegularButton
                         size="m"
-                        onClick={() => {
-                            if (action === 'APPR') {
-                                setOpen(true);
-                            }
-                        }}
+                        onClick={handleRunAction}
+                        disabled={isLoading || isFetching || selected.length === 0 || !action}
                     >
                         {t('Common.Run')}
                     </RegularButton>
@@ -79,7 +91,10 @@ const TaskList: React.FC = () => {
                     tableData={data!}
                     isLoading={isLoading || isFetching}
                     isActionOpen={open}
+                    action={action}
                     onActionClose={() => setOpen(false)}
+                    selectedRows={selected}
+                    setSelectedRows={handleSelectRows}
                 />
             </Grid>
         </Grid>
