@@ -18,21 +18,25 @@ const ModalWindowsGroup: React.FC<Props> = ({onClose, products, action}) => {
                 onClose={onClose}
                 products={products}
                 show={action === ProductsActions.AddComment}
+                onSubmit={onClose}
             />
             <ProductsAddDocumentModalWindow
                 onClose={onClose}
                 products={products}
                 show={action === ProductsActions.AddDocument}
+                onSubmit={onClose}
             />
             <ProductsAddTasksModalWindow
                 onClose={onClose}
                 products={products}
                 show={action === ProductsActions.AddTasks}
+                onSubmit={onClose}
             />
             <ProductsBlockOrUnBlockModalWindow
                 onClose={onClose}
                 products={products}
                 show={action === ProductsActions.BlockOrUnBlock}
+                onSubmit={onClose}
             />
         </>
     );

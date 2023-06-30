@@ -1,0 +1,15 @@
+.tableHead {
+    margin-top: 24px;
+    height: 44px;
+    background-color: rgba(239, 241, 245, 1);
+    padding: 0 8px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(34, 36, 41, 1);
+}
+
+.tableBody {
+    height: 52px;
+    padding: 0 8px;
+}

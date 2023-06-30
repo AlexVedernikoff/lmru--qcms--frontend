@@ -6,6 +6,7 @@ interface Props {
     show: boolean;
     onClose: () => void;
     products: IProduct[];
+    onSubmit?: () => void;
 }
 
 const ProductsAddTasksModalWindow: React.FC<Props> = ({show, onClose, products}) => {

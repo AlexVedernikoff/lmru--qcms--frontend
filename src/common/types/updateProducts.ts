@@ -1,3 +1,5 @@
+// https://confluence.lmru.tech/display/QCMS/POST+update-product
+
 export interface IUpdateProductsRequestHeader {
     securityCode: string;
 }
