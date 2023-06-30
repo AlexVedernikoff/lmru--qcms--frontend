@@ -17,7 +17,6 @@ const baseQualityActionsResponsible = [
         externalId: USER_EXTERNAL_ID,
     },
 ];
-const currentDate = new Date();
 
 const DashboardSupplierRole: React.FC = () => {
     const {t} = useTranslation('dashboard');
@@ -38,11 +37,7 @@ const DashboardSupplierRole: React.FC = () => {
         searchBy: {
             responsible: baseQualityActionsResponsible,
             actionStatuses: ['AWAITING_DOCUMENT_LOADING', 'AWAITING_RESOLUTION'],
-            dates: {
-                dateType: 'REALISATION_DUE_DATE',
-                startDate: currentDate.toLocaleDateString("fr-CA"),
-                endDate: currentDate.toLocaleDateString("fr-CA")
-            },
+            isOverdue: true
         },
     });
 
