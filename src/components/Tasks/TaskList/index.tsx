@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import {Grid, RegularButton, Dropdown, DropdownItem} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import {ITaskListParams} from '../../../common/types/tasks';
@@ -28,7 +28,7 @@ const TaskList: React.FC = () => {
 
     const [searchBy, setSearchBy] = useState<ITaskListParams['body']['searchBy']>({});
 
-    const {data, isLoading, isFetching} = tasksApi.endpoints.getTasks.useQuery(
+    const {data, isLoading, isFetching, refetch} = tasksApi.endpoints.getTasks.useQuery(
         {
             header: {securityCode: 'security_code'},
             body: {...page, ...sort, searchBy},
@@ -45,10 +45,25 @@ const TaskList: React.FC = () => {
     };
 
     const handleFiltersSubmit = (filters: TFilterFormState) => {
-        setSearchBy(p => ({
-            ...p,
-            ...filters,
-        }));
+        setSearchBy({
+            actionStatuses: filters.actionStatuses,
+            awaitedDocumentTypes: filters.awaitedDocumentTypes,
+            categoryTypeNames: filters.categoryTypeNames,
+            categotyName: filters.categotyName,
+            conclusions: filters.conclusions,
+            dates: filters.dates,
+            ean: filters.ean,
+            isForUpdate: filters.isForUpdate,
+            productCode: filters.productCode,
+            productName: filters.productName,
+            productQualityModel: filters.productQualityModel,
+            productRange: filters.productRange,
+            qualityActionId: filters.qualityActionId,
+            responsible: filters.responsible,
+            supplierName: filters.supplierName,
+            supplierRMSCode: filters.supplierRMSCode,
+            supplierTaxIdentifier: filters.supplierTaxIdentifier,
+        });
     };
 
     const handlePageChange = (pageNumber: number = 1, pageSize: number) => {
@@ -58,6 +73,16 @@ const TaskList: React.FC = () => {
     const handleRunAction = () => {
         setOpen(true);
     };
+
+    const handleActionClose = useCallback(
+        (isCompleted?: boolean) => {
+            setOpen(false);
+            if (isCompleted) {
+                refetch();
+            }
+        },
+        [refetch]
+    );
 
     return (
         <Grid rowGap={16}>
@@ -93,7 +118,7 @@ const TaskList: React.FC = () => {
                     isLoading={isLoading || isFetching}
                     isActionOpen={open}
                     action={action}
-                    onActionClose={() => setOpen(false)}
+                    onActionClose={handleActionClose}
                     selectedRows={selected}
                     setSelectedRows={handleSelectRows}
                 />
