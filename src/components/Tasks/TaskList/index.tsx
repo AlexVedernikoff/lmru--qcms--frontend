@@ -73,8 +73,9 @@ const TaskList: React.FC = () => {
                         disabled={isLoading || isFetching}
                         className={styles.actionsSelect}
                     >
+                        <DropdownItem text="Добавить документы" value={EModalVariant.documents} />
                         <DropdownItem text="Изменение утверждающего" value={EModalVariant.approver} />
-                        <DropdownItem text="Изменение исполнителя" value={EModalVariant.assignee} />
+                        <DropdownItem text="Изменение исполнителя" value={EModalVariant.responsible} />
                     </Dropdown>
 
                     <RegularButton

@@ -8,7 +8,9 @@ import {TASKS_ROUTES} from '../../../common/consts';
 import CustomTable from '../../Common/CustomTable';
 import {ITaskListResponse} from '../../../common/types/tasks';
 import {convertDateFromServer} from '../../../utils/convertDateFromServer';
-import ActionModal from './ActionModal';
+import ResponsibleModal from './ActionModals/ResponsibleModal';
+import DocumnentModal from './ActionModals/DocumentsModal';
+import ApproverModal from './ActionModals/ApproverModal';
 import {EModalVariant, TDataType} from './types';
 
 interface IProps {
@@ -212,8 +214,14 @@ const Table: React.FC<IProps> = ({
                     onChange: onPageChange,
                 }}
             />
-            {!!action && (
-                <ActionModal dataList={selectedRows} isOpen={isActionOpen} onClose={onActionClose} variant={action} />
+            {action === EModalVariant.documents && (
+                <DocumnentModal dataList={selectedRows} isOpen={isActionOpen} onClose={onActionClose} />
+            )}
+            {action === EModalVariant.responsible && (
+                <ResponsibleModal dataList={selectedRows} isOpen={isActionOpen} onClose={onActionClose} />
+            )}
+            {action === EModalVariant.approver && (
+                <ApproverModal dataList={selectedRows} isOpen={isActionOpen} onClose={onActionClose} />
             )}
         </>
     );

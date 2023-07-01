@@ -10,6 +10,7 @@ import CustomTable from '../../Common/CustomTable';
 import NomenclatureRow from '../Common/NomenclatureRow';
 import {IModelItem, IModelsResponse} from '../../../common/types/models';
 import {TWithReactKey} from '../../../common/clientModels';
+import {convertDateFromServer} from '../../../utils/convertDateFromServer';
 
 type TDataType = TWithReactKey<IModelItem>;
 
@@ -140,7 +141,7 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
         {
             title: t('ModelList.Table.Columns.changeDate'),
             dataIndex: 'lastUpdateInformation',
-            render: (data: TDataType['lastUpdateInformation']) => <div>{data?.updatedAt}</div>,
+            render: (data: TDataType['lastUpdateInformation']) => <div>{convertDateFromServer(data?.updatedAt)}</div>,
             width: 246,
         },
     ];

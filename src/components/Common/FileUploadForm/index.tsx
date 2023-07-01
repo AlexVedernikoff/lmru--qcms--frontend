@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {useState, DragEvent} from 'react';
 
 import s from './styles.module.css';
+import {Typography} from 'fronton-react';
 
 interface Props {
     onFileSelect: (file: File | undefined) => void;
@@ -64,13 +65,19 @@ const FileUploadForm: React.FC<Props> = ({onFileSelect}) => {
     return (
         <div className={s.root} onDragStart={handleDragStart} onDragOver={handleDragStart}>
             <br />
-            {t('Title')}
-            <br />
+            <Typography variant="l" size="body_accent">
+                {t('Title')}
+            </Typography>
             <SelectFilesToUploadButton onFilesSelect={handleFilesSelect} />
-            <br />
-            {t('Format')}
-            <br />
-            {t('Size')}
+            <div>
+                <Typography variant="s" size="body_short">
+                    {t('Format')}
+                </Typography>
+                <br />
+                <Typography variant="s" size="body_short">
+                    {t('Size')}
+                </Typography>
+            </div>
             <br />
         </div>
     );
