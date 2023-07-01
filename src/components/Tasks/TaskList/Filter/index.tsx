@@ -29,7 +29,7 @@ const Filter: React.FC<IProps> = ({onSubmit}) => {
 
     const handleClear: React.MouseEventHandler<HTMLButtonElement> = _e => {
         setFormState({});
-        onSubmit(formState);
+        onSubmit({});
     };
 
     const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = _e => {
