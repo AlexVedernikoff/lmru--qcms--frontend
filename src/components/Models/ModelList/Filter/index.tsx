@@ -41,7 +41,7 @@ interface IProps {
 
 const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
     const {data: nomenclature = []} = modelsApi.useGetModelNomenclatureQuery({securityCode: 'security_code'});
-    const {isLoading} = modelsApi.endpoints.getModels.useQueryState(skipToken);
+    const {isLoading, isFetching} = modelsApi.endpoints.getModels.useQueryState(skipToken);
     const [formState, setFormState] = useState<IFilterFormState>({});
 
     const {t} = useTranslation('models');
@@ -128,7 +128,7 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
 
     const handleClear: React.MouseEventHandler<HTMLButtonElement> = _e => {
         setFormState({});
-        onSubmit(formState);
+        onSubmit({});
     };
 
     const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = _e => {
@@ -204,11 +204,11 @@ const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
                 <span />
 
                 <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton disabled={isLoading} onClick={handleClear} size="m" variant="outline">
+                    <RegularButton disabled={isLoading || isFetching} onClick={handleClear} size="m" variant="outline">
                         {t('Buttons.Clear')}
                     </RegularButton>
 
-                    <RegularButton disabled={isLoading} size="m" variant="primary" onClick={handleSubmit}>
+                    <RegularButton disabled={isLoading || isFetching} size="m" variant="primary" onClick={handleSubmit}>
                         {t('Buttons.Search')}
                     </RegularButton>
                 </Grid>

@@ -55,7 +55,7 @@ const ModelList: React.FC = () => {
         setSearchBy(p => ({
             ...p,
             qualityModelLabel: filters.qualityModel,
-            modelNameOrCode: filters.modelNameOrCode,
+            labels: filters.modelNameOrCode ? [filters.modelNameOrCode] : undefined,
             productModelNomenclatureDepartmentCode: filters.productModelNomenclatureDepartmentCode?.length
                 ? filters.productModelNomenclatureDepartmentCode
                 : undefined,
