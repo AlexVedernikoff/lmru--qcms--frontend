@@ -14,6 +14,8 @@ import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSli
 import {providersApi} from '../components/Providers/services';
 import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
 import {suppliersFilter} from './slices/suppliersFilterSlice';
+import {postSearchSuppliers} from '../api/postSearchSuppliers';
+import {suppliersTableData} from './slices/suppliersTableDataSlice';
 
 const rootReducer = {
     [getManagementNomenclature.reducerPath]: getManagementNomenclature.reducer,
@@ -29,6 +31,8 @@ const rootReducer = {
     productsDocumentsFilters: productsDocumentsFilters.reducer,
     productsDocumentsTableData: productsDocumentsTableData.reducer,
     suppliersFilter: suppliersFilter.reducer,
+    [postSearchSuppliers.reducerPath]: postSearchSuppliers.reducer,
+    suppliersTableData: suppliersTableData.reducer,
 };
 
 const createReducer = (injectedReducers = {}) =>
@@ -51,7 +55,8 @@ const makeStore = () =>
                 postSearchQualityDocuments.middleware,
                 providersApi.middleware,
                 taskDetailsApi.middleware,
-                withModelApi.middleware
+                withModelApi.middleware,
+                postSearchSuppliers.middleware
             ),
         devTools: process.env.NODE_ENV === 'development',
     });

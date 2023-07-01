@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {TRootState} from '../../../../store/index';
 import {useTranslation} from 'react-i18next';
@@ -7,7 +7,10 @@ import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
 import AdditionalFilter from './AdditionalFilter';
 import styles from '../../../Common.module.css';
 import {IManagementNomenclature, IModelNomenclature, IProvidersParams} from '../../../../common/types/providers';
-import {setSuppliersFilter, ISuppliersFilter} from '../../../../store/slices/suppliersFilterSlice';
+import {setSuppliersFilter, ISuppliersFilter, initialState} from '../../../../store/slices/suppliersFilterSlice';
+import {prepareBody} from './prepareBody';
+import {usePostSearchSupplsMutation} from '../../../../api/postSearchSuppliers';
+import {setSuppliersTableData} from '../../../../store/slices/suppliersTableDataSlice';
 
 interface Props {
     loadProvidersList: (value: IProvidersParams) => void;
@@ -17,65 +20,41 @@ interface Props {
 
 const ProvidersFilter: React.FC<Props> = props => {
     const {t} = useTranslation('providers');
+    const dispatch = useDispatch();
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
-    const [filter, setFilter] = useState<string>();
-    const [inputFilter, setInputFilter] = useState<string>();
     const {loadProvidersList, modelNomenclature} = props;
     const handleShowMoreFiltersClick = () => {
         setIsMoreFiltersActive(prevState => !prevState);
     };
 
-    const [searchBy, setSearchBy] = useState<IProvidersParams['searchBy']>({});
-
-    const updateRequestPayload = {
-        pageIndex: 5,
-        pageSize: 2,
-        searchBy: {
-            [String(filter)]: inputFilter,
-            ...searchBy,
-        },
-    };
-
-    const keys = ['modelDepartmentId', 'modelSubDepartmentId', 'modelConsolidationId', 'modelCodeId'];
-    const initialAcc = keys.reduce((acc: any, key) => {
-        acc[key] = [];
-        return acc;
-    }, {});
-
-    const handleFiltersAdditional: (newValue: string[]) => void = newValue => {
-        const newFilters = newValue.reduce((acc: any, el: any) => {
-            const [key, value] = el.split(' ');
-
-            if (!acc[key]) acc[key] = [];
-            acc[key].push(value);
-            return acc;
-        }, initialAcc);
-
-        setSearchBy(filters => ({
-            ...filters,
-            ...newFilters,
-        }));
-    };
-
-    // const handleSelect = () => {
-    //     // const value = e.target.value;
-    //     // setFilter(value);
-    // };
-
-    const resetFilters = () => {
-        setInputFilter(undefined);
-        setFilter(undefined);
-        setSearchBy(undefined);
-    };
-
-    // ********************************************************************************* //
-
-    const dispatch = useDispatch();
     const onHandleFilterChange = (e: ISuppliersFilter[keyof ISuppliersFilter], k: string) => {
         dispatch(setSuppliersFilter([e, k]));
     };
 
+    const clearFilters = (initialState: ISuppliersFilter) => {
+        for (const key in initialState) {
+            onHandleFilterChange(initialState[key as keyof ISuppliersFilter], key);
+        }
+    };
+
     const suppliersFilterState: ISuppliersFilter = useSelector((state: TRootState) => state.suppliersFilter);
+    const [getProviders] = usePostSearchSupplsMutation();
+
+    const currentPage = suppliersFilterState.pageable.pageIndex;
+
+    const requestBody = prepareBody(suppliersFilterState);
+
+    useEffect(() => {
+        receiveProviders();
+        // eslint-disable-next-line
+    }, [currentPage]);
+
+    const receiveProviders = async () => {
+        const requestBody = prepareBody(suppliersFilterState);
+        // console.log('requestBody= ', requestBody);
+        const providersTableData = await getProviders(requestBody);
+        dispatch(setSuppliersTableData(providersTableData));
+    };
 
     const {supplierKey, supplierValue, registrationStatus, billingCountry, supplierDepartmentCountry} =
         suppliersFilterState;
@@ -147,7 +126,7 @@ const ProvidersFilter: React.FC<Props> = props => {
                         placeholder={t('Common.Select')}
                         label={t('ProvidersList.Filters.countryLocationSupplier')}
                         value={supplierDepartmentCountry}
-                        onSelect={e => onHandleFilterChange(e!, ' supplierDepartmentCountry')}
+                        onSelect={e => onHandleFilterChange(e!, 'supplierDepartmentCountry')}
                     >
                         <DropdownItem text="Россия" value={'Russia'} />
                     </Dropdown>
@@ -310,7 +289,7 @@ const ProvidersFilter: React.FC<Props> = props => {
                 <Grid columnGap={16} columns="1fr" alignItems="center">
                     <AdditionalFilter
                         modelNomenclature={modelNomenclature}
-                        handleFiltersAdditional={handleFiltersAdditional}
+                        // handleFiltersAdditional={handleFiltersAdditional}
                     />
                 </Grid>
             )}
@@ -333,11 +312,34 @@ const ProvidersFilter: React.FC<Props> = props => {
                 <span />
 
                 <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton onClick={resetFilters} size="m" variant="outline">
+                    <RegularButton
+                        onClick={() => {
+                            clearFilters(initialState);
+                            loadProvidersList(requestBody);
+                        }}
+                        size="m"
+                        variant="outline"
+                    >
                         {t('Buttons.Clear')}
                     </RegularButton>
 
-                    <RegularButton onClick={() => loadProvidersList(updateRequestPayload)} size="m" variant="primary">
+                    {/* <RegularButton
+                        onClick={() => {
+                            loadProvidersList(requestBody);
+                        }}
+                        size="m"
+                        variant="primary"
+                    >
+                        {t('Buttons.Search')}
+                    </RegularButton> */}
+
+                    <RegularButton
+                        onClick={() => {
+                            receiveProviders();
+                        }}
+                        size="m"
+                        variant="primary"
+                    >
                         {t('Buttons.Search')}
                     </RegularButton>
                 </Grid>

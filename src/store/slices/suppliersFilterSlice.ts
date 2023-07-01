@@ -1,5 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 
+export interface IPageable {
+    pageIndex: number;
+    pageSize: number;
+    sortField?: string;
+    sortDirection?: string;
+}
+
 export interface ISuppliersFilter {
     supplierKey: string;
     supplierValue: string | undefined;
@@ -17,6 +24,7 @@ export interface ISuppliersFilter {
     productManagementNomenclatureSubdepartmentId: number[] | undefined;
     productManagementNomenclatureTypeId: number[] | undefined;
     productManagementNomenclatureSubtypeId: number[] | undefined;
+    pageable: IPageable;
 }
 
 export const initialState: ISuppliersFilter = {
@@ -36,6 +44,11 @@ export const initialState: ISuppliersFilter = {
     productManagementNomenclatureSubdepartmentId: undefined,
     productManagementNomenclatureTypeId: undefined,
     productManagementNomenclatureSubtypeId: undefined,
+
+    pageable: {
+        pageIndex: 0,
+        pageSize: 10,
+    },
 };
 
 export const suppliersFilter = createSlice({

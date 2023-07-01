@@ -13,7 +13,6 @@ import {СustomTreeSelect} from '../../../Common/CustomTreeSelect';
 
 type Props = {
     modelNomenclature: IModelNomenclature | undefined;
-    handleFiltersAdditional: (filters: string[]) => void;
 };
 
 const AdditionalFilter: React.FC<Props> = props => {
@@ -43,14 +42,13 @@ const AdditionalFilter: React.FC<Props> = props => {
     const treeSelectValue = (keys: string[]) =>
         keys.reduce((acc: string[], key) => {
             const idsArr: string[] = suppliersFilterState[key as keyof ISuppliersFilter] as string[];
-            console.log('idsArr = ', idsArr);
             if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
             return acc;
         }, []);
 
     const modelNomenclatureValue = treeSelectValue(modNomKeys);
     const managementNomenclatureValue = treeSelectValue(manNomKeys);
-    console.log('modelNomenclatureValue = ', modelNomenclatureValue);
+    // console.log('modelNomenclatureValue = ', modelNomenclatureValue);
 
     const onTreeChange = (newValue: any, keys: any) => {
         const initialAcc = keys.reduce((acc: any, key: any) => {
@@ -65,7 +63,7 @@ const AdditionalFilter: React.FC<Props> = props => {
             return acc;
         }, initialAcc);
 
-        console.log('result = ', result);
+        // console.log('result = ', result);
 
         for (const key in result) {
             onHandleFilterChange(result[key], key);

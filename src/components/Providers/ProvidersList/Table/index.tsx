@@ -1,5 +1,6 @@
 import {useCallback, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {RegularButton} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
@@ -8,17 +9,25 @@ import {TableRowSelection} from 'antd/es/table/interface';
 import {PROVIDER_ROUTES} from '../../../../common/consts';
 import {getProviderTableColumns} from './TableColumns';
 import CustomTable from '../../../Common/CustomTable';
-import {IProvidersResponse, IProvidersResponseItem} from '../../../../common/types/providers';
+import {IProvidersResponse} from '../../../../common/types/providers';
+import {setSuppliersFilter} from '../../../../store/slices/suppliersFilterSlice';
+import {TRootState} from '../../../../store/index';
+import {ISearchSuppliersResponse, ISuppliersContent} from '../../../../common/types/searchSuppliers';
 
 interface Props {
     providers: IProvidersResponse | undefined; // IProviderTableItem[]
 }
-export type RawTable = Pick<IProvidersResponseItem, 'supplierName' | 'supplierRMSCode' | 'id'>;
+export type RawTable = Pick<ISuppliersContent, 'supplierName' | 'supplierRMSCode' | 'id'>;
 
 const ProvidersTable: React.FC<Props> = props => {
     const navigate = useNavigate();
     const {t} = useTranslation('providers');
-    const {providers} = props;
+    const dispatch = useDispatch();
+    // *****************************************************************
+    const suppliersTableData: ISearchSuppliersResponse = useSelector((state: TRootState) => state.suppliersTableData);
+    // *****************************************************************
+    const providers = suppliersTableData;
+    const {pageable} = providers || {};
 
     let rawTable = providers?.content.map((el, i) => {
         let raw = {supplierName: el.supplierName, supplierRMSCode: el.supplierRMSCode, id: el.id, key: i};
@@ -35,6 +44,18 @@ const ProvidersTable: React.FC<Props> = props => {
         [navigate]
     );
 
+    const onPageChange = (page: number) => {
+        dispatch(
+            setSuppliersFilter([
+                {
+                    ...pageable,
+                    pageIndex: page - 1,
+                },
+                'pageable',
+            ])
+        );
+    };
+
     const columns = useMemo<ColumnsType<RawTable>>(
         () => [
             {
@@ -43,7 +64,7 @@ const ProvidersTable: React.FC<Props> = props => {
                 width: 64,
                 render: (_value: string, record: RawTable) => (
                     <RegularButton
-                        data-id={record.id.toString()}
+                        data-id={record.id?.toString()}
                         onClick={handleViewProviderDetails}
                         href=""
                         rel=""
@@ -87,7 +108,12 @@ const ProvidersTable: React.FC<Props> = props => {
             tableLayout="fixed"
             size="small"
             bordered
-            pagination={{}}
+            pagination={{
+                pageSize: pageable?.pageSize,
+                total: pageable?.totalElements,
+                current: pageable?.pageIndex ? pageable?.pageIndex + 1 : 1,
+                onChange: onPageChange,
+            }}
         />
     );
 };

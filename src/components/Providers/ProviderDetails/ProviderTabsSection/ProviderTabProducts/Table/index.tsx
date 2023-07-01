@@ -20,7 +20,7 @@ const ContactsTable: React.FC = () => {
                 pageIndex: 1,
                 pageSize: 1,
                 searchBy: {
-                    code: supplierDetails?.supplierRMSCode,
+                    supplierCode: supplierDetails?.supplierRMSCode,
                 },
             });
         }
