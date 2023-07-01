@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
     Dropdown,
@@ -12,21 +12,31 @@ import {
     RegularButton,
 } from 'fronton-react';
 import tasksApi from '../../tasksApi';
-import {TDataType} from '../types';
+import {IModalProps} from '../types';
 
-interface IProps {
-    isOpen: boolean;
-    onClose: () => void;
-    dataList: TDataType[];
-}
-
-const ApproverModal: React.FC<IProps> = ({isOpen, onClose, dataList}) => {
+const ApproverModal: React.FC<IModalProps> = ({isOpen, onClose, dataList}) => {
     const {t} = useTranslation('tasks');
 
     const [type, setType] = useState<string | undefined>();
     const [user, setUser] = useState<string | undefined>();
 
-    const [updateTasks] = tasksApi.endpoints.updateTasks.useMutation();
+    const [updateTasks, updateTasksResult] = tasksApi.endpoints.updateTasks.useMutation();
+
+    const isButtonDisabled = useMemo(
+        () => !type || !user || updateTasksResult.isLoading,
+        [type, updateTasksResult.isLoading, user]
+    );
+
+    useEffect(() => {
+        if (updateTasksResult.isSuccess) {
+            onClose(true);
+        }
+
+        if (updateTasksResult.isError) {
+            type TDataError = {data: {errors: [{message: string}]}};
+            alert((updateTasksResult.error as unknown as TDataError)?.data?.errors?.[0]?.message);
+        }
+    }, [updateTasksResult.error, updateTasksResult.isError, updateTasksResult.isSuccess, onClose]);
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser(e.target.value);
@@ -60,7 +70,7 @@ const ApproverModal: React.FC<IProps> = ({isOpen, onClose, dataList}) => {
     };
 
     return (
-        <Modal show={isOpen} onClose={handleClose} size="m">
+        <Modal show={isOpen} onClose={isButtonDisabled ? () => {} : handleClose} size="m">
             <ModalHeader title="Изменение утверждающего" />
             <ModalContent>
                 <Grid gap={24}>
@@ -91,11 +101,20 @@ const ApproverModal: React.FC<IProps> = ({isOpen, onClose, dataList}) => {
             </ModalContent>
             <ModalFooter>
                 <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton onClick={onClose} size="m" variant="outline">
+                    <RegularButton
+                        onClick={() => {
+                            onClose();
+                        }}
+                        size="m"
+                        variant="outline"
+                        disabled={isButtonDisabled}
+                    >
                         {t('Buttons.Cancel')}
                     </RegularButton>
 
-                    <RegularButton onClick={handleSave}>{t('Buttons.Save')}</RegularButton>
+                    <RegularButton onClick={handleSave} disabled={isButtonDisabled}>
+                        {t('Buttons.Save')}
+                    </RegularButton>
                 </Grid>
             </ModalFooter>
         </Modal>

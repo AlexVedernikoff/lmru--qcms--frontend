@@ -15,7 +15,7 @@ import {EModalVariant, TDataType} from './types';
 
 interface IProps {
     onPageChange: (page: number, size: number) => void;
-    onActionClose: () => void;
+    onActionClose: (isCompleted?: boolean) => void;
     tableData: ITaskListResponse;
     isLoading: boolean;
     action: EModalVariant | undefined;

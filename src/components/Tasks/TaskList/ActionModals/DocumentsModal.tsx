@@ -6,15 +6,9 @@ import FileUploadForm from '../../../Common/FileUploadForm';
 import {IDocumentMetaData} from '../../../../common/types/files';
 import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
 import styles from './DocumentsModal.module.css';
-import {TDataType} from '../types';
+import {IModalProps} from '../types';
 
-interface IProps {
-    isOpen: boolean;
-    onClose: () => void;
-    dataList: TDataType[];
-}
-
-const DocumnentModal: React.FC<IProps> = ({isOpen, onClose, dataList}) => {
+const DocumnentModal: React.FC<IModalProps> = ({isOpen, onClose, dataList}) => {
     const {t} = useTranslation('tasks');
 
     const [isPartial, setIsPartial] = useState(false);
@@ -25,13 +19,13 @@ const DocumnentModal: React.FC<IProps> = ({isOpen, onClose, dataList}) => {
     const [createDocument, createDocumentResult] = tasksApi.endpoints.createDocument.useMutation();
 
     const isButtonDisabled = useMemo(
-        () => !file || (isPartial ? !startDate : !startDate || !endDate),
-        [endDate, file, isPartial, startDate]
+        () => createDocumentResult.isLoading || !file || (isPartial ? !startDate : !startDate || !endDate),
+        [createDocumentResult.isLoading, endDate, file, isPartial, startDate]
     );
 
     useEffect(() => {
         if (createDocumentResult.isSuccess) {
-            onClose();
+            onClose(true);
         }
 
         if (createDocumentResult.isError) {
@@ -154,15 +148,17 @@ const DocumnentModal: React.FC<IProps> = ({isOpen, onClose, dataList}) => {
             <ModalFooter>
                 <Grid columnGap={16} columns="repeat(2, 1fr)">
                     <RegularButton
-                        onClick={onClose}
+                        onClick={() => {
+                            onClose();
+                        }}
                         size="m"
                         variant="outline"
-                        disabled={createDocumentResult.isLoading || isButtonDisabled}
+                        disabled={isButtonDisabled}
                     >
                         {t('Buttons.Cancel')}
                     </RegularButton>
 
-                    <RegularButton onClick={handleSave} disabled={createDocumentResult.isLoading || isButtonDisabled}>
+                    <RegularButton onClick={handleSave} disabled={isButtonDisabled}>
                         {t('Buttons.Save')}
                     </RegularButton>
                 </Grid>

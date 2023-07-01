@@ -8,3 +8,9 @@ export enum EModalVariant {
 }
 
 export type TDataType = TWithReactKey<ITaskListResponse['content'][number]>;
+
+export interface IModalProps {
+    isOpen: boolean;
+    onClose: (isCompleted?: boolean) => void;
+    dataList: TDataType[];
+}
