@@ -3,7 +3,7 @@ import {ITaskListResponse} from '../../../common/types/tasks';
 
 export enum EModalVariant {
     approver,
-    assignee,
+    responsible,
     documents,
 }
 

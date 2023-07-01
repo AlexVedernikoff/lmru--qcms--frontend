@@ -131,9 +131,9 @@ interface ITaskActionQualityAction {
     id: number;
     actionStatus: string;
     conclusion: string;
-    approvers: ITaskActionApprover[];
-    responsible: ITaskActionResponsible[];
-    publicComment: string;
+    approvers?: ITaskActionApprover[];
+    responsible?: ITaskActionResponsible[];
+    publicComment?: string;
 }
 
 export interface ITaskActionParams {
@@ -145,4 +145,14 @@ export interface ITaskActionParams {
         updatedBy: string;
     };
 }
+
 export interface ITaskActionResponse {}
+
+export interface ITaskUploadDocumentParams {
+    header: {
+        securityCode: string;
+    };
+    body: FormData;
+}
+
+export interface ITaskUploadDocumentResponse {}

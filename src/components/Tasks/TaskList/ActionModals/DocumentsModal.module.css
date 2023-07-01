@@ -1,0 +1,17 @@
+.dateInput {
+    width: 100%;
+}
+
+.dateInput > div {
+    width: 100%;
+    min-width: 220px;
+    max-width: 280px;
+}
+
+.grid {
+    margin-top: 40px;
+}
+
+.content {
+    height: 650px;
+}
