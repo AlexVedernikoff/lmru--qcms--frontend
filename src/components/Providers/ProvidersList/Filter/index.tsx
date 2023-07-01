@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {TRootState} from '../../../../store/index';
 import {useTranslation} from 'react-i18next';
-import {Checkbox, Dropdown, DropdownItem, Grid, Input, RegularButton, DatePicker, Typography} from 'fronton-react';
+import {Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react';
 import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
 import AdditionalFilter from './AdditionalFilter';
 import styles from '../../../Common.module.css';
@@ -57,10 +57,10 @@ const ProvidersFilter: React.FC<Props> = props => {
         }));
     };
 
-    const handleSelect = () => {
-        // const value = e.target.value;
-        // setFilter(value);
-    };
+    // const handleSelect = () => {
+    //     // const value = e.target.value;
+    //     // setFilter(value);
+    // };
 
     const resetFilters = () => {
         setInputFilter(undefined);

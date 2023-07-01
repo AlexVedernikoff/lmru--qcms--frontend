@@ -33,101 +33,26 @@ const AdditionalFilter: React.FC<Props> = props => {
         'productModelNomenclatureCodeId',
     ];
 
-    const manNomLeys = [
+    const manNomKeys = [
         'productManagementNomenclatureDepartmentId',
         'productManagementNomenclatureSubdepartmentId',
         'productManagementNomenclatureTypeId',
         'productManagementNomenclatureSubtypeId',
     ];
 
-    // const productNomenclatureData = productModelNomenclature.map((el: IProductModelNomenclatureResponse) => {
-    //     return {
-    //         title: el.nameRu,
-    //         value: `${modNomKeys[0]} ${el.code}`,
-    //         children: el.subdepartments.map(subDep => {
-    //             return {
-    //                 title: subDep.nameRu,
-    //                 value: `${modNomKeys[1]} ${subDep.code}`,
-    //                 children: subDep.modelConsolidationGroups.map(modCon => {
-    //                     return {
-    //                         title: modCon.nameRu,
-    //                         value: `${modNomKeys[2]} ${modCon.code}`,
-    //                         children: modCon.models
-    //                             ? modCon.models.map(mod => {
-    //                                   return {
-    //                                       title: mod.nameRu,
-    //                                       value: `${modNomKeys[3]} ${mod.code}`,
-    //                                   };
-    //                               })
-    //                             : undefined,
-    //                     };
-    //                 }),
-    //             };
-    //         }),
-    //     };
-    // });
-
-    // const managementNomenclatureData = managementNomenclature.map((el: IManagementNomenclatureResponse) => {
-    //     return {
-    //         title: el.name,
-    //         value: `${manNomLeys[0]} ${el.id}`,
-    //         children: el.subDepartments.map(subDep => {
-    //             return {
-    //                 title: subDep.name,
-    //                 value: `${manNomLeys[1]} ${subDep.id}`,
-    //                 children: subDep.types
-    //                     ? subDep.types.map(modCon => {
-    //                           return {
-    //                               title: modCon.name,
-    //                               value: `${manNomLeys[2]} ${modCon.id}`,
-    //                               children: modCon.subTypes
-    //                                   ? modCon.subTypes.map(mod => {
-    //                                         return {
-    //                                             title: mod.name,
-    //                                             value: `${manNomLeys[3]} ${mod.id}`,
-    //                                         };
-    //                                     })
-    //                                   : undefined,
-    //                           };
-    //                       })
-    //                     : undefined,
-    //             };
-    //         }),
-    //     };
-    // });
-
     const treeSelectValue = (keys: string[]) =>
         keys.reduce((acc: string[], key) => {
             const idsArr: string[] = suppliersFilterState[key as keyof ISuppliersFilter] as string[];
+            console.log('idsArr = ', idsArr);
             if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
             return acc;
         }, []);
 
-    // function treeSelectValue<T = string>(keys: string[], state: T) {
-    //     return keys.reduce((acc: string[], key) => {
-    //         const idsArr: string[] = state[key] as string[];
-    //         if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
-    //         return acc;
-    //     }, []);
-    // }
-    // keys: string[] //обобщить функцию дженериком?
-
-    // function treeSelectValue<T>(keys: string[], state: T) {
-    //     return keys.reduce((acc: string[], key) => {
-    //         const idsArr: string[] = state[key as keyof T] as string[];
-    //         if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
-    //         return acc;
-    //     }, []);
-    // }
-
-    // const modelNomenclatureValue = treeSelectValue<ISuppliersFilter>(modNomKeys, suppliersFilterState); // передать через пропсы?
-    // const managementNomenclatureValue = treeSelectValue<ISuppliersFilter>(manNomLeys, suppliersFilterState);
-
-    const modelNomenclatureValue = treeSelectValue(modNomKeys); // передать через пропсы?
-    const managementNomenclatureValue = treeSelectValue(manNomLeys);
+    const modelNomenclatureValue = treeSelectValue(modNomKeys);
+    const managementNomenclatureValue = treeSelectValue(manNomKeys);
+    console.log('modelNomenclatureValue = ', modelNomenclatureValue);
 
     const onTreeChange = (newValue: any, keys: any) => {
-        // передать через пропсы? у каждого эта функция, меняющая стейт, своя.
         const initialAcc = keys.reduce((acc: any, key: any) => {
             acc[key] = [];
             return acc;
@@ -135,10 +60,12 @@ const AdditionalFilter: React.FC<Props> = props => {
 
         const result = newValue.reduce((acc: any, el: any) => {
             let [key, value] = el.split(' ');
-            if (keys === manNomLeys) value = Number(value);
+            if (keys === manNomKeys) value = Number(value);
             acc[key].push(value);
             return acc;
         }, initialAcc);
+
+        console.log('result = ', result);
 
         for (const key in result) {
             onHandleFilterChange(result[key], key);
@@ -149,30 +76,6 @@ const AdditionalFilter: React.FC<Props> = props => {
             });
         }
     };
-
-    // const tPropsProdNom = {
-    //     treeData: productNomenclatureData,
-    //     value: modelNomenclatureValue,
-    //     onChange: (val: any) => onTreeChange(val, modNomKeys),
-    //     treeCheckable: true,
-    //     showCheckedStrategy: SHOW_PARENT,
-    //     placeholder: t('ProvidersList.DetailFilters.productModelNomenclature'),
-    //     style: {
-    //         width: '100%',
-    //     },
-    // };
-
-    // const tPropsManNom = {
-    //     treeData: managementNomenclatureData,
-    //     value: managementNomenclatureValue,
-    //     onChange: (val: any) => onTreeChange(val, manNomLeys),
-    //     treeCheckable: true,
-    //     showCheckedStrategy: SHOW_PARENT,
-    //     placeholder: t('ProvidersList.DetailFilters.managementNomenclature'),
-    //     style: {
-    //         width: '100%',
-    //     },
-    // };
 
     const {qualityRating} = suppliersFilterState;
 
@@ -208,16 +111,6 @@ const AdditionalFilter: React.FC<Props> = props => {
                     nomenclatureValue={managementNomenclatureValue}
                     handleChange={onTreeChange}
                 />
-                {/* <TreeSelect {...tPropsManNom} /> */}
-                {/**************** Экспериментальный кастомный компонент *****************/}
-                {/* <СustomTreeSelect
-                    type={'product'}
-                    nomenclatureValue={managementNomenclatureValue}
-                    handleChange={onTreeChange}
-                /> */}
-
-                {/* modelNomenclatureValue = treeSelectValue(modNomKeys); // передать через пропсы?
-    const managementNomenclatureValue = treeSelectValue(manNomLeys); */}
 
                 {/**************** Фильтр "07 Модель качества" *****************/}
 
