@@ -2,7 +2,7 @@ import {Checkbox, Dropdown, DropdownItem, Grid, Typography, Input} from 'fronton
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 // import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
-import {IModelNomenclature} from '../../../../common/types/providers';
+// import {IModelNomenclature} from '../../../../common/types/providers';
 // import {useGetProductModelNomenclatureQuery} from '../../../../api/getProductModelNomenclature';
 // import {useGetManagementNomenclatureQuery} from '../../../../api/getManagementNomenclature';
 // import {IProductModelNomenclatureResponse} from '../../../../common/types/productModelNomenclature';
@@ -12,7 +12,7 @@ import {setSuppliersFilter, ISuppliersFilter} from '../../../../store/slices/sup
 import {СustomTreeSelect} from '../../../Common/CustomTreeSelect';
 
 type Props = {
-    modelNomenclature: IModelNomenclature | undefined;
+    // modelNomenclature: IModelNomenclature | undefined;
 };
 
 const AdditionalFilter: React.FC<Props> = props => {

@@ -15,7 +15,7 @@ export const prepareBody = (suppliersFilterState: ISuppliersFilter) => {
     // const newDateArr = ['createDate', 'updateDate'];
 
     requsetBody.pageIndex = pageable.pageIndex;
-
+    requsetBody.pageSize = pageable.pageSize;
     requsetBody.searchBy = {
         [supplierKey]: supplierValue,
         ...suppliersFilterState,

@@ -35,26 +35,30 @@ const DocumentsTable = () => {
     const data = useMemo<IDataType[]>(
         () =>
             productsDocuments?.map(el => {
+                const {id, type, productsDetails, issueDate, expireDate, status, creationInformation} = el;
+                const receiveData = (field: string) => {
+                    return productsDetails && productsDetails[0] ? productsDetails[0][field] : 'нет данных';
+                };
                 return {
-                    key: el.id,
-                    documentNumber: el.id,
-                    type: el.type,
-                    productCode: el.productsDetails ? el.productsDetails[0]?.productCode : 'нет данных',
-                    EAN: el.productsDetails ? el.productsDetails[0]?.ean : 'нет данных',
-                    TNVED: el.productsDetails ? el.productsDetails[0]?.productTNVEDCode : 'нет данных',
-                    name: el.productsDetails ? el.productsDetails[0]?.productTNVEDCode : 'нет данных',
-                    releaseDate: el.issueDate || ' ',
-                    endDate: el.expireDate || ' ',
-                    status: el.status,
-                    confirmationStatus: el.productsDetails ? el.productsDetails[0]?.approvingStatus : 'нет данных',
-                    uploadDate: el.creationInformation.createdAt || ' ',
-                    nameSupplier: el.productsDetails ? el.productsDetails[0]?.supplierName : 'нет данных',
-                    supplieroCodeRMS: el.productsDetails ? el.productsDetails[0]?.supplierRMSCode : 'нет данных',
-                    INN: el.productsDetails ? el.productsDetails[0]?.supplierTaxIdentifier : 'нет данных',
+                    key: id,
+                    documentNumber: id,
+                    type: type,
+                    productCode: receiveData('productCode'),
+                    EAN: receiveData('ean'),
+                    TNVED: receiveData('productTNVEDCode'),
+                    name: receiveData('productDescription'),
+                    releaseDate: issueDate || 'нет данных',
+                    endDate: expireDate || 'нет данных',
+                    status: status,
+                    confirmationStatus: receiveData('approvingStatus'),
+                    uploadDate: creationInformation.createdAt || 'нет данных',
+                    nameSupplier: receiveData('supplierName'),
+                    supplieroCodeRMS: receiveData('supplierRMSCode'),
+                    INN: receiveData('supplierTaxIdentifier'),
                     businessLicenseNumber: 0,
                     SSMCode: 0,
-                    role: el.creationInformation.createdBy.Role || ' ',
-                    downloadCompleted: el.creationInformation.createdBy || ' ',
+                    role: creationInformation.createdBy.Role || 'нет данных',
+                    downloadCompleted: creationInformation.createdBy || 'нет данных',
                 };
             }),
         [productsDocuments]

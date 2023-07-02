@@ -9,30 +9,28 @@ import {TableRowSelection} from 'antd/es/table/interface';
 import {PROVIDER_ROUTES} from '../../../../common/consts';
 import {getProviderTableColumns} from './TableColumns';
 import CustomTable from '../../../Common/CustomTable';
-import {IProvidersResponse} from '../../../../common/types/providers';
 import {setSuppliersFilter} from '../../../../store/slices/suppliersFilterSlice';
 import {TRootState} from '../../../../store/index';
 import {ISearchSuppliersResponse, ISuppliersContent} from '../../../../common/types/searchSuppliers';
 
-interface Props {
-    providers: IProvidersResponse | undefined; // IProviderTableItem[]
-}
 export type RawTable = Pick<ISuppliersContent, 'supplierName' | 'supplierRMSCode' | 'id'>;
 
-const ProvidersTable: React.FC<Props> = props => {
+const ProvidersTable: React.FC = () => {
     const navigate = useNavigate();
     const {t} = useTranslation('providers');
     const dispatch = useDispatch();
-    // *****************************************************************
-    const suppliersTableData: ISearchSuppliersResponse = useSelector((state: TRootState) => state.suppliersTableData);
-    // *****************************************************************
-    const providers = suppliersTableData;
-    const {pageable} = providers || {};
 
-    let rawTable = providers?.content.map((el, i) => {
-        let raw = {supplierName: el.supplierName, supplierRMSCode: el.supplierRMSCode, id: el.id, key: i};
-        return raw;
-    });
+    const suppliersTableData: ISearchSuppliersResponse = useSelector((state: TRootState) => state.suppliersTableData);
+
+    const {content: providers, pageable} = suppliersTableData || {};
+
+    const data = useMemo<RawTable[]>(
+        () =>
+            providers?.map((el, i) => {
+                return {supplierName: el.supplierName, supplierRMSCode: el.supplierRMSCode, id: el.id, key: i};
+            }),
+        [providers]
+    );
 
     const handleViewProviderDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
         e => {
@@ -44,11 +42,12 @@ const ProvidersTable: React.FC<Props> = props => {
         [navigate]
     );
 
-    const onPageChange = (page: number) => {
+    const onPageChange = (page: number, size: number) => {
         dispatch(
             setSuppliersFilter([
                 {
                     ...pageable,
+                    pageSize: size,
                     pageIndex: page - 1,
                 },
                 'pageable',
@@ -82,18 +81,10 @@ const ProvidersTable: React.FC<Props> = props => {
         [handleViewProviderDetails, t]
     );
 
-    const data = useMemo<RawTable[] | undefined>(() => rawTable, [rawTable]);
-
     const rowSelection = useMemo<TableRowSelection<RawTable>>(
         () => ({
             type: 'checkbox',
-            onChange: (selectedRowKeys: React.Key[], selectedRows: RawTable[]) => {
-                // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            },
-            // getCheckboxProps: (record: IDataType) => ({
-            //     disabled: record.qualityStatus === '2',
-            //     name: record.qualityStatus,
-            // }),
+            onChange: (selectedRowKeys: React.Key[], selectedRows: RawTable[]) => {},
             fixed: 'left',
         }),
         []

@@ -22,7 +22,7 @@ const ProvidersFilter: React.FC<Props> = props => {
     const {t} = useTranslation('providers');
     const dispatch = useDispatch();
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
-    const {loadProvidersList, modelNomenclature} = props;
+    // const {modelNomenclature} = props;
     const handleShowMoreFiltersClick = () => {
         setIsMoreFiltersActive(prevState => !prevState);
     };
@@ -40,14 +40,12 @@ const ProvidersFilter: React.FC<Props> = props => {
     const suppliersFilterState: ISuppliersFilter = useSelector((state: TRootState) => state.suppliersFilter);
     const [getProviders] = usePostSearchSupplsMutation();
 
-    const currentPage = suppliersFilterState.pageable.pageIndex;
-
-    const requestBody = prepareBody(suppliersFilterState);
+    const {pageIndex: currentPage, pageSize} = suppliersFilterState.pageable;
 
     useEffect(() => {
         receiveProviders();
         // eslint-disable-next-line
-    }, [currentPage]);
+    }, [currentPage, pageSize]);
 
     const receiveProviders = async () => {
         const requestBody = prepareBody(suppliersFilterState);
@@ -288,8 +286,8 @@ const ProvidersFilter: React.FC<Props> = props => {
             {isMoreFiltersActive && (
                 <Grid columnGap={16} columns="1fr" alignItems="center">
                     <AdditionalFilter
-                        modelNomenclature={modelNomenclature}
-                        // handleFiltersAdditional={handleFiltersAdditional}
+                    // modelNomenclature={modelNomenclature}
+                    // handleFiltersAdditional={handleFiltersAdditional}
                     />
                 </Grid>
             )}
@@ -315,7 +313,6 @@ const ProvidersFilter: React.FC<Props> = props => {
                     <RegularButton
                         onClick={() => {
                             clearFilters(initialState);
-                            loadProvidersList(requestBody);
                         }}
                         size="m"
                         variant="outline"
