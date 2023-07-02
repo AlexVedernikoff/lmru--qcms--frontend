@@ -3,11 +3,14 @@ import {useTranslation} from 'react-i18next';
 import {ColumnsType} from 'antd/es/table';
 import {getTableColumns} from './TableColumns';
 import CustomTable from '../../../../../Common/CustomTable';
-import {PropsTaskDetails} from '../../../TaskDetails';
-import {ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
+import {ITaskDetails, ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
 import FileImmediatelyUploadForm from '../../../../../Common/FileImmediatelyUploadForm';
 
-const UploadedDocumentsTable: React.FC<PropsTaskDetails> = props => {
+interface Props {
+    taskDetails: ITaskDetails;
+}
+
+const UploadedDocumentsTable: React.FC<Props> = props => {
     const {t} = useTranslation('tasks');
     const {taskDetails} = props;
     const columns = useMemo<ColumnsType<ITaskUploadedDocument>>(() => getTableColumns(t), [t]);

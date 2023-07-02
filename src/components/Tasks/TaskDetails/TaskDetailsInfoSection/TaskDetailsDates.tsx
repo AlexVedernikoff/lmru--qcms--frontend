@@ -2,11 +2,14 @@ import {Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 import {convertDateFromServer} from '../../../../utils/convertDateFromServer';
-import {PropsTaskDetails} from '../TaskDetails';
+import {ITaskDetails} from '../../../../common/types/taskDetails';
 
-const TaskDetailsDates: React.FC<PropsTaskDetails> = props => {
+interface Props {
+    taskDetails: ITaskDetails;
+}
+
+const TaskDetailsDates: React.FC<Props> = ({taskDetails}) => {
     const {t} = useTranslation('tasks');
-    const {taskDetails} = props;
 
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">

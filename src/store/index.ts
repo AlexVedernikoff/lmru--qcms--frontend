@@ -14,7 +14,7 @@ import {postSearchQualityActions} from '../api/postSearchQualityActions';
 import {postSearchQualityDocuments} from '../api/postSearchQualityDocuments';
 import {productsDocumentsFilters} from './slices/productsDocumentsSlice';
 import {productsDocumentsTableData} from './slices/productsDocumentsTableDataSlice';
-import {taskDetailsApi} from '../components/Tasks/TaskDetails/servicesTaskDetails';
+import {taskDetailsApi} from '../components/Tasks/TaskDetails/api';
 import {productDetailsApi} from '../components/Products/ProductDetails/productDetailsApi';
 import {providersApi} from '../components/Providers/services';
 

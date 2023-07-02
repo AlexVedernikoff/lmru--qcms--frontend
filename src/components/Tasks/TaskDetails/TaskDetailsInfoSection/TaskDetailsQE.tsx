@@ -2,11 +2,15 @@ import {Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 import classes from './styles.module.css';
-import {PropsTaskDetails} from '../TaskDetails';
+import {ITaskDetails} from '../../../../common/types/taskDetails';
 
-const TaskDetailsQE: React.FC<PropsTaskDetails> = props => {
+interface Props {
+    taskDetails: ITaskDetails;
+}
+
+const TaskDetailsQE: React.FC<Props> = ({taskDetails}) => {
     const {t} = useTranslation('tasks');
-    const {taskDetails} = props;
+
     //TODO уточнить одно из трех полей отображается или все три сразу? Лейла обещала ответить позже
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">

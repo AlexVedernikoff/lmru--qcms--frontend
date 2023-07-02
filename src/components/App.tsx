@@ -9,7 +9,6 @@ import ProductsWithoutQualityModel from './Products/WithoutQualityModel';
 import ProductsWithDocuments from './Products/WithDocuments';
 import ProductDetails from './Products/ProductDetails/ProductDetails';
 import ProviderDetails from './Providers/ProviderDetails/ProductDetails';
-import TaskDetails from './Tasks/TaskDetails/TaskDetails';
 import ModelDetails from './Models/ModelDetails';
 import Transfer from './Products/Transfer';
 import Providers from './Providers';
@@ -17,6 +16,7 @@ import Products from './Products';
 import Models from './Models';
 import Tasks from './Tasks';
 import Dashboard from './Dashboard';
+import TaskDetails from './Tasks/TaskDetails';
 
 const App: React.FC = () => (
     <Grid areas={['header header header', 'aside main spacer']} columnGap={16} columns="auto 1fr 12px">

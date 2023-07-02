@@ -5,7 +5,7 @@ import styles from '../../../Common.module.css';
 import NotificationsTable from './TaskTabNotifications/Table';
 import TasksTable from './TaskTabTasks/Table';
 import TaskTabDocuments from './TaskTabDocuments';
-import {PropsTaskDetails} from '../TaskDetails';
+import {ITaskDetails} from '../../../../common/types/taskDetails';
 
 enum ETabs {
     documents,
@@ -13,8 +13,11 @@ enum ETabs {
     linkedTasks,
 }
 
-const TaskTabs: React.FC<PropsTaskDetails> = props => {
-    const {taskDetails} = props;
+interface Props {
+    taskDetails: ITaskDetails;
+}
+
+const TaskTabs: React.FC<Props> = ({taskDetails}) => {
     const {t} = useTranslation('tasks');
     const [tab, setTab] = useState<ETabs>(ETabs.documents);
 
@@ -33,7 +36,7 @@ const TaskTabs: React.FC<PropsTaskDetails> = props => {
                 <Tab>{t('TaskTabs.Tasks.Title')}</Tab>
             </TabList>
             {tab === ETabs.documents && <TaskTabDocuments taskDetails={taskDetails} />}
-            {tab === ETabs.notifications && <NotificationsTable taskDetails={taskDetails} />}
+            {tab === ETabs.notifications && <NotificationsTable />}
             {tab === ETabs.linkedTasks && <TasksTable taskDetails={taskDetails} />}
         </Grid>
     );

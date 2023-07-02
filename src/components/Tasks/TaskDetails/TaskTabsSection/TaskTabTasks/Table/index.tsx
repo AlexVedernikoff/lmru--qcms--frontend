@@ -6,12 +6,15 @@ import CustomTable from '../../../../../Common/CustomTable';
 import {TableRowSelection} from 'antd/es/table/interface';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {Grid, RegularButton} from 'fronton-react';
-import {PropsTaskDetails} from '../../../TaskDetails';
-import {ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
+import {ITaskDetails, ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
 
-const TasksTable: React.FC<PropsTaskDetails> = props => {
+interface Props {
+    taskDetails: ITaskDetails;
+}
+
+const TasksTable: React.FC<Props> = ({taskDetails}) => {
     const {t} = useTranslation('tasks');
-    const {taskDetails} = props;
+
     const uploadedDocuments = taskDetails.documents.uploadedDocuments;
     const handleViewProductDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(e => {
         //TODO добавить детализацию

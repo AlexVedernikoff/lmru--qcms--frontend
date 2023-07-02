@@ -3,11 +3,14 @@ import {useTranslation} from 'react-i18next';
 import AwaitedDocumentsTable from './AwaitedDocumentsTable';
 import UploadedDocumentsTable from './UploadedDocumentsTable';
 import commonStyles from '../../../../Common.module.css';
-import {PropsTaskDetails} from '../../TaskDetails';
+import {ITaskDetails} from '../../../../../common/types/taskDetails';
 
-const TaskTabDocuments: React.FC<PropsTaskDetails> = props => {
+interface Props {
+    taskDetails: ITaskDetails;
+}
+
+const TaskTabDocuments: React.FC<Props> = ({taskDetails}) => {
     const {t} = useTranslation('tasks');
-    const {taskDetails} = props;
 
     return (
         <Grid gap={16}>

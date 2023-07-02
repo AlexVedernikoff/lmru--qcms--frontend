@@ -1,3 +1,5 @@
+// https://confluence.lmru.tech/display/QCMS/Quality+actions+update-batch
+
 export type ITaskAwaitingDocument = {
     // optional, документы, необходимые для загрузки
     type: string; // required, тип документа
@@ -62,6 +64,14 @@ export interface ITaskUploadedDocument {
     fileName: string;
 }
 
+export interface ITaskDetailsPublicComment {
+    id: string; // required, идентификатор комментария
+    order: number; // required, порядок комментария
+    comment: string; // requried, текст комментария
+    createdAt: string; // required, дата создания комментария
+    createdBy: string; // required, пользователь, оставивший комментарий
+}
+
 export interface ITaskDetails {
     id: string; // required, идентификатор задачи
     actionStatus: string; // required, статус задачи ENUM: ['DRAFT', 'СANCELLED', 'AWAITING_DOCUMENT_LOADING", "AWAITING_RESOLUTION", "RETURNED_AWAITING_DOCUMENT_LOADING", "RETURNED_AWAITING_RESOLUTION"]
@@ -103,16 +113,7 @@ export interface ITaskDetails {
         adeoRisk: string; // required, риск ADEO - нужен?
         regulatoryStatus: string;
     };
-    publicComments?: [
-        {
-            // optional [
-            id: string; // required, идентификатор комментария
-            order: number; // required, порядок комментария
-            comment: string; // requried, текст комментария
-            createdAt: string; // required, дата создания комментария
-            createdBy: string; // required, пользователь, оставивший комментарий
-        }
-    ];
+    publicComments?: ITaskDetailsPublicComment[];
     documents: {
         awaitedDocuments?: ITaskAwaitingDocument[];
         uploadedDocuments: ITaskUploadedDocument[];
@@ -142,6 +143,11 @@ export interface ITaskDetails {
     };
 }
 
+export interface ITaskUpdateInfoParamsComment {
+    comment: string; // requried, текст комментария
+    createdBy: string; // required, пользователь, оставивший комментарий
+}
+
 export interface ITaskUpdateInfoParams {
     updatedBy: string; // required - ldap или идентификатор системы, обновивший задачу
     qualityActions: {
@@ -158,12 +164,7 @@ export interface ITaskUpdateInfoParams {
             type: string; // required, ENUM: ['SUPPLIER', 'SERVICE_PROVIDER', 'QE','SQM'] тип подтверждающего сотрудника
             externalId: string; // required, идентификатор согласующего или название компании
         }[];
-        publicComments?: {
-            // optional
-            comment: string; // requried, текст комментария
-            createdBy: string; // required, пользователь, новый комментарий
-        }[];
-        publicComment: string;
+        publicComments?: ITaskUpdateInfoParamsComment[];
     }[];
 }
 

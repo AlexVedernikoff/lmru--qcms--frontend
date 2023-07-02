@@ -1,0 +1,35 @@
+.container {
+    padding: 6px 16px;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 12px;
+}
+
+.ava {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 14px;
+    background-color: rgba(209, 222, 255, 1);
+    color: rgba(59, 89, 164, 1);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.createdBy {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.createdAt {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(34, 36, 41, 1);
+}
+
+.comment {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(34, 36, 41, 1);
+}

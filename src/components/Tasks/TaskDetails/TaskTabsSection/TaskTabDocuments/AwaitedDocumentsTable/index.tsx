@@ -3,12 +3,14 @@ import {useTranslation} from 'react-i18next';
 import {ColumnsType} from 'antd/es/table';
 import {getTableColumns} from './TableColumns';
 import CustomTable from '../../../../../Common/CustomTable';
-import {PropsTaskDetails} from '../../../TaskDetails';
-import {ITaskAwaitingDocument} from '../../../../../../common/types/taskDetails';
+import {ITaskAwaitingDocument, ITaskDetails} from '../../../../../../common/types/taskDetails';
 
-const AwaitedDocumentsTable: React.FC<PropsTaskDetails> = props => {
+interface Props {
+    taskDetails: ITaskDetails;
+}
+
+const AwaitedDocumentsTable: React.FC<Props> = ({taskDetails}) => {
     const {t} = useTranslation('tasks');
-    const {taskDetails} = props;
     const columns = useMemo<ColumnsType<ITaskAwaitingDocument>>(() => getTableColumns(t), [t]);
     const awaitedDocuments = taskDetails.documents?.awaitedDocuments;
     const data = useMemo<ITaskAwaitingDocument[] | undefined>(() => awaitedDocuments, [awaitedDocuments]);

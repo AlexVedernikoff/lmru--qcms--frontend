@@ -3,11 +3,14 @@ import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import classes from './styles.module.css';
-import {PropsTaskDetails} from '../TaskDetails';
+import {ITaskDetails} from '../../../../common/types/taskDetails';
 
-const TaskDetailsProduct: React.FC<PropsTaskDetails> = props => {
+interface Props {
+    taskDetails: ITaskDetails;
+}
+
+const TaskDetailsProduct: React.FC<Props> = ({taskDetails}) => {
     const {t} = useTranslation('tasks');
-    const {taskDetails} = props;
 
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">

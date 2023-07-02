@@ -1,10 +1,13 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-
 import {ITaskDetails, ITaskUpdateInfoParams, ITaskUpdateInfoResponse} from '../../../common/types/taskDetails';
+
 const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/';
-const serviceTaskDetails = 'quality-actions-details';
-const updateInfoTask = 'quality-actions:batch-update';
-const servicePostTaskDocuments = 'create-quality-document';
+
+const serviceUrl = {
+    getTaskDetails: 'quality-actions-details',
+    updateTaskDetails: 'quality-actions:batch-update',
+    uploadQualityDocument: 'create-quality-document',
+};
 
 export const taskDetailsApi = createApi({
     reducerPath: 'taskDetailsApi',
@@ -15,25 +18,26 @@ export const taskDetailsApi = createApi({
             return headers;
         },
     }),
+    tagTypes: ['TaskData'],
     endpoints: builder => ({
-        updateInfoTask: builder.mutation<ITaskUpdateInfoResponse, ITaskUpdateInfoParams>({
+        getTaskDetails: builder.query<ITaskDetails, string>({
+            query: id => `${serviceUrl.getTaskDetails}/${id}`,
+            providesTags: ['TaskData'],
+        }),
+        updateTaskDetails: builder.mutation<ITaskUpdateInfoResponse, ITaskUpdateInfoParams>({
             query: params => ({
-                url: updateInfoTask,
+                url: serviceUrl.updateTaskDetails,
                 method: 'POST',
                 body: params,
+                invalidatesTags: ['TaskData'],
             }),
-        }),
-        getTaskDetails: builder.query<ITaskDetails, string>({
-            query: id => `${serviceTaskDetails}/${id}`,
         }),
         postTaskDocuments: builder.query({
             query: params => ({
-                url: servicePostTaskDocuments,
+                url: serviceUrl.uploadQualityDocument,
                 method: 'POST',
                 body: params,
             }),
         }),
     }),
 });
-
-export const {useGetTaskDetailsQuery, useUpdateInfoTaskMutation, usePostTaskDocumentsQuery} = taskDetailsApi;
