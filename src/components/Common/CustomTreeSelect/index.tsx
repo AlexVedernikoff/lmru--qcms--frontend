@@ -94,7 +94,7 @@ export const СustomTreeSelect: React.FC<TProps> = ({type, nomenclatureValue, ha
 
     const nomenclatureData = type === 'product' ? productNomenclatureData() : managementNomenclatureData();
 
-    console.log('nomenclatureValue = ', nomenclatureValue);
+    // console.log('nomenclatureValue = ', nomenclatureValue);
 
     // console.log('nomenclatureData = ', nomenclatureData);
 
