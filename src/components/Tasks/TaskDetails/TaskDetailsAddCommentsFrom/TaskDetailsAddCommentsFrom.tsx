@@ -36,6 +36,7 @@ const TaskDetailsAddCommentsForm: React.FC<Props> = ({taskDetails}) => {
                 {
                     id: parseInt(taskDetails.id, 10),
                     publicComments: newComments,
+                    actionStatus: 'DRAFT',
                 },
             ],
         })

@@ -14,42 +14,42 @@ const TaskDetailsQE: React.FC<Props> = ({taskDetails}) => {
     //TODO уточнить одно из трех полей отображается или все три сразу? Лейла обещала ответить позже
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">
-            {taskDetails.responsible[0].type === 'QE' && (
+            {taskDetails.responsible[0]?.type === 'QE' && (
                 <div>
                     <Typography variant="s" size="body_long" color="text-minor">
                         {t('TaskDetails.DetailsQE.QE')}
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {taskDetails.responsible[0].type}
+                        {taskDetails.responsible[0]?.type}
                     </Typography>
                 </div>
             )}
 
             {/* <br /> */}
 
-            {taskDetails.responsible[0].type === 'SQM' && (
+            {taskDetails.responsible[0]?.type === 'SQM' && (
                 <div>
                     <Typography variant="s" size="body_long" color="text-minor">
                         {t('TaskDetails.DetailsQE.SQM')}
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {taskDetails.approvers[0].externalId}
+                        {taskDetails.approvers[0]?.externalId}
                     </Typography>
                 </div>
             )}
 
             {/* <br /> */}
 
-            {taskDetails.responsible[0].type === 'SUPPLIER' && (
+            {taskDetails.responsible[0]?.type === 'SUPPLIER' && (
                 <div>
                     <Typography variant="s" size="body_long" color="text-minor">
                         {t('TaskDetails.DetailsQE.Contractor')}
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {taskDetails.responsible[0].externalId}
+                        {taskDetails.responsible[0]?.externalId}
                     </Typography>
                 </div>
             )}
@@ -62,7 +62,7 @@ const TaskDetailsQE: React.FC<Props> = ({taskDetails}) => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {taskDetails.approvers[0].type}
+                    {taskDetails.approvers[0]?.type}
                 </Typography>
             </div>
 
