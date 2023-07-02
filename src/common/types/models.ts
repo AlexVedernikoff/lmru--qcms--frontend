@@ -111,6 +111,12 @@ export interface IModelDetailsParams {
     securityCode: string;
 }
 
+export enum ERegulatoryType {
+    MANUFACTURER = 'MANUFACTURER',
+    IMPORTER = 'IMPORTER',
+    DISTRIBUTOR = 'DISTRIBUTOR',
+}
+
 export interface IMasterPlanTask {
     id: string; // required - идентификатор задачи в БД
     categoryType: {
@@ -122,7 +128,7 @@ export interface IMasterPlanTask {
         };
     }; // required, - тип задачи из категории (содержит ссылку на категорию, к которой относится)
     version: number; // required - версия задачи
-    regulatoryType: string; // required - тип плана ENUM: [DISTRIBUTOR, IMPORTER, MANUFACTURER] (поставщик, СТМ, дистрибьютор)
+    regulatoryType: ERegulatoryType; // required - тип плана ENUM: [DISTRIBUTOR, IMPORTER, MANUFACTURER] (поставщик, СТМ, дистрибьютор)
     // otional, законодательное требование для протоколов сертификационных испытаний (из отдельной таблички)
     linkedRegulations: {
         id: string; // required, идентификатор связанного законодательного требования

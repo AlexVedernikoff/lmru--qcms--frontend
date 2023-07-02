@@ -7,12 +7,13 @@ import CardView from '../../Common/CardView';
 import modelsApi from '../modelsApi';
 import MasterPlanTable from './MasterPlanTable';
 import MasterPlanAddModal from './MasterPlanAddModal';
+import {IMasterPlanTask} from '../../../common/types/models';
 
 interface IProps {
-    planIndex: number;
+    tasks: IMasterPlanTask[];
 }
 
-const MasterPlanRequirements: React.FC<IProps> = ({planIndex}) => {
+const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
     const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
@@ -69,9 +70,7 @@ const MasterPlanRequirements: React.FC<IProps> = ({planIndex}) => {
                 ))}
             </Grid>
 
-            {!!details?.masterPlanIds?.[planIndex]?.id && (
-                <MasterPlanTable data={details?.masterPlanIds?.[planIndex]} />
-            )}
+            <MasterPlanTable data={tasks} />
 
             <MasterPlanAddModal isOpen={isOpen} onClose={handleModalClose} />
         </Grid>

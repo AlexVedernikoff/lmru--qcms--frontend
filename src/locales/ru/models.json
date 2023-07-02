@@ -69,13 +69,13 @@
                 }
             },
             "Section": {
-                "Developer": {
+                "MANUFACTURER": {
                     "Title": "Статус поставщика: Производитель"
                 },
-                "Importer": {
+                "IMPORTER": {
                     "Title": "Статус поставщика: Импортер"
                 },
-                "Exporter": {
+                "DISTRIBUTOR": {
                     "Title": "Статус поставщика: Дистрибьютер"
                 }
             },
