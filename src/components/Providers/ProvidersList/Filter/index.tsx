@@ -22,7 +22,6 @@ const ProvidersFilter: React.FC<Props> = props => {
     const {t} = useTranslation('providers');
     const dispatch = useDispatch();
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
-    // const {modelNomenclature} = props;
     const handleShowMoreFiltersClick = () => {
         setIsMoreFiltersActive(prevState => !prevState);
     };
@@ -49,7 +48,6 @@ const ProvidersFilter: React.FC<Props> = props => {
 
     const receiveProviders = async () => {
         const requestBody = prepareBody(suppliersFilterState);
-        // console.log('requestBody= ', requestBody);
         const providersTableData = await getProviders(requestBody);
         dispatch(setSuppliersTableData(providersTableData));
     };
@@ -128,23 +126,6 @@ const ProvidersFilter: React.FC<Props> = props => {
                     >
                         <DropdownItem text="Россия" value={'Russia'} />
                     </Dropdown>
-
-                    {/* <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('ProvidersList.Filters.countryLocationSupplier')}
-                        name={'modelNameOrCode'}
-                        placeholder={t('Common.Input')}
-                        value={undefined}
-                        onChange={handleInputChange}
-                    /> */}
-
-                    {/* 
-// 
-// 
-// 
-// 
- */}
                 </Grid>
 
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
@@ -285,10 +266,7 @@ const ProvidersFilter: React.FC<Props> = props => {
 
             {isMoreFiltersActive && (
                 <Grid columnGap={16} columns="1fr" alignItems="center">
-                    <AdditionalFilter
-                    // modelNomenclature={modelNomenclature}
-                    // handleFiltersAdditional={handleFiltersAdditional}
-                    />
+                    <AdditionalFilter />
                 </Grid>
             )}
 
@@ -319,16 +297,6 @@ const ProvidersFilter: React.FC<Props> = props => {
                     >
                         {t('Buttons.Clear')}
                     </RegularButton>
-
-                    {/* <RegularButton
-                        onClick={() => {
-                            loadProvidersList(requestBody);
-                        }}
-                        size="m"
-                        variant="primary"
-                    >
-                        {t('Buttons.Search')}
-                    </RegularButton> */}
 
                     <RegularButton
                         onClick={() => {
