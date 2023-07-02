@@ -1,21 +1,11 @@
 import {Checkbox, Dropdown, DropdownItem, Grid, Typography, Input} from 'fronton-react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-// import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
-// import {IModelNomenclature} from '../../../../common/types/providers';
-// import {useGetProductModelNomenclatureQuery} from '../../../../api/getProductModelNomenclature';
-// import {useGetManagementNomenclatureQuery} from '../../../../api/getManagementNomenclature';
-// import {IProductModelNomenclatureResponse} from '../../../../common/types/productModelNomenclature';
-// import {IManagementNomenclatureResponse} from '../../../../common/types/productManagementNomenclature';
 import {TRootState} from '../../../../store/index';
 import {setSuppliersFilter, ISuppliersFilter} from '../../../../store/slices/suppliersFilterSlice';
 import {СustomTreeSelect} from '../../../Common/CustomTreeSelect';
 
-type Props = {
-    // modelNomenclature: IModelNomenclature | undefined;
-};
-
-const AdditionalFilter: React.FC<Props> = props => {
+const AdditionalFilter: React.FC = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation('providers');
 
@@ -48,7 +38,6 @@ const AdditionalFilter: React.FC<Props> = props => {
 
     const modelNomenclatureValue = treeSelectValue(modNomKeys);
     const managementNomenclatureValue = treeSelectValue(manNomKeys);
-    // console.log('modelNomenclatureValue = ', modelNomenclatureValue);
 
     const onTreeChange = (newValue: any, keys: any) => {
         const initialAcc = keys.reduce((acc: any, key: any) => {
@@ -58,12 +47,10 @@ const AdditionalFilter: React.FC<Props> = props => {
 
         const result = newValue.reduce((acc: any, el: any) => {
             let [key, value] = el.split(' ');
-            if (keys === manNomKeys) value = Number(value);
+            if (keys[0] === manNomKeys[0]) value = Number(value);
             acc[key].push(value);
             return acc;
         }, initialAcc);
-
-        // console.log('result = ', result);
 
         for (const key in result) {
             onHandleFilterChange(result[key], key);
@@ -76,20 +63,6 @@ const AdditionalFilter: React.FC<Props> = props => {
     };
 
     const {qualityRating} = suppliersFilterState;
-
-    // const {modelNomenclature, handleFiltersAdditional} = props;
-    // const [checked, setChecked] = useState(false);
-
-    // const handleChange = () => setChecked(!checked);
-    // const handleSelect = (value: string | null) => {};
-    // const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
-
-    // const [value, setValue] = useState<string[]>();
-
-    // const onChange = (newValue: string[]) => {
-    //     setValue(newValue);
-    //     handleFiltersAdditional(newValue);
-    // };
 
     return (
         <Grid columnGap={24} columns="repeat(4, 1fr)" alignItems="baseline">
