@@ -181,7 +181,7 @@ const Table: React.FC<IProps> = ({
                 title: t('TaskList.Table.Columns.responsibleContractor'),
                 dataIndex: 'responsible',
                 width: 240,
-                render: (v: TDataType['responsible']) => v[0].type,
+                render: (v: TDataType['responsible']) => v?.[0]?.type,
             },
         ],
         [handleViewDetails, t]

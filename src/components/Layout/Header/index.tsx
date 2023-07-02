@@ -5,12 +5,21 @@ import {APP_ROUTES} from '../../../common/consts';
 import Logo from '../Logo';
 import styles from './Header.module.css';
 
+const user = {
+    name: 'Ivan Ivanov',
+    department: 'Сотрудник Леруа Мерлен Восток',
+    ldap: '60000000',
+    role: 'admin',
+};
+
 const Header: React.FC = () => {
     const navigate = useNavigate();
 
     const handleLogoClick = () => {
         navigate(APP_ROUTES.dashboard);
     };
+
+    const handleSignOut = () => {};
 
     return (
         <header className={styles.header}>
@@ -19,32 +28,36 @@ const Header: React.FC = () => {
             </BaseButton>
 
             <div className={styles.items}>
-                <BaseButton>
-                    <QuestionIcon type="outline" size="l" color="text-minor" />
-                </BaseButton>
+                {false && (
+                    <BaseButton>
+                        <QuestionIcon type="outline" size="l" color="text-minor" />
+                    </BaseButton>
+                )}
 
-                <BaseButton>
-                    <BellIcon type="outline" size="l" color="text-minor" />
-                </BaseButton>
+                {false && (
+                    <BaseButton>
+                        <BellIcon type="outline" size="l" color="text-minor" />
+                    </BaseButton>
+                )}
 
                 <div className={styles.row}>
                     <Avatar
+                        name={user.name}
+                        description={user.department}
                         color="green"
-                        description="Сотрудник Леруа Мерлен Восток"
-                        hideInfo
-                        name={'test test'}
                         overflow="multiline"
-                        size="s"
                         variant="fill"
+                        size="s"
+                        hideInfo
                     />
 
                     <div className={styles.column}>
-                        <div className={styles.columnItemPrimary}>{'60131149'}</div>
-                        <div className={styles.columnItem}>{'ui/ux designer'}</div>
+                        <div className={styles.columnItemPrimary}>{user.ldap}</div>
+                        <div className={styles.columnItem}>{user.role}</div>
                     </div>
                 </div>
 
-                <BaseButton onClick={() => {}}>
+                <BaseButton onClick={handleSignOut}>
                     <SignOutIcon type="fill" size="l" color="text-minor" />
                 </BaseButton>
             </div>
