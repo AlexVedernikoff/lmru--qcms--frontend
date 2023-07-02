@@ -22,7 +22,7 @@ const MasterPlanAddModal: React.FC<IProps> = ({isOpen, onClose}) => {
         <Modal show={isOpen} onClose={handleClose} size="l">
             <ModalHeader title={t('Buttons.Add')} />
             <ModalContent>
-                <MasterPlanTable />
+                <MasterPlanTable data={[]} />
             </ModalContent>
             <ModalFooter>
                 <RegularButton onClick={handleSave}>{t('Buttons.Save')}</RegularButton>

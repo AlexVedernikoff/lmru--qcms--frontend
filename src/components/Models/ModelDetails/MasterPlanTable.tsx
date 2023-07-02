@@ -6,14 +6,14 @@ import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
 import {IMasterPlanRequirementTableItem, TWithReactKey} from '../../../common/clientModels';
 import CustomTable from '../../Common/CustomTable';
-import {IMasterPlan} from '../../../common/types/models';
 import {CustomSwitch} from '../../Common/Switch/CustomSwitch';
+import {IMasterPlanTask} from '../../../common/types/models';
 
 type TDataType = TWithReactKey<IMasterPlanRequirementTableItem>;
 
 interface IProps {
     isEdit?: boolean;
-    data?: IMasterPlan | undefined;
+    data: IMasterPlanTask[];
 }
 
 const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
@@ -213,7 +213,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
 
     const dataSource = useMemo<TDataType[]>(
         () =>
-            data?.tasks?.map(d => ({
+            data.map(d => ({
                 key: d.id,
                 status: d.regulatoryType,
                 category: d.categoryType?.category?.name,
