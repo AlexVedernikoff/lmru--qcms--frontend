@@ -5,7 +5,7 @@ import {IProduct} from '../../../../common/types/products';
 import {IDocumentMetaData} from '../../../../common/types/files';
 import FileUploadForm from '../../../Common/FileUploadForm';
 import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
-import tasksApi from '../../../Tasks/tasksApi';
+import withModelApi from '../withModelApi';
 
 import styles from './styles.module.css';
 
@@ -31,7 +31,7 @@ const ProductsAddDocumentModalWindow: React.FC<Props> = ({show, onClose, product
     const {t} = useTranslation('products');
     const [formState, setFormState] = useState<FormState>(initialFormState);
 
-    const [createDocument, createDocumentResult] = tasksApi.endpoints.createDocument.useMutation();
+    const [createDocument, createDocumentResult] = withModelApi.endpoints.createDocument.useMutation();
 
     const isButtonDisabled = useMemo(
         () =>

@@ -9,13 +9,18 @@ import {
     IProductsSendQualityMessageResponse,
     IProductsSendQualityMessageRequest,
 } from '../../../common/types/productsSendQualityStatusMessage';
+import {ICreateTaskResponse, ICreateTaskRequest} from '../../../common/types/createTask';
+import {ITaskUploadDocumentResponse, ITaskUploadDocumentParams} from '../../../common/types/tasks';
 
-const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/';
+const hostUrl = '';
 
 const serviceUrl = {
-    getProducts: 'v1/search-products',
-    getProductsNomenclature: 'v1/product-model-nomenclature',
-    productsSendQualityStatusMessage: 'send-quality-status-message',
+    getProducts: 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/search-products',
+    getProductsNomenclature: 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/product-model-nomenclature',
+    productsSendQualityStatusMessage:
+        'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/send-quality-status-message',
+    createTask:
+        'https://qcms-dev-shared-stage.apps.lmru.tech/api/qas/v1/quality-action-service/quality-actions:createTask',
 };
 
 const withModelApi = createApi({
@@ -57,6 +62,24 @@ const withModelApi = createApi({
                     securityCode: request.header.securityCode,
                 },
                 body: request.body,
+            }),
+        }),
+        createTask: builder.mutation<ICreateTaskResponse, ICreateTaskRequest>({
+            query: request => ({
+                method: 'POST',
+                url: serviceUrl.createTask,
+                body: request.body,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }),
+        }),
+        createDocument: builder.mutation<ITaskUploadDocumentResponse, ITaskUploadDocumentParams>({
+            query: queryArg => ({
+                url: `create-quality-document`,
+                method: 'POST',
+                body: queryArg.body,
+                headers: queryArg.header,
             }),
         }),
     }),

@@ -3,7 +3,9 @@ import {Dropdown, Grid, Modal, ModalContent, ModalFooter, ModalHeader, RegularBu
 import {IProduct} from '../../../../common/types/products';
 import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
 import FileUploadForm from '../../../Common/FileUploadForm';
-import {useState} from 'react';
+import withModelApi from '../withModelApi';
+import {useEffect, useState} from 'react';
+import {ICreateTaskRequestBody} from '../../../../common/types/createTask';
 
 import s from './styles.module.css';
 
@@ -20,12 +22,80 @@ interface FormState {
 
 const initialFormState: FormState = {};
 
+const createTaskRequestMock: ICreateTaskRequestBody = {
+    qualityActions: [
+        {
+            id: 0,
+            actionStatus: 'DRAFT',
+            targetBuCodes: [0],
+            conclusion: 'string',
+            isForUpdate: true,
+            categoryName: 'string',
+            categoryTypeName: 'string',
+            realisationDueDate: '2023-07-03',
+            approvalDueDate: '2023-07-03',
+            approvers: [
+                {
+                    type: 'SUPPLIER',
+                    externalId: 'string',
+                },
+            ],
+            responsible: [
+                {
+                    type: 'SUPPLIER',
+                    externalId: 'string',
+                },
+            ],
+            publicComments: [
+                {
+                    id: 0,
+                    order: 0,
+                    comment: 'string',
+                    createdAt: '2023-07-03T14:01:23.296Z',
+                    createdBy: 'string',
+                },
+            ],
+            supplierData: {
+                id: 0,
+                name: 'string',
+                supplierRMSCode: 'string',
+                supplierAdeoCode: 'string',
+                supplierTaxIdentifier: 'string',
+            },
+            product: {
+                id: 0,
+                name: 'string',
+                code: 'string',
+                ean: 'string',
+                isFromProject: true,
+                productRange: 'string',
+                qualityModel: 'string',
+                regulatoryStatus: 'string',
+                adeoRisk: 'string',
+            },
+            documents: {
+                awaitedDocuments: [
+                    {
+                        type: 'string',
+                        templateId: 0,
+                        linkedRegulations: [0],
+                        requirementType: 'string',
+                    },
+                ],
+            },
+        },
+    ],
+    createdBy: 'string',
+};
+
 const ProductsAddTasksModalWindow: React.FC<Props> = ({show, onClose, products}) => {
     const {t} = useTranslation('products');
 
+    const [createTask, createTaskResult] = withModelApi.useCreateTaskMutation();
+
     const [formState, setFormState] = useState<FormState>(initialFormState);
 
-    const isSubmitButtonDisabled = !formState.file;
+    const isFromValid = formState.file;
 
     const clearForm = () => setFormState(initialFormState);
 
@@ -34,8 +104,25 @@ const ProductsAddTasksModalWindow: React.FC<Props> = ({show, onClose, products})
         clearForm();
     };
 
+    useEffect(() => {
+        if (!isFromValid) return;
+        if (createTaskResult.isError) {
+            alert('Не удалось создать задачу. Повторите попытку позже.');
+        }
+        if (createTaskResult.isSuccess) {
+            alert('Задача успешно создана!');
+            handleClose();
+        }
+    }, [createTaskResult, isFromValid]);
+
     const handleSubmit = () => {
-        if (isSubmitButtonDisabled) return;
+        if (!isFromValid) return;
+        createTask({
+            body: createTaskRequestMock,
+            header: {
+                securityCode: '',
+            },
+        });
     };
 
     const handleFileSelect = (file?: File) => {
@@ -82,7 +169,7 @@ const ProductsAddTasksModalWindow: React.FC<Props> = ({show, onClose, products})
                     <RegularButton variant="outline" size="l" onClick={handleClose}>
                         {t('WithModels.addTaskModalWindow.closeModalButton')}
                     </RegularButton>
-                    <RegularButton variant="primary" size="l" disabled={isSubmitButtonDisabled} onClick={handleSubmit}>
+                    <RegularButton variant="primary" size="l" disabled={!isFromValid} onClick={handleSubmit}>
                         {t('WithModels.addTaskModalWindow.submitButton')}
                     </RegularButton>
                 </Grid>
