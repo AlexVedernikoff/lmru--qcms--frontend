@@ -30,7 +30,7 @@ const ProductDetailsProvider: React.FC = () => {
     return (
         <Grid className={styles.sectionItem} columns="3fr 0.1fr" rowGap={24} columnGap={24}>
             <Typography variant="h3">{t('ProviderDetails.MainData.Title')}</Typography>
-            <Button size="small" style={{border: 'none'}} type="default" icon={<EditIcon />} />
+            <Button size="small" style={{border: 'none', visibility: 'hidden'}} type="default" icon={<EditIcon />} />
             <Grid rowGap={18} columnGap={24} columns="1fr 1fr">
                 <div>
                     <Typography variant="s" size="body_long" color="text-minor">
@@ -41,16 +41,15 @@ const ProductDetailsProvider: React.FC = () => {
                         {supplierCategory}
                     </Typography>
                 </div>
-
-                <Input
-                    inputSize="m"
-                    autoComplete="off"
-                    label={t('ProviderDetails.MainData.ExNameSupplier')}
-                    name={'modelNameOrCode'}
-                    placeholder={t('Common.Input')}
-                    value={supplierExName}
-                    onChange={handleInputChange}
-                />
+                <div>
+                    <Typography variant="s" size="body_long" color="text-minor">
+                        {t('ProviderDetails.MainData.ExNameSupplier')}
+                    </Typography>
+                    <br />
+                    <Typography variant="s" size="body_short">
+                        {supplierExName}
+                    </Typography>
+                </div>
 
                 <div>
                     <Typography variant="s" size="body_long" color="text-minor">
@@ -120,7 +119,7 @@ const ProductDetailsProvider: React.FC = () => {
                 </div>
                 <div>
                     <Typography variant="s" size="body_long" color="text-minor">
-                        {t('ProviderDetails.MainData.NrustKiller')}
+                        {t('ProviderDetails.MainData.TrustKiller')}
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
