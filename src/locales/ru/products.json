@@ -202,6 +202,20 @@
         "addDocumentModalWindow": {
             "closeModalButton": "Отменить",
             "submitButton": "Добавить"
+        },
+        "addTaskModalWindow": {
+            "categoryLabel": "Категория",
+            "documentTypeLabel": "Тип документа",
+            "typeLabel": "Тип",
+            "documentsLabel": "Документы",
+            "responsiblePersonLabel": "Ответственное лицо",
+            "BULabel": "BU",
+            "approverPersonLabel": "Утверждающее лицо",
+            "lawRequirements": "Связанные законодательные требования",
+            "processLabel": "Процесс",
+            "dutyLabel": "Обязанность",
+            "closeModalButton": "Отменить",
+            "submitButton": "Добавить"
         }
     },
     "WithoutModels": {
