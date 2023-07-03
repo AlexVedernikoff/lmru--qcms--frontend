@@ -83,13 +83,13 @@ const ModelDetailsRiskMap: React.FC = () => {
                     healthRisk: formState.healthRisk,
                     riskComments: '',
                 },
-                assignedApprovers: [
-                    {
-                        userId: '1',
-                        role: 'QE',
-                        buId: 1,
-                    },
-                ],
+                // assignedApprovers: [
+                //     {
+                //         userId: '1',
+                //         role: 'QE',
+                //         buId: 1,
+                //     },
+                // ],
                 updatedBy: 'currentUser',
             },
         });

@@ -71,7 +71,7 @@ const ModelDetailsQualityManager: React.FC = () => {
                     {
                         userId: SQM,
                         role: QE,
-                        buId: 1,
+                        buId: 9,
                     },
                 ],
                 updatedBy: 'currentUser',

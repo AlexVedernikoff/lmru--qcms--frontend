@@ -50,13 +50,13 @@ const ModelDetailsMainData: React.FC = () => {
                 //     riskComments: 'Комментарий к группе риска',
                 // },
                 // regulatoryReferences: [1],
-                assignedApprovers: [
-                    {
-                        userId: '1',
-                        role: 'QE',
-                        buId: 1,
-                    },
-                ],
+                // assignedApprovers: [
+                //     {
+                //         userId: '1',
+                //         role: 'QE',
+                //         buId: 1,
+                //     },
+                // ],
                 updatedBy: 'currentUser',
             },
         });
@@ -82,7 +82,7 @@ const ModelDetailsMainData: React.FC = () => {
                         checkable: false,
                         children: modCon?.models?.map(mod => ({
                             title: modCon.nameRu || modCon.code,
-                            value: `${mod.code}`,
+                            value: `${mod.id}`,
                         })),
                     })),
                 })),
