@@ -89,11 +89,11 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
                 text: t('Items.Models'),
                 value: APP_ROUTES.models,
             },
-            {
-                icon: GearIcon,
-                text: t('Items.Settings'),
-                value: APP_ROUTES.settings,
-            },
+            // {
+            //     icon: GearIcon,
+            //     text: t('Items.Settings'),
+            //     value: APP_ROUTES.settings,
+            // },
         ],
         [t]
     );

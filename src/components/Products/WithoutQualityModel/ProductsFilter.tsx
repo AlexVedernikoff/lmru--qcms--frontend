@@ -153,7 +153,7 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
                         value={formState.regulatoryStatus!}
                         onSelect={handleSelect('regulatoryStatus')}
                     >
-                        <DropdownItem text="Дистрибьютер" value={'MANUFACTURER'} />
+                        <DropdownItem text="Дистрибьютор" value={'MANUFACTURER'} />
                         <DropdownItem text="Импортер" value={'IMPORTER'} />
                         <DropdownItem text="Поставщик" value={'DISTRIBUTOR'} />
                     </Dropdown>
