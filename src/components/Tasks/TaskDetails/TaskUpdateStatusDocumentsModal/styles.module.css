@@ -2,5 +2,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px;
+    margin: 20px 0;
+    gap: 20px;
+    word-wrap: break-word;
+}
+
+.overflow {
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+}
+
+.fileName {
+    width: 100px;
+}
+
+.input {
+    min-width: 185px;
+}
+
+.save {
+    display: flex;
+    justify-content: end;
 }

@@ -53,7 +53,7 @@ const TaskActionsForm: React.FC<Props> = ({taskDetails}) => {
                         onSelect={handleActionSelect}
                     >
                         <DropdownItem
-                            text={t('TaskTabs.Actions.actions.updateStatusDocuments')}
+                            text={t('TaskTabs.Actions.actions.updateDocument')}
                             value={TaskActions.UpdateStatusDocuments}
                         />
                     </Dropdown>

@@ -78,21 +78,23 @@ export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): Colu
     },
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.documentName'),
-        dataIndex: 'id',
         width: 240,
         render: text => (
-            <RegularButton
-                variant="pseudo"
-                iconRight={<DownloadIcon />}
-                onClick={() => {
-                    downloadDocument(Number(text));
-                }}
-            />
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <div>{text.fileName}</div>
+                <RegularButton
+                    variant="pseudo"
+                    iconRight={<DownloadIcon />}
+                    onClick={() => {
+                        downloadDocument(Number(text.id));
+                    }}
+                />
+            </div>
         ),
     },
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.partial'),
-        dataIndex: 'lotDocumentFlag',
+        dataIndex: 'isForLot',
         width: 240,
         render: d => <CustomSwitch checked={d} handleChange={() => {}} name="" />,
     },

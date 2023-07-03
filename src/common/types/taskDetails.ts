@@ -9,6 +9,7 @@ export type ITaskAwaitingDocument = {
 };
 
 export interface ITaskUploadedDocument {
+    isForLot?: boolean;
     // required, загруженные документы
     linkedTaskIds?: string[]; // optional, задачи в которых приложен тот же документ
     id: number; // - required, Уникальный идентификатор разрешительного документа в БД
@@ -174,4 +175,82 @@ export interface ITaskUpdateInfoResponse {
             //  "Quality actions"
         }
     ];
+}
+
+export interface IUpdateDocumentParams {
+    updatedBy: string; // required
+    documents: {
+        id: number; // required, номер документа
+        status?: string; // optional, статус действия документа ['ACTIVE, 'INACTIVE', 'DELETED', 'IN_RENEWAL']
+        mask?: string; // optional, спец. название документа для проверки в россаккредитации
+        issueDate?: string; // optional, дата вступления в силу документа
+        expireDate?: string; // optional, дата окончания срока действия документа
+        rosAccreditationApproveStatus?: string; // optional, статус документа в РосАккредитации (доп. статус с информацией из россакредитации)
+        isForLot?: boolean; // optional, флаг, показывающий, что документ относится к партии товаров
+        fileName?: string; // optional, название файла
+        fileLink?: string; // optional, ссылка на файл в S3
+        approvingStatuses?: // optional
+        {
+            productId: number; // required
+            approvingStatus: string; // required
+        }[];
+        removeProductBundle?: number[]; // optional
+        comment?: string; // optional
+    }[];
+}
+
+export interface IUpdateDocumentResponse {
+    content: {
+        id: 'integer'; // - required, Уникальный идентификатор разрешительного документа в БД
+        version: 'integer'; //required, Версия объекта в БД
+        type: 'string'; // required - тип разрешительного документа
+        isTemplate: 'boolean'; // required, показывает, что это шаблон
+        comment: 'string'; // optional, комментарий
+        status: 'string'; //optional, статус действия документа ['ACTIVE, 'INACTIVE', 'DELETED', 'IN_RENEWAL']
+        productsDetails: // optional, информация о товарах для которых загружается документ
+        [
+            {
+                id: 'integer'; // required, идентификатор связки товара с документом в БД
+                approvingStatus: 'string'; // optional, ['APPROVED', 'REJECTED', 'WAITING_FOR_APPROVAL']
+                productId: 'integer'; // required, идентификатор товара в QCMS
+                productDescription: 'string'; // required, название товара
+                productCode: 'string'; // requried, номер товара (артикул)
+                productTNVEDCode: 'string'; // optinal, ТН ВЭД код товара
+                productManagementNomenclature: {
+                    departmentId: 'integer'; // requried, департамент отдела товара
+                    subDepartmentId: 'integer'; // required, поддепартамент отдела товара
+                    typeId: 'integer'; // required, категория товара
+                    subTypeId: 'integer'; // required, подкатегория товара
+                };
+                productModelNomenclature: {
+                    departmentId: 'string'; // optional- код отдела
+                    subDepartmentId: 'string'; // optional - код подотдела
+                    consolidationId: 'string'; // optional - код группы
+                    codeId: 'string'; // optional - код модели
+                };
+                ean: 'string'; // required, ГТИН, штрих-код
+                supplierRMSCode: 'string'; // required, поставщик (или отделение поставщика)
+                supplierName: 'string'; // optional, название поставщика
+                supplierTaxIdentifier: 'string'; // optional, ИНН поставщика
+                supplierId: 'integer'; // required, идентификатор поставщика
+                qualityActionId: 'integer'; // required, идентификатор задачи для которой был загружен документ
+                buCodes: ['string']; // required, BU в которых действует документ (должен быть хотя бы один элемент массива)
+            }
+        ];
+        mask: 'string'; // optional, спец. название документа для проверки в россаккредитации
+        issueDate: 'datetime'; // optional, дата вступления в силу документа
+        expiryDate: 'datetime'; // oprional, дата окончания срока действия документа
+        rosAccreditationApproveStatus: 'string'; // optional, статус документа в РосАккредитации (доп. статус с информацией из россакредитации)
+        isForLot: 'boolean'; // required, флаг, показывающий, что документ относится к партии товаров
+        fileName: 'string'; // required, название файла
+        fileLink: 'string'; // optional, ссылка на файл в S3
+        creationInformation: {
+            createdAt: 'datetime'; // required, время создания задачи
+            createdBy: 'string'; // required, ldap или идентификатор системы, создавшей задачу
+        };
+        lastUpdateInfomation: {
+            updatedAt: 'datetime'; // required, время создания задачи
+            updatedBy: 'string'; // required, ldap или идентификатор системы, обновившей задачу
+        };
+    }[];
 }

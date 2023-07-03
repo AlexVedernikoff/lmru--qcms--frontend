@@ -114,7 +114,7 @@
             "chooseActionPlaceholder": "Выберите",
             "applyAction": "Выполнить",
             "actions": {
-                "updateStatusDocuments": "Обновить статус документа"
+                "updateDocument": "Редактировать документ"
             }
         },
         "Documents": {

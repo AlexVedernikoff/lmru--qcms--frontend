@@ -46,7 +46,11 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
                     name={'buCode'}
                     placeholder=""
                     value={formState.buCode!}
-                    onChange={handleInputChange}
+                    onChange={e => {
+                        const eventToNum = Number(e.target.value);
+                        if (isNaN(eventToNum)) return;
+                        handleInputChange(e, e.target.value);
+                    }}
                 />
 
                 <Input
@@ -202,6 +206,7 @@ const ProductsAdditionalFilter: React.FC<IProps> = ({formState, setFormState, ha
                     date={[formState.startDate!, formState.endDate!]}
                     mode="range"
                     view="double"
+                    size="s"
                     onChange={function noRefCheck(e) {
                         const datesArr = [formState.startDate, formState.endDate];
                         const datesArrRemoveEmpty = datesArr.filter(el => el);
