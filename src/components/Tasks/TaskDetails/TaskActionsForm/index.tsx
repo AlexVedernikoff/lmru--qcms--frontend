@@ -1,13 +1,14 @@
 import {Dropdown, DropdownItem, Grid, RegularButton} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import {useState} from 'react';
-import ModalWindowsGroup from '../ModalWindowsGroup';
+import {ITaskDetails} from '../../../../common/types/taskDetails';
+import TaskUploadDocumentModal from '../TaskUploadDocumentModal';
 
 import styles from './styles.module.css';
-import {ITaskDetails} from '../../../../common/types/taskDetails';
 
 export enum TaskActions {
     UpdateStatusDocuments = 'UpdateStatusDocuments',
+    UploadDocument = 'UploadDocument',
 }
 
 interface Props {
@@ -16,7 +17,6 @@ interface Props {
 
 const TaskActionsForm: React.FC<Props> = ({taskDetails}) => {
     const {t} = useTranslation('tasks');
-    const uploadedDocuments = taskDetails.documents.uploadedDocuments;
     const [action, setAction] = useState<TaskActions | null>(null);
     const [submitedAction, setSubmitedAction] = useState<TaskActions | null>(null);
 
@@ -25,22 +25,20 @@ const TaskActionsForm: React.FC<Props> = ({taskDetails}) => {
         setAction(prevAction => (prevAction === newAction ? null : newAction));
     };
 
-    const isSubmitButtonDisabled = !uploadedDocuments.length || !action;
-
     const handleSubmit = () => {
         setSubmitedAction(action);
     };
 
-    const handleModalClose = () => {
+    const handleModalWindowClose = () => {
         setSubmitedAction(null);
     };
 
     return (
         <>
-            <ModalWindowsGroup
-                onClose={handleModalClose}
-                uploadedDocuments={uploadedDocuments}
-                action={submitedAction}
+            <TaskUploadDocumentModal
+                isOpen={submitedAction === TaskActions.UploadDocument}
+                onClose={handleModalWindowClose}
+                taskDetails={taskDetails}
             />
             <Grid className={styles.grid} rowGap={16} columns="auto auto" justifyContent="end" alignItems="baseline">
                 <Grid columns="387px 126px" columnGap={16}>
@@ -56,8 +54,12 @@ const TaskActionsForm: React.FC<Props> = ({taskDetails}) => {
                             text={t('TaskTabs.Actions.actions.updateDocument')}
                             value={TaskActions.UpdateStatusDocuments}
                         />
+                        <DropdownItem
+                            text={t('TaskTabs.Actions.actions.uploadDocument')}
+                            value={TaskActions.UploadDocument}
+                        />
                     </Dropdown>
-                    <RegularButton size="m" variant="primary" onClick={handleSubmit} disabled={isSubmitButtonDisabled}>
+                    <RegularButton size="m" variant="primary" onClick={handleSubmit} disabled={!action}>
                         {t('TaskTabs.Actions.applyAction')}
                     </RegularButton>
                 </Grid>

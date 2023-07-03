@@ -114,7 +114,8 @@
             "chooseActionPlaceholder": "Выберите",
             "applyAction": "Выполнить",
             "actions": {
-                "updateDocument": "Редактировать документ"
+                "updateDocument": "Редактировать документ",
+                "uploadDocument": "Загрузить документ"
             }
         },
         "Documents": {
