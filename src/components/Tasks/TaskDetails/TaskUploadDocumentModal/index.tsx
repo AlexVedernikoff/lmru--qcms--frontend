@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {DatePicker, Grid, Modal, ModalContent, ModalFooter, ModalHeader, RegularButton} from 'fronton-react';
 import tasksApi from '../../tasksApi';
@@ -26,7 +26,7 @@ const initialFormState: FormState = {
     isPartial: false,
 };
 
-const TaskUploadDocumentModal: React.FC<Props> = ({isOpen, onClose, taskDetails}) => {
+const TaskUploadDocumentModal: React.FC<Props> = ({isOpen, onClose}) => {
     const {t} = useTranslation('tasks');
 
     const [formState, setFormState] = useState<FormState>(initialFormState);
@@ -41,11 +41,11 @@ const TaskUploadDocumentModal: React.FC<Props> = ({isOpen, onClose, taskDetails}
         [createDocumentResult.isLoading, formState]
     );
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         if (createDocumentResult.isLoading) return;
         onClose();
         setFormState(initialFormState);
-    };
+    }, [createDocumentResult.isLoading, onClose]);
 
     useEffect(() => {
         if (!formState.file) return;
@@ -58,7 +58,14 @@ const TaskUploadDocumentModal: React.FC<Props> = ({isOpen, onClose, taskDetails}
             type TDataError = {data: {errors: [{message: string}]}};
             alert((createDocumentResult.error as unknown as TDataError)?.data?.errors?.[0]?.message);
         }
-    }, [createDocumentResult.error, createDocumentResult.isError, createDocumentResult.isSuccess, onClose]);
+    }, [
+        createDocumentResult.error,
+        createDocumentResult.isError,
+        createDocumentResult.isSuccess,
+        formState.file,
+        handleClose,
+        onClose,
+    ]);
 
     const handleStartDateChange = (date: string[]) => {
         setFormState(prevState => ({...prevState, startDate: date[0]}));

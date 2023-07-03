@@ -3,9 +3,9 @@ import TaskDetailsProvider from './TaskDetailsProvider';
 import TaskDetailsProduct from './TaskDetailsProduct';
 import TaskDetailsQE from './TaskDetailsQE';
 import TaskDetailsDates from './TaskDetailsDates';
-import {ITaskDetails, ITaskUpdateInfoParams} from '../../../../common/types/taskDetails';
+import {ITaskDetails} from '../../../../common/types/taskDetails';
 import EditTaskDetailsButton from '../EditTaskDetailsButton';
-import {taskDetailsApi} from '../api';
+// import {taskDetailsApi} from '../api';
 import TaskDetailsAddCommentsForm from '../TaskDetailsAddCommentsFrom/TaskDetailsAddCommentsFrom';
 
 import styles from '../../../Common.module.css';
@@ -15,21 +15,21 @@ interface Props {
 }
 
 const ProductDetailsInfoSection: React.FC<Props> = ({taskDetails}) => {
-    const [updateTaskDetails] = taskDetailsApi.useUpdateTaskDetailsMutation();
+    // const [updateTaskDetails] = taskDetailsApi.useUpdateTaskDetailsMutation();
 
     // Функция-обработчик события, когда юзер обновил данные задачи и нажал кнопку "submit".
-    const handleTaskDetailsUpdateSubmit = (taskUpdateDetails: ITaskUpdateInfoParams) => {
-        updateTaskDetails(taskUpdateDetails)
-            .unwrap()
-            .then(
-                () => {
-                    alert('Данные успешно обновлены!');
-                },
-                () => {
-                    alert('Не удалось обновить данные. Повторите попытку позже.');
-                }
-            );
-    };
+    // const handleTaskDetailsUpdateSubmit = (taskUpdateDetails: ITaskUpdateInfoParams) => {
+    //     updateTaskDetails(taskUpdateDetails)
+    //         .unwrap()
+    //         .then(
+    //             () => {
+    //                 alert('Данные успешно обновлены!');
+    //             },
+    //             () => {
+    //                 alert('Не удалось обновить данные. Повторите попытку позже.');
+    //             }
+    //         );
+    // };
 
     const title = `${taskDetails.categoryName} - ${taskDetails.categoryTypeName} - ${taskDetails.id}`;
 
