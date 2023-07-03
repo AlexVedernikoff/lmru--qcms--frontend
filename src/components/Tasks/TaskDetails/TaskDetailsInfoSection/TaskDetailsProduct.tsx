@@ -52,17 +52,17 @@ const TaskDetailsProduct: React.FC<Props> = ({taskDetails}) => {
 
             <br />
 
-            {taskDetails?.documents?.uploadedDocuments[0]?.productInfoDetails && (
-                <div>
-                    <Typography variant="s" size="body_long" color="text-minor">
-                        {t('TaskDetails.DetailsProduct.EAN')}
-                    </Typography>
-                    <br />
-                    <Typography variant="s" size="body_short">
-                        {taskDetails?.documents?.uploadedDocuments[0]?.productInfoDetails[0].ean}
-                    </Typography>
-                </div>
-            )}
+            <div>
+                <Typography variant="s" size="body_long" color="text-minor">
+                    {t('TaskDetails.DetailsProduct.EAN')}
+                </Typography>
+                <br />
+                {/* {taskDetails?.documents?.uploadedDocuments[0]?.productInfoDetails && ( */}
+                <Typography variant="s" size="body_short">
+                    {/* {taskDetails?.documents?.uploadedDocuments[0]?.productInfoDetails[0].ean} */}
+                </Typography>
+                {/* )} */}
+            </div>
 
             <br />
 
