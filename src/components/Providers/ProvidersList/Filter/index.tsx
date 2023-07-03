@@ -1,10 +1,16 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {TRootState} from '../../../../store/index';
 import {useTranslation} from 'react-i18next';
-import {Checkbox, Dropdown, DropdownItem, Grid, Input, RegularButton, DatePicker, Typography} from 'fronton-react';
+import {Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react';
 import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
 import AdditionalFilter from './AdditionalFilter';
 import styles from '../../../Common.module.css';
 import {IManagementNomenclature, IModelNomenclature, IProvidersParams} from '../../../../common/types/providers';
+import {setSuppliersFilter, ISuppliersFilter, initialState} from '../../../../store/slices/suppliersFilterSlice';
+import {prepareBody} from './prepareBody';
+import {usePostSearchSupplsMutation} from '../../../../api/postSearchSuppliers';
+import {setSuppliersTableData} from '../../../../store/slices/suppliersTableDataSlice';
 
 interface Props {
     loadProvidersList: (value: IProvidersParams) => void;
@@ -14,133 +20,116 @@ interface Props {
 
 const ProvidersFilter: React.FC<Props> = props => {
     const {t} = useTranslation('providers');
+    const dispatch = useDispatch();
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
-    const [filter, setFilter] = useState<string>();
-    const [inputFilter, setInputFilter] = useState<string>();
-    const {loadProvidersList, modelNomenclature} = props;
     const handleShowMoreFiltersClick = () => {
         setIsMoreFiltersActive(prevState => !prevState);
     };
 
-    const [searchBy, setSearchBy] = useState<IProvidersParams['searchBy']>({});
-
-    const updateRequestPayload = {
-        pageIndex: 2,
-        pageSize: 2,
-        searchBy: {
-            [String(filter)]: inputFilter,
-            ...searchBy,
-        },
+    const onHandleFilterChange = (e: ISuppliersFilter[keyof ISuppliersFilter], k: string) => {
+        dispatch(setSuppliersFilter([e, k]));
     };
 
-    const keys = ['modelDepartmentId', 'modelSubDepartmentId', 'modelConsolidationId', 'modelCodeId'];
-    const initialAcc = keys.reduce((acc: any, key) => {
-        acc[key] = [];
-        return acc;
-    }, {});
-
-    const handleFiltersAdditional: (newValue: string[]) => void = newValue => {
-        const newFilters = newValue.reduce((acc: any, el: any) => {
-            const [key, value] = el.split(' ');
-
-            if (!acc[key]) acc[key] = [];
-            acc[key].push(value);
-            return acc;
-        }, initialAcc);
-
-        setSearchBy(filters => ({
-            ...filters,
-            ...newFilters,
-        }));
+    const clearFilters = (initialState: ISuppliersFilter) => {
+        for (const key in initialState) {
+            onHandleFilterChange(initialState[key as keyof ISuppliersFilter], key);
+        }
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
-        // setInputFilter(value);
+    const suppliersFilterState: ISuppliersFilter = useSelector((state: TRootState) => state.suppliersFilter);
+    const [getProviders] = usePostSearchSupplsMutation();
+
+    const {pageIndex: currentPage, pageSize} = suppliersFilterState.pageable;
+
+    useEffect(() => {
+        receiveProviders();
+        // eslint-disable-next-line
+    }, [currentPage, pageSize]);
+
+    const receiveProviders = async () => {
+        const requestBody = prepareBody(suppliersFilterState);
+        const providersTableData = await getProviders(requestBody);
+        dispatch(setSuppliersTableData(providersTableData));
     };
 
-    const handleSelect = () => {
-        // const value = e.target.value;
-        // setFilter(value);
-    };
-
-    const resetFilters = () => {
-        setInputFilter(undefined);
-        setFilter(undefined);
-        setSearchBy(undefined);
-    };
+    const {supplierKey, supplierValue, registrationStatus, billingCountry, supplierDepartmentCountry} =
+        suppliersFilterState;
 
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
             <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline" rowGap="48px">
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
+                    {/**************** Фильтр 01 "Поставщик код/ИНН/имя" *****************/}
                     <Dropdown
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
                         label={t('ProvidersList.Filters.filter')}
-                        value={filter}
-                        onSelect={function selectValue(value) {
-                            value && setFilter(value);
-                        }}
+                        value={supplierKey}
+                        onSelect={e => onHandleFilterChange(e!, 'supplierKey')}
                     >
                         <DropdownItem text={t('ProvidersList.Filters.providerName')} value={'supplierName'} />
-                        <DropdownItem text={t('ProvidersList.Filters.providerCode')} value={'supplierCode'} />
-                        <DropdownItem text={t('ProvidersList.Filters.INN')} value={'supplierTaxIndetifier'} />
+                        <DropdownItem text={t('ProvidersList.Filters.providerCode')} value={'supplierRMSCode'} />
+                        <DropdownItem text={t('ProvidersList.Filters.INN')} value={'supplierInn'} />
                         <DropdownItem
                             text={t('ProvidersList.Filters.businessLicenseNumber')}
-                            value={'businessLicenseNumber'}
+                            value={'businessLicence'}
                         />
                     </Dropdown>
-
                     <Input
                         inputSize="m"
                         autoComplete="off"
                         label=""
                         placeholder=""
-                        value={inputFilter}
-                        disabled={!filter}
-                        onChange={(e, value) => setInputFilter(value)}
+                        value={supplierValue}
+                        disabled={!supplierKey}
+                        onChange={e => {
+                            onHandleFilterChange(e.target.value, 'supplierValue');
+                        }}
                     />
+                    {/**************** Фильтр 02 "Статус регистрации поставщика" *****************/}
+                    <Dropdown
+                        size="m"
+                        closeOnSelect
+                        placeholder={t('Common.Select')}
+                        label={t('ProvidersList.Filters.supplierRegistrationStatus')}
+                        value={registrationStatus}
+                        onSelect={e => onHandleFilterChange(e!, 'registrationStatus')}
+                    >
+                        <DropdownItem text="Возможное значение 1" value={'Возможное значение 1'} />
+                        <DropdownItem text="Возможное значение 2" value={'Возможное значение 2'} />
+                        <DropdownItem text="Возможное значение 3" value={'Возможное значение 3'} />
+                    </Dropdown>
 
-                    <Checkbox checked={false} label={t('ProvidersList.Filters.databasePotentialSuppliers')} />
-                    <Checkbox checked={false} label={t('ProvidersList.Filters.referenceDatabaseSuppliers')} />
+                    {/**************** Фильтр 03 Страна выставления счетов" *****************/}
 
                     <Dropdown
                         size="m"
                         closeOnSelect
-                        placeholder={t('ProvidersList.Filters.reference')}
-                        label={t('ProvidersList.Filters.supplierRegistrationStatus')}
-                        value={undefined}
-                        onSelect={handleSelect}
+                        placeholder={t('Common.Select')}
+                        label={t('ProvidersList.Filters.billingCountry')}
+                        value={billingCountry}
+                        onSelect={e => onHandleFilterChange(e!, 'billingCountry')}
                     >
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
-                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text="Россия" value={'Russia'} />
                     </Dropdown>
 
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={t('ProvidersList.Filters.billingCountry')}
-                        name={'modelNameOrCode'}
-                        placeholder={t('Common.Input')}
-                        value={undefined}
-                        onChange={handleInputChange}
-                    />
+                    {/***** Фильтр 04 Страна расположения отделения поставщика" *****************/}
 
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
+                    <Dropdown
+                        size="m"
+                        closeOnSelect
+                        placeholder={t('Common.Select')}
                         label={t('ProvidersList.Filters.countryLocationSupplier')}
-                        name={'modelNameOrCode'}
-                        placeholder={t('Common.Input')}
-                        value={undefined}
-                        onChange={handleInputChange}
-                    />
+                        value={supplierDepartmentCountry}
+                        onSelect={e => onHandleFilterChange(e!, 'supplierDepartmentCountry')}
+                    >
+                        <DropdownItem text="Россия" value={'Russia'} />
+                    </Dropdown>
                 </Grid>
 
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
-                    <Dropdown
+                    {/* <Dropdown
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
@@ -151,8 +140,8 @@ const ProvidersFilter: React.FC<Props> = props => {
                         <DropdownItem text="test" value={'test'} />
                         <DropdownItem text="test" value={'test'} />
                         <DropdownItem text="test" value={'test'} />
-                    </Dropdown>
-
+                    </Dropdown> */}
+                    {/* 
                     <Dropdown
                         size="m"
                         closeOnSelect
@@ -164,9 +153,9 @@ const ProvidersFilter: React.FC<Props> = props => {
                         <DropdownItem text="test" value={'test'} />
                         <DropdownItem text="test" value={'test'} />
                         <DropdownItem text="test" value={'test'} />
-                    </Dropdown>
+                    </Dropdown> */}
 
-                    <Dropdown
+                    {/* <Dropdown
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
@@ -177,8 +166,8 @@ const ProvidersFilter: React.FC<Props> = props => {
                         <DropdownItem text="test" value={'test'} />
                         <DropdownItem text="test" value={'test'} />
                         <DropdownItem text="test" value={'test'} />
-                    </Dropdown>
-
+                    </Dropdown> */}
+                    {/* 
                     <Dropdown
                         size="m"
                         closeOnSelect
@@ -190,11 +179,11 @@ const ProvidersFilter: React.FC<Props> = props => {
                         <DropdownItem text="test" value={'test'} />
                         <DropdownItem text="test" value={'test'} />
                         <DropdownItem text="test" value={'test'} />
-                    </Dropdown>
+                    </Dropdown> */}
                 </Grid>
 
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="14px">
-                    <Dropdown
+                    {/* <Dropdown
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
@@ -270,17 +259,14 @@ const ProvidersFilter: React.FC<Props> = props => {
                         </Grid>
                         <Typography variant="s" size="body_short">
                             {t('ProvidersList.Filters.withoutAssignedQE')}
-                        </Typography>
-                    </Grid>
+                        </Typography> 
+                     </Grid> */}
                 </Grid>
             </Grid>
 
             {isMoreFiltersActive && (
                 <Grid columnGap={16} columns="1fr" alignItems="center">
-                    <AdditionalFilter
-                        modelNomenclature={modelNomenclature}
-                        handleFiltersAdditional={handleFiltersAdditional}
-                    />
+                    <AdditionalFilter />
                 </Grid>
             )}
 
@@ -302,11 +288,23 @@ const ProvidersFilter: React.FC<Props> = props => {
                 <span />
 
                 <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton onClick={resetFilters} size="m" variant="outline">
+                    <RegularButton
+                        onClick={() => {
+                            clearFilters(initialState);
+                        }}
+                        size="m"
+                        variant="outline"
+                    >
                         {t('Buttons.Clear')}
                     </RegularButton>
 
-                    <RegularButton onClick={() => loadProvidersList(updateRequestPayload)} size="m" variant="primary">
+                    <RegularButton
+                        onClick={() => {
+                            receiveProviders();
+                        }}
+                        size="m"
+                        variant="primary"
+                    >
                         {t('Buttons.Search')}
                     </RegularButton>
                 </Grid>

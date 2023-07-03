@@ -16,6 +16,7 @@ import {IPermissiveDocumentsResponse} from '../../../../common/types/permissiveD
 import {setProductsDocumentsTableData} from '../../../../store/slices/productsDocumentsTableDataSlice';
 import {TRootState} from '../../../../store/index';
 import styles from '../../../Common.module.css';
+import stylesProductsDocs from './styles.module.css';
 import {prepareBody} from './prepareBody';
 
 const DocumentsFilter: React.FC = () => {
@@ -214,7 +215,7 @@ const DocumentsFilter: React.FC = () => {
                         <DropdownItem text={t('WithDocuments.Table.ISSUE')} value={'issueDate'} />
                         <DropdownItem text={t('WithDocuments.Table.EXPIRY')} value={'expireDate'} />
                     </Dropdown>
-                    <div>
+                    <div className={stylesProductsDocs.datePicker}>
                         <DatePicker
                             date={[
                                 productsDocumentsFiltersState.dates.startDate,

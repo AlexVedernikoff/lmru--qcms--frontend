@@ -6,7 +6,7 @@ import {useGetProviders} from './hooks/useGetProviders';
 import {useGetManagementNomenclatureQuery, useGetProductModelNomenclatureQuery} from '../services';
 
 const ProvidersList: React.FC = () => {
-    const {providers, loadProvidersList} = useGetProviders({
+    const {loadProvidersList} = useGetProviders({
         pageIndex: 1,
         pageSize: 1,
     });
@@ -25,7 +25,7 @@ const ProvidersList: React.FC = () => {
             </Grid>
 
             <Grid rowGap={16} className={styles.panel}>
-                <ProvidersTable providers={providers} />
+                <ProvidersTable />
             </Grid>
         </Grid>
     );
