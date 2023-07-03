@@ -1,62 +1,174 @@
-import {Dropdown, DropdownItem, Grid, Typography} from 'fronton-react';
+import {useEffect, useState} from 'react';
+import {Grid, IconButton, Input, RegularButton, Typography} from 'fronton-react';
 import {useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import styles from '../../Common.module.css';
 import modelsApi from '../modelsApi';
+import EditIcon from '../../Icons/EditIcon';
 
 const ModelDetailsQualityManager: React.FC = () => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
-    const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
 
-    const handleSelect = (value: string | null) => {};
+    const [isEditMode, setIsEditMode] = useState(false);
+
+    const [BU, setBU] = useState<string | undefined>(undefined);
+    const [QE, setQE] = useState<string | undefined>(undefined);
+    const [SQM, setSQM] = useState<string | undefined>(undefined);
+
+    const {data: details, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id, securityCode: 'security_code'});
+    const [updateModel] = modelsApi.endpoints.updateQualityModel.useMutation();
+
+    useEffect(() => {
+        const user = details?.assignedApprovers?.[0];
+
+        setBU(user?.buId?.toString());
+        setQE(user?.role);
+        setSQM(user?.userId);
+    }, [details?.assignedApprovers]);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        switch (e.target.name) {
+            case 'BU':
+                setBU(e.target.value);
+                return;
+            case 'QE':
+                setQE(e.target.value);
+                return;
+            case 'SQM':
+                setSQM(e.target.value);
+                return;
+        }
+    };
+
+    const handleEditClick = () => {
+        setIsEditMode(true);
+    };
+
+    const handleSaveClick = async () => {
+        await updateModel({
+            accept: 'application/json',
+            id,
+            securityCode: 'security_code',
+            body: {
+                // productModelNomenclatureId: 0,
+                // qualityModelForMixtures: true,
+                // qualityModelLabel: 'Этикетка тестовая',
+                // qualityModelFullName: 'Полное наименование модели качества',
+                // qualityModelDescription: 'Описание модели качества',
+                // deleteRelationToNomenclature: true,
+                // productGroupRisks: {
+                //     productRiskLevel: 1,
+                //     personLevelRiskForCorrectUsage: 2,
+                //     personLevelRiskForNonCorrectUsage: 3,
+                //     sustainabilityRisk: 4,
+                //     regulatoryRisk: 5,
+                //     healthRisk: 6,
+                //     riskComments: 'Комментарий к группе риска',
+                // },
+                // regulatoryReferences: [1],
+                assignedApprovers: [
+                    {
+                        userId: SQM,
+                        role: QE,
+                        buId: 1,
+                    },
+                ],
+                updatedBy: 'currentUser',
+            },
+        });
+
+        await refetch();
+
+        setIsEditMode(false);
+    };
 
     return (
-        <Grid className={styles.sectionItem} rowGap={4} columnGap={24}>
-            <Grid>
+        <Grid className={styles.sectionItem} rowGap={8} columnGap={16}>
+            <Grid columns="1fr auto" gap={16} alignItems="start">
                 <Typography variant="h3">{t('ModelDetails.QualityManager.Title')}</Typography>
+                {isEditMode ? (
+                    <Grid columns="120px" gap={16}>
+                        <RegularButton size="m" onClick={handleSaveClick}>
+                            {t('Buttons.Save')}
+                        </RegularButton>
+                    </Grid>
+                ) : (
+                    <Grid columns="48px" gap={4}>
+                        <IconButton aria-label="edit" size="s" onClick={handleEditClick}>
+                            <EditIcon color="none" />
+                        </IconButton>
+                    </Grid>
+                )}
             </Grid>
 
-            <Grid columnGap={24} columns="repeat(3, 1fr)">
-                <Dropdown
-                    size="m"
-                    closeOnSelect
-                    placeholder={t('Common.Select')}
-                    label={t('ModelDetails.QualityManager.Field.BU')}
-                    value={undefined}
-                    onSelect={handleSelect}
-                >
-                    {details?.assignedApprovers?.map(d => (
-                        <DropdownItem key={d.id} text={d.buId.toString()} value={d.buId} />
-                    ))}
-                </Dropdown>
+            <br />
+            <br />
+            <br />
 
-                <Dropdown
-                    size="m"
-                    closeOnSelect
-                    placeholder={t('Common.Select')}
-                    label={t('ModelDetails.QualityManager.Field.QE')}
-                    value={undefined}
-                    onSelect={handleSelect}
-                >
-                    {details?.assignedApprovers?.map(d => (
-                        <DropdownItem key={d.id} text={d.role} value={d.role} />
-                    ))}
-                </Dropdown>
+            {isEditMode ? (
+                <Grid columnGap={24} columns="repeat(3, 1fr)">
+                    <Input
+                        inputSize="m"
+                        autoComplete="off"
+                        label={t('ModelDetails.QualityManager.Field.BU')}
+                        name={'BU'}
+                        placeholder=""
+                        value={BU}
+                        onChange={handleInputChange}
+                    />
+                    <Input
+                        inputSize="m"
+                        autoComplete="off"
+                        label={t('ModelDetails.QualityManager.Field.QE')}
+                        name={'QE'}
+                        placeholder=""
+                        value={QE}
+                        onChange={handleInputChange}
+                    />
+                    <Input
+                        inputSize="m"
+                        autoComplete="off"
+                        label={t('ModelDetails.QualityManager.Field.SCM')}
+                        name={'SQM'}
+                        placeholder=""
+                        value={SQM}
+                        onChange={handleInputChange}
+                    />
+                </Grid>
+            ) : (
+                <Grid columnGap={24} columns="repeat(3, 1fr)" alignItems="start">
+                    <Grid>
+                        <Typography variant="s" size="subtitle">
+                            {t('ModelDetails.QualityManager.Field.BU')}
+                        </Typography>
+                        <Typography variant="s" size="body_long">
+                            {BU || '-'}
+                        </Typography>
+                    </Grid>
+                    <Grid>
+                        <Typography variant="s" size="subtitle">
+                            {t('ModelDetails.QualityManager.Field.QE')}
+                        </Typography>
+                        <Typography variant="s" size="body_long">
+                            {QE || '-'}
+                        </Typography>
+                    </Grid>
+                    <Grid>
+                        <Typography variant="s" size="subtitle">
+                            {t('ModelDetails.QualityManager.Field.SCM')}
+                        </Typography>
+                        <Typography variant="s" size="body_long">
+                            {SQM || '-'}
+                        </Typography>
+                    </Grid>
+                </Grid>
+            )}
 
-                <Dropdown
-                    size="m"
-                    closeOnSelect
-                    placeholder={t('Common.Select')}
-                    label={t('ModelDetails.QualityManager.Field.SCM')}
-                    value={undefined}
-                    onSelect={handleSelect}
-                >
-                    {details?.assignedApprovers?.map(d => (
-                        <DropdownItem key={d.id} text={d.role} value={d.role} />
-                    ))}
-                </Dropdown>
-            </Grid>
+            <br />
+            <br />
+            <br />
+            <br />
         </Grid>
     );
 };
