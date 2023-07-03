@@ -11,8 +11,6 @@ const serviceUrl = {
 export const productDetailsApi = createApi({
     reducerPath: 'productDetailsApi',
     baseQuery: fetchBaseQuery({baseUrl: hostUrl}),
-    tagTypes: ['Details'],
-
     endpoints: builder => ({
         getDetailsForProducts: builder.query<ProductDetails, IQualityProductDetailsParams>({
             query: params => ({
@@ -24,9 +22,8 @@ export const productDetailsApi = createApi({
                     securityCode: params.securityCode,
                 },
             }),
-            providesTags: ['Details'],
         }),
-        postUpdateProduct: builder.mutation<ProductDetails, IQualityProductDetailsParams>({
+        postUpdateProduct: builder.mutation<ProductDetails[], IQualityProductDetailsParams>({
             query: params => ({
                 method: 'POST',
                 url: serviceUrl.updateProduct,
@@ -35,7 +32,6 @@ export const productDetailsApi = createApi({
                     securityCode: params.securityCode,
                 },
             }),
-            invalidatesTags: ['Details'],
         }),
     }),
 });

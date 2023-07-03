@@ -2,12 +2,15 @@ import {Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 
-import {productId, securityCode} from '../mockProductDetails';
+import {securityCode} from '../mockProductDetails';
 
 import {useGetDetailsForProductsQuery} from '../productDetailsApi';
+import {useParams} from 'react-router-dom';
 
 const ProductDetailsProvider: React.FC = () => {
     const {t} = useTranslation('products');
+
+    const {id: productId = ''} = useParams();
 
     const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
 

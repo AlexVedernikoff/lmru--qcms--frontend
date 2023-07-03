@@ -9,12 +9,12 @@ import styles from '../../../Common.module.css';
 const ProductDetailsInfoSection: React.FC = () => {
     return (
         <Grid className={styles.panel} rowGap={16} columnGap={16}>
-            <Grid rowGap={16} columnGap={16} columns="500px 1fr">
+            <Grid rowGap={16} columnGap={16} columns="533px 1fr">
                 <ProductDetailsProvider />
                 <ProductDetailsProduct />
             </Grid>
 
-            <Grid rowGap={16} columnGap={16} columns="500px 1fr">
+            <Grid rowGap={16} columnGap={16} columns="533px 1fr">
                 <ProductDetailsAttributes />
 
                 <Grid columnGap={16} columns="1fr 1fr">

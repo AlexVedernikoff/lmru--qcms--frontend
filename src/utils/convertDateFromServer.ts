@@ -5,7 +5,7 @@ export const convertDateFromServer = (date: string) => {
     return res;
 };
 
-export const converStringToDateTime = (date: string) => {
-    const res = format(new Date(date), 'yyyy/MM/dd HH:mm:ss');
+export const converStringToDateTime = (date: string | Date) => {
+    const res = format(new Date(date), 'yyyy.MM.dd HH:mm:ss');
     return res;
 };

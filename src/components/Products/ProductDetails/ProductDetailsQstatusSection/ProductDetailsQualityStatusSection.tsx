@@ -1,18 +1,27 @@
-import {useEffect, useState} from 'react';
 import {BackofficeStatus, Grid, Typography, RegularButton} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import CustomTable from '../../Common/CustomTable';
-import styles from '../../Common.module.css';
-import {useLazyGetDetailsForProductsQuery, usePostUpdateProductMutation} from './productDetailsApi';
-import {productId, securityCode} from './mockProductDetails';
+import CustomTable from '../../../Common/CustomTable';
+import styles from '../../../Common.module.css';
+
+import stylesProductQStatus from './productDetailsQstatuses.module.css';
+
+import {useEffect, useState} from 'react';
+
+import {useGetDetailsForProductsQuery, usePostUpdateProductMutation} from '../productDetailsApi';
+
+import {securityCode} from '../mockProductDetails';
+
+import {IDataDeatailsQstatus, IUpdateBodyReq, ProductDetails} from '../../../../common/types/productDetails';
+import {prepareUpdateBody} from '../ProductDetailsMapping/ProductDetailsQaulityStatusSection/prepareUpdateBody';
 import {
-    ELanguages,
+    DataIndexQtable,
+    prepareQstatusesColumns,
+} from '../ProductDetailsMapping/ProductDetailsQaulityStatusSection/prepareQstatusesColumns';
+import {
     getQualityStatus,
     qaulityStatusSectionMapping,
-} from './productUtils.ts/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
-import {IDataDeatailsQstatus, IUpdateBodyReq, ProductDetails} from '../../../common/types/productDetails';
-import {prepareQstatusesColumns} from './productUtils.ts/ProductDetailsQaulityStatusSection/prepareQstatusesColumns';
-import {prepareUpdateBody} from './productUtils.ts/ProductDetailsQaulityStatusSection/prepareUpdateBody';
+} from '../ProductDetailsMapping/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
+import {useParams} from 'react-router-dom';
 
 export enum EBlockers {
     BlockOrders = 'blockOrders',
@@ -20,12 +29,18 @@ export enum EBlockers {
     BlockPublics = 'blockPublics',
 }
 
+export enum ELanguages {
+    RU = 'ru',
+    ENG = 'eng',
+}
+
 const ProductDetailsQualityStatusSection: React.FC = () => {
     const {t} = useTranslation('products');
+    const {id: productId = ''} = useParams();
 
     const [postUpdateProduct] = usePostUpdateProductMutation();
 
-    const [getDetailsForProductsQuery] = useLazyGetDetailsForProductsQuery();
+    const {data} = useGetDetailsForProductsQuery({productId, securityCode});
 
     const [details, setDetails] = useState<ProductDetails>();
     const [tableData, setTableData] = useState<IDataDeatailsQstatus[]>([]);
@@ -34,14 +49,13 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
     useEffect(() => {
         setIsDiscardChanges(false);
-
-        getDetailsForProductsQuery({productId, securityCode}).then(data => setDetails(data.data));
-    }, [getDetailsForProductsQuery, isDiscardChanges]);
+        data && setDetails(data);
+    }, [data, isDiscardChanges]);
 
     useEffect(() => {
         if (details?.qualityStatuses && details?.qualityStatuses?.length > 0) {
             const arrQRowsVal: IDataDeatailsQstatus[] = details.qualityStatuses.map((el, i: number) => {
-                const mapping = qaulityStatusSectionMapping(el);
+                const mapping = qaulityStatusSectionMapping(t, el);
 
                 return {
                     id: `${i}`,
@@ -57,16 +71,24 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                     blockPublics: mapping.blockedForPublics,
                     blockPublicsComment: '',
                     isBlockPublicsOpened: false,
-                    ruStatus: mapping.qualityStatus.ru,
-                    engStatus: mapping.qualityStatus.eng,
+                    ruStatus: mapping.ruStatus,
+                    engStatus: mapping.engStatus,
                     isStatusCommentOpened: false,
                     statusComment: '',
+                    isStatusHistoryOpened: false,
+                    statusRowHistory: mapping.statusRowHistory,
+                    isOrdersHistoryOpened: false,
+                    ordersRowHistory: mapping.ordersRowHistory,
+                    isSellingsHistoryOpened: false,
+                    sellingsRowHistory: mapping.sellingsRowHistory,
+                    isPublicationsHistoryOpened: false,
+                    publicationsRowHistory: mapping.publicationsRowHistory,
                 };
             });
 
             setTableData(arrQRowsVal);
         }
-    }, [details?.qualityStatuses]);
+    }, [details?.qualityStatuses, t]);
 
     const handleChange = (recordId: string, value: string) => {
         setIsChangesInData(true);
@@ -174,7 +196,8 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         };
         const body: IUpdateBodyReq = prepareUpdateBody(tableData, commonProductFields);
 
-        await postUpdateProduct({body, securityCode}).unwrap();
+        const update = await postUpdateProduct({body, securityCode}).unwrap();
+        setDetails(update[0]);
         setIsChangesInData(false);
     };
 
@@ -184,11 +207,62 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         setIsChangesInData(false);
     };
 
+    const handleHistoryTables = (recordId: string, dataIndex: string) => {
+        if (dataIndex === DataIndexQtable.Statuses) {
+            setTableData(prevState =>
+                prevState.map(el => {
+                    if (el.id === recordId) {
+                        return {...el, isStatusHistoryOpened: !el.isStatusHistoryOpened};
+                    } else {
+                        return el;
+                    }
+                })
+            );
+        }
+
+        if (dataIndex === DataIndexQtable.BlockOrders) {
+            setTableData(prevState =>
+                prevState.map(el => {
+                    if (el.id === recordId) {
+                        return {...el, isOrdersHistoryOpened: !el.isOrdersHistoryOpened};
+                    } else {
+                        return el;
+                    }
+                })
+            );
+        }
+
+        if (dataIndex === DataIndexQtable.BlockSellings) {
+            setTableData(prevState =>
+                prevState.map(el => {
+                    if (el.id === recordId) {
+                        return {...el, isSellingsHistoryOpened: !el.isSellingsHistoryOpened};
+                    } else {
+                        return el;
+                    }
+                })
+            );
+        }
+
+        if (dataIndex === DataIndexQtable.BlockPublics) {
+            setTableData(prevState =>
+                prevState.map(el => {
+                    if (el.id === recordId) {
+                        return {...el, isPublicationsHistoryOpened: !el.isPublicationsHistoryOpened};
+                    } else {
+                        return el;
+                    }
+                })
+            );
+        }
+    };
+
     const attr_columns = prepareQstatusesColumns(
         handleSelect,
         handleChange,
         handleStatusComment,
-        handleBlockersComments
+        handleBlockersComments,
+        handleHistoryTables
     );
 
     return (
@@ -202,7 +276,13 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                         {t('ProductDetails.QualityStatusSection.Table.Empty')}
                     </Typography>
 
-                    <CustomTable columns={attr_columns} dataSource={tableData} pagination={false} size="small" />
+                    <CustomTable
+                        scroll={{y: 400}}
+                        columns={attr_columns}
+                        dataSource={tableData}
+                        tableLayout="fixed"
+                        size="small"
+                    />
                 </Grid>
             </Grid>
 
@@ -210,10 +290,19 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 <Typography variant="h3">{t('ProductDetails.QualityStatusSection.Comments')}</Typography>
                 <Textarea />
             </Grid> */}
-            <RegularButton disabled={!isChangesInData} onClick={updateChangesOnServer}>
+            <RegularButton
+                disabled={!isChangesInData}
+                onClick={updateChangesOnServer}
+                className={stylesProductQStatus.butt}
+            >
                 Отправить
             </RegularButton>
-            <RegularButton variant="alert" disabled={!isChangesInData} onClick={discardChanges}>
+            <RegularButton
+                variant="alert"
+                disabled={!isChangesInData}
+                onClick={discardChanges}
+                className={stylesProductQStatus.butt}
+            >
                 Сбросить изменения
             </RegularButton>
         </Grid>

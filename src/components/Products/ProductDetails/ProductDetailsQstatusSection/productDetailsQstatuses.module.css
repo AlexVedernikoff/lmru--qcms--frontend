@@ -1,0 +1,20 @@
+.dropdownItem {
+    width: 260px;
+}
+
+.dropdown {
+    width: 260px;
+}
+
+.dropdown > div > button > fieldset {
+    left: 0;
+    right: 0;
+}
+
+.inputComment {
+    width: 260px;
+}
+
+.butt {
+    width: 15%;
+}

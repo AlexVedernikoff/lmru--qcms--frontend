@@ -1,8 +1,9 @@
-import {QualityStatus} from '../../../../../common/types/productDetails';
+import {TFunction} from 'i18next';
+import {History, QualityStatus} from '../../../../../common/types/productDetails';
+import {converStringToDateTime} from '../../../../../utils/convertDateFromServer';
 
 export enum EQualityStatusesEng {
     MissingData = 'MISSING_DATA',
-    MissingDate = 'MISSING_DATE',
     QualificationInProgress = 'QUALIFICATION_IN_PROGRESS',
     DocumentCollection = 'DOCUMENT_COLLECTION',
     Certified = 'CERTIFIED',
@@ -19,17 +20,10 @@ export enum EQualityStatusesRu {
     TemporarilyAllowed = 'Временно сертифицирован',
 }
 
-export enum ELanguages {
-    RU = 'ru',
-    ENG = 'eng',
-}
-
 export const getQualityStatus = (lang: string, qualityStatus?: string) => {
     if (lang === 'ru') {
         const statusMissingDataRu =
-            qualityStatus === EQualityStatusesEng.MissingData || qualityStatus === EQualityStatusesEng.MissingDate
-                ? EQualityStatusesRu.MissingData
-                : '';
+            qualityStatus === EQualityStatusesEng.MissingData ? EQualityStatusesRu.MissingData : '';
         const statusQualificationInProgressRu =
             qualityStatus === EQualityStatusesEng.QualificationInProgress
                 ? EQualityStatusesRu.QualificationInProgress
@@ -99,7 +93,24 @@ const arrQstatusesRu = [
     EQualityStatusesRu.TemporarilyAllowed,
 ];
 
-export const qaulityStatusSectionMapping = (qStatus?: QualityStatus) => {
+const sortAndFormateDatesArray = (array: History[]) => {
+    const formatedDateHistory = [...array].map(el => ({
+        ...el,
+        statusUpdatedAt: converStringToDateTime(el.statusUpdatedAt),
+    }));
+
+    return [...formatedDateHistory].sort((a: History, b: History) => {
+        const dateA: any = new Date(converStringToDateTime(a.statusUpdatedAt));
+        const dateB: any = new Date(converStringToDateTime(b.statusUpdatedAt));
+
+        return dateB - dateA;
+    });
+};
+
+export const qaulityStatusSectionMapping = (
+    t: TFunction<'products', undefined, 'products'>,
+    qStatus?: QualityStatus
+) => {
     const buCodeText =
         qStatus?.buCode && qStatus.buCode === 9
             ? 'Леруа Мерлен Россия'
@@ -107,19 +118,34 @@ export const qaulityStatusSectionMapping = (qStatus?: QualityStatus) => {
             ? 'Леруа Мерлен Казахстан'
             : qStatus?.buCode;
     const buCode = qStatus?.buCode;
-    const qualityStatus = {ru: getQualityStatus(ELanguages.RU, qStatus?.qualityStatus), eng: qStatus?.qualityStatus};
+
+    const engStatus = qStatus?.qualityStatus;
+    // @ts-ignore-next-line
+    const ruStatus = t(`ProductDetails.QualityStatusSection.Table.Statuses.${qStatus?.qualityStatus}`) as string;
 
     const blockedForOrders = qStatus?.blockedForOrder;
     const blockedForSellings = qStatus?.blockedForSelling;
     const blockedForPublics = qStatus?.blockedForPublication;
 
+    const statusRowHistory = qStatus?.qualityStatusHistory && sortAndFormateDatesArray(qStatus.qualityStatusHistory);
+
+    const ordersRowHistory = qStatus?.orderBlockHistory && sortAndFormateDatesArray(qStatus.orderBlockHistory);
+    const sellingsRowHistory = qStatus?.sellingBlockHistory && sortAndFormateDatesArray(qStatus.sellingBlockHistory);
+    const publicationsRowHistory =
+        qStatus?.publicationBlockHistory && sortAndFormateDatesArray(qStatus.publicationBlockHistory);
+
     return {
         buCode,
         buCodeText,
-        qualityStatus,
+        ruStatus,
+        engStatus,
         blockedForOrders,
         blockedForSellings,
         blockedForPublics,
         arrQstatusesRu,
+        statusRowHistory,
+        ordersRowHistory,
+        sellingsRowHistory,
+        publicationsRowHistory,
     };
 };

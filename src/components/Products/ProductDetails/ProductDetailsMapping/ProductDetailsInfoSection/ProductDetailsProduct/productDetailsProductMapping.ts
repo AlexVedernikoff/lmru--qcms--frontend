@@ -1,13 +1,13 @@
 import {TFunction} from 'i18next';
 import {ProductDetails} from '../../../../../../common/types/productDetails';
 
-const getRiskOption = (t: TFunction, calculatedRisk?: string) => {
-    enum ERiskOptions {
-        Minor = 'MINOR',
-        Major = 'MAJOR',
-        Critical = 'CRITICAL',
-    }
+enum ERiskOptions {
+    Minor = 'MINOR',
+    Major = 'MAJOR',
+    Critical = 'CRITICAL',
+}
 
+const getRiskOption = (t: TFunction, calculatedRisk?: string) => {
     const minor = t('ProductDetails.Info.Product.RiskOptions.minor');
     const major = t('ProductDetails.Info.Product.RiskOptions.major');
     const critical = t('ProductDetails.Info.Product.RiskOptions.critical');
@@ -44,9 +44,9 @@ ${productModelNomenclature?.modelConsolidationName} / ${productModelNomenclature
 
     const code = details?.code;
     const ean = details?.ean;
-    const isChemical = details?.qualityModel?.qualityModelForMixtures ? true : false;
+    const isChemical = details?.productWithSubstances || false;
     const isSTM = details?.mdd ? true : false;
-    const isImport = details?.import ? true : false;
+    const isImport = details?.import || false;
     const isFromProject = details?.project ? true : false;
 
     return {

@@ -25,7 +25,7 @@
                 "Table": {
                     "Columns": {
                         "characteristics": "Характеристики",
-                        "available": "Наличие",
+                        "available": "Значения",
                         "type": "Тип"
                     }
                 }
@@ -77,9 +77,64 @@
             "Title": "Статус качества",
             "Table": {
                 "Empty": "Контактные данные поставщика отсутствуют",
-                "Columns": {}
+                "Columns": {},
+                "Statuses": {
+                    "MISSING_DATA": "Отсутствуют данные о качестве",
+                    "QUALIFICATION_IN_PROGRESS": "Квалификация",
+                    "DOCUMENT_COLLECTION": "Сбор документации",
+                    "CERTIFIED": "Сертифицирован",
+                    "NOT_CERTIFIED": "Не сертифицирован",
+                    "TEMPORARILY_ALLOWED": "Временно сертифицирован"
+                }
             },
             "Comments": "Публичные комментарии"
+        },
+        "ProductDetailsTabs": {
+            "DocumentsTab": {
+                "Title": "Документы",
+                "StatusesOptions": {
+                    "APPROVED": "Подтвержден",
+                    "REJECTED": "Отклонен",
+                    "NEEDS_APPROVAL": "Требуется подтверждение"
+                },
+                "Fields": {
+                    "Type": "Тип документа",
+                    "FileName": "Имя документа",
+                    "Status": "Статус утверждения",
+                    "IsParty": "Партийный",
+                    "UploadedAt": "Дата загрузки",
+                    "IssueDate": "Дата начала действия",
+                    "ExpiredAt": "Дата окончания",
+                    "DocumentMask": "Маска документа"
+                }
+            },
+            "TasksTab": {
+                "Title": "Задачи",
+                "StatusesOptions": {
+                    "APPROVED": "Подтвержден",
+                    "DRAFT": "Драфт",
+                    "СANCELLED": "Отменен",
+                    "AWAITING_DOCUMENT_LOADING": "Ожидает загрузки документов",
+                    "AWAITING_RESOLUTION": "Ожидает валидации",
+                    "RETURNED_AWAITING_DOCUMENT_LOADING": "Возращено на загрузку документа",
+                    "RETURNED_AWAITING_RESOLUTION": "Возращено ожидает валидации"
+                },
+                "Fields": {
+                    "Type": "Тип",
+                    "Status": "Статус",
+                    "UploadedDocs": "Загруженные документы",
+                    "SupplierName": "Наименование поставщика",
+                    "SupplierCode": "Код поставщика",
+                    "QE": "QE",
+                    "SQM": "SQM",
+                    "Number": "№",
+                    "AwaitedDocs": "Ожидаемые документы",
+                    "CategoryName": "Категория задач",
+                    "CreatedAt": "Дата создания",
+                    "ApprovalDueDate": "Дата окончания подтверждения ",
+                    "Responsible": "Ответственный подрядчик"
+                }
+            }
         }
     },
     "WithModels": {

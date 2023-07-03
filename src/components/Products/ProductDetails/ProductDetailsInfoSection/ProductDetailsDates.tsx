@@ -3,11 +3,13 @@ import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 import {useGetDetailsForProductsQuery} from '../productDetailsApi';
 
-import {productId, securityCode} from '../mockProductDetails';
+import {securityCode} from '../mockProductDetails';
 import {converStringToDateTime} from '../../../../utils/convertDateFromServer';
+import {useParams} from 'react-router-dom';
 
 const ProductDetailsDates: React.FC = () => {
     const {t} = useTranslation('products');
+    const {id: productId = ''} = useParams();
 
     const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
 

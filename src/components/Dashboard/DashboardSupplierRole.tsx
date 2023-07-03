@@ -37,7 +37,7 @@ const DashboardSupplierRole: React.FC = () => {
         searchBy: {
             responsible: baseQualityActionsResponsible,
             actionStatuses: ['AWAITING_DOCUMENT_LOADING', 'AWAITING_RESOLUTION'],
-            isOverdue: true
+            isOverdue: true,
         },
     });
 

@@ -1,9 +1,10 @@
 import {ICommonProductFields, IDataDeatailsQstatus} from '../../../../../common/types/productDetails';
+import {mockUser} from '../../mockProductDetails';
 
 export const prepareUpdateBody = (tableData: IDataDeatailsQstatus[], commonProductFields: ICommonProductFields) => {
     const products = tableData.map(tableRow => {
         return {
-            id: Number(commonProductFields.productId),
+            id: parseInt(commonProductFields.productId, 10),
             qualityModelId: commonProductFields?.qualityModelId,
             isProductWithSubstances: commonProductFields?.productWithSubstances,
             quality: {
@@ -29,7 +30,7 @@ export const prepareUpdateBody = (tableData: IDataDeatailsQstatus[], commonProdu
     });
 
     const result = {
-        updatedBy: 'mock user2',
+        updatedBy: mockUser,
         products,
     };
 

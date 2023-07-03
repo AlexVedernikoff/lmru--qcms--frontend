@@ -4,6 +4,10 @@ export interface IQualityProductDetailsParams {
     body?: IUpdateBodyReq;
 }
 
+export interface BodyUpdate {
+    data: ProductDetails[];
+}
+
 export interface ProductDetails {
     id: number;
     code: string;
@@ -24,7 +28,7 @@ export interface ProductDetails {
     ean: string;
     regulatoryStatus: string;
     supplierCode: string;
-    uploadedDocuments: QualityAction[];
+    uploadedDocuments: UploadedDocument[];
     qualityActionIds: number[];
     qualityStatuses: QualityStatus[];
     productAttributes: ProductAttribute[];
@@ -43,6 +47,24 @@ export interface ProductDetails {
     qualityModel: QualityModel;
     qualityActions: QualityAction[];
 }
+export interface UploadedDocument {
+    id: number;
+    type: string;
+    isTemplate: boolean;
+    status: string;
+    mask: string;
+    comment: null;
+    issueDate: Date;
+    expireDate: Date;
+    rosAccreditationApproveStatus: string;
+    isForLot: boolean;
+    fileName: string;
+    fileLink: string;
+    version: number;
+    creationInformation: CreationInformation;
+    lastUpdateInformation: LastUpdateInformation;
+    productsDetails: ProductsDocDetail[];
+}
 
 export interface CreationInformation {
     createdAt: string;
@@ -50,8 +72,40 @@ export interface CreationInformation {
 }
 
 export interface LastUpdateInformation {
-    updatedAt: Date;
-    string: string;
+    updatedAt: string;
+    updatedBy: string;
+}
+
+export interface ProductsDocDetail {
+    id: number;
+    approvingStatus: string;
+    productId: number;
+    productDescription: string;
+    productCode: string;
+    productTNVEDCode: string;
+    ean: string;
+    supplierId: number;
+    supplierRMSCode: string;
+    supplierName: string;
+    supplierTaxIdentifier: string;
+    qualityActionId: number;
+    productManagementNomenclature: ProductDocManagementNomenclature;
+    productModelNomenclature: ProductDocModelNomenclature;
+    buCodes: string[];
+}
+
+export interface ProductDocManagementNomenclature {
+    departmentId: number;
+    subdepartmentId: number;
+    typeId: number;
+    subtypeId: number;
+}
+
+export interface ProductDocModelNomenclature {
+    departmentId: string;
+    subdepartmentId: string;
+    consolidationId: string;
+    codeId: string;
 }
 
 export interface ProductAttribute {
@@ -90,7 +144,7 @@ export interface QualityAction {
     categoryName?: string;
     categoryTypeName?: string;
     realisationDueDate?: Date;
-    approvalDueDate?: Date;
+    approvalDueDate?: string;
     approvers?: Approver[];
     responsible?: Approver[];
     supplierData?: SupplierData;
@@ -119,7 +173,20 @@ export interface Approver {
 }
 
 export interface Documents {
-    uploadedDocuments: any[];
+    awaitedDocuments: QActionsAwaitedDocument[];
+    uploadedDocuments: QActionsUploadedDocument[];
+}
+
+export interface QActionsAwaitedDocument {
+    type: string;
+    templateId: string;
+    linkedRegulations: string[];
+    requirementType: string;
+}
+
+export interface QActionsUploadedDocument {
+    id: string;
+    linkedTaskIds: string[];
 }
 
 export interface ProductUpdateData {
@@ -170,7 +237,7 @@ export interface PublicComment {
     id: number;
     order: number;
     comment: string;
-    createdAt: Date;
+    createdAt: string;
     createdBy: string;
 }
 
@@ -246,7 +313,7 @@ export interface History {
     id: number;
     currentValue: string;
     previousValue: string;
-    statusUpdatedAt: Date;
+    statusUpdatedAt: string;
     statusstring: string;
     comment: Comment;
 }
@@ -269,10 +336,32 @@ interface IqStatuses {
     engStatus?: string;
     isStatusCommentOpened: boolean;
     statusComment: string;
+    isStatusHistoryOpened: boolean;
+    isOrdersHistoryOpened: boolean;
+    isSellingsHistoryOpened: boolean;
+    isPublicationsHistoryOpened: boolean;
+    statusRowHistory?: History[];
+    ordersRowHistory?: History[];
+    sellingsRowHistory?: History[];
+    publicationsRowHistory?: History[];
 }
 
 export interface IDataDeatailsQstatus extends IqStatuses {
     key?: React.Key;
+}
+
+export interface IProductDeatilsProductMapping {
+    customId?: string;
+    regulatoryStatus?: string;
+    riskOption?: string;
+    qualityModel?: string;
+    productModelValueStr: string;
+    code?: string;
+    ean?: string;
+    isChemical: boolean;
+    isSTM: boolean;
+    isImport: boolean;
+    isFromProject: boolean;
 }
 
 export interface ICommonProductFields {
@@ -319,4 +408,42 @@ export interface QualityIUpdateReq {
 export interface SellingBlocking {
     blockedForSelling?: boolean;
     sellingBlockComment: string;
+}
+
+interface IProductDetailsTabDoc {
+    type?: string;
+    fileName?: string;
+    arppovingStatus?: string;
+    isForLot?: boolean;
+    createdAt?: string;
+    issueDate?: Date;
+    expireDate?: Date;
+    mask?: string;
+    id?: number;
+}
+
+export interface IDataProductDetailsTabDoc extends IProductDetailsTabDoc {
+    key?: React.Key;
+}
+
+interface IProductDetailsTabTasks {
+    id?: number;
+    categoryTypeName?: string;
+    actionStatus?: string;
+    uploadedDocumentId?: string;
+    supDataName?: string;
+    supDatasupplierRMSCode?: string;
+    approversTypeQE?: string;
+    approversTypeSQM?: string;
+    tasks?: number;
+    awaitedDocuments?: string;
+    categoryName?: string;
+    createdAt?: string;
+    approvalDueDate?: string;
+    responsible?: string;
+    publicComments?: PublicComment[];
+}
+
+export interface IDataProductDetailsTabTasks extends IProductDetailsTabTasks {
+    key?: React.Key;
 }

@@ -2,17 +2,48 @@ import {Checkbox, Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 
-import {useGetDetailsForProductsQuery} from '../productDetailsApi';
+import {useGetDetailsForProductsQuery, usePostUpdateProductMutation} from '../productDetailsApi';
 
-import {productId, securityCode} from '../mockProductDetails';
-
-import {productDetailsProductMapping} from '../productUtils.ts/ProductDetailsInfoSection/ProductDetailsProduct/productDetailsProductMapping';
+import {mockUser, securityCode} from '../mockProductDetails';
+import {productDetailsProductMapping} from '../ProductDetailsMapping/ProductDetailsInfoSection/ProductDetailsProduct/productDetailsProductMapping';
+import {ProductDetails, IProductDeatilsProductMapping, IUpdateBodyReq} from '../../../../common/types/productDetails';
+import {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 
 const ProductDetailsProduct: React.FC = () => {
     const {t} = useTranslation('products');
+    const {id: productId = ''} = useParams();
 
-    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
-    const mapping = productDetailsProductMapping(t, details);
+    const {data} = useGetDetailsForProductsQuery({productId, securityCode});
+
+    const [postUpdateProduct] = usePostUpdateProductMutation();
+
+    const [details, setDetails] = useState<ProductDetails>();
+    const [productSection, setProductSection] = useState<IProductDeatilsProductMapping>();
+
+    useEffect(() => {
+        data && setDetails(data);
+    }, [data]);
+
+    useEffect(() => {
+        const mapping = productDetailsProductMapping(t, details);
+        setProductSection(mapping);
+    }, [details, t]);
+
+    const updateChemestryBox = async () => {
+        const body: IUpdateBodyReq = {
+            products: [
+                {
+                    id: parseInt(productId, 10),
+                    isProductWithSubstances: !productSection?.isChemical,
+                },
+            ],
+            updatedBy: mockUser,
+        };
+
+        const update = await postUpdateProduct({body, securityCode}).unwrap();
+        setDetails(update[0]);
+    };
 
     return (
         <Grid className={styles.sectionItem} rowGap={24} columnGap={24}>
@@ -25,7 +56,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {mapping.code}
+                        {productSection?.code}
                     </Typography>
                 </div>
 
@@ -35,7 +66,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {mapping.ean}
+                        {productSection?.ean}
                     </Typography>
                 </div>
 
@@ -45,7 +76,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {mapping.customId}
+                        {productSection?.customId}
                     </Typography>
                 </div>
             </Grid>
@@ -57,7 +88,7 @@ const ProductDetailsProduct: React.FC = () => {
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {mapping.riskOption}
+                        {productSection?.riskOption}
                     </Typography>
                 </div>
 
@@ -68,7 +99,7 @@ const ProductDetailsProduct: React.FC = () => {
                     <br />
                     {/* <LinkButton> */}
                     <Typography variant="s" size="body_short">
-                        {mapping.qualityModel}
+                        {productSection?.qualityModel}
                     </Typography>
                     {/* </LinkButton> */}
                 </div>
@@ -80,18 +111,28 @@ const ProductDetailsProduct: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {mapping.productModelValueStr}
+                    {productSection?.productModelValueStr}
                 </Typography>
             </div>
 
             <div>
-                <Checkbox checked={mapping.isChemical} label={t('ProductDetails.Info.Product.Field.isChemical')} />
+                <Checkbox
+                    onClick={updateChemestryBox}
+                    checked={productSection?.isChemical || false}
+                    label={t('ProductDetails.Info.Product.Field.isChemical')}
+                />
             </div>
 
             <Grid rowGap={4} columns="165px 250px 200px 1fr">
-                <Checkbox checked={mapping.isSTM} label={t('ProductDetails.Info.Product.Field.STM')} />
-                <Checkbox checked={mapping.isImport} label={t('ProductDetails.Info.Product.Field.intImport')} />
-                <Checkbox checked={mapping.isFromProject} label={t('ProductDetails.Info.Product.Field.fromProject')} />
+                <Checkbox checked={productSection?.isSTM || false} label={t('ProductDetails.Info.Product.Field.STM')} />
+                <Checkbox
+                    checked={productSection?.isImport || false}
+                    label={t('ProductDetails.Info.Product.Field.intImport')}
+                />
+                <Checkbox
+                    checked={productSection?.isFromProject || false}
+                    label={t('ProductDetails.Info.Product.Field.fromProject')}
+                />
             </Grid>
         </Grid>
     );
