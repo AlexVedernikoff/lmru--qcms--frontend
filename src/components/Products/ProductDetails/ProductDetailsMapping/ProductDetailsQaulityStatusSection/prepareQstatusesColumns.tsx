@@ -73,18 +73,17 @@ export const prepareQstatusesColumns = (
                             </RegularButton>
                         </div>
 
-                        {record.isStatusCommentOpened && (
-                            <Input
-                                className={styles.inputComment}
-                                inputSize="m"
-                                autoComplete="off"
-                                placeholder="Комментарий..."
-                                value={record.statusComment}
-                                onChange={e => {
-                                    handleStatusComment(record.id, e.target.value);
-                                }}
-                            />
-                        )}
+                        <Input
+                            className={styles.inputComment}
+                            inputSize="m"
+                            autoComplete="off"
+                            disabled={!record.isStatusCommentOpened}
+                            placeholder="Комментарий..."
+                            value={record.statusComment}
+                            onChange={e => {
+                                handleStatusComment(record.id, e.target.value);
+                            }}
+                        />
 
                         {record.isStatusHistoryOpened && record.statusRowHistory && (
                             <HistoryTabModal
@@ -120,17 +119,16 @@ export const prepareQstatusesColumns = (
                             <HistoryBackIcon />
                         </RegularButton>
                     </div>
-                    {record.isBlockOrderOpened && (
-                        <Input
-                            inputSize="m"
-                            autoComplete="off"
-                            placeholder="Комментарий..."
-                            value={record.blockOrdersComment}
-                            onChange={e => {
-                                handleBlockersComments(record.id, e.target.value, EBlockers.BlockOrders);
-                            }}
-                        />
-                    )}
+                    <Input
+                        inputSize="m"
+                        autoComplete="off"
+                        placeholder="Комментарий..."
+                        disabled={!record.isBlockOrderOpened}
+                        value={record.blockOrdersComment}
+                        onChange={e => {
+                            handleBlockersComments(record.id, e.target.value, EBlockers.BlockOrders);
+                        }}
+                    />
 
                     {record.isOrdersHistoryOpened && record.ordersRowHistory && (
                         <HistoryTabModal
@@ -166,17 +164,16 @@ export const prepareQstatusesColumns = (
                             <HistoryBackIcon />
                         </RegularButton>
                     </div>
-                    {record.isBlockSellingsOpened && (
-                        <Input
-                            inputSize="m"
-                            autoComplete="off"
-                            placeholder="Комментарий..."
-                            value={record.blockSellingsComment}
-                            onChange={e => {
-                                handleBlockersComments(record.id, e.target.value, EBlockers.BlockSellings);
-                            }}
-                        />
-                    )}
+                    <Input
+                        inputSize="m"
+                        autoComplete="off"
+                        placeholder="Комментарий..."
+                        disabled={!record.isBlockSellingsOpened}
+                        value={record.blockSellingsComment}
+                        onChange={e => {
+                            handleBlockersComments(record.id, e.target.value, EBlockers.BlockSellings);
+                        }}
+                    />
 
                     {record.isSellingsHistoryOpened && record.sellingsRowHistory && (
                         <HistoryTabModal
@@ -212,17 +209,16 @@ export const prepareQstatusesColumns = (
                             <HistoryBackIcon />
                         </RegularButton>
                     </div>
-                    {record.isBlockPublicsOpened && (
-                        <Input
-                            inputSize="m"
-                            autoComplete="off"
-                            placeholder="Комментарий..."
-                            value={record.blockPublicsComment}
-                            onChange={e => {
-                                handleBlockersComments(record.id, e.target.value, EBlockers.BlockPublics);
-                            }}
-                        />
-                    )}
+                    <Input
+                        inputSize="m"
+                        autoComplete="off"
+                        placeholder="Комментарий..."
+                        disabled={!record.isBlockPublicsOpened}
+                        value={record.blockPublicsComment}
+                        onChange={e => {
+                            handleBlockersComments(record.id, e.target.value, EBlockers.BlockPublics);
+                        }}
+                    />
 
                     {record.isPublicationsHistoryOpened && record.publicationsRowHistory && (
                         <HistoryTabModal

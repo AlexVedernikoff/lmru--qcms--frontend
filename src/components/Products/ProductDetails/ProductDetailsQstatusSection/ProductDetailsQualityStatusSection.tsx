@@ -196,8 +196,12 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         };
         const body: IUpdateBodyReq = prepareUpdateBody(tableData, commonProductFields);
 
-        const update = await postUpdateProduct({body, securityCode}).unwrap();
-        setDetails(update[0]);
+        try {
+            const update = await postUpdateProduct({body, securityCode}).unwrap();
+            setDetails(update[0]);
+        } catch (error) {
+            alert('Ошибка при обновлении продукта');
+        }
         setIsChangesInData(false);
     };
 

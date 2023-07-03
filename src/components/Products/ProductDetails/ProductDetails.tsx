@@ -5,11 +5,31 @@ import ProductDetailsQualityStatusSection from './ProductDetailsQstatusSection/P
 import ProductDetailsTabs from './ProductDetailsTabsSection/ProductDetailsTabs';
 import {useGetDetailsForProductsQuery} from './productDetailsApi';
 import {securityCode} from './mockProductDetails';
+import {useEffect} from 'react';
 
 const ProductDetails: React.FC = () => {
     const {id: productId = ''} = useParams();
 
-    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
+    const {
+        data: details,
+        error: errorGet,
+        isError: isGetError,
+    } = useGetDetailsForProductsQuery({productId, securityCode});
+
+    useEffect(() => {
+        if (isGetError) {
+            const err = errorGet as any;
+            const code = err?.data?.errors[0]?.code;
+            const status = err?.status;
+            const message = err.data.errors[0].message;
+
+            if (code && status && message) {
+                alert(`Ошибка! Код: ${code}, статус: ${status}, сообщение: ${message}`);
+            } else {
+                alert(`Ошибка!`);
+            }
+        }
+    }, [errorGet, isGetError]);
 
     const title = details?.description;
 

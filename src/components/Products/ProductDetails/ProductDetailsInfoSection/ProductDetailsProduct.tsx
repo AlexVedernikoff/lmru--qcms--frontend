@@ -41,8 +41,12 @@ const ProductDetailsProduct: React.FC = () => {
             updatedBy: mockUser,
         };
 
-        const update = await postUpdateProduct({body, securityCode}).unwrap();
-        setDetails(update[0]);
+        try {
+            const update = await postUpdateProduct({body, securityCode}).unwrap();
+            setDetails(update[0]);
+        } catch (error) {
+            alert('Ошибка при обновлении продукта');
+        }
     };
 
     return (
