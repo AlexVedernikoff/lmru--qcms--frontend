@@ -25,6 +25,7 @@ const ModelDetailsMainData: React.FC = () => {
     const handleEditClick = () => {
         setIsEditMode(true);
     };
+
     const handleSaveClick = async () => {
         await updateModel({
             accept: 'application/json',

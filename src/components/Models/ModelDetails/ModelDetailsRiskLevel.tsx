@@ -39,7 +39,7 @@ const ModelDetailsRiskLevel: React.FC<IProps> = ({onResetClick}) => {
     }, [details?.productGroupRisks.calculatedRisk, t]);
 
     return (
-        <Grid columns="1fr" alignContent="start" justifyContent="start" rowGap={16}>
+        <Grid className={styles.riskLevelWrap} columns="1fr" alignContent="start" justifyContent="start" rowGap={16}>
             <Typography variant="h3">{t('ModelDetails.RiskLevel.Title')}</Typography>
 
             <Grid columns="180px auto" columnGap={12}>
