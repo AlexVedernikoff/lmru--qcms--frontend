@@ -3,12 +3,13 @@ import {useTranslation} from 'react-i18next';
 import {useState} from 'react';
 import {ITaskDetails} from '../../../../common/types/taskDetails';
 import TaskUploadDocumentModal from '../TaskUploadDocumentModal';
+import TaskUpdateDocumentModal from '../TaskUpdateDocumentModal';
 
 import styles from './styles.module.css';
 
 export enum TaskActions {
-    UpdateStatusDocuments = 'UpdateStatusDocuments',
     UploadDocument = 'UploadDocument',
+    UpdateDocument = 'UpdateDocument',
 }
 
 interface Props {
@@ -33,12 +34,19 @@ const TaskActionsForm: React.FC<Props> = ({taskDetails}) => {
         setSubmitedAction(null);
     };
 
+    const {uploadedDocuments} = taskDetails.documents;
+
     return (
         <>
             <TaskUploadDocumentModal
-                isOpen={submitedAction === TaskActions.UploadDocument}
+                show={submitedAction === TaskActions.UploadDocument}
                 onClose={handleModalWindowClose}
                 taskDetails={taskDetails}
+            />
+            <TaskUpdateDocumentModal
+                show={submitedAction === TaskActions.UpdateDocument}
+                onClose={handleModalWindowClose}
+                uploadedDocuments={uploadedDocuments}
             />
             <Grid className={styles.grid} rowGap={16} columns="auto auto" justifyContent="end" alignItems="baseline">
                 <Grid columns="387px 126px" columnGap={16}>
@@ -51,12 +59,13 @@ const TaskActionsForm: React.FC<Props> = ({taskDetails}) => {
                         onSelect={handleActionSelect}
                     >
                         <DropdownItem
-                            text={t('TaskTabs.Actions.actions.updateDocument')}
-                            value={TaskActions.UpdateStatusDocuments}
-                        />
-                        <DropdownItem
                             text={t('TaskTabs.Actions.actions.uploadDocument')}
                             value={TaskActions.UploadDocument}
+                        />
+                        <DropdownItem
+                            text={t('TaskTabs.Actions.actions.updateDocument')}
+                            value={TaskActions.UpdateDocument}
+                            disabled={!uploadedDocuments.length}
                         />
                     </Dropdown>
                     <RegularButton size="m" variant="primary" onClick={handleSubmit} disabled={!action}>

@@ -10,7 +10,7 @@ import {ITaskDetails} from '../../../../common/types/taskDetails';
 import styles from './styles.module.css';
 
 export interface Props {
-    isOpen: boolean;
+    show: boolean;
     onClose: () => void;
     taskDetails: ITaskDetails;
 }
@@ -26,7 +26,7 @@ const initialFormState: FormState = {
     isPartial: false,
 };
 
-const TaskUploadDocumentModal: React.FC<Props> = ({isOpen, onClose}) => {
+const TaskUploadDocumentModal: React.FC<Props> = ({show, onClose}) => {
     const {t} = useTranslation('tasks');
 
     const [formState, setFormState] = useState<FormState>(initialFormState);
@@ -113,7 +113,7 @@ const TaskUploadDocumentModal: React.FC<Props> = ({isOpen, onClose}) => {
     };
 
     return (
-        <Modal show={isOpen} onClose={handleClose} size="m">
+        <Modal show={show} onClose={handleClose} size="m">
             <ModalHeader title="Добавление документа" />
             <ModalContent className={styles.content}>
                 <Grid gap={24} className={styles.grid}>

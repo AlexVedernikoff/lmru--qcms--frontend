@@ -23,7 +23,7 @@ type IBodyRequest = {
     };
 };
 
-const TaskUpdateStatusDocumentsModal: React.FC<Props> = ({show, onClose, uploadedDocuments}) => {
+const TaskUpdateDocumentModal: React.FC<Props> = ({show, onClose, uploadedDocuments}) => {
     const {t} = useTranslation('tasks');
     const {id: taskId} = useParams();
     const [text, setText] = useState<IBodyRequest>({});
@@ -215,4 +215,4 @@ const TaskUpdateStatusDocumentsModal: React.FC<Props> = ({show, onClose, uploade
     );
 };
 
-export default TaskUpdateStatusDocumentsModal;
+export default TaskUpdateDocumentModal;
