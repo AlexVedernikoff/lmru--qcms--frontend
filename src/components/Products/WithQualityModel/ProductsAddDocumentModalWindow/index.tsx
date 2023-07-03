@@ -1,7 +1,7 @@
+import {useState, useMemo, useEffect, useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
 import {DatePicker, Grid, Modal, ModalContent, ModalFooter, ModalHeader, RegularButton} from 'fronton-react';
 import {IProduct} from '../../../../common/types/products';
-import {useState, useMemo, useEffect} from 'react';
 import {IDocumentMetaData} from '../../../../common/types/files';
 import FileUploadForm from '../../../Common/FileUploadForm';
 import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
@@ -41,11 +41,11 @@ const ProductsAddDocumentModalWindow: React.FC<Props> = ({show, onClose, product
         [createDocumentResult.isLoading, formState]
     );
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         if (createDocumentResult.isLoading) return;
         onClose();
         setFormState(initialFormState);
-    };
+    }, [createDocumentResult.isLoading, onClose]);
 
     useEffect(() => {
         if (!formState.file) return;
@@ -58,7 +58,14 @@ const ProductsAddDocumentModalWindow: React.FC<Props> = ({show, onClose, product
             type TDataError = {data: {errors: [{message: string}]}};
             alert((createDocumentResult.error as unknown as TDataError)?.data?.errors?.[0]?.message);
         }
-    }, [createDocumentResult.error, createDocumentResult.isError, createDocumentResult.isSuccess, onClose]);
+    }, [
+        createDocumentResult.error,
+        createDocumentResult.isError,
+        createDocumentResult.isSuccess,
+        formState.file,
+        handleClose,
+        onClose,
+    ]);
 
     const handleStartDateChange = (date: string[]) => {
         setFormState(prevState => ({...prevState, startDate: date[0]}));
