@@ -42,7 +42,7 @@ const ProductsWithQualityModel: React.FC = () => {
             customId: filters.customId ? filters.customId : undefined,
             qualityModelId: filters.qualityModelId ? parseInt(filters.qualityModelId, 10) : undefined,
             supplierName: filters.supplierName ? filters.supplierName : undefined,
-            supplierRMSCode: filters.supplierRMSCode ? filters.supplierRMSCode : undefined,
+            supplierCode: filters.supplierRMSCode ? filters.supplierRMSCode : undefined,
             supplierTaxIndetifier: filters.supplierTaxIndetifier ? filters.supplierTaxIndetifier : undefined,
             productModelNomenclature:
                 filters.productModelNomenclatureDepartmentCode ||
