@@ -198,6 +198,10 @@
             "blockCommentLabel": "Комментарий",
             "closeModalButton": "Отменить",
             "submitButton": "Добавить"
+        },
+        "addDocumentModalWindow": {
+            "closeModalButton": "Отменить",
+            "submitButton": "Добавить"
         }
     },
     "WithoutModels": {
