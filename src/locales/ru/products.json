@@ -216,6 +216,11 @@
             "dutyLabel": "Обязанность",
             "closeModalButton": "Отменить",
             "submitButton": "Добавить"
+        },
+        "addCommentModalWindow": {
+            "textAreaPlaceholder": "Ваш комментарий",
+            "closeModalButton": "Отменить",
+            "submitButton": "Ок"
         }
     },
     "WithoutModels": {
