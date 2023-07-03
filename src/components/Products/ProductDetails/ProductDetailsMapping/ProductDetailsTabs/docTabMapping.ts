@@ -8,14 +8,14 @@ export const docTabMapping = (
 ) => {
     const docTabRows = uploadedDocuments.map(doc => {
         const status = doc?.productsDetails.find(el => el?.productId === parseInt(productId, 10))?.approvingStatus;
-
         // @ts-ignore-next-line
         const translateStatus = t(`ProductDetails.ProductDetailsTabs.DocumentsTab.StatusesOptions.${status}`) as string;
+        const translatedStatus = status ? translateStatus : '';
 
         return {
             type: doc?.type,
             fileName: doc?.fileName,
-            arppovingStatus: translateStatus,
+            arppovingStatus: translatedStatus,
             isForLot: doc?.isForLot,
             createdAt: doc?.creationInformation.createdAt,
             issueDate: doc?.issueDate,

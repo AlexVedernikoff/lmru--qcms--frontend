@@ -15,20 +15,22 @@ const ProductDetailsTabs: React.FC = () => {
     const [tab, setTab] = useState<ETabs>(ETabs.documents);
 
     return (
-        <Grid className={styles.sectionItem} columns="1fr" rowGap={24} columnGap={24}>
-            <TabList
-                active={tab}
-                style={{color: '#999999'}}
-                size="l"
-                onChangeTab={function noRefCheck(_, tab) {
-                    setTab(tab);
-                }}
-            >
-                <Tab>{t('ProductDetails.ProductDetailsTabs.DocumentsTab.Title')}</Tab>
-                <Tab>{t('ProductDetails.ProductDetailsTabs.TasksTab.Title')}</Tab>
-            </TabList>
-            {tab === ETabs.documents && <DocumentsTab />}
-            {tab === ETabs.linkedTasks && <TasksTab />}
+        <Grid className={styles.panel} rowGap={16} columnGap={16}>
+            <Grid className={styles.sectionItem} columns="1fr" rowGap={24} columnGap={24}>
+                <TabList
+                    active={tab}
+                    style={{color: '#999999'}}
+                    size="l"
+                    onChangeTab={function noRefCheck(_, tab) {
+                        setTab(tab);
+                    }}
+                >
+                    <Tab>{t('ProductDetails.ProductDetailsTabs.DocumentsTab.Title')}</Tab>
+                    <Tab>{t('ProductDetails.ProductDetailsTabs.TasksTab.Title')}</Tab>
+                </TabList>
+                {tab === ETabs.documents && <DocumentsTab />}
+                {tab === ETabs.linkedTasks && <TasksTab />}
+            </Grid>
         </Grid>
     );
 };

@@ -1,5 +1,6 @@
 import {TFunction} from 'i18next';
 import {QualityAction} from '../../../../../common/types/productDetails';
+import {converStringToDateTime, convertDateFromServer} from '../../../../../utils/convertDateFromServer';
 
 enum Approvers {
     QE = 'QE',
@@ -13,14 +14,14 @@ export const tasksTabMapping = (
 ) => {
     const qActionsRows = qualityActions.map(qAction => {
         const status = qAction?.actionStatus;
-
         // @ts-ignore-next-line
         const translateStatus = t(`ProductDetails.ProductDetailsTabs.TasksTab.StatusesOptions.${status}`) as string;
+        const translatedStatus = status ? translateStatus : '';
 
         return {
             id: qAction?.id,
             categoryTypeName: qAction?.categoryTypeName,
-            actionStatus: translateStatus,
+            actionStatus: translatedStatus,
             uploadedDocumentId: qAction?.documents?.uploadedDocuments
                 ? qAction.documents.uploadedDocuments.find(doc => doc.id === productId)?.id
                 : '',
@@ -35,8 +36,10 @@ export const tasksTabMapping = (
             tasks: qAction?.id,
             awaitedDocuments: qAction?.documents?.awaitedDocuments ? qAction?.documents?.awaitedDocuments[0]?.type : '',
             categoryName: qAction?.categoryName,
-            createdAt: qAction?.creationInformation.createdAt,
-            approvalDueDate: qAction?.approvalDueDate,
+            createdAt: qAction?.creationInformation.createdAt
+                ? converStringToDateTime(qAction?.creationInformation.createdAt)
+                : '',
+            approvalDueDate: qAction?.approvalDueDate ? convertDateFromServer(qAction.approvalDueDate) : '',
             responsible: qAction?.responsible ? qAction?.responsible[0].externalId : '',
             publicComments: qAction?.publicComments && qAction?.publicComments.length > 0 ? qAction.publicComments : [],
         };

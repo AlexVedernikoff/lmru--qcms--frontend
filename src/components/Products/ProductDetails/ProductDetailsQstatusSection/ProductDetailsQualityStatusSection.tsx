@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import CustomTable from '../../../Common/CustomTable';
 import styles from '../../../Common.module.css';
 
-import stylesProductQStatus from './productDetailsQstatuses.module.css';
+import productDetailsStyles from './productDetailsQstatuses.module.css';
 
 import {useEffect, useState} from 'react';
 
@@ -290,21 +290,34 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 <Typography variant="h3">{t('ProductDetails.QualityStatusSection.Comments')}</Typography>
                 <Textarea />
             </Grid> */}
-            <RegularButton
-                disabled={!isChangesInData}
-                onClick={updateChangesOnServer}
-                className={stylesProductQStatus.butt}
+            <Grid
+                columnGap={16}
+                columns="repeat(6, 1fr)"
+                className={productDetailsStyles.buttStyles}
+                alignItems="start"
             >
-                Отправить
-            </RegularButton>
-            <RegularButton
-                variant="alert"
-                disabled={!isChangesInData}
-                onClick={discardChanges}
-                className={stylesProductQStatus.butt}
-            >
-                Сбросить изменения
-            </RegularButton>
+                <Grid columnGap={16} columns="repeat(2, 1fr)">
+                    <RegularButton
+                        disabled={!isChangesInData}
+                        onClick={() => discardChanges()}
+                        size="m"
+                        variant="outline"
+                    >
+                        {t('Buttons.Clear')}
+                    </RegularButton>
+
+                    <RegularButton
+                        disabled={!isChangesInData}
+                        onClick={() => {
+                            updateChangesOnServer();
+                        }}
+                        size="m"
+                        variant="primary"
+                    >
+                        {'Отправить'}
+                    </RegularButton>
+                </Grid>
+            </Grid>
         </Grid>
     );
 };

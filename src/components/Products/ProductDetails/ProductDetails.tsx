@@ -3,11 +3,15 @@ import {Grid, Typography} from 'fronton-react';
 import ProductDetailsInfoSection from './ProductDetailsInfoSection';
 import ProductDetailsQualityStatusSection from './ProductDetailsQstatusSection/ProductDetailsQualityStatusSection';
 import ProductDetailsTabs from './ProductDetailsTabsSection/ProductDetailsTabs';
+import {useGetDetailsForProductsQuery} from './productDetailsApi';
+import {securityCode} from './mockProductDetails';
 
 const ProductDetails: React.FC = () => {
-    const {id = ''} = useParams();
+    const {id: productId = ''} = useParams();
 
-    const title = id;
+    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
+
+    const title = details?.description;
 
     return (
         <Grid rowGap={16}>
