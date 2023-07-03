@@ -39,3 +39,11 @@
     height: auto !important;
     min-height: 40px;
 }
+
+.dropdown {
+    width: 100%;
+}
+
+.riskLevelWrap {
+    margin: 0 48px;
+}
