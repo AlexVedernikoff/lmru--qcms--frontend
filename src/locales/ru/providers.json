@@ -30,7 +30,7 @@
             "SupplierStatus": "Статус поставщика",
             "VendorLevelMonitoring": "Уровень поставщика для мониторинга",
             "NonConformity": "Non conformity",
-            "NrustKiller": "Nrust killer",
+            "TrustKiller": "Trust killer",
             "FailureRateInspections": "Частота отказов предотгрузочных инспекций",
             "Status": "Статус",
             "BillingCountry": "Страна выставления счетов",

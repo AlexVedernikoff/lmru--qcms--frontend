@@ -34,8 +34,10 @@ const ContactsTable: React.FC = () => {
               SupplierBindingStatus: regulatoryStatus,
               SupplierLink: supplierCode,
               EAN: ean,
-              ComplianceStatusBU: `${qualityStatuses[0].qualityStatus} ${qualityStatuses[0].buCode} 
-`,
+              ComplianceStatusBU:
+                  qualityStatuses && qualityStatuses[0]
+                      ? `${qualityStatuses[0].qualityStatus} ${qualityStatuses[0].buCode}`
+                      : 'нет данных',
           }))
         : [];
 

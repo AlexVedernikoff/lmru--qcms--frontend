@@ -14,7 +14,7 @@ const ProviderDetailsProfile: React.FC = () => {
     return (
         <Grid className={styles.sectionItem} rows="0.3fr 0.3fr 0.5fr 0.5fr 0.5fr 0.5fr">
             <Typography variant="h3">{t('ProviderDetails.ProductData.ProfileComplete')}</Typography>
-            <div>
+            <div style={{display: 'none'}}>
                 <Typography className={classes.AvailabilitySTMProduct} variant="s" size="body_long">
                     {t('ProviderDetails.ProductData.AvailabilitySTMProduct')}
                 </Typography>
@@ -62,7 +62,7 @@ const ProviderDetailsProfile: React.FC = () => {
                 </div>
             </Grid>
 
-            <Grid className={classes.layoutCheckbox} columns="1fr 1fr 5fr">
+            <Grid className={classes.layoutCheckbox} style={{visibility: 'hidden'}} columns="1fr 1fr 5fr">
                 <Checkbox checked={false} label={t('Common.Yes')} />
                 <Checkbox checked={false} label={t('Common.No')} />
                 <Typography variant="s" size="body_short">
