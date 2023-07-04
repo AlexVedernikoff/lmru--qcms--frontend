@@ -105,7 +105,7 @@ const ModelDetailsRiskMap: React.FC = () => {
             areas={['field field field field level level']}
             columns="1fr auto"
             rowGap={16}
-            columnGap={16}
+            columnGap={36}
         >
             <GridItem area="field">
                 <Grid rowGap={16}>

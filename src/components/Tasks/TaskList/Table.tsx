@@ -97,7 +97,23 @@ const Table: React.FC<IProps> = ({
                 title: t('TaskList.Table.Columns.taskStatus'),
                 dataIndex: 'actionStatus',
                 width: 240,
-                render: (v: TDataType['actionStatus']) => v,
+                render: (v: TDataType['actionStatus']) => {
+                    let status = null;
+
+                    switch (v) {
+                        case 'APPROVED':
+                            status = 'Согласован';
+                            break;
+                        case 'REJECTED':
+                            status = 'Отклонен';
+                            break;
+                        case 'DRAFT':
+                            status = 'Черновик';
+                            break;
+                    }
+
+                    return status;
+                },
             },
             {
                 title: t('TaskList.Table.Columns.documents'),
@@ -181,7 +197,7 @@ const Table: React.FC<IProps> = ({
                 title: t('TaskList.Table.Columns.responsibleContractor'),
                 dataIndex: 'responsible',
                 width: 240,
-                render: (v: TDataType['responsible']) => v?.[0]?.type,
+                render: (v: TDataType['responsible']) => v.map(d => d.externalId).join(', '),
             },
         ],
         [handleViewDetails, t]

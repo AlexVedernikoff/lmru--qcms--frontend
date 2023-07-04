@@ -303,3 +303,16 @@ export type IUpdateMasterPlanTasksParams = {
 };
 
 export interface IUpdateMasterPlanTasksResponse {}
+
+export type ITaskCategoryParams = {
+    securityCode?: string;
+};
+
+export type TTaskCategoryResponse = Array<{
+    id: number;
+    name: string;
+    types: Array<{
+        id: number;
+        name: string;
+    }>;
+}>;
