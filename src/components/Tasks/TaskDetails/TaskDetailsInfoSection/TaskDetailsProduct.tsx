@@ -43,9 +43,6 @@ const TaskDetailsProduct: React.FC<Props> = ({taskDetails}) => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {
-                        // может просто code?
-                    }
                     {taskDetails.product.adeoProductCode}
                 </Typography>
             </div>
@@ -57,11 +54,9 @@ const TaskDetailsProduct: React.FC<Props> = ({taskDetails}) => {
                     {t('TaskDetails.DetailsProduct.EAN')}
                 </Typography>
                 <br />
-                {/* {taskDetails?.documents?.uploadedDocuments[0]?.productInfoDetails && ( */}
                 <Typography variant="s" size="body_short">
-                    {/* {taskDetails?.documents?.uploadedDocuments[0]?.productInfoDetails[0].ean} */}
+                    {taskDetails.product.ean}
                 </Typography>
-                {/* )} */}
             </div>
 
             <br />

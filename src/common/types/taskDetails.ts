@@ -8,6 +8,37 @@ export type ITaskAwaitingDocument = {
     requirementType: string; // required, тип
 };
 
+export interface ITaskProductDetails {
+    // optional, информация о товарах для которых загружается документ
+    id: number; // required, идентификатор связки товара с документом в БД
+    qualityActionId: number; // required, идентификатор задачи для которой был загружен документ
+    productId: number; // required, идентификатор товара в QCMS
+    approvingStatus?: string; // optional, ['APPROVED', 'REJECTED', 'NEEDS_APPROVAL']
+    regulatoryStatus: string; // required, регуляторный статус товара
+    productDescription: string; // required, название товара
+    productCode: string; // requried, номер товара (артикул)
+    productTNVEDCode?: string; // optinal, ТН ВЭД код товара
+    productManagementNomenclature: {
+        departmentId: number; // requried, департамент отдела товара
+        subDepartmentId: number; // required, поддепартамент отдела товара
+        typeId: number; // required, категория товара
+        subTypeId: number; // required, подкатегория товара
+    };
+    productModelNomenclature?: {
+        modelDepartmentId?: string; // optional- код отдела
+        modelSubDepartmentId?: string; // optional - код подотдела
+        modelConsolidationId?: string; // optional - код группы
+        modelCodeId?: string; // optional - код модели
+    };
+    ean: string; // required, ГТИН, штрих-код
+    supplierRMSCode: string; // required, поставщик (или отделение поставщика)
+    supplierName?: string; // optional, название поставщика
+    supplierTaxIdentifier?: string; // optional, ИНН поставщика
+    supplierId: number; // required, идентификатор поставщика
+
+    buCode: string[]; // required, BU в которых действует документ (должен быть хотя бы один элемент массива)
+}
+
 export interface ITaskUploadedDocument {
     isForLot?: boolean;
     // required, загруженные документы
@@ -18,35 +49,7 @@ export interface ITaskUploadedDocument {
     template: boolean; // required - показывает, что это шаблон
     comment?: string; // optional, комментарий
     status?: string; //optional, статус действия документа ['ACTIVE, 'INACTIVE', 'DELETED', 'IN_RENEWAL']
-    productInfoDetails?: {
-        // optional, информация о товарах для которых загружается документ
-        id: number; // required, идентификатор связки товара с документом в БД
-        productId: number; // required, идентификатор товара в QCMS
-        approvingStatus?: string; // optional, ['APPROVED', 'REJECTED', 'NEEDS_APPROVAL']
-        regulatoryStatus: string; // required, регуляторный статус товара
-        productDescription: string; // required, название товара
-        productCode: string; // requried, номер товара (артикул)
-        productTNVEDCode?: string; // optinal, ТН ВЭД код товара
-        productManagementNomenclature: {
-            departmentId: number; // requried, департамент отдела товара
-            subDepartmentId: number; // required, поддепартамент отдела товара
-            typeId: number; // required, категория товара
-            subTypeId: number; // required, подкатегория товара
-        };
-        productModelNomenclature?: {
-            modelDepartmentId?: string; // optional- код отдела
-            modelSubDepartmentId?: string; // optional - код подотдела
-            modelConsolidationId?: string; // optional - код группы
-            modelCodeId?: string; // optional - код модели
-        };
-        ean: string; // required, ГТИН, штрих-код
-        supplierRMSCode: string; // required, поставщик (или отделение поставщика)
-        supplierName?: string; // optional, название поставщика
-        supplierTaxIdentifier?: string; // optional, ИНН поставщика
-        supplierId: number; // required, идентификатор поставщика
-        qualityActionId: number; // required, идентификатор задачи для которой был загружен документ
-        buCode: string[]; // required, BU в которых действует документ (должен быть хотя бы один элемент массива)
-    }[];
+    productsDetails?: ITaskProductDetails[];
     mask?: string; // optional, спец. название документа для проверки в россаккредитации
     issueDate?: string; // optional, дата вступления в силу документа
     expiryDate?: string; // oprional, дата окончания срока действия документа
@@ -113,6 +116,7 @@ export interface ITaskDetails {
         qualityStatus: string; // required, статус соответствия
         adeoRisk: string; // required, риск ADEO - нужен?
         regulatoryStatus: string;
+        ean: string;
     };
     publicComments?: ITaskDetailsPublicComment[];
     documents: {

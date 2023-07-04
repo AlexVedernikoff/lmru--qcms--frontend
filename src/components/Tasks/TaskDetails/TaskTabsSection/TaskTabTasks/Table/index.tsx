@@ -7,6 +7,7 @@ import {TableRowSelection} from 'antd/es/table/interface';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {Grid, RegularButton} from 'fronton-react';
 import {ITaskDetails, ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
+import {useParams} from 'react-router-dom';
 
 interface Props {
     taskDetails: ITaskDetails;
@@ -14,7 +15,7 @@ interface Props {
 
 const TasksTable: React.FC<Props> = ({taskDetails}) => {
     const {t} = useTranslation('tasks');
-
+    const {id} = useParams();
     const uploadedDocuments = taskDetails.documents.uploadedDocuments;
     const handleViewProductDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(e => {
         //TODO добавить детализацию
@@ -41,9 +42,9 @@ const TasksTable: React.FC<Props> = ({taskDetails}) => {
                 ),
                 fixed: 'left',
             },
-            ...getTasksTableColumns(t),
+            ...getTasksTableColumns(t, id!),
         ],
-        [handleViewProductDetails, t]
+        [handleViewProductDetails, id, t]
     );
 
     const data = useMemo<ITaskUploadedDocument[]>(
