@@ -10,15 +10,11 @@ import {
     IUpdateMasterPlanTasksParams,
     IUpdateQualityModelResponse,
     IUpdateQualityModelParams,
+    TTaskCategoryResponse,
+    ITaskCategoryParams,
 } from '../../common/types/models';
 
 const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/';
-
-const serviceUrl = {
-    getModels: 'search-quality-models',
-    getModelNomenclature: 'product-model-nomenclature',
-    getModelDetails: 'quality-model-details',
-};
 
 const modelsApi = createApi({
     reducerPath: 'modelsApi',
@@ -27,7 +23,7 @@ const modelsApi = createApi({
         getModels: builder.query<IModelsResponse, IModelsParams>({
             query: params => ({
                 method: 'POST',
-                url: serviceUrl.getModels,
+                url: 'search-quality-models',
                 body: params.body,
                 headers: {
                     securityCode: params.header.securityCode,
@@ -37,7 +33,7 @@ const modelsApi = createApi({
         getModelNomenclature: builder.query<TModelNomenclatureResponse, IModelNomenclatureParams>({
             query: params => ({
                 method: 'GET',
-                url: serviceUrl.getModelNomenclature,
+                url: 'product-model-nomenclature',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
@@ -49,7 +45,7 @@ const modelsApi = createApi({
         getModelDetails: builder.query<IModelDetailsResponse, IModelDetailsParams>({
             query: params => ({
                 method: 'GET',
-                url: `${serviceUrl.getModelDetails}/${params.id}`,
+                url: `quality-model-details/${params.id}`,
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
@@ -83,6 +79,17 @@ const modelsApi = createApi({
                 method: 'POST',
                 body: queryArg.body,
                 headers: {securityCode: queryArg.securityCode},
+            }),
+        }),
+        getTaskCategory: builder.query<TTaskCategoryResponse, ITaskCategoryParams>({
+            query: params => ({
+                method: 'GET',
+                url: 'regulatory-quality-management/master-plan/task-category',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    securityCode: params.securityCode,
+                },
             }),
         }),
     }),

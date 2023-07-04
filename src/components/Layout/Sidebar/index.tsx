@@ -6,7 +6,6 @@ import {
     TruckIcon,
     CubeIcon,
     FileIcon,
-    GearIcon,
     ChevronDownIcon,
     ChevronRightIcon,
     ChevronLeftIcon,

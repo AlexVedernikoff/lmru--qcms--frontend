@@ -47,7 +47,7 @@ const ModelDetails: React.FC = () => {
 
                 <ModelDetailsCharacteristics />
 
-                <Grid columnGap={16} columns="300px 1fr">
+                <Grid columnGap={16} columns="auto 1fr">
                     <ModelDetailsRiskLevel onResetClick={() => {}} />
                     <ModelDetailsDescription />
                 </Grid>

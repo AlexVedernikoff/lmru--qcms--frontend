@@ -72,7 +72,7 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
                         break;
                 }
 
-                return <div>{status}</div>;
+                return status;
             },
             width: 246,
         },
@@ -98,7 +98,7 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
             render: (data: TDataType['assignedApprovers'] = [], record) => (
                 <Grid>
                     {data.map((d, i) => (
-                        <Grid key={i} columns="36px 1fr" columnGap={12} alignItems="center">
+                        <Grid key={i} columns="auto 1fr" columnGap={8} alignItems="center">
                             <Label background="success-light">{d.role}</Label>
                             <Typography variant="s" size="body_long">
                                 {d.id}
