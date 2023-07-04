@@ -24,7 +24,7 @@ export const getTasksTableColumns = (
         width: 160,
         render: text => {
             const productDetails = text?.find((el: ITaskProductDetails) => el?.qualityActionId?.toString() === id);
-            return <div>{productDetails.ean}</div>;
+            return <div>{productDetails?.ean}</div>;
         },
     },
     {
@@ -35,7 +35,7 @@ export const getTasksTableColumns = (
             const productDetails = text?.find((el: ITaskProductDetails) =>
                 text?.find((el: ITaskProductDetails) => el?.qualityActionId?.toString() === id)
             );
-            return <div>{productDetails.supplierRMSCode}</div>;
+            return <div>{productDetails?.supplierRMSCode}</div>;
         },
     },
     {
@@ -83,7 +83,7 @@ export const getTasksTableColumns = (
                         <div style={{color: '#5AB030'}}>{productDetails.approvingStatus}</div>
                     </Grid>
                 );
-            } else return <div>{productDetails.approvingStatus}</div>;
+            } else return <div>{productDetails?.approvingStatus}</div>;
         },
         width: 200,
     },
@@ -93,7 +93,7 @@ export const getTasksTableColumns = (
         width: 300,
         render: text => {
             const productDetails = text?.find((el: ITaskProductDetails) => el?.qualityActionId?.toString() === id);
-            return <div>{productDetails.productDescription}</div>;
+            return <div>{productDetails?.productDescription}</div>;
         },
     },
     {
