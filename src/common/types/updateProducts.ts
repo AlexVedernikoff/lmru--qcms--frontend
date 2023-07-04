@@ -16,6 +16,7 @@ export interface IUpdateProductsRequest {
 
 interface ProductDataUpdate {
     id: number; // required, иднетификатор товара в системе
+    publicComment?: string; // ЭТОГО ПОЛЯ НЕТ В ДОКУМЕНТАЦИИ, НО НИКИТА СКАЗАЛ, ЧТО СКОРО БУДЕТ
     qualityModelId?: string; // optional, изменение модели качества
     productWithSubstances?: boolean; // optional, изменение флага
     quality?: {

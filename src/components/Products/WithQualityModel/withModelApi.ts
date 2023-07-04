@@ -11,6 +11,7 @@ import {
 } from '../../../common/types/productsSendQualityStatusMessage';
 import {ICreateTaskResponse, ICreateTaskRequest} from '../../../common/types/createTask';
 import {ITaskUploadDocumentResponse, ITaskUploadDocumentParams} from '../../../common/types/tasks';
+import {IUpdateProductsResponse, IUpdateProductsRequest} from '../../../common/types/updateProducts';
 
 const hostUrl = '';
 
@@ -21,6 +22,9 @@ const serviceUrl = {
         'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/send-quality-status-message',
     createTask:
         'https://qcms-dev-shared-stage.apps.lmru.tech/api/qas/v1/quality-action-service/quality-actions:createTask',
+    updateProducts:
+        'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/product-quality/product-quality/products:batch-update',
+    createDocument: 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/create-quality-document',
 };
 
 const withModelApi = createApi({
@@ -76,10 +80,22 @@ const withModelApi = createApi({
         }),
         createDocument: builder.mutation<ITaskUploadDocumentResponse, ITaskUploadDocumentParams>({
             query: queryArg => ({
-                url: `create-quality-document`,
+                url: serviceUrl.createDocument,
                 method: 'POST',
                 body: queryArg.body,
                 headers: queryArg.header,
+            }),
+        }),
+        updateProducts: builder.mutation<IUpdateProductsResponse, IUpdateProductsRequest>({
+            query: request => ({
+                url: serviceUrl.updateProducts,
+                method: 'POST',
+                body: request.body,
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    securityCode: request.header.securityCode,
+                },
             }),
         }),
     }),
