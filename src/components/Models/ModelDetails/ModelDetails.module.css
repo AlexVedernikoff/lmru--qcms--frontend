@@ -1,6 +1,5 @@
 .chip {
-    max-height: 36px;
-    margin-top: 2px;
+    min-width: 150px;
 }
 
 .criticalChip {
