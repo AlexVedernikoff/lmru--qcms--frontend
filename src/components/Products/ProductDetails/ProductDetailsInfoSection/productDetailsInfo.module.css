@@ -1,0 +1,16 @@
+.dropdown {
+    width: 170px;
+}
+
+.dropdownItem {
+    width: 170px;
+}
+
+.editWrapper {
+    max-height: 160px;
+    overflow-x: hidden;
+}
+
+.editWrapper [data-testid='icon'] {
+    display: none;
+}

@@ -354,7 +354,8 @@ export interface IProductDeatilsProductMapping {
     customId?: string;
     regulatoryStatus?: string;
     riskOption?: string;
-    qualityModel?: string;
+    qualityModelLabel: string;
+    qualityModelId: string;
     productModelValueStr: string;
     code?: string;
     ean?: string;
@@ -446,4 +447,66 @@ interface IProductDetailsTabTasks {
 
 export interface IDataProductDetailsTabTasks extends IProductDetailsTabTasks {
     key?: React.Key;
+}
+
+export interface IQsearchModelsReq {
+    pageIndex: number;
+    pageSize: number;
+    searchBy: ISearchBy;
+}
+
+export interface ISearchBy {
+    productModelNomenclatureModelCode: string[];
+}
+
+export interface IQsearchModelsRes {
+    pageable: IQsearchModelsPageable;
+    content: IQsearchModelsContent[];
+}
+
+export interface IQsearchModelsContent {
+    id?: number;
+    qualityModelLabel?: string;
+    documentVersion?: string;
+    qualityModelStatus?: string;
+    assignedApprovers?: IQsearchModelsContentAssignedApprover[];
+    calculatedRisk?: string;
+    qualityModelForMixtures?: boolean;
+    productRiskLevel?: number;
+    personLevelRiskForCorrectUsage?: number;
+    personLevelRiskForNonCorrectUsage?: number;
+    sustainabilityRisk?: number;
+    healthRisk?: number;
+    regulatoryRisk?: number;
+    productModelNomenclatureDepartmentCode?: string;
+    productModelNomenclatureSubDepartmentCode?: string;
+    productModelNomeclatureConsolidationCode?: string;
+    productModelNomenclatureModelCode?: string;
+    creationInformation?: CreationInformation;
+    lastUpdateInfomation?: LastUpdateInfomation;
+}
+
+export interface IQsearchModelsContentAssignedApprover {
+    id: number;
+    userId: string;
+    buId: number;
+    role: string;
+}
+
+export interface LastUpdateInfomation {
+    updatedAt?: string;
+    updatedBy?: string;
+}
+
+export interface IQsearchModelsPageable {
+    pageSize: number;
+    pageIndex: number;
+    totalPages: number;
+    totalElements: number;
+}
+
+export interface IQsearchModelsParams {
+    productId?: string;
+    securityCode: string;
+    body?: IQsearchModelsReq;
 }

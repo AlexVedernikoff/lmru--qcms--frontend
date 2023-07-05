@@ -31,7 +31,9 @@ const getRiskOption = (t: TFunction, calculatedRisk?: string) => {
 export const productDetailsProductMapping = (t: TFunction, details?: ProductDetails) => {
     const customId = details?.customId;
     const riskOption = getRiskOption(t, details?.qualityModel?.productGroupRisks?.calculatedRisk);
-    const qualityModel = details?.qualityModelId;
+    const qualityModelLabel = details?.qualityModel.qualityModelLabel ? details.qualityModel.qualityModelLabel : '';
+    const qualityModelId = details?.qualityModel.id ? `${details.qualityModel.id}` : '';
+
     const regulatoryStatus = details?.regulatoryStatus;
     const productModelNomenclature = details?.qualityModel?.productModelNomenclature;
     const areAllNomenclature =
@@ -53,7 +55,8 @@ ${productModelNomenclature?.modelConsolidationName} / ${productModelNomenclature
         customId,
         regulatoryStatus,
         riskOption,
-        qualityModel,
+        qualityModelLabel,
+        qualityModelId,
         productModelValueStr: areAllNomenclature ? productModelValueStr : '',
         code,
         ean,
