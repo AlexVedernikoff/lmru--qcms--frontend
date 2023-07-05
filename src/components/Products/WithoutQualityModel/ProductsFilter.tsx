@@ -159,26 +159,6 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
                     </Dropdown>
                 </Grid>
 
-                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="32px">
-                    <Grid columnGap={16} columns="120px 1fr" alignItems="baseline" alignContent="baseline">
-                        <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="baseline" alignContent="baseline">
-                            <Checkbox
-                                onChange={handleInProjectYesCheckBoxClick}
-                                checked={formState.project === true}
-                                label={t('Common.Yes')}
-                            />
-                            <Checkbox
-                                onChange={handleInProjectNoCheckBoxClick}
-                                checked={formState.project === false}
-                                label={t('Common.No')}
-                            />
-                        </Grid>
-                        <Typography variant="s" size="body_short">
-                            {t('WithoutModels.Filters.fromProject')}
-                        </Typography>
-                    </Grid>
-                </Grid>
-
                 <Grid columnGap={16} columns="2fr" alignItems="baseline" rowGap="20px">
                     <Dropdown
                         size="m"
@@ -201,24 +181,36 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
                         onChange={handleInputChange}
                     />
                 </Grid>
+
+                <Grid columnGap={16} columns="1fr" rowGap="32px">
+                    <Grid columnGap={16} columns="120px 1fr" alignItems="center">
+                        <Grid columnGap={8} columns="repeat(2, 1fr)">
+                            <Checkbox
+                                onChange={handleInProjectYesCheckBoxClick}
+                                checked={formState.project === true}
+                                label={t('Common.Yes')}
+                            />
+                            <Checkbox
+                                onChange={handleInProjectNoCheckBoxClick}
+                                checked={formState.project === false}
+                                label={t('Common.No')}
+                            />
+                        </Grid>
+                        <Typography variant="s" size="body_short">
+                            {t('WithoutModels.Filters.fromProject')}
+                        </Typography>
+                    </Grid>
+                </Grid>
             </Grid>
 
-            <Grid columnGap={16} columns="repeat(6, 1fr)" alignItems="baseline">
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
+            <Grid columnGap={16} columns="auto auto" justifyContent="right">
+                <RegularButton onClick={handleClear} size="m" variant="outline">
+                    {t('Buttons.Clear')}
+                </RegularButton>
 
-                <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton onClick={handleClear} size="m" variant="outline">
-                        {t('Buttons.Clear')}
-                    </RegularButton>
-
-                    <RegularButton onClick={handleSubmit} size="m" variant="primary">
-                        {t('Buttons.Search')}
-                    </RegularButton>
-                </Grid>
+                <RegularButton onClick={handleSubmit} size="m" variant="primary">
+                    {t('Buttons.Search')}
+                </RegularButton>
             </Grid>
         </Grid>
     );
