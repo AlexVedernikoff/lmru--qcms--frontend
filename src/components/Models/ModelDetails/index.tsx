@@ -1,7 +1,7 @@
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
 import {useMemo, useState} from 'react';
-import {Grid, RegularButton, Tab, TabList, Typography} from 'fronton-react';
+import {Grid, Tab, TabList, Typography} from 'fronton-react';
 import styles from '../../Common.module.css';
 import ModelDetailsMainData from './ModelDetailsMainData';
 import ModelDetailsQualityManager from './ModelDetailsQualityManager';
@@ -34,9 +34,9 @@ const ModelDetails: React.FC = () => {
         <Grid rowGap={16} rows="auto 1fr">
             <Grid columnGap={16} columns="1fr auto">
                 <Typography variant="h2">{title}</Typography>
-                <div>
+                {/* <div>
                     <RegularButton>{t('Buttons.Edit')}</RegularButton>
-                </div>
+                </div> */}
             </Grid>
 
             <Grid className={styles.panel} rowGap={24} columnGap={16}>

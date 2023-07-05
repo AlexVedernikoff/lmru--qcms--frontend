@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
 import {useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
-import {Chip, Grid, RegularButton, Typography} from 'fronton-react';
+import {Grid, RegularButton, Typography} from 'fronton-react';
 import {ERiskLevel} from '../../../common/types/models';
 import HistoryBackIcon from '../../Icons/HistoryBackIcon';
 import modelsApi from '../modelsApi';
@@ -42,8 +42,10 @@ const ModelDetailsRiskLevel: React.FC<IProps> = ({onResetClick}) => {
         <Grid columns="1fr" alignContent="start" justifyContent="start" rowGap={16}>
             <Typography variant="h3">{t('ModelDetails.RiskLevel.Title')}</Typography>
 
-            <Grid columns="180px auto" columnGap={12}>
-                <Chip className={riskParams.style} text={riskParams.label} variant="primary" deleteIcon={<></>} />
+            <Grid columns="auto auto" columnGap={12}>
+                <RegularButton className={riskParams.style} rounded>
+                    {riskParams.label}
+                </RegularButton>
 
                 {onResetClick && (
                     <RegularButton iconOnly href={''} rel={''} aria-label="" variant="pseudo" onClick={onResetClick}>
