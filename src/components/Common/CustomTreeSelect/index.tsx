@@ -4,53 +4,44 @@ import {useGetProductModelNomenclatureQuery} from '../../../api/getProductModelN
 import {useGetManagementNomenclatureQuery} from '../../../api/getManagementNomenclature';
 import {IProductModelNomenclatureResponse} from '../../../common/types/productModelNomenclature';
 import {IManagementNomenclatureResponse} from '../../../common/types/productManagementNomenclature';
-import s from './customTreeSelect.module.css';
+import style from './customTreeSelect.module.css';
+import {modNomKeys, manNomKeys} from './consts';
 
 const {SHOW_PARENT} = TreeSelect;
 
+export type TNomenclatureValue = Record<string, Array<string | number>>;
+
 interface IProps {
-    type: 'product' | 'management';
-    nomenclatureValue: string[];
-    handleChange: (val: string[], treeChangeKeys: string[]) => void;
+    className?: string;
+    nomenclatureValue: TNomenclatureValue;
+    handleChange: (result: TNomenclatureValue) => void;
 }
 
 type TProps = React.PropsWithChildren<IProps>;
 
-export const СustomTreeSelect: React.FC<TProps> = ({type, nomenclatureValue, handleChange: onTreeChange}) => {
+export const СustomTreeSelect: React.FC<TProps> = ({className, nomenclatureValue, handleChange: onTreeChange}) => {
     const {t} = useTranslation('providers');
     const {data: productModelNomenclature = []} = useGetProductModelNomenclatureQuery();
     const {data: managementNomenclature = []} = useGetManagementNomenclatureQuery();
-    const modNomKeys = [
-        'productModelNomenclatureDepartmentId',
-        'productModelNomenclatureSubdepartmentId',
-        'productModelNomenclatureConsolidationId',
-        'productModelNomenclatureCodeId',
-    ];
-
-    const manNomKeys = [
-        'productManagementNomenclatureDepartmentId',
-        'productManagementNomenclatureSubdepartmentId',
-        'productManagementNomenclatureTypeId',
-        'productManagementNomenclatureSubtypeId',
-    ];
+    const title: 'nameRu' | 'code' = 'nameRu'; //когда починят бэк, присвоить title = 'nameRu'
 
     const productNomenclatureData = () =>
         productModelNomenclature.map((el: IProductModelNomenclatureResponse) => {
             return {
-                title: el.nameRu,
+                title: el[title],
                 value: `${modNomKeys[0]} ${el.code}`,
                 children: el.subdepartments.map(subDep => {
                     return {
-                        title: subDep.nameRu,
+                        title: subDep[title],
                         value: `${modNomKeys[1]} ${subDep.code}`,
                         children: subDep.modelConsolidationGroups.map(modCon => {
                             return {
-                                title: modCon.nameRu,
+                                title: modCon[title],
                                 value: `${modNomKeys[2]} ${modCon.code}`,
                                 children: modCon.models
                                     ? modCon.models.map(mod => {
                                           return {
-                                              title: mod.nameRu,
+                                              title: mod[title],
                                               value: `${modNomKeys[3]} ${mod.code}`,
                                           };
                                       })
@@ -92,24 +83,44 @@ export const СustomTreeSelect: React.FC<TProps> = ({type, nomenclatureValue, ha
             };
         });
 
+    const type = modNomKeys.includes(Object.keys(nomenclatureValue)[0]) ? 'product' : 'management';
+
     const nomenclatureData = type === 'product' ? productNomenclatureData() : managementNomenclatureData();
 
-    // console.log('nomenclatureValue = ', nomenclatureValue);
-
-    // console.log('nomenclatureData = ', nomenclatureData);
+    const keys = type === 'product' ? modNomKeys : manNomKeys;
 
     const translation = type === 'product' ? 'productModelNomenclature' : 'managementNomenclature';
 
-    const treeChangeKeys = type === 'product' ? modNomKeys : manNomKeys;
+    const treeSelectValue = (keys: string[]) =>
+        keys.reduce((acc: string[], key) => {
+            const idsArr: string[] = nomenclatureValue[key as string] as string[];
+            if (idsArr) acc.push(...idsArr.map((el: string) => `${key} ${el}`));
+            return acc;
+        }, []);
 
-    const {treeSelect} = s;
+    const initialAcc = (keys: string[]) =>
+        keys.reduce((acc: TNomenclatureValue, key: string) => {
+            acc[key] = [];
+            return acc;
+        }, {});
+
+    const result = (newValue: string[]) =>
+        newValue.reduce((acc: TNomenclatureValue, el: string) => {
+            let [key, value] = el.split(' ');
+            if (keys[0] === manNomKeys[0]) {
+                acc[key].push(Number(value));
+            } else {
+                acc[key].push(value);
+            }
+            return acc;
+        }, initialAcc(keys));
 
     const treeProps = {
-        className: treeSelect,
+        className: `${style.treeSelect} ${className}`,
         treeData: nomenclatureData,
-        value: nomenclatureValue,
-        onChange: (val: string[]) => {
-            onTreeChange(val, treeChangeKeys);
+        value: treeSelectValue(keys),
+        onChange: (newValue: string[]) => {
+            onTreeChange(result(newValue));
         },
         treeCheckable: true,
         showCheckedStrategy: SHOW_PARENT,
