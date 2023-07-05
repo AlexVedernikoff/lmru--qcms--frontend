@@ -3,7 +3,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {TRootState} from '../../../../store/index';
 import {setSuppliersFilter, ISuppliersFilter} from '../../../../store/slices/suppliersFilterSlice';
-import {СustomTreeSelect} from '../../../Common/CustomTreeSelect';
+import {СustomTreeSelect, TNomenclatureValue} from '../../../Common/CustomTreeSelect';
+import {modNomKeys, manNomKeys} from '../../../Common/CustomTreeSelect/consts';
 
 const AdditionalFilter: React.FC = () => {
     const dispatch = useDispatch();
@@ -15,50 +16,20 @@ const AdditionalFilter: React.FC = () => {
         dispatch(setSuppliersFilter([e, k]));
     };
 
-    const modNomKeys = [
-        'productModelNomenclatureDepartmentId',
-        'productModelNomenclatureSubdepartmentId',
-        'productModelNomenclatureConsolidationId',
-        'productModelNomenclatureCodeId',
-    ];
-
-    const manNomKeys = [
-        'productManagementNomenclatureDepartmentId',
-        'productManagementNomenclatureSubdepartmentId',
-        'productManagementNomenclatureTypeId',
-        'productManagementNomenclatureSubtypeId',
-    ];
-
-    const treeSelectValue = (keys: string[]) =>
-        keys.reduce((acc: string[], key) => {
-            const idsArr: string[] = suppliersFilterState[key as keyof ISuppliersFilter] as string[];
-            if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
-            return acc;
-        }, []);
+    const treeSelectValue = (keys: string[]) => {
+        const result: TNomenclatureValue = {};
+        for (let key of keys) {
+            result[key] = (suppliersFilterState[key as keyof ISuppliersFilter] as string[]) || [];
+        }
+        return result;
+    };
 
     const modelNomenclatureValue = treeSelectValue(modNomKeys);
     const managementNomenclatureValue = treeSelectValue(manNomKeys);
 
-    const onTreeChange = (newValue: any, keys: any) => {
-        const initialAcc = keys.reduce((acc: any, key: any) => {
-            acc[key] = [];
-            return acc;
-        }, {});
-
-        const result = newValue.reduce((acc: any, el: any) => {
-            let [key, value] = el.split(' ');
-            if (keys[0] === manNomKeys[0]) value = Number(value);
-            acc[key].push(value);
-            return acc;
-        }, initialAcc);
-
+    const onTreeChange = (result: TNomenclatureValue) => {
         for (const key in result) {
-            onHandleFilterChange(result[key], key);
-        }
-        if (!Object.keys(result).length) {
-            keys.forEach((key: any) => {
-                onHandleFilterChange([], key);
-            });
+            onHandleFilterChange(result[key] as string[] | number[], key);
         }
     };
 
@@ -71,17 +42,9 @@ const AdditionalFilter: React.FC = () => {
                     {t('ProvidersList.DetailFilters.relatedProducts')}
                 </Typography>
                 {/**************** Фильтр "11 Номенклатура товарной модели" *****************/}
-                <СustomTreeSelect
-                    type={'product'}
-                    nomenclatureValue={modelNomenclatureValue}
-                    handleChange={onTreeChange}
-                />
+                <СustomTreeSelect nomenclatureValue={modelNomenclatureValue} handleChange={onTreeChange} />
                 {/**************** Фильтр "12 Управленческая номенклатура" *****************/}
-                <СustomTreeSelect
-                    type={'management'}
-                    nomenclatureValue={managementNomenclatureValue}
-                    handleChange={onTreeChange}
-                />
+                <СustomTreeSelect nomenclatureValue={managementNomenclatureValue} handleChange={onTreeChange} />
 
                 {/**************** Фильтр "07 Модель качества" *****************/}
 

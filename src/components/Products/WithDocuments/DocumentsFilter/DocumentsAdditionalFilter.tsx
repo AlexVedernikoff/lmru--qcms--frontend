@@ -1,22 +1,15 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {Dropdown, DropdownItem, Grid, Input} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import {TreeSelect} from 'antd';
 import {setProductsDocumentsFilters} from '../../../../store/slices/productsDocumentsSlice';
-import {useGetProductModelNomenclatureQuery} from '../../../../api/getProductModelNomenclature';
-import {IProductModelNomenclatureResponse} from '../../../../common/types/productModelNomenclature';
 import {TRootState} from '../../../../store/index';
 import {IFilters} from '../../../../store/slices/productsDocumentsSlice';
-import {useGetManagementNomenclatureQuery} from '../../../../api/getManagementNomenclature';
-import {IManagementNomenclatureResponse} from '../../../../common/types/productManagementNomenclature';
-
-const {SHOW_PARENT} = TreeSelect;
+import {СustomTreeSelect, TNomenclatureValue} from '../../../Common/CustomTreeSelect';
+import {modNomKeys, manNomKeys} from '../../../Common/CustomTreeSelect/consts';
 
 const ProductsAdditionalFilter: React.FC = () => {
     const dispatch = useDispatch();
-    const {data: productModelNomenclature = []} = useGetProductModelNomenclatureQuery();
-
-    const {data: managementNomenclature = []} = useGetManagementNomenclatureQuery();
+    const {t} = useTranslation('products');
 
     const productsDocumentsFiltersState = useSelector((state: TRootState) => state.productsDocumentsFilters);
 
@@ -24,133 +17,21 @@ const ProductsAdditionalFilter: React.FC = () => {
         dispatch(setProductsDocumentsFilters([e, k]));
     };
 
-    const modNomKeys = [
-        'productModelNomenclatureDepartmentId',
-        'productModelNomenclatureSubdepartmentId',
-        'productModelNomenclatureConsolidationId',
-        'productModelNomenclatureCodeId',
-    ];
-
-    const manNomLeys = [
-        'productManagementNomenclatureDepartmentId',
-        'productManagementNomenclatureSubdepartmentId',
-        'productManagementNomenclatureTypeId',
-        'productManagementNomenclatureSubtypeId',
-    ];
-
-    const productNomenclatureData = productModelNomenclature.map((el: IProductModelNomenclatureResponse) => {
-        return {
-            title: el.nameRu,
-            value: `${modNomKeys[0]} ${el.code}`,
-            children: el.subdepartments.map(subDep => {
-                return {
-                    title: subDep.nameRu,
-                    value: `${modNomKeys[1]} ${subDep.code}`,
-                    children: subDep.modelConsolidationGroups.map(modCon => {
-                        return {
-                            title: modCon.nameRu,
-                            value: `${modNomKeys[2]} ${modCon.code}`,
-                            children: modCon.models
-                                ? modCon.models.map(mod => {
-                                      return {
-                                          title: mod.nameRu,
-                                          value: `${modNomKeys[3]} ${mod.code}`,
-                                      };
-                                  })
-                                : undefined,
-                        };
-                    }),
-                };
-            }),
-        };
-    });
-
-    const managementNomenclatureData = managementNomenclature.map((el: IManagementNomenclatureResponse) => {
-        return {
-            title: el.name,
-            value: `${manNomLeys[0]} ${el.id}`,
-            children: el.subDepartments.map(subDep => {
-                return {
-                    title: subDep.name,
-                    value: `${manNomLeys[1]} ${subDep.id}`,
-                    children: subDep.types
-                        ? subDep.types.map(modCon => {
-                              return {
-                                  title: modCon.name,
-                                  value: `${manNomLeys[2]} ${modCon.id}`,
-                                  children: modCon.subTypes
-                                      ? modCon.subTypes.map(mod => {
-                                            return {
-                                                title: mod.name,
-                                                value: `${manNomLeys[3]} ${mod.id}`,
-                                            };
-                                        })
-                                      : undefined,
-                              };
-                          })
-                        : undefined,
-                };
-            }),
-        };
-    });
-
-    const {t} = useTranslation('products');
-
-    const treeSelectValue = (keys: string[]) =>
-        keys.reduce((acc: string[], key) => {
-            const idsArr: string[] = productsDocumentsFiltersState[key as keyof IFilters] as string[];
-            if (idsArr) acc.push(...idsArr.map((el: any) => `${key} ${el}`));
-            return acc;
-        }, []);
+    const treeSelectValue = (keys: string[]) => {
+        const result: TNomenclatureValue = {};
+        for (let key of keys) {
+            result[key as string] = (productsDocumentsFiltersState[key as keyof IFilters] as string[]) || [];
+        }
+        return result;
+    };
 
     const modelNomenclatureValue = treeSelectValue(modNomKeys);
-    const managementNomenclatureValue = treeSelectValue(manNomLeys);
+    const managementNomenclatureValue = treeSelectValue(manNomKeys);
 
-    const onTreeChange = (newValue: any, keys: any) => {
-        const initialAcc = keys.reduce((acc: any, key: any) => {
-            acc[key] = [];
-            return acc;
-        }, {});
-
-        const result = newValue.reduce((acc: any, el: any) => {
-            let [key, value] = el.split(' ');
-            if (keys === manNomLeys) value = Number(value);
-            acc[key].push(value);
-            return acc;
-        }, initialAcc);
-
+    const onTreeChange = (result: TNomenclatureValue) => {
         for (const key in result) {
-            onHandleFilterChange(result[key], key);
+            onHandleFilterChange(result[key] as string[] | number[], key);
         }
-        if (!Object.keys(result).length) {
-            keys.forEach((key: any) => {
-                onHandleFilterChange([], key);
-            });
-        }
-    };
-
-    const tPropsProdNom = {
-        treeData: productNomenclatureData,
-        value: modelNomenclatureValue,
-        onChange: (val: any) => onTreeChange(val, modNomKeys),
-        treeCheckable: true,
-        showCheckedStrategy: SHOW_PARENT,
-        placeholder: t('WithDocuments.DetailFilters.ProductModelNomenclature'),
-        style: {
-            width: '100%',
-        },
-    };
-
-    const tPropsManNom = {
-        treeData: managementNomenclatureData,
-        value: managementNomenclatureValue,
-        onChange: (val: any) => onTreeChange(val, manNomLeys),
-        treeCheckable: true,
-        showCheckedStrategy: SHOW_PARENT,
-        placeholder: t('WithDocuments.DetailFilters.ManagementNomenclature'),
-        style: {
-            width: '100%',
-        },
     };
 
     const {country, qualityModelId} = productsDocumentsFiltersState;
@@ -187,10 +68,10 @@ const ProductsAdditionalFilter: React.FC = () => {
             </Grid>
 
             <Grid rowGap={16} columns="1fr" alignItems="baseline">
-                {/**************** Фильтр "11 Номенклатура товарной модели" *****************/}
-                <TreeSelect {...tPropsProdNom} />
+                {/**************** Фильтр "11 Номенклатура товарной модели" **************** */}
+                <СustomTreeSelect nomenclatureValue={modelNomenclatureValue} handleChange={onTreeChange} />
                 {/**************** Фильтр "12 Управленческая номенклатура" *****************/}
-                <TreeSelect {...tPropsManNom} />
+                <СustomTreeSelect nomenclatureValue={managementNomenclatureValue} handleChange={onTreeChange} />
             </Grid>
         </Grid>
     );
