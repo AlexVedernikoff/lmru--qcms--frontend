@@ -1,11 +1,11 @@
 import {Grid, RegularButton, Textarea, Typography} from 'fronton-react';
-import {ITaskDetails, ITaskUpdateInfoParamsComment} from '../../../../common/types/taskDetails';
+import {ITaskDetails} from '../../../../common/types/taskDetails';
 import {taskDetailsApi} from '../api';
 import {ChangeEvent, useState} from 'react';
 import TaskDetailsCommentsList from '../TaskDetailsCommentsList';
+import {notification} from 'antd';
 
 import s from './styles.module.css';
-import {notification} from 'antd';
 
 interface Props {
     taskDetails: ITaskDetails;
@@ -23,24 +23,16 @@ const TaskDetailsAddCommentsForm: React.FC<Props> = ({taskDetails}) => {
     };
 
     const handleSubmit = () => {
-        const prevComments: ITaskUpdateInfoParamsComment[] = publicComments
-            ? publicComments.map(({createdBy, comment}) => ({createdBy, comment}))
-            : [];
-        const newComment: ITaskUpdateInfoParamsComment = {
-            createdBy: 'Matvey',
-            comment,
-        };
-        const newComments: ITaskUpdateInfoParamsComment[] = [...prevComments, newComment];
+        const comments = publicComments ? [...publicComments.map(({comment}) => comment), comment] : [comment];
+
+        const id = parseInt(taskDetails.id, 10);
 
         updateTaskDetails({
             updatedBy: 'Matvey',
-            qualityActions: [
-                {
-                    id: parseInt(taskDetails.id, 10),
-                    publicComments: newComments,
-                    actionStatus: 'DRAFT',
-                },
-            ],
+            qualityActions: comments.map(comment => ({
+                id,
+                publicComment: comment,
+            })),
         })
             .unwrap()
             .then(

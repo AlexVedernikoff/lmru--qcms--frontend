@@ -1,7 +1,7 @@
 import {Grid, Modal, ModalContent, ModalFooter, ModalHeader, RegularButton, Textarea} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import {IProduct} from '../../../../common/types/products';
-import {ChangeEvent, useEffect, useState} from 'react';
+import {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import withModelApi from '../withModelApi';
 
 interface Props {
@@ -24,11 +24,11 @@ const ProductsAddCommentModalWindow: React.FC<Props> = ({show, onClose, products
 
     const clear = () => setText('');
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         if (isLoading) return;
         onClose();
         clear();
-    };
+    }, [isLoading, onClose]);
 
     const handleSubmit = () => {
         if (!text) return;

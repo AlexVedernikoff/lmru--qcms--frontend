@@ -169,7 +169,7 @@ export interface ITaskUpdateInfoParams {
             type: string; // required, ENUM: ['SUPPLIER', 'SERVICE_PROVIDER', 'QE','SQM'] тип подтверждающего сотрудника
             externalId: string; // required, идентификатор согласующего или название компании
         }[];
-        publicComments?: ITaskUpdateInfoParamsComment[];
+        publicComment: string;
     }[];
 }
 
