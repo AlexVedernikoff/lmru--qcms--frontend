@@ -5,7 +5,7 @@ import {TRootState} from '../../../../store/index';
 import {setSuppliersFilter, ISuppliersFilter} from '../../../../store/slices/suppliersFilterSlice';
 import {СustomTreeSelect, TNomenclatureValue} from '../../../Common/CustomTreeSelect';
 import {modNomKeys, manNomKeys} from '../../../Common/CustomTreeSelect/consts';
-
+import styles from './styles.module.css';
 const AdditionalFilter: React.FC = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation('providers');
@@ -75,35 +75,37 @@ const AdditionalFilter: React.FC = () => {
                 </Dropdown>
             </Grid>
 
-            <Grid rowGap={24} columns="1fr" alignItems="baseline">
+            <Grid rowGap={26} columns="1fr" alignItems="baseline">
                 <div></div>
-                <Dropdown
-                    size="m"
-                    closeOnSelect
-                    placeholder={t('Common.Select')}
-                    label={t('ProvidersList.DetailFilters.сharacteristic')}
-                    value={undefined}
-                    // // onSelect={handleSelect}
-                >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                </Dropdown>
+                <Grid rowGap="20px" style={{marginTop: '10px'}}>
+                    <Dropdown
+                        size="m"
+                        closeOnSelect
+                        placeholder={t('Common.Select')}
+                        label={t('ProvidersList.DetailFilters.сharacteristic')}
+                        value={undefined}
+                        className={styles.dropdown}
+                        // // onSelect={handleSelect}
+                    >
+                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text="test" value={'test'} />
+                    </Dropdown>
 
-                <Dropdown
-                    size="m"
-                    closeOnSelect
-                    placeholder={t('Common.Select')}
-                    label={t('ProvidersList.DetailFilters.meaning')}
-                    value={undefined}
-                    // // onSelect={handleSelect}
-                >
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                    <DropdownItem text="test" value={'test'} />
-                </Dropdown>
-
-                <Grid columnGap={16} columns="120px 1fr" alignItems="baseline" alignContent="baseline">
+                    <Dropdown
+                        size="m"
+                        closeOnSelect
+                        placeholder={t('Common.Select')}
+                        label={t('ProvidersList.DetailFilters.meaning')}
+                        value={undefined}
+                        // // onSelect={handleSelect}
+                    >
+                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text="test" value={'test'} />
+                        <DropdownItem text="test" value={'test'} />
+                    </Dropdown>
+                </Grid>
+                <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
                     <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="baseline" alignContent="baseline">
                         <Checkbox checked={false} label={t('Common.Yes')} />
                         <Checkbox checked={false} label={t('Common.No')} />
@@ -112,7 +114,7 @@ const AdditionalFilter: React.FC = () => {
                         {t('ProvidersList.DetailFilters.withCTMProduct')}
                     </Typography>
                 </Grid>
-                <Grid columnGap={16} columns="120px 1fr" alignItems="baseline" alignContent="baseline">
+                <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
                     <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="baseline" alignContent="baseline">
                         <Checkbox checked={false} label={t('Common.Yes')} />
                         <Checkbox checked={false} label={t('Common.No')} />
@@ -121,7 +123,7 @@ const AdditionalFilter: React.FC = () => {
                         {t('ProvidersList.DetailFilters.productDistributorOnly')}
                     </Typography>
                 </Grid>
-                <Grid columnGap={16} columns="120px 1fr" alignItems="baseline" alignContent="baseline">
+                <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
                     <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="baseline" alignContent="baseline">
                         <Checkbox checked={false} label={t('Common.Yes')} />
                         <Checkbox checked={false} label={t('Common.No')} />

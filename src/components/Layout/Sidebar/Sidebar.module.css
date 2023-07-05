@@ -16,10 +16,15 @@
     z-index: 999999;
 }
 
+.selectedAccordeon > li > div {
+    font-weight: 500 !important;
+}
+
 .selectedAccordeon::before {
     content: url('../../Icons/SelectedIcon.svg');
     position: absolute;
     left: -7px;
+    top: 4px;
 }
 
 .item {
@@ -31,10 +36,15 @@
     composes: item;
 }
 
+.selected > li > div {
+    font-weight: 500 !important;
+}
+
 .selected::before {
     content: url('../../Icons/SelectedIcon.svg');
     position: absolute;
     left: -7px;
+    top: 4px;
 }
 
 .collapseBtn {

@@ -10,6 +10,7 @@ import {getProductTableColumns} from './ProductTableColumns';
 import CustomTable from '../../../Common/CustomTable';
 import {TWithReactKey} from '../../../../common/clientModels';
 import {IProduct, IProductsResponse} from '../../../../common/types/products';
+import NotFound from '../../../Icons/NotFound';
 
 export type RawTable = Pick<IProduct, 'id'>;
 
@@ -43,7 +44,7 @@ const ProductsTable: React.FC<IProps> = ({onPageChange, onProductsSelect, tableD
             {
                 title: '',
                 dataIndex: undefined,
-                width: 64,
+                width: 57,
                 render: (_value: string, record: TDataType) => (
                     <RegularButton
                         data-id={record.id}
@@ -79,21 +80,26 @@ const ProductsTable: React.FC<IProps> = ({onPageChange, onProductsSelect, tableD
     );
 
     return (
-        <CustomTable
-            rowSelection={rowSelection}
-            columns={columns}
-            dataSource={dataSource}
-            scroll={{x: 400}}
-            tableLayout="fixed"
-            size="small"
-            bordered
-            pagination={{
-                pageSize: tableData?.pageable?.pageSize,
-                total: tableData?.pageable?.totalElements,
-                current: tableData?.pageable?.pageIndex + 1,
-                onChange: onPageChange,
-            }}
-        />
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+            {(!dataSource?.length && !isLoading && <NotFound />) || (
+                <CustomTable
+                    loading={isLoading}
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={dataSource}
+                    scroll={{x: 400}}
+                    tableLayout="fixed"
+                    size="small"
+                    bordered
+                    pagination={{
+                        pageSize: tableData?.pageable?.pageSize,
+                        total: tableData?.pageable?.totalElements,
+                        current: tableData?.pageable?.pageIndex + 1,
+                        onChange: onPageChange,
+                    }}
+                />
+            )}
+        </div>
     );
 };
 

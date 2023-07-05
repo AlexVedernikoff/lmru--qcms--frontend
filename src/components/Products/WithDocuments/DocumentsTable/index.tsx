@@ -71,7 +71,7 @@ const DocumentsTable = () => {
             {
                 title: '',
                 dataIndex: undefined,
-                width: 64,
+                width: 57,
                 render: (_value: string, record: IDataType) => (
                     <RegularButton
                         data-id={record.productCode?.toString()}

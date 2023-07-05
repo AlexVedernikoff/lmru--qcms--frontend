@@ -16,7 +16,6 @@ import {IPermissiveDocumentsResponse} from '../../../../common/types/permissiveD
 import {setProductsDocumentsTableData} from '../../../../store/slices/productsDocumentsTableDataSlice';
 import {TRootState} from '../../../../store/index';
 import styles from '../../../Common.module.css';
-import stylesProductsDocs from './styles.module.css';
 import {prepareBody} from './prepareBody';
 
 const DocumentsFilter: React.FC = () => {
@@ -71,61 +70,64 @@ const DocumentsFilter: React.FC = () => {
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
             <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline" rowGap="48px">
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
-                    {/**************** Фильтр 01 "Код товара" *****************/}
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={t('WithDocuments.Filters.productNumberKey')}
-                        value={productsDocumentsFiltersState.productNumberKey}
-                        onSelect={e => onHandleFilterChange(e!, 'productNumberKey')}
-                    >
-                        <DropdownItem text={t('WithDocuments.Table.ProductCode')} value={'productCode'} />
-                        <DropdownItem text={t('WithDocuments.Table.EAN')} value={'ean'} />
-                        <DropdownItem text={t('WithDocuments.Table.TNVED')} value={'productTNVEDcode'} />
-                        <DropdownItem text={t('WithDocuments.Table.Name')} value={'productDescription'} />
-                    </Dropdown>
+                    <Grid rowGap="7px">
+                        {/**************** Фильтр 01 "Код товара" *****************/}
+                        <Dropdown
+                            size="m"
+                            closeOnSelect
+                            placeholder={t('Common.Select')}
+                            label={t('WithDocuments.Filters.productNumberKey')}
+                            value={productsDocumentsFiltersState.productNumberKey}
+                            onSelect={e => onHandleFilterChange(e!, 'productNumberKey')}
+                        >
+                            <DropdownItem text={t('WithDocuments.Table.ProductCode')} value={'productCode'} />
+                            <DropdownItem text={t('WithDocuments.Table.EAN')} value={'ean'} />
+                            <DropdownItem text={t('WithDocuments.Table.TNVED')} value={'productTNVEDcode'} />
+                            <DropdownItem text={t('WithDocuments.Table.Name')} value={'productDescription'} />
+                        </Dropdown>
 
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        name={'filter'}
-                        value={productsDocumentsFiltersState.productNumberValue}
-                        onChange={e => {
-                            onHandleFilterChange(e.target.value, 'productNumberValue');
-                        }}
-                    />
-
-                    {/**************** Фильтр 02 "Поставщик" *****************/}
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={t('WithDocuments.Filters.supplierName')}
-                        value={productsDocumentsFiltersState.supplierNameKey}
-                        onSelect={e => onHandleFilterChange(e!, 'supplierNameKey')}
-                    >
-                        <DropdownItem text={t('WithDocuments.Table.SupplierName')} value={'supplierName'} />
-                        <DropdownItem text={t('WithDocuments.Table.SupplierCodeRMS')} value={'supplierRMSCode'} />
-                        <DropdownItem
-                            text={t('WithDocuments.Table.SupplierTaxIndetifier')}
-                            value={'supplierTaxIdentifer'}
+                        <Input
+                            inputSize="m"
+                            autoComplete="off"
+                            name={'filter'}
+                            value={productsDocumentsFiltersState.productNumberValue}
+                            onChange={e => {
+                                onHandleFilterChange(e.target.value, 'productNumberValue');
+                            }}
                         />
-                        <DropdownItem
-                            text={t('WithDocuments.Table.BusinessLicenseNumber')}
-                            value={'supplierBusinessLicense'}
-                        />
-                    </Dropdown>
+                    </Grid>
+                    <Grid rowGap="7px">
+                        {/**************** Фильтр 02 "Поставщик" *****************/}
+                        <Dropdown
+                            size="m"
+                            closeOnSelect
+                            placeholder={t('Common.Select')}
+                            label={t('WithDocuments.Filters.supplierName')}
+                            value={productsDocumentsFiltersState.supplierNameKey}
+                            onSelect={e => onHandleFilterChange(e!, 'supplierNameKey')}
+                        >
+                            <DropdownItem text={t('WithDocuments.Table.SupplierName')} value={'supplierName'} />
+                            <DropdownItem text={t('WithDocuments.Table.SupplierCodeRMS')} value={'supplierRMSCode'} />
+                            <DropdownItem
+                                text={t('WithDocuments.Table.SupplierTaxIndetifier')}
+                                value={'supplierTaxIdentifer'}
+                            />
+                            <DropdownItem
+                                text={t('WithDocuments.Table.BusinessLicenseNumber')}
+                                value={'supplierBusinessLicense'}
+                            />
+                        </Dropdown>
 
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        name={'filter'}
-                        value={productsDocumentsFiltersState.supplierNameValue}
-                        onChange={e => {
-                            onHandleFilterChange(e.target.value, 'supplierNameValue');
-                        }}
-                    />
+                        <Input
+                            inputSize="m"
+                            autoComplete="off"
+                            name={'filter'}
+                            value={productsDocumentsFiltersState.supplierNameValue}
+                            onChange={e => {
+                                onHandleFilterChange(e.target.value, 'supplierNameValue');
+                            }}
+                        />
+                    </Grid>
                     {/**************** Фильтр 03 "Регуляторный статус" *****************/}
                     <Dropdown
                         size="m"
@@ -199,23 +201,23 @@ const DocumentsFilter: React.FC = () => {
                         <DropdownItem text={t('WithDocuments.Table.NEEDS_APPROVAL')} value={'NEEDS_APPROVAL'} />
                     </Dropdown>
                     {/**************** Фильтр "08 Поиск по дате " *****************/}
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={t('WithDocuments.Filters.DateSearch')}
-                        value={dates.dateType}
-                        onSelect={e => {
-                            const dateType = e as EDateType;
-                            onHandleFilterChange({...dates, dateType}, 'dates');
-                        }}
-                    >
-                        <DropdownItem text={t('WithDocuments.Table.CREATED')} value={'createDate'} />
-                        <DropdownItem text={t('WithDocuments.Table.UPDATED')} value={'updateDate'} />
-                        <DropdownItem text={t('WithDocuments.Table.ISSUE')} value={'issueDate'} />
-                        <DropdownItem text={t('WithDocuments.Table.EXPIRY')} value={'expireDate'} />
-                    </Dropdown>
-                    <div className={stylesProductsDocs.datePicker}>
+                    <Grid rowGap="7px">
+                        <Dropdown
+                            size="m"
+                            closeOnSelect
+                            placeholder={t('Common.Select')}
+                            label={t('WithDocuments.Filters.DateSearch')}
+                            value={dates.dateType}
+                            onSelect={e => {
+                                const dateType = e as EDateType;
+                                onHandleFilterChange({...dates, dateType}, 'dates');
+                            }}
+                        >
+                            <DropdownItem text={t('WithDocuments.Table.CREATED')} value={'createDate'} />
+                            <DropdownItem text={t('WithDocuments.Table.UPDATED')} value={'updateDate'} />
+                            <DropdownItem text={t('WithDocuments.Table.ISSUE')} value={'issueDate'} />
+                            <DropdownItem text={t('WithDocuments.Table.EXPIRY')} value={'expireDate'} />
+                        </Dropdown>
                         <DatePicker
                             date={[
                                 productsDocumentsFiltersState.dates.startDate,
@@ -245,7 +247,7 @@ const DocumentsFilter: React.FC = () => {
                                 );
                             }}
                         />
-                    </div>
+                    </Grid>
                 </Grid>
             </Grid>
 

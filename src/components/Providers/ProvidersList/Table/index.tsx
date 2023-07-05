@@ -60,7 +60,7 @@ const ProvidersTable: React.FC = () => {
             {
                 title: '',
                 dataIndex: undefined,
-                width: 64,
+                width: 35,
                 render: (_value: string, record: RawTable) => (
                     <RegularButton
                         data-id={record.id?.toString()}
@@ -84,6 +84,7 @@ const ProvidersTable: React.FC = () => {
     const rowSelection = useMemo<TableRowSelection<RawTable>>(
         () => ({
             type: 'checkbox',
+            columnWidth: 35,
             onChange: (selectedRowKeys: React.Key[], selectedRows: RawTable[]) => {},
             fixed: 'left',
         }),

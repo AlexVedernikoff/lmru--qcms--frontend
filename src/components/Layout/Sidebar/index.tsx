@@ -34,6 +34,7 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
     const location = useLocation();
 
     const [isHovered, setIsHovered] = useState(false);
+    const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
     const handleHover = () => {
         setIsHovered(true);
@@ -100,6 +101,9 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
     const handleItemClick = useCallback(
         (value: string | number) => {
             navigate(value as string);
+            if (value === APP_ROUTES.products) {
+                setIsAccordionOpen(prevState => !prevState);
+            }
         },
         [navigate]
     );
@@ -138,7 +142,7 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
                                     onClick={handleItemClick}
                                     iconRight={
                                         !!item.children?.length ? (
-                                            isSectionOpened ? (
+                                            isSectionOpened && isAccordionOpen ? (
                                                 <ChevronDownIcon />
                                             ) : (
                                                 <ChevronRightIcon />
@@ -146,7 +150,7 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
                                         ) : undefined
                                     }
                                 >
-                                    {isSectionOpened && !!item.children ? (
+                                    {isSectionOpened && !!item.children && isAccordionOpen ? (
                                         isMinified ? (
                                             isHovered ? (
                                                 <div

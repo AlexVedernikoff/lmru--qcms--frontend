@@ -13,27 +13,29 @@ const TransferFilter: React.FC = () => {
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
             <Grid columnGap={24} columns="repeat(4, 1fr)" alignItems="baseline" rowGap={48}>
                 <Grid columnGap={16} columns="2fr" alignItems="baseline" rowGap={20}>
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={t('Transfer.Filters.filter')}
-                        value={undefined}
-                        onSelect={handleSelect}
-                    >
-                        <DropdownItem
-                            text={t('Transfer.Filters.productName')}
-                            value={t('Transfer.Filters.productName')}
-                        />
-                    </Dropdown>
+                    <Grid rowGap="7px">
+                        <Dropdown
+                            size="m"
+                            closeOnSelect
+                            placeholder={t('Common.Select')}
+                            label={t('Transfer.Filters.filter')}
+                            value={undefined}
+                            onSelect={handleSelect}
+                        >
+                            <DropdownItem
+                                text={t('Transfer.Filters.productName')}
+                                value={t('Transfer.Filters.productName')}
+                            />
+                        </Dropdown>
 
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        name={'filter'}
-                        value={undefined}
-                        onChange={handleProductCodeChange}
-                    />
+                        <Input
+                            inputSize="m"
+                            autoComplete="off"
+                            name={'filter'}
+                            value={undefined}
+                            onChange={handleProductCodeChange}
+                        />
+                    </Grid>
                 </Grid>
 
                 <Dropdown

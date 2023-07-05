@@ -59,34 +59,36 @@ const ProvidersFilter: React.FC<Props> = props => {
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
             <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline" rowGap="48px">
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
-                    {/**************** Фильтр 01 "Поставщик код/ИНН/имя" *****************/}
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={t('ProvidersList.Filters.filter')}
-                        value={supplierKey}
-                        onSelect={e => onHandleFilterChange(e!, 'supplierKey')}
-                    >
-                        <DropdownItem text={t('ProvidersList.Filters.providerName')} value={'supplierName'} />
-                        <DropdownItem text={t('ProvidersList.Filters.providerCode')} value={'supplierRMSCode'} />
-                        <DropdownItem text={t('ProvidersList.Filters.INN')} value={'supplierInn'} />
-                        <DropdownItem
-                            text={t('ProvidersList.Filters.businessLicenseNumber')}
-                            value={'businessLicence'}
+                    <Grid rowGap="7px">
+                        {/**************** Фильтр 01 "Поставщик код/ИНН/имя" *****************/}
+                        <Dropdown
+                            size="m"
+                            closeOnSelect
+                            placeholder={t('Common.Select')}
+                            label={t('ProvidersList.Filters.filter')}
+                            value={supplierKey}
+                            onSelect={e => onHandleFilterChange(e!, 'supplierKey')}
+                        >
+                            <DropdownItem text={t('ProvidersList.Filters.providerName')} value={'supplierName'} />
+                            <DropdownItem text={t('ProvidersList.Filters.providerCode')} value={'supplierRMSCode'} />
+                            <DropdownItem text={t('ProvidersList.Filters.INN')} value={'supplierInn'} />
+                            <DropdownItem
+                                text={t('ProvidersList.Filters.businessLicenseNumber')}
+                                value={'businessLicence'}
+                            />
+                        </Dropdown>
+                        <Input
+                            inputSize="m"
+                            autoComplete="off"
+                            label=""
+                            placeholder=""
+                            value={supplierValue}
+                            disabled={!supplierKey}
+                            onChange={e => {
+                                onHandleFilterChange(e.target.value, 'supplierValue');
+                            }}
                         />
-                    </Dropdown>
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label=""
-                        placeholder=""
-                        value={supplierValue}
-                        disabled={!supplierKey}
-                        onChange={e => {
-                            onHandleFilterChange(e.target.value, 'supplierValue');
-                        }}
-                    />
+                    </Grid>
                     {/**************** Фильтр 02 "Статус регистрации поставщика" *****************/}
                     <Dropdown
                         size="m"

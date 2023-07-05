@@ -12,6 +12,7 @@ import ResponsibleModal from './ActionModals/ResponsibleModal';
 import DocumnentModal from './ActionModals/DocumentsModal';
 import ApproverModal from './ActionModals/ApproverModal';
 import {EModalVariant, TDataType} from './types';
+import NotFound from '../../Icons/NotFound';
 
 interface IProps {
     onPageChange: (page: number, size: number) => void;
@@ -52,7 +53,7 @@ const Table: React.FC<IProps> = ({
             {
                 title: '',
                 dataIndex: undefined,
-                width: 64,
+                width: 57,
                 render: (_value: string, record: TDataType) => (
                     <RegularButton
                         data-id={'publicComments'}
@@ -71,7 +72,7 @@ const Table: React.FC<IProps> = ({
             {
                 title: '',
                 dataIndex: undefined,
-                width: 64,
+                width: 57,
                 render: (_value: string, record: TDataType) => (
                     <RegularButton
                         data-id={record.id}
@@ -209,27 +210,29 @@ const Table: React.FC<IProps> = ({
     );
 
     return (
-        <>
-            <CustomTable
-                loading={isLoading}
-                rowSelection={{
-                    type: 'checkbox',
-                    onChange: setSelectedRows,
-                    fixed: 'left',
-                }}
-                columns={columns}
-                dataSource={dataSource}
-                scroll={{x: 400}}
-                tableLayout="fixed"
-                size="small"
-                bordered
-                pagination={{
-                    pageSize: tableData?.pageable?.pageSize,
-                    total: tableData?.pageable?.totalElements,
-                    current: (tableData?.pageable?.pageIndex || 0) + 1,
-                    onChange: onPageChange,
-                }}
-            />
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+            {(!dataSource?.length && !isLoading && <NotFound />) || (
+                <CustomTable
+                    loading={isLoading}
+                    rowSelection={{
+                        type: 'checkbox',
+                        onChange: setSelectedRows,
+                        fixed: 'left',
+                    }}
+                    columns={columns}
+                    dataSource={dataSource}
+                    scroll={{x: 400}}
+                    tableLayout="fixed"
+                    size="small"
+                    bordered
+                    pagination={{
+                        pageSize: tableData?.pageable?.pageSize,
+                        total: tableData?.pageable?.totalElements,
+                        current: (tableData?.pageable?.pageIndex || 0) + 1,
+                        onChange: onPageChange,
+                    }}
+                />
+            )}
             {action === EModalVariant.documents && (
                 <DocumnentModal dataList={selectedRows} isOpen={isActionOpen} onClose={onActionClose} />
             )}
@@ -239,7 +242,7 @@ const Table: React.FC<IProps> = ({
             {action === EModalVariant.approver && (
                 <ApproverModal dataList={selectedRows} isOpen={isActionOpen} onClose={onActionClose} />
             )}
-        </>
+        </div>
     );
 };
 

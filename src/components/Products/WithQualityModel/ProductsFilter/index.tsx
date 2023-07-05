@@ -169,57 +169,61 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
             <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline" rowGap="48px">
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={t('WithModels.Filters.filter')}
-                        value={filterSupplier}
-                        onSelect={function selectfilter(value) {
-                            value && setFilterSupplier(value);
-                        }}
-                    >
-                        <DropdownItem text={t('WithModels.Filters.providerName')} value={'supplierName'} />
-                        <DropdownItem text={t('WithModels.Filters.supplierCode')} value={'supplierRMSCode'} />
-                        <DropdownItem text={t('WithModels.Filters.INN')} value={'supplierTaxIndetifier'} />
-                    </Dropdown>
+                    <Grid rowGap="7px">
+                        <Dropdown
+                            size="m"
+                            closeOnSelect
+                            placeholder={t('Common.Select')}
+                            label={t('WithModels.Filters.filter')}
+                            value={filterSupplier}
+                            onSelect={function selectfilter(value) {
+                                value && setFilterSupplier(value);
+                            }}
+                        >
+                            <DropdownItem text={t('WithModels.Filters.providerName')} value={'supplierName'} />
+                            <DropdownItem text={t('WithModels.Filters.supplierCode')} value={'supplierRMSCode'} />
+                            <DropdownItem text={t('WithModels.Filters.INN')} value={'supplierTaxIndetifier'} />
+                        </Dropdown>
 
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        name={filterSupplier}
-                        value={inputFilterSupplier}
-                        onChange={(e, value) => {
-                            setInputFilterSupplier(value);
-                            handleInputChange(e, value);
-                        }}
-                    />
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={t('WithModels.Filters.filter')}
-                        value={filterProduct}
-                        onSelect={function selectFilter(value) {
-                            value && setFilterProduct(value);
-                        }}
-                    >
-                        <DropdownItem text={t('WithModels.Filters.productCode')} value={'code'} />
-                        <DropdownItem text={t('WithModels.Filters.EAN')} value={'ean'} />
-                        <DropdownItem text={t('WithModels.Filters.TNVD')} value={'customId'} />
-                        <DropdownItem text={t('WithModels.Filters.productName')} value={'description'} />
-                    </Dropdown>
+                        <Input
+                            inputSize="m"
+                            autoComplete="off"
+                            name={filterSupplier}
+                            value={inputFilterSupplier}
+                            onChange={(e, value) => {
+                                setInputFilterSupplier(value);
+                                handleInputChange(e, value);
+                            }}
+                        />
+                    </Grid>
+                    <Grid rowGap="7px">
+                        <Dropdown
+                            size="m"
+                            closeOnSelect
+                            placeholder={t('Common.Select')}
+                            label={t('WithModels.Filters.filter')}
+                            value={filterProduct}
+                            onSelect={function selectFilter(value) {
+                                value && setFilterProduct(value);
+                            }}
+                        >
+                            <DropdownItem text={t('WithModels.Filters.productCode')} value={'code'} />
+                            <DropdownItem text={t('WithModels.Filters.EAN')} value={'ean'} />
+                            <DropdownItem text={t('WithModels.Filters.TNVD')} value={'customId'} />
+                            <DropdownItem text={t('WithModels.Filters.productName')} value={'description'} />
+                        </Dropdown>
 
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        name={filterProduct}
-                        value={inputFilterProduct}
-                        onChange={(e, value) => {
-                            setInputFilterProduct(value);
-                            handleInputChange(e, value);
-                        }}
-                    />
+                        <Input
+                            inputSize="m"
+                            autoComplete="off"
+                            name={filterProduct}
+                            value={inputFilterProduct}
+                            onChange={(e, value) => {
+                                setInputFilterProduct(value);
+                                handleInputChange(e, value);
+                            }}
+                        />
+                    </Grid>
                 </Grid>
 
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
@@ -245,7 +249,7 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
                     />
                 </Grid>
 
-                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="14px">
+                <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="12px">
                     <Dropdown
                         size="m"
                         closeOnSelect

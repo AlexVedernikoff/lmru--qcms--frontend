@@ -11,6 +11,7 @@ import NomenclatureRow from '../Common/NomenclatureRow';
 import {IModelItem, IModelsResponse} from '../../../common/types/models';
 import {TWithReactKey} from '../../../common/clientModels';
 import {convertDateFromServer} from '../../../utils/convertDateFromServer';
+import NotFound from '../../Icons/NotFound';
 import {QualityModelsSortableFields} from '../../../common/types/searchQualityModels';
 import SwitchSortButton from './SwitchSortButton';
 import {Sort} from '.';
@@ -43,7 +44,7 @@ const ModelsTable: React.FC<IProps> = ({sort, onSortChange, onPageChange, tableD
         {
             title: '',
             dataIndex: undefined,
-            width: 64,
+            width: 57,
             render: (_value: string, record: TDataType) => (
                 <RegularButton
                     data-id={record.id}
@@ -213,22 +214,26 @@ const ModelsTable: React.FC<IProps> = ({sort, onSortChange, onPageChange, tableD
     );
 
     return (
-        <CustomTable
-            loading={isLoading}
-            rowSelection={rowSelection}
-            columns={columns}
-            dataSource={dataSource}
-            scroll={{x: 400}}
-            tableLayout="fixed"
-            size="small"
-            bordered
-            pagination={{
-                pageSize: tableData?.pageable?.pageSize,
-                total: tableData?.pageable?.totalElements,
-                current: (tableData?.pageable?.pageIndex || 0) + 1,
-                onChange: onPageChange,
-            }}
-        />
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+            {(!dataSource?.length && !isLoading && <NotFound />) || (
+                <CustomTable
+                    loading={isLoading}
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={dataSource}
+                    scroll={{x: 400}}
+                    tableLayout="fixed"
+                    size="small"
+                    bordered
+                    pagination={{
+                        pageSize: tableData?.pageable?.pageSize,
+                        total: tableData?.pageable?.totalElements,
+                        current: (tableData?.pageable?.pageIndex || 0) + 1,
+                        onChange: onPageChange,
+                    }}
+                />
+            )}
+        </div>
     );
 };
 
