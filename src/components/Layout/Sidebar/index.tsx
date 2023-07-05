@@ -100,12 +100,19 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
 
     const handleItemClick = useCallback(
         (value: string | number) => {
-            navigate(value as string);
             if (value === APP_ROUTES.products) {
                 setIsAccordionOpen(prevState => !prevState);
             }
+
+            if (
+                value !== location.pathname &&
+                !location.pathname.includes(value.toString()) &&
+                Object.values(PRODUCTS_ROUTES).some(v => v !== value)
+            ) {
+                navigate(value as string);
+            }
         },
-        [navigate]
+        [location.pathname, navigate]
     );
 
     return (
