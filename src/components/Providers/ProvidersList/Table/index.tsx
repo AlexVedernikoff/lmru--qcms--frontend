@@ -12,6 +12,7 @@ import CustomTable from '../../../Common/CustomTable';
 import {setSuppliersFilter} from '../../../../store/slices/suppliersFilterSlice';
 import {TRootState} from '../../../../store/index';
 import {ISearchSuppliersResponse, ISuppliersContent} from '../../../../common/types/searchSuppliers';
+import NotFound from '../../../Icons/NotFound';
 
 export type RawTable = Pick<ISuppliersContent, 'supplierName' | 'supplierRMSCode' | 'id'>;
 
@@ -22,7 +23,7 @@ const ProvidersTable: React.FC = () => {
 
     const suppliersTableData: ISearchSuppliersResponse = useSelector((state: TRootState) => state.suppliersTableData);
 
-    const {content: providers, pageable} = suppliersTableData || {};
+    const {content: providers, pageable, isLoading} = suppliersTableData || {};
 
     const data = useMemo<RawTable[]>(
         () =>
@@ -92,21 +93,26 @@ const ProvidersTable: React.FC = () => {
     );
 
     return (
-        <CustomTable
-            rowSelection={rowSelection}
-            columns={columns}
-            dataSource={data}
-            scroll={{x: 400}}
-            tableLayout="fixed"
-            size="small"
-            bordered
-            pagination={{
-                pageSize: pageable?.pageSize,
-                total: pageable?.totalElements,
-                current: pageable?.pageIndex ? pageable?.pageIndex + 1 : 1,
-                onChange: onPageChange,
-            }}
-        />
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+            {(!data?.length && !isLoading && <NotFound />) || (
+                <CustomTable
+                    loading={isLoading}
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={data}
+                    scroll={{x: 400}}
+                    tableLayout="fixed"
+                    size="small"
+                    bordered
+                    pagination={{
+                        pageSize: pageable?.pageSize,
+                        total: pageable?.totalElements,
+                        current: pageable?.pageIndex ? pageable?.pageIndex + 1 : 1,
+                        onChange: onPageChange,
+                    }}
+                />
+            )}
+        </div>
     );
 };
 
