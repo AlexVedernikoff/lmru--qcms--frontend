@@ -1,5 +1,20 @@
+// https://confluence.lmru.tech/pages/viewpage.action?pageId=234492302
+
 import {IPageable} from './common';
 import {IModelItem} from './models';
+
+export enum QualityModelsSortableFields {
+    QualityModelStatus = 'qualityModelStatus', // Статус
+    Id = 'id', // Код модели
+    QualityModelLabel = 'qualityModelLabel', // Модель качества
+    UpdatedAt = 'updatedAt', // Последнее изменение
+    UpdatedBy = 'updatedBy', // Автор последнего изменения
+}
+
+export enum QualityModelsSortDirection {
+    ASC = 'ASC', // По возрастанию
+    DESC = 'DESC', // По убыванию
+}
 
 export interface IQualityModelsRequestHeader {
     securityCode: string;
@@ -18,7 +33,6 @@ export interface IQualityModelsRequest {
     body: IQualityModelsRequestBody;
 }
 
-// https://confluence.lmru.tech/pages/viewpage.action?pageId=234492302
 interface SearchBy {
     labels?: string[]; // optional, поиск по названию модели качества (логическое или + полное совпадение со значением из запроса)
     qualityModelLabel?: string; // optional, название модели качества

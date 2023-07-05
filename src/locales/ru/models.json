@@ -133,7 +133,7 @@
             "riskByProductUsageNegative": "Риск ущерба здоровью при неадекватном применении",
             "riskByProductUsagePositive": "Риск ущерба здоровью при адекватном применении",
             "riskEnvironment": "Риск ущерба окружающей среде",
-            "riskProperty": "Риск ущерба имущества",
+            "riskProperty": "Риск ущерба имуществу",
             "riskLegal": "Законодательный риск",
             "riskHealth": "Риск для здоровья",
             "risk": "Риск",

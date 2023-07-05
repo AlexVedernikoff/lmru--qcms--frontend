@@ -11,16 +11,21 @@ import NomenclatureRow from '../Common/NomenclatureRow';
 import {IModelItem, IModelsResponse} from '../../../common/types/models';
 import {TWithReactKey} from '../../../common/clientModels';
 import {convertDateFromServer} from '../../../utils/convertDateFromServer';
+import {QualityModelsSortableFields} from '../../../common/types/searchQualityModels';
+import SwitchSortButton from './SwitchSortButton';
+import {Sort} from '.';
 
 type TDataType = TWithReactKey<IModelItem>;
 
 interface IProps {
+    sort?: Sort;
+    onSortChange: (sortField: QualityModelsSortableFields) => void;
     onPageChange: (page: number, size: number) => void;
     tableData: IModelsResponse;
     isLoading: boolean;
 }
 
-const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => {
+const ModelsTable: React.FC<IProps> = ({sort, onSortChange, onPageChange, tableData, isLoading}) => {
     const navigate = useNavigate();
     const {t} = useTranslation('models');
 
@@ -55,7 +60,16 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
             fixed: 'left',
         },
         {
-            title: t('ModelList.Table.Columns.modelStatus'),
+            title: (
+                <Grid columns="auto auto" justifyContent="space-between" alignItems="center">
+                    {t('ModelList.Table.Columns.modelStatus')}
+                    <SwitchSortButton
+                        currentSort={sort}
+                        sortField={QualityModelsSortableFields.QualityModelStatus}
+                        onClick={() => onSortChange(QualityModelsSortableFields.QualityModelStatus)}
+                    />
+                </Grid>
+            ),
             dataIndex: 'qualityModelStatus',
             render: (data: TDataType['qualityModelStatus']) => {
                 let status = null;
@@ -77,13 +91,31 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
             width: 246,
         },
         {
-            title: t('ModelList.Table.Columns.modelCode'),
+            title: (
+                <Grid columns="auto auto" justifyContent="space-between" alignItems="center">
+                    {t('ModelList.Table.Columns.modelCode')}
+                    <SwitchSortButton
+                        currentSort={sort}
+                        sortField={QualityModelsSortableFields.Id}
+                        onClick={() => onSortChange(QualityModelsSortableFields.Id)}
+                    />
+                </Grid>
+            ),
             dataIndex: 'id',
             render: (data: TDataType['id']) => <div>{data}</div>,
             width: 246,
         },
         {
-            title: t('ModelList.Table.Columns.qualityModel'),
+            title: (
+                <Grid columns="auto auto" justifyContent="space-between" alignItems="center">
+                    {t('ModelList.Table.Columns.qualityModel')}
+                    <SwitchSortButton
+                        currentSort={sort}
+                        sortField={QualityModelsSortableFields.QualityModelLabel}
+                        onClick={() => onSortChange(QualityModelsSortableFields.QualityModelLabel)}
+                    />
+                </Grid>
+            ),
             dataIndex: 'qualityModelLabel',
             render: (data: TDataType['qualityModelLabel']) => (
                 <Typography variant="m" size="body_short">
@@ -101,7 +133,7 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
                         <Grid key={i} columns="auto 1fr" columnGap={8} alignItems="center">
                             <Label background="success-light">{d.role}</Label>
                             <Typography variant="s" size="body_long">
-                                {d.id}
+                                {d.userId}
                             </Typography>
                         </Grid>
                     ))}
@@ -133,13 +165,31 @@ const ModelsTable: React.FC<IProps> = ({onPageChange, tableData, isLoading}) => 
             width: 700,
         },
         {
-            title: t('ModelList.Table.Columns.latestChange'),
+            title: (
+                <Grid columns="auto auto" justifyContent="space-between" alignItems="center">
+                    {t('ModelList.Table.Columns.latestChange')}
+                    <SwitchSortButton
+                        currentSort={sort}
+                        sortField={QualityModelsSortableFields.UpdatedBy}
+                        onClick={() => onSortChange(QualityModelsSortableFields.UpdatedBy)}
+                    />
+                </Grid>
+            ),
             dataIndex: 'lastUpdateInformation',
             render: (data: TDataType['lastUpdateInformation']) => <div>{data?.updatedBy}</div>,
             width: 246,
         },
         {
-            title: t('ModelList.Table.Columns.changeDate'),
+            title: (
+                <Grid columns="auto auto" justifyContent="space-between" alignItems="center">
+                    {t('ModelList.Table.Columns.changeDate')}
+                    <SwitchSortButton
+                        currentSort={sort}
+                        sortField={QualityModelsSortableFields.UpdatedAt}
+                        onClick={() => onSortChange(QualityModelsSortableFields.UpdatedAt)}
+                    />
+                </Grid>
+            ),
             dataIndex: 'lastUpdateInformation',
             render: (data: TDataType['lastUpdateInformation']) => <div>{convertDateFromServer(data?.updatedAt)}</div>,
             width: 246,

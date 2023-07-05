@@ -5,6 +5,12 @@ import ModelsTable from './Table';
 import {IModelsParams} from '../../../common/types/models';
 import modelsApi from '../modelsApi';
 import styles from '../../Common.module.css';
+import {QualityModelsSortableFields, QualityModelsSortDirection} from '../../../common/types/searchQualityModels';
+
+export type Sort = {
+    sortField: QualityModelsSortableFields;
+    sortDirection: QualityModelsSortDirection;
+};
 
 const ModelList: React.FC = () => {
     const [page, setPage] = useState<Pick<IModelsParams['body'], 'pageSize' | 'pageIndex'>>({
@@ -12,10 +18,7 @@ const ModelList: React.FC = () => {
         pageIndex: 0,
     });
 
-    const [sort] = useState<Pick<IModelsParams['body'], 'sortField' | 'sortDirection'>>({
-        sortField: 'createdAt',
-        sortDirection: 'DESC',
-    });
+    const [sort, setSort] = useState<Sort>();
 
     const [searchBy, setSearchBy] = useState<IModelsParams['body']['searchBy']>({
         labels: undefined,
@@ -90,6 +93,24 @@ const ModelList: React.FC = () => {
         setPage({pageIndex: pageIndex - 1, pageSize});
     };
 
+    const handleSortChange = (sortField: QualityModelsSortableFields) => {
+        if (!sort || sort.sortField !== sortField) {
+            setSort({
+                sortField: sortField,
+                sortDirection: QualityModelsSortDirection.ASC,
+            });
+            return;
+        }
+        if (sort.sortDirection === QualityModelsSortDirection.ASC) {
+            setSort({
+                sortField,
+                sortDirection: QualityModelsSortDirection.DESC,
+            });
+            return;
+        }
+        setSort(undefined);
+    };
+
     return (
         <Grid rowGap={16}>
             <Grid rowGap={16}>
@@ -97,7 +118,13 @@ const ModelList: React.FC = () => {
             </Grid>
 
             <Grid rowGap={16} className={styles.panel}>
-                <ModelsTable onPageChange={handlePageChange} tableData={data!} isLoading={isLoading || isFetching} />
+                <ModelsTable
+                    sort={sort}
+                    onSortChange={handleSortChange}
+                    onPageChange={handlePageChange}
+                    tableData={data!}
+                    isLoading={isLoading || isFetching}
+                />
             </Grid>
         </Grid>
     );

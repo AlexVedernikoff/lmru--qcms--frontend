@@ -7,8 +7,8 @@ export enum ERiskLevel {
 interface IModelsBodyParams {
     pageIndex: number; // required, номер страницы
     pageSize: number; // required, количество элементов на странице
-    sortField: string; // optional, поле для сортировки
-    sortDirection: string; // optional, ENUM: 'ASC', 'DESC'[], порядок сортировки
+    sortField?: string; // optional, поле для сортировки
+    sortDirection?: string; // optional, ENUM: 'ASC', 'DESC'[], порядок сортировки
     searchBy: {
         labels?: string[]; // optional, поиск по названию модели качества (логическое или + полное совпадение со значением из запроса)
         qualityModelLabel?: string; // optional, название модели качества

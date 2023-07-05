@@ -52,7 +52,7 @@ const ProductsAddCommentModalWindow: React.FC<Props> = ({show, onClose, products
             alert('Запрос успешно отправлен!');
         }
         handleClose();
-    }, [isError, isSuccess]);
+    }, [isError, isSuccess, text, handleClose]);
 
     return (
         <Modal onClose={handleClose} show={show}>
