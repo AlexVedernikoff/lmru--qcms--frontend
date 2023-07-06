@@ -125,7 +125,7 @@
             "AwaitedDocuments": {
                 "Title": "Ожидаемые документы",
                 "Field": {
-                    "documentName": "Название разрешительного документа",
+                    "documentName": "Наименование",
                     "documentType": "Тип документа",
                     "template": "Шаблон",
                     "comment": "Комментарий"
@@ -137,7 +137,7 @@
                     "documentType": "Тип документа",
                     "documentMask": "Маска документа",
                     "status": "Статус",
-                    "documentName": "Имя документа",
+                    "documentName": "Имя файла",
                     "partial": "Партийный",
                     "uploadDate": "Дата загрузки",
                     "startDate": "Дата начала действия",

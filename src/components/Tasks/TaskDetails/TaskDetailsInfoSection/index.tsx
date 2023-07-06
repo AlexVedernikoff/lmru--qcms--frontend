@@ -8,8 +8,7 @@ import {taskDetailsApi} from '../api';
 import EditTaskDetailsButton from './EditTaskDetailsButton';
 import StopEditingButton from './StopEditingButton';
 
-import styles from '../../../Common.module.css';
-
+import styles from './styles.module.css';
 interface Props {
     taskDetails: ITaskDetails;
 }

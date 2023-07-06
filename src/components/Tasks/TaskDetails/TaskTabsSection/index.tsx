@@ -1,6 +1,6 @@
 import {Grid} from 'fronton-react';
 import TaskTabs from './TaskTabs';
-import styles from '../../../Common.module.css';
+import styles from '../TaskDetailsInfoSection/styles.module.css';
 import TaskActionsForm from '../TaskActionsForm';
 import {ITaskDetails} from '../../../../common/types/taskDetails';
 

@@ -2,7 +2,6 @@ import {useCallback, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {RegularButton} from 'fronton-react';
-import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
 import {PRODUCTS_ROUTES} from '../../../../common/consts';
@@ -11,6 +10,7 @@ import CustomTable from '../../../Common/CustomTable';
 import {TWithReactKey} from '../../../../common/clientModels';
 import {IProduct, IProductsResponse} from '../../../../common/types/products';
 import NotFound from '../../../Icons/NotFound';
+import MagnifyingGlassIcon from '../../../Icons/MagnifyingGlassIcon';
 
 export type RawTable = Pick<IProduct, 'id'>;
 

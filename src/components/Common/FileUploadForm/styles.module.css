@@ -1,6 +1,7 @@
 .root {
     min-height: 146px;
     border: 2px dashed #ced0d6;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;

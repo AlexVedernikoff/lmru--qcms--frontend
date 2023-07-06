@@ -1,7 +1,7 @@
-import {DownloadIcon} from '@fronton/icons-react';
 import {useTranslation} from 'react-i18next';
 import {RegularButton} from 'fronton-react';
 import {useRef} from 'react';
+import DownloadIcon from '../../Icons/DownloadIcon';
 
 import s from './styles.module.css';
 

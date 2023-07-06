@@ -9,7 +9,7 @@ const TaskDetails: React.FC = () => {
     const {data: taskDetails} = taskDetailsApi.useGetTaskDetailsQuery(id!);
 
     return (
-        <Grid rowGap={16}>
+        <Grid rowGap={16} style={{boxShadow: 'none'}}>
             {taskDetails && (
                 <>
                     <TaskDetailsInfoSection taskDetails={taskDetails} />

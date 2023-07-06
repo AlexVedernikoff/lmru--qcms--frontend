@@ -6,7 +6,7 @@
 }
 
 .sectionItem {
-    border: 1px solid var(--background-secondary);
+    border: 2px solid var(--background-secondary);
     border-radius: var(--rounding-l);
     padding: 16px;
 }
