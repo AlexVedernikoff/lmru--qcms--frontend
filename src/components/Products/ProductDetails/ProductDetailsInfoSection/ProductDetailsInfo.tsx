@@ -22,7 +22,7 @@ const ProductDetailsInfo: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {details?.range}
+                    {details?.range ? details.range : '-'}
                 </Typography>
             </div>
         </Grid>

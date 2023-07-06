@@ -94,16 +94,27 @@ const arrQstatusesRu = [
 ];
 
 const sortAndFormateDatesArray = (array: History[]) => {
-    const formatedDateHistory = [...array].map(el => ({
-        ...el,
-        statusUpdatedAt: converStringToDateTime(el.statusUpdatedAt),
-    }));
+    const formatedDateHistory = [...array].map(el => {
+        if (el.statusUpdatedAt) {
+            return {...el, statusUpdatedAt: converStringToDateTime(el.statusUpdatedAt)};
+        } else {
+            return el;
+        }
+    });
 
     return [...formatedDateHistory].sort((a: History, b: History) => {
-        const dateA: any = new Date(converStringToDateTime(a.statusUpdatedAt));
-        const dateB: any = new Date(converStringToDateTime(b.statusUpdatedAt));
+        const dateA: any = a.statusUpdatedAt ? new Date(converStringToDateTime(a.statusUpdatedAt)) : null;
+        const dateB: any = b.statusUpdatedAt ? new Date(converStringToDateTime(b.statusUpdatedAt)) : null;
 
-        return dateB - dateA;
+        if (dateA && dateB) {
+            return dateB - dateA;
+        } else if (dateA) {
+            return -1;
+        } else if (dateB) {
+            return 1;
+        } else {
+            return 0;
+        }
     });
 };
 
@@ -116,8 +127,8 @@ export const qaulityStatusSectionMapping = (
             ? 'Леруа Мерлен Россия'
             : qStatus?.buCode && qStatus.buCode === 2
             ? 'Леруа Мерлен Казахстан'
-            : qStatus?.buCode;
-    const buCode = qStatus?.buCode;
+            : '-';
+    const buCode = qStatus?.buCode ? `${qStatus.buCode}` : '-';
 
     const engStatus = qStatus?.qualityStatus;
     // @ts-ignore-next-line

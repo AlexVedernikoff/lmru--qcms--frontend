@@ -4,7 +4,7 @@ import styles from '../../../Common.module.css';
 import {useGetDetailsForProductsQuery} from '../productDetailsApi';
 
 import {securityCode} from '../mockProductDetails';
-import {converStringToDateTime} from '../../../../utils/convertDateFromServer';
+import {convertDateFromServer} from '../../../../utils/convertDateFromServer';
 import {useParams} from 'react-router-dom';
 
 const ProductDetailsDates: React.FC = () => {
@@ -13,8 +13,9 @@ const ProductDetailsDates: React.FC = () => {
 
     const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
 
-    const createdAt =
-        details?.creationInformation.createdAt && converStringToDateTime(details?.creationInformation.createdAt);
+    const createdAt = details?.creationInformation?.createdAt
+        ? convertDateFromServer(details?.creationInformation.createdAt)
+        : '-';
 
     return (
         <Grid className={styles.sectionItem} rowGap={16} columnGap={16} columns="1fr" rows="36px">
@@ -32,7 +33,7 @@ const ProductDetailsDates: React.FC = () => {
                 </div>
 
                 <div>
-                    <Checkbox checked={false} label={t('ProductDetails.Info.Dates.Field.AVS')} />
+                    <Checkbox disabled={true} checked={false} label={t('ProductDetails.Info.Dates.Field.AVS')} />
                 </div>
             </Grid>
         </Grid>

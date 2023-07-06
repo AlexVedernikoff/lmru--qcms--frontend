@@ -5,7 +5,7 @@ interface Props {
     onClick: () => void;
 }
 
-const EditProductDetailsButton: React.FC<Props> = ({onClick}) => {
+const EditButton: React.FC<Props> = ({onClick}) => {
     return (
         <RegularButton
             onClick={onClick}
@@ -18,4 +18,4 @@ const EditProductDetailsButton: React.FC<Props> = ({onClick}) => {
     );
 };
 
-export default EditProductDetailsButton;
+export default EditButton;

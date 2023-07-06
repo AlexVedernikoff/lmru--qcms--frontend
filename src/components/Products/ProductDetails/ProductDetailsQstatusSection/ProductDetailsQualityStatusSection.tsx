@@ -293,13 +293,14 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 <Typography variant="h3">{t('ProductDetails.QualityStatusSection.Comments')}</Typography>
                 <Textarea />
             </Grid> */}
-            <Grid
-                columnGap={16}
-                columns="repeat(6, 1fr)"
-                className={productDetailsStyles.buttStyles}
-                alignItems="start"
-            >
-                <Grid columnGap={16} columns="repeat(2, 1fr)">
+            <Grid columnGap={16} columns="repeat(7, 1fr)" className={productDetailsStyles.buttStyles}>
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+
+                <Grid columnGap={16}>
                     <RegularButton
                         disabled={!isChangesInData}
                         onClick={() => discardChanges()}
@@ -308,7 +309,9 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                     >
                         {t('Buttons.Clear')}
                     </RegularButton>
+                </Grid>
 
+                <Grid columnGap={16}>
                     <RegularButton
                         disabled={!isChangesInData}
                         onClick={() => {

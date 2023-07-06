@@ -13,6 +13,11 @@ const ProductDetailsProvider: React.FC = () => {
     const {id: productId = ''} = useParams();
 
     const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
+    // const handleProvidersOpen = (id: any) => {
+    //     if (id) {
+    //         navigate(PROVIDER_ROUTES.details.replace(':id', id));
+    //     }
+    // };
 
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">
@@ -24,7 +29,7 @@ const ProductDetailsProvider: React.FC = () => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {details?.supplierCode}
+                    {details?.supplierCode ? details.supplierCode : '-'}
                 </Typography>
             </div>
 

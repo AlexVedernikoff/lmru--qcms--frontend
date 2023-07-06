@@ -20,7 +20,7 @@ import {
 } from '../../../../common/types/productDetails';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import EditProductDetailsButton from '../EditProductDetailsButton/EditProductDetailsButton';
+import EditButton from '../EditProductDetailsButton/EditProductDetailsButton';
 
 interface IQModalLabel {
     qualityModelLabel: string;
@@ -39,9 +39,10 @@ const ProductDetailsProduct: React.FC = () => {
     const [details, setDetails] = useState<ProductDetails>();
     const [productSection, setProductSection] = useState<IProductDeatilsProductMapping>();
 
-    const [isEdit, setIsEdit] = useState(false);
+    const [isQModelEdit, setIsQModelEdit] = useState(false);
+    const [isNoChemestryEdit, setIsNoChemestryEdit] = useState(true);
 
-    const [qModalLabels, setqModalLabel] = useState<IQModalLabel[]>([]);
+    const [qModalLabels, setqModalLabels] = useState<IQModalLabel[]>([]);
     const [qModalLabel, setQModalLabel] = useState<IQModalLabel>({
         qualityModelLabel: productSection?.qualityModelLabel ? productSection.qualityModelLabel : '',
         qualityModalId: productSection?.qualityModelId ? productSection.qualityModelId : '',
@@ -83,7 +84,8 @@ const ProductDetailsProduct: React.FC = () => {
 
             try {
                 await postUpdateProduct({body, securityCode}).unwrap();
-                setIsEdit(false);
+                setIsQModelEdit(false);
+                isChemistryChanged && setIsNoChemestryEdit(true);
             } catch (error) {
                 alert('Ошибка при обновлении продукта');
             }
@@ -101,17 +103,17 @@ const ProductDetailsProduct: React.FC = () => {
             };
             try {
                 const searchQModels = await postSearchQModels({body, securityCode}).unwrap();
-                const qModalLabelArr = searchQModels.content.map(qModal => ({
+                const qModalLabelArr = searchQModels?.content?.map(qModal => ({
                     qualityModelLabel: qModal.qualityModelLabel ? qModal.qualityModelLabel : '',
                     qualityModalId: qModal.id ? `${qModal.id}` : '',
                 }));
 
-                setqModalLabel(qModalLabelArr);
+                qModalLabelArr && setqModalLabels(qModalLabelArr);
             } catch (error) {
                 alert('Ошибка при редактировании модели качества');
             }
         }
-        setIsEdit(!isEdit);
+        setIsQModelEdit(!isQModelEdit);
     };
 
     const handleSelectLabel = (id: string | null) => {
@@ -119,6 +121,10 @@ const ProductDetailsProduct: React.FC = () => {
             const findQModalLabel = qModalLabels.find(el => el.qualityModalId === id);
             findQModalLabel && setQModalLabel(findQModalLabel);
         }
+    };
+
+    const handleChemistry = () => {
+        setIsNoChemestryEdit(false);
     };
 
     return (
@@ -169,13 +175,13 @@ const ProductDetailsProduct: React.FC = () => {
                 </div>
                 <div>
                     <Grid rowGap={1} columnGap={10} columns="max-content max-content">
-                        {!isEdit ? (
+                        {!isQModelEdit ? (
                             <>
                                 <Typography variant="s" size="body_long" color="text-minor">
                                     {t('ProductDetails.Info.Product.Field.qualityModel')}
                                 </Typography>
 
-                                <EditProductDetailsButton onClick={handleQModel} />
+                                <EditButton onClick={handleQModel} />
 
                                 <Typography variant="s" size="body_short">
                                     {productSection?.qualityModelLabel}
@@ -208,7 +214,7 @@ const ProductDetailsProduct: React.FC = () => {
                                     </div>
                                 </Dropdown>
 
-                                <Checkbox checked={false} onClick={() => updateBoxes(false)} />
+                                <Checkbox checked={true} onClick={() => updateBoxes(false)} />
                             </>
                         )}
                     </Grid>
@@ -225,23 +231,31 @@ const ProductDetailsProduct: React.FC = () => {
                 </Typography>
             </div>
 
-            <div>
+            <Grid rowGap={1} columnGap={10} columns="max-content max-content">
                 <Checkbox
                     onClick={() => updateBoxes(true)}
                     checked={productSection?.isChemical || false}
+                    disabled={isNoChemestryEdit}
                     label={t('ProductDetails.Info.Product.Field.isChemical')}
                 />
-            </div>
+                {isNoChemestryEdit && <EditButton onClick={handleChemistry} />}
+            </Grid>
 
             <Grid rowGap={4} columns="165px 250px 200px 1fr">
-                <Checkbox checked={productSection?.isSTM || false} label={t('ProductDetails.Info.Product.Field.STM')} />
+                <Checkbox
+                    disabled={true}
+                    checked={productSection?.isSTM || false}
+                    label={t('ProductDetails.Info.Product.Field.STM')}
+                />
                 <Checkbox
                     checked={productSection?.isImport || false}
                     label={t('ProductDetails.Info.Product.Field.intImport')}
+                    disabled={true}
                 />
                 <Checkbox
                     checked={productSection?.isFromProject || false}
                     label={t('ProductDetails.Info.Product.Field.fromProject')}
+                    disabled={true}
                 />
             </Grid>
         </Grid>

@@ -18,29 +18,29 @@ export const tasksTabMapping = (
         const translateStatus = t(`ProductDetails.ProductDetailsTabs.TasksTab.StatusesOptions.${status}`) as string;
         const translatedStatus = status ? translateStatus : '';
 
+        const uploadedDocumentId = qAction?.documents?.uploadedDocuments?.find(doc => doc.id === productId)?.id;
+        const approversTypeQE = qAction?.approvers?.find(approver => approver.type === Approvers.QE)?.externalId;
+        const approversTypeSQM = qAction?.approvers?.find(approver => approver.type === Approvers.SQM)?.externalId;
         return {
-            id: qAction?.id,
-            categoryTypeName: qAction?.categoryTypeName,
+            id: qAction?.id ? `${qAction.id}` : '-',
+            categoryTypeName: qAction?.categoryTypeName ? qAction?.categoryTypeName : '-',
             actionStatus: translatedStatus,
-            uploadedDocumentId: qAction?.documents?.uploadedDocuments
-                ? qAction.documents.uploadedDocuments.find(doc => doc.id === productId)?.id
-                : '',
-            supDataName: qAction?.supplierData?.name,
+            uploadedDocumentId: uploadedDocumentId ? uploadedDocumentId : '-',
+            supDataName: qAction?.supplierData?.name ? qAction?.supplierData?.name : '-',
             supDatasupplierRMSCode: qAction?.supplierData?.supplierRMSCode,
-            approversTypeQE: qAction?.approvers
-                ? qAction?.approvers.find(approver => approver.type === Approvers.QE)?.externalId
-                : '',
-            approversTypeSQM: qAction?.approvers
-                ? qAction?.approvers.find(approver => approver.type === Approvers.SQM)?.externalId
-                : '',
-            tasks: qAction?.id,
-            awaitedDocuments: qAction?.documents?.awaitedDocuments ? qAction?.documents?.awaitedDocuments[0]?.type : '',
-            categoryName: qAction?.categoryName,
-            createdAt: qAction?.creationInformation.createdAt
-                ? converStringToDateTime(qAction?.creationInformation.createdAt)
-                : '',
-            approvalDueDate: qAction?.approvalDueDate ? convertDateFromServer(qAction.approvalDueDate) : '',
-            responsible: qAction?.responsible ? qAction?.responsible[0].externalId : '',
+            approversTypeQE: approversTypeQE ? approversTypeQE : '-',
+            approversTypeSQM: approversTypeSQM ? approversTypeSQM : '-',
+            tasks: qAction?.id ? `${qAction.id}` : '-',
+            awaitedDocuments: qAction?.documents?.awaitedDocuments
+                ? qAction?.documents?.awaitedDocuments[0]?.type
+                : '-',
+            categoryName: qAction?.categoryName ? qAction?.categoryName : '-',
+            createdAt: qAction?.creationInformation?.createdAt
+                ? converStringToDateTime(qAction.creationInformation.createdAt)
+                : '-',
+            approvalDueDate: qAction?.approvalDueDate ? convertDateFromServer(qAction.approvalDueDate) : '-',
+            responsible:
+                qAction?.responsible && qAction?.responsible[0]?.externalId ? qAction?.responsible[0]?.externalId : '-',
             publicComments: qAction?.publicComments && qAction?.publicComments.length > 0 ? qAction.publicComments : [],
         };
     });

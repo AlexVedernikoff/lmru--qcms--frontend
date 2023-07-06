@@ -9,134 +9,134 @@ export interface BodyUpdate {
 }
 
 export interface ProductDetails {
-    id: number;
-    code: string;
-    version: number;
-    productManagementNomenclature: ProductManagementNomenclature;
-    qualityModelId: string;
-    productModelNomenclature: ProductModelNomenclature;
-    adeoCode: string;
-    description: string;
-    category: string;
-    brand: string;
-    range: string;
-    status: string;
-    customId: string;
-    projectId: string;
-    productAVSDate: Date;
-    buCode: any[];
-    ean: string;
-    regulatoryStatus: string;
-    supplierCode: string;
-    uploadedDocuments: UploadedDocument[];
-    qualityActionIds: number[];
-    qualityStatuses: QualityStatus[];
-    productAttributes: ProductAttribute[];
-    creationInformation: CreationInformation;
-    lastUpdateInformation: LastUpdateInformation;
-    productWithSubstances: boolean;
-    import: boolean;
-    sample: boolean;
-    topAVS: boolean;
-    mdd: boolean;
-    topReferencment: boolean;
-    top1000: boolean;
-    topDeleted: boolean;
-    project: boolean;
-    multipleModel: boolean;
-    qualityModel: QualityModel;
-    qualityActions: QualityAction[];
+    id?: number;
+    code?: string;
+    version?: number;
+    productManagementNomenclature?: ProductManagementNomenclature;
+    qualityModelId?: string;
+    productModelNomenclature?: ProductModelNomenclature;
+    adeoCode?: string;
+    description?: string;
+    category?: string;
+    brand?: string;
+    range?: string;
+    status?: string;
+    customId?: string;
+    projectId?: string;
+    productAVSDate?: Date;
+    buCode?: any[];
+    ean?: string;
+    regulatoryStatus?: string;
+    supplierCode?: string;
+    uploadedDocuments?: UploadedDocument[];
+    qualityActionIds?: number[];
+    qualityStatuses?: QualityStatus[];
+    productAttributes?: ProductAttribute[];
+    creationInformation?: CreationInformation;
+    lastUpdateInformation?: LastUpdateInformation;
+    productWithSubstances?: boolean;
+    import?: boolean;
+    sample?: boolean;
+    topAVS?: boolean;
+    mdd?: boolean;
+    topReferencment?: boolean;
+    top1000?: boolean;
+    topDeleted?: boolean;
+    project?: boolean;
+    multipleModel?: boolean;
+    qualityModel?: QualityModel;
+    qualityActions?: QualityAction[];
 }
 export interface UploadedDocument {
-    id: number;
-    type: string;
-    isTemplate: boolean;
-    status: string;
-    mask: string;
-    comment: null;
-    issueDate: Date;
-    expireDate: Date;
-    rosAccreditationApproveStatus: string;
-    isForLot: boolean;
-    fileName: string;
-    fileLink: string;
-    version: number;
-    creationInformation: CreationInformation;
-    lastUpdateInformation: LastUpdateInformation;
-    productsDetails: ProductsDocDetail[];
+    id?: number;
+    type?: string;
+    isTemplate?: boolean;
+    status?: string;
+    mask?: string;
+    comment?: string | null;
+    issueDate?: Date;
+    expireDate?: Date;
+    rosAccreditationApproveStatus?: string;
+    isForLot?: boolean;
+    fileName?: string;
+    fileLink?: string;
+    version?: number;
+    creationInformation?: CreationInformation;
+    lastUpdateInformation?: LastUpdateInformation;
+    productsDetails?: ProductsDocDetail[];
 }
 
 export interface CreationInformation {
-    createdAt: string;
-    createdBy: string;
+    createdAt?: string;
+    createdBy?: string;
 }
 
 export interface LastUpdateInformation {
-    updatedAt: string;
-    updatedBy: string;
+    updatedAt?: string;
+    updatedBy?: string;
 }
 
 export interface ProductsDocDetail {
-    id: number;
-    approvingStatus: string;
-    productId: number;
-    productDescription: string;
-    productCode: string;
-    productTNVEDCode: string;
-    ean: string;
-    supplierId: number;
-    supplierRMSCode: string;
-    supplierName: string;
-    supplierTaxIdentifier: string;
-    qualityActionId: number;
-    productManagementNomenclature: ProductDocManagementNomenclature;
-    productModelNomenclature: ProductDocModelNomenclature;
-    buCodes: string[];
+    id?: number;
+    approvingStatus?: string;
+    productId?: number;
+    productDescription?: string;
+    productCode?: string;
+    productTNVEDCode?: string;
+    ean?: string;
+    supplierId?: number;
+    supplierRMSCode?: string;
+    supplierName?: string;
+    supplierTaxIdentifier?: string;
+    qualityActionId?: number;
+    productManagementNomenclature?: ProductDocManagementNomenclature;
+    productModelNomenclature?: ProductDocModelNomenclature;
+    buCodes?: string[];
 }
 
 export interface ProductDocManagementNomenclature {
-    departmentId: number;
-    subdepartmentId: number;
-    typeId: number;
-    subtypeId: number;
+    departmentId?: number;
+    subdepartmentId?: number;
+    typeId?: number;
+    subtypeId?: number;
 }
 
 export interface ProductDocModelNomenclature {
-    departmentId: string;
-    subdepartmentId: string;
-    consolidationId: string;
-    codeId: string;
+    departmentId?: string;
+    subdepartmentId?: string;
+    consolidationId?: string;
+    codeId?: string;
 }
 
 export interface ProductAttribute {
-    attributeCode: string;
-    attributeName: string;
-    values: Value[];
+    attributeCode?: string;
+    attributeName?: string;
+    values?: Value[];
 }
 
 export interface Value {
-    code: string;
-    name: string;
+    code?: string;
+    name?: string;
 }
 
 export interface ProductManagementNomenclature {
-    departmentId: number;
-    subDepartmentId: number;
-    typeId: number;
-    subTypeId: number;
+    departmentId?: number;
+    subDepartmentId?: number;
+    typeId?: number;
+    subTypeId?: number;
 }
 
 export interface ProductModelNomenclature {
-    modelDepartmentId: number;
-    modelSubDepartmentId: number;
-    modelConsolidationId: number;
-    modelCodeId: number;
+    modelDepartmentId?: number;
+    modelSubDepartmentId?: number;
+    modelConsolidationId?: number;
+    modelCodeId?: number;
 }
 
 export interface QualityAction {
-    id: number;
+    id?: number;
     actionStatus?: string;
-    version: number;
+    version?: number;
     targetBuCodes?: number[];
     conclusion?: string;
     isForUpdate?: string;
@@ -151,8 +151,8 @@ export interface QualityAction {
     product?: ProductUpdateData;
     publicComments?: PublicComment[];
     documents?: Documents;
-    creationInformation: CreationInformation;
-    lastUpdateInformation: LastUpdateInformation;
+    creationInformation?: CreationInformation;
+    lastUpdateInformation?: LastUpdateInformation;
     type?: string;
     isTemplate?: boolean;
     status?: string;
@@ -168,85 +168,85 @@ export interface QualityAction {
 }
 
 export interface Approver {
-    type: string;
-    externalId: string;
+    type?: string;
+    externalId?: string;
 }
 
 export interface Documents {
-    awaitedDocuments: QActionsAwaitedDocument[];
-    uploadedDocuments: QActionsUploadedDocument[];
+    awaitedDocuments?: QActionsAwaitedDocument[];
+    uploadedDocuments?: QActionsUploadedDocument[];
 }
 
 export interface QActionsAwaitedDocument {
-    type: string;
-    templateId: string;
-    linkedRegulations: string[];
-    requirementType: string;
+    type?: string;
+    templateId?: string;
+    linkedRegulations?: string[];
+    requirementType?: string;
 }
 
 export interface QActionsUploadedDocument {
-    id: string;
-    linkedTaskIds: string[];
+    id?: string;
+    linkedTaskIds?: string[];
 }
 
 export interface ProductUpdateData {
-    id: number;
-    name: string;
-    code: string;
-    ean: string;
-    isFromProject: boolean;
-    productRange: string;
-    qualityModel: string;
-    regulatoryStatus: string;
-    adeoRisk: string;
+    id?: number;
+    name?: string;
+    code?: string;
+    ean?: string;
+    isFromProject?: boolean;
+    productRange?: string;
+    qualityModel?: string;
+    regulatoryStatus?: string;
+    adeoRisk?: string;
 }
 
 export interface ProductsDetail {
-    id: number;
-    approvingStatus: string;
-    productId: number;
-    productDescription: string;
-    productCode: string;
-    productTNVEDCode: string;
-    ean: string;
-    supplierId: number;
-    supplierRMSCode: string;
-    supplierName: string;
-    supplierTaxIdentifier: string;
-    qualityActionId: number;
-    productManagementNomenclature: ProductsDetailProductManagementNomenclature;
-    productModelNomenclature: ProductsDetailProductModelNomenclature;
-    buCodes: string[];
+    id?: number;
+    approvingStatus?: string;
+    productId?: number;
+    productDescription?: string;
+    productCode?: string;
+    productTNVEDCode?: string;
+    ean?: string;
+    supplierId?: number;
+    supplierRMSCode?: string;
+    supplierName?: string;
+    supplierTaxIdentifier?: string;
+    qualityActionId?: number;
+    productManagementNomenclature?: ProductsDetailProductManagementNomenclature;
+    productModelNomenclature?: ProductsDetailProductModelNomenclature;
+    buCodes?: string[];
 }
 
 export interface ProductsDetailProductManagementNomenclature {
-    departmentId: number;
-    subdepartmentId: number;
-    typeId: number;
-    subtypeId: number;
+    departmentId?: number;
+    subdepartmentId?: number;
+    typeId?: number;
+    subtypeId?: number;
 }
 
 export interface ProductsDetailProductModelNomenclature {
-    departmentId: string;
-    subdepartmentId: string;
-    consolidationId: string;
-    codeId: string;
+    departmentId?: string;
+    subdepartmentId?: string;
+    consolidationId?: string;
+    codeId?: string;
 }
 
 export interface PublicComment {
-    id: number;
-    order: number;
-    comment: string;
-    createdAt: string;
-    createdBy: string;
+    id?: number;
+    order?: number;
+    comment?: string;
+    createdAt?: string;
+    createdBy?: string;
 }
 
 export interface SupplierData {
-    id: number;
-    name: string;
-    supplierRMSCode: string;
-    supplierAdeoCode: string;
-    supplierTaxIdentifier: string;
+    id?: number;
+    name?: string;
+    supplierRMSCode?: string;
+    supplierAdeoCode?: string;
+    supplierTaxIdentifier?: string;
 }
 
 export interface QualityModel {
@@ -290,37 +290,37 @@ export interface QualityModelProductModelNomenclature {
 }
 
 export interface QualityStatus {
-    qualityStatus: string;
-    qualityStatusComment: string | null;
-    qualityStatusHistory: History[];
-    buCode: number;
-    targetBuCode: number;
-    sellingBlockHistory: History[];
-    orderBlockHistory: History[];
-    publicationBlockHistory: History[];
-    startDateForPublicationBlock: Date | null;
-    endDateForPublicationBlock: Date | null;
-    startDateForSellingBlock: Date | null;
-    endDateForSellingBlock: Date | null;
-    startDateForOrderBlock: Date | null;
-    endDateForOrderBlock: Date | null;
-    blockedForOrder: boolean;
-    blockedForPublication: boolean;
-    blockedForSelling: boolean;
+    qualityStatus?: string;
+    qualityStatusComment?: string | null;
+    qualityStatusHistory?: History[];
+    buCode?: number;
+    targetBuCode?: number;
+    sellingBlockHistory?: History[];
+    orderBlockHistory?: History[];
+    publicationBlockHistory?: History[];
+    startDateForPublicationBlock?: Date | null;
+    endDateForPublicationBlock?: Date | null;
+    startDateForSellingBlock?: Date | null;
+    endDateForSellingBlock?: Date | null;
+    startDateForOrderBlock?: Date | null;
+    endDateForOrderBlock?: Date | null;
+    blockedForOrder?: boolean;
+    blockedForPublication?: boolean;
+    blockedForSelling?: boolean;
 }
 
 export interface History {
-    id: number;
-    currentValue: string;
-    previousValue: string;
-    statusUpdatedAt: string;
-    statusstring: string;
-    comment: Comment;
+    id?: number;
+    currentValue?: string;
+    previousValue?: string;
+    statusUpdatedAt?: string;
+    statusstring?: string;
+    comment?: string;
 }
 
 interface IqStatuses {
     id: string;
-    bu?: number;
+    bu?: string;
     buCodeText?: string | number;
     statuses: string[];
     blockOrders?: boolean;
@@ -384,7 +384,7 @@ export interface ProductUpdateReq {
 }
 
 export interface ProductQualityUpdateReq {
-    buCode?: number;
+    buCode?: string;
     quality?: QualityIUpdateReq;
     orderBlocking: OrderBlocking;
     publicationBlocking: PublicationBlocking;
@@ -420,7 +420,7 @@ interface IProductDetailsTabDoc {
     issueDate?: Date;
     expireDate?: Date;
     mask?: string;
-    id?: number;
+    id?: string;
 }
 
 export interface IDataProductDetailsTabDoc extends IProductDetailsTabDoc {
@@ -428,7 +428,7 @@ export interface IDataProductDetailsTabDoc extends IProductDetailsTabDoc {
 }
 
 interface IProductDetailsTabTasks {
-    id?: number;
+    id?: string;
     categoryTypeName?: string;
     actionStatus?: string;
     uploadedDocumentId?: string;
@@ -436,7 +436,7 @@ interface IProductDetailsTabTasks {
     supDatasupplierRMSCode?: string;
     approversTypeQE?: string;
     approversTypeSQM?: string;
-    tasks?: number;
+    tasks?: string;
     awaitedDocuments?: string;
     categoryName?: string;
     createdAt?: string;
@@ -460,8 +460,8 @@ export interface ISearchBy {
 }
 
 export interface IQsearchModelsRes {
-    pageable: IQsearchModelsPageable;
-    content: IQsearchModelsContent[];
+    pageable?: IQsearchModelsPageable;
+    content?: IQsearchModelsContent[];
 }
 
 export interface IQsearchModelsContent {
@@ -487,10 +487,10 @@ export interface IQsearchModelsContent {
 }
 
 export interface IQsearchModelsContentAssignedApprover {
-    id: number;
-    userId: string;
-    buId: number;
-    role: string;
+    id?: number;
+    userId?: string;
+    buId?: number;
+    role?: string;
 }
 
 export interface LastUpdateInfomation {
@@ -499,10 +499,10 @@ export interface LastUpdateInfomation {
 }
 
 export interface IQsearchModelsPageable {
-    pageSize: number;
-    pageIndex: number;
-    totalPages: number;
-    totalElements: number;
+    pageSize?: number;
+    pageIndex?: number;
+    totalPages?: number;
+    totalElements?: number;
 }
 
 export interface IQsearchModelsParams {

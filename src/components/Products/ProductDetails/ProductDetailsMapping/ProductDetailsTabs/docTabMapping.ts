@@ -7,21 +7,21 @@ export const docTabMapping = (
     t: TFunction<'products', undefined, 'products'>
 ) => {
     const docTabRows = uploadedDocuments.map(doc => {
-        const status = doc?.productsDetails.find(el => el?.productId === parseInt(productId, 10))?.approvingStatus;
+        const status = doc?.productsDetails?.find(el => el?.productId === parseInt(productId, 10))?.approvingStatus;
         // @ts-ignore-next-line
         const translateStatus = t(`ProductDetails.ProductDetailsTabs.DocumentsTab.StatusesOptions.${status}`) as string;
-        const translatedStatus = status ? translateStatus : '';
+        const translatedStatus = status ? translateStatus : '-';
 
         return {
-            type: doc?.type,
-            fileName: doc?.fileName,
+            type: doc?.type ? doc.type : '-',
+            fileName: doc?.fileName ? doc.fileName : '-',
             arppovingStatus: translatedStatus,
             isForLot: doc?.isForLot,
-            createdAt: doc?.creationInformation.createdAt,
+            createdAt: doc?.creationInformation?.createdAt ? doc?.creationInformation?.createdAt : '-',
             issueDate: doc?.issueDate,
             expireDate: doc?.expireDate,
-            mask: doc?.mask,
-            id: doc?.id,
+            mask: doc?.mask ? doc.mask : '-',
+            id: doc?.id ? `${doc.id}` : '-',
         };
     });
 

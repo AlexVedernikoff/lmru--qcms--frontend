@@ -130,19 +130,19 @@ export const getDocsTabColumns = (
         title: t('ProductDetails.ProductDetailsTabs.DocumentsTab.Fields.UploadedAt'),
         dataIndex: 'createdAt',
         width: 240,
-        render: d => <div>{converStringToDateTime(d)}</div>,
+        render: d => <div>{d ? converStringToDateTime(d) : '-'}</div>,
     },
     {
         title: t('ProductDetails.ProductDetailsTabs.DocumentsTab.Fields.IssueDate'),
         dataIndex: 'issueDate',
         width: 240,
-        render: d => <div>{converStringToDateTime(d)}</div>,
+        render: d => <div>{d ? converStringToDateTime(d) : '-'}</div>,
     },
     {
         title: t('ProductDetails.ProductDetailsTabs.DocumentsTab.Fields.ExpiredAt'),
         dataIndex: 'expireDate',
         width: 240,
-        render: d => <div>{convertDateFromServer(d)}</div>,
+        render: d => <div>{d ? convertDateFromServer(d) : '-'}</div>,
     },
     {
         title: t('ProductDetails.ProductDetailsTabs.DocumentsTab.Fields.DocumentMask'),

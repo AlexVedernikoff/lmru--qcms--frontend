@@ -3,6 +3,9 @@ import {ColumnsType} from 'antd/es/table/interface';
 import {IDataProductDetailsTabTasks} from '../../../../../../common/types/productDetails';
 import {Grid, RegularButton, Typography} from 'fronton-react';
 import LinkIcon from '../../../../../Icons/LinkIcon';
+import {DownloadIcon} from '@fronton/icons-react';
+
+type handleProvidersOpen = (id: any) => void;
 
 const downloadDocument = (id: number) => {
     let fileName: string | null | undefined = '';
@@ -35,7 +38,8 @@ const downloadDocument = (id: number) => {
 };
 
 export const getTasksTabColumns = (
-    t: TFunction<'products', undefined, 'products'>
+    t: TFunction<'products', undefined, 'products'>,
+    handleProvidersOpen: handleProvidersOpen
 ): ColumnsType<IDataProductDetailsTabTasks> => [
     {
         title: t('ProductDetails.ProductDetailsTabs.TasksTab.Fields.Type'),
@@ -71,14 +75,16 @@ export const getTasksTabColumns = (
                         <Typography variant="s" size="body_short">
                             {uploadedDocumentId}
                         </Typography>
-                        <RegularButton
-                            variant="pseudo"
-                            label="download"
-                            iconRight={<LinkIcon />}
-                            onClick={() => {
-                                downloadDocument(Number(uploadedDocumentId));
-                            }}
-                        />
+                        {uploadedDocumentId && uploadedDocumentId !== '-' && (
+                            <RegularButton
+                                variant="pseudo"
+                                label="download"
+                                iconRight={<DownloadIcon />}
+                                onClick={() => {
+                                    downloadDocument(Number(uploadedDocumentId));
+                                }}
+                            />
+                        )}
                     </Grid>
                 )}
             </>
@@ -93,23 +99,21 @@ export const getTasksTabColumns = (
         title: t('ProductDetails.ProductDetailsTabs.TasksTab.Fields.SupplierCode'),
         dataIndex: 'supDatasupplierRMSCode',
         width: 240,
-        render: (supDatasupplierRMSCode: string) => (
+        render: (supDatasupplierRMSCode: string, record: IDataProductDetailsTabTasks) => (
             <>
-                {supDatasupplierRMSCode && (
-                    <Grid columns="2fr 0.5fr">
-                        <Typography variant="s" size="body_short">
-                            {supDatasupplierRMSCode}
-                        </Typography>
+                <Grid columns="2fr 0.5fr">
+                    <Typography variant="s" size="body_short">
+                        {supDatasupplierRMSCode}
+                    </Typography>
+                    {supDatasupplierRMSCode !== '-' && supDatasupplierRMSCode && (
                         <RegularButton
+                            onClick={() => handleProvidersOpen(record.id)}
                             label="download"
                             variant="pseudo"
                             iconRight={<LinkIcon />}
-                            onClick={() => {
-                                downloadDocument(Number(supDatasupplierRMSCode));
-                            }}
                         />
-                    </Grid>
-                )}
+                    )}
+                </Grid>
             </>
         ),
     },

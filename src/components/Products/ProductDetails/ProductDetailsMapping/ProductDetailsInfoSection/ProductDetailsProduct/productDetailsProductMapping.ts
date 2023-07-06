@@ -29,12 +29,15 @@ const getRiskOption = (t: TFunction, calculatedRisk?: string) => {
 };
 
 export const productDetailsProductMapping = (t: TFunction, details?: ProductDetails) => {
-    const customId = details?.customId;
-    const riskOption = getRiskOption(t, details?.qualityModel?.productGroupRisks?.calculatedRisk);
-    const qualityModelLabel = details?.qualityModel.qualityModelLabel ? details.qualityModel.qualityModelLabel : '';
-    const qualityModelId = details?.qualityModel.id ? `${details.qualityModel.id}` : '';
+    const customId = details?.customId ? details?.customId : '-';
 
-    const regulatoryStatus = details?.regulatoryStatus;
+    const gottenRiskOption = getRiskOption(t, details?.qualityModel?.productGroupRisks?.calculatedRisk);
+    const riskOption = gottenRiskOption ? gottenRiskOption : '-';
+
+    const qualityModelLabel = details?.qualityModel?.qualityModelLabel ? details.qualityModel.qualityModelLabel : '-';
+    const qualityModelId = details?.qualityModel?.id ? `${details.qualityModel.id}` : '-';
+
+    const regulatoryStatus = details?.regulatoryStatus ? details.regulatoryStatus : '-';
     const productModelNomenclature = details?.qualityModel?.productModelNomenclature;
     const areAllNomenclature =
         productModelNomenclature?.departmentName &&
@@ -44,12 +47,12 @@ export const productDetailsProductMapping = (t: TFunction, details?: ProductDeta
     const productModelValueStr = `${productModelNomenclature?.departmentName} / ${productModelNomenclature?.subDepartmentName} / 
 ${productModelNomenclature?.modelConsolidationName} / ${productModelNomenclature?.modelName}`;
 
-    const code = details?.code;
-    const ean = details?.ean;
+    const code = details?.code ? details?.code : '-';
+    const ean = details?.ean ? details?.ean : '-';
     const isChemical = details?.productWithSubstances || false;
-    const isSTM = details?.mdd ? true : false;
+    const isSTM = details?.mdd || false;
     const isImport = details?.import || false;
-    const isFromProject = details?.project ? true : false;
+    const isFromProject = details?.project || false;
 
     return {
         customId,
@@ -57,7 +60,7 @@ ${productModelNomenclature?.modelConsolidationName} / ${productModelNomenclature
         riskOption,
         qualityModelLabel,
         qualityModelId,
-        productModelValueStr: areAllNomenclature ? productModelValueStr : '',
+        productModelValueStr: areAllNomenclature ? productModelValueStr : '-',
         code,
         ean,
         isChemical,
