@@ -3,9 +3,9 @@ import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
 import DownloadIcon from '../../../../../Icons/DownloadIcon';
 import {CustomSwitch} from '../../../../../Common/Switch/CustomSwitch';
-import {TrashIcon} from '@fronton/icons-react';
 import {ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
 import {convertDateFromServer} from '../../../../../../utils/convertDateFromServer';
+import BasketIcon from '../../../../../Icons/BasketIcon';
 
 export interface IDataType extends ITaskUploadedDocument {
     key: React.Key;
@@ -53,11 +53,6 @@ export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): Colu
         ),
     },
     {
-        title: t('TaskTabs.Documents.UploadedDocuments.Field.documentMask'),
-        dataIndex: 'mask',
-        width: 240,
-    },
-    {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.status'),
         dataIndex: 'status',
         width: 240,
@@ -80,7 +75,7 @@ export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): Colu
         title: t('TaskTabs.Documents.UploadedDocuments.Field.documentName'),
         width: 240,
         render: text => (
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 <div>{text.fileName}</div>
                 <RegularButton
                     variant="pseudo"
@@ -117,6 +112,11 @@ export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): Colu
         render: d => <div>{convertDateFromServer(d)}</div>,
     },
     {
+        title: t('TaskTabs.Documents.UploadedDocuments.Field.documentMask'),
+        dataIndex: 'mask',
+        width: 240,
+    },
+    {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.uploaderName'),
         dataIndex: 'creationInformation',
         width: 240,
@@ -127,9 +127,11 @@ export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): Colu
         dataIndex: undefined,
         width: 48,
         render: () => (
-            <IconButton href="" rel="" aria-label="">
-                <TrashIcon />
-            </IconButton>
+            <div style={{textAlign: 'center'}}>
+                <IconButton href="" rel="" aria-label="" style={{verticalAlign: 'middle'}}>
+                    <BasketIcon />
+                </IconButton>
+            </div>
         ),
     },
 ];

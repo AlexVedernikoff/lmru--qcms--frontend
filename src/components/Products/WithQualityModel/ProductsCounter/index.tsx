@@ -1,5 +1,4 @@
-import {ShoppingCartSimpleIcon} from '@fronton/icons-react';
-
+import ShoppingCartSimpleIcon from '../../../Icons/ShoppingCartSimpleIcon';
 import s from './ProductsCounter.module.css';
 
 interface Props {
@@ -9,7 +8,7 @@ interface Props {
 const ProductsCounter: React.FC<Props> = ({value}) => {
     return (
         <div className={s.root}>
-            <ShoppingCartSimpleIcon color="white" bold />
+            <ShoppingCartSimpleIcon color="white" />
             <div className={s.label}>
                 <span className={s.value}>{value}</span>
             </div>

@@ -8,8 +8,7 @@ import EditTaskDetailsButton from '../EditTaskDetailsButton';
 // import {taskDetailsApi} from '../api';
 import TaskDetailsAddCommentsForm from '../TaskDetailsAddCommentsFrom/TaskDetailsAddCommentsFrom';
 
-import styles from '../../../Common.module.css';
-
+import styles from './styles.module.css';
 interface Props {
     taskDetails: ITaskDetails;
 }

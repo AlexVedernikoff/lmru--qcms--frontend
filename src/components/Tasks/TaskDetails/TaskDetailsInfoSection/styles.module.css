@@ -24,3 +24,9 @@
     width: 20px;
     z-index: 10;
 }
+
+.panel {
+    border-radius: var(--rounding-l);
+    background: var(--background-primary);
+    padding: 36px 24px 12px;
+}
