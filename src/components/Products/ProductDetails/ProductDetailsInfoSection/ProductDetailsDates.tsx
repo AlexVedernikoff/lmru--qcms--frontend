@@ -14,7 +14,7 @@ const ProductDetailsDates: React.FC = () => {
     const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
 
     const createdAt = details?.creationInformation?.createdAt
-        ? convertDateFromServer(details?.creationInformation.createdAt)
+        ? convertDateFromServer(details.creationInformation.createdAt)
         : '-';
 
     return (

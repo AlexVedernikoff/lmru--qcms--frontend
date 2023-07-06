@@ -65,16 +65,20 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                     blockOrders: mapping.blockedForOrders,
                     blockOrdersComment: '',
                     isBlockOrderOpened: false,
+                    isValidBlockOrders: true,
                     blockSellings: mapping.blockedForSellings,
                     blockSellingsComment: '',
                     isBlockSellingsOpened: false,
+                    isValidBlockSellings: true,
                     blockPublics: mapping.blockedForPublics,
                     blockPublicsComment: '',
                     isBlockPublicsOpened: false,
+                    isValidBlockPublics: true,
                     ruStatus: mapping.ruStatus,
                     engStatus: mapping.engStatus,
                     isStatusCommentOpened: false,
                     statusComment: '',
+                    isValidStatus: true,
                     isStatusHistoryOpened: false,
                     statusRowHistory: mapping.statusRowHistory,
                     isOrdersHistoryOpened: false,
@@ -96,21 +100,37 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         if (value === EBlockers.BlockOrders) {
             setTableData(prevState =>
                 prevState.map(el =>
-                    el.id === recordId ? {...el, blockOrders: !el.blockOrders, isBlockOrderOpened: true} : el
+                    el.id === recordId
+                        ? {...el, blockOrders: !el.blockOrders, isBlockOrderOpened: true, isValidBlockOrders: false}
+                        : el
                 )
             );
         }
         if (value === EBlockers.BlockSellings) {
             setTableData(prevState =>
                 prevState.map(el =>
-                    el.id === recordId ? {...el, blockSellings: !el.blockSellings, isBlockSellingsOpened: true} : el
+                    el.id === recordId
+                        ? {
+                              ...el,
+                              blockSellings: !el.blockSellings,
+                              isBlockSellingsOpened: true,
+                              isValidBlockSellings: false,
+                          }
+                        : el
                 )
             );
         }
         if (value === EBlockers.BlockPublics) {
             setTableData(prevState =>
                 prevState.map(el =>
-                    el.id === recordId ? {...el, blockPublics: !el.blockPublics, isBlockPublicsOpened: true} : el
+                    el.id === recordId
+                        ? {
+                              ...el,
+                              blockPublics: !el.blockPublics,
+                              isBlockPublicsOpened: true,
+                              isValidBlockPublics: false,
+                          }
+                        : el
                 )
             );
         }
@@ -122,7 +142,12 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 prevState.map(el => {
                     if (el.id === recordId) {
                         setIsChangesInData(true);
-                        return {...el, blockOrdersComment: comment};
+
+                        if (comment) {
+                            return {...el, blockOrdersComment: comment, isValidBlockOrders: true};
+                        } else {
+                            return {...el, blockOrdersComment: comment, isValidBlockOrders: false};
+                        }
                     } else {
                         return el;
                     }
@@ -134,7 +159,11 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 prevState.map(el => {
                     if (el.id === recordId) {
                         setIsChangesInData(true);
-                        return {...el, blockSellingsComment: comment};
+                        if (comment) {
+                            return {...el, blockSellingsComment: comment, isValidBlockSellings: true};
+                        } else {
+                            return {...el, blockSellingsComment: comment, isValidBlockSellings: false};
+                        }
                     } else {
                         return el;
                     }
@@ -146,7 +175,12 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 prevState.map(el => {
                     if (el.id === recordId) {
                         setIsChangesInData(true);
-                        return {...el, blockPublicsComment: comment};
+
+                        if (comment) {
+                            return {...el, blockPublicsComment: comment, isValidBlockPublics: true};
+                        } else {
+                            return {...el, blockPublicsComment: comment, isValidBlockPublics: false};
+                        }
                     } else {
                         return el;
                     }
@@ -166,6 +200,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                             ruStatus: value,
                             engStatus: getQualityStatus(ELanguages.ENG, value),
                             isStatusCommentOpened: true,
+                            isValidStatus: false,
                         };
                     } else {
                         return el;
@@ -180,7 +215,11 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             prevState.map(el => {
                 if (el.id === recordId) {
                     setIsChangesInData(true);
-                    return {...el, statusComment: comment};
+                    if (comment) {
+                        return {...el, statusComment: comment, isValidStatus: true};
+                    } else {
+                        return {...el, statusComment: comment, isValidStatus: false};
+                    }
                 } else {
                     return el;
                 }
@@ -189,19 +228,26 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     };
 
     const updateChangesOnServer = async () => {
-        const commonProductFields = {
-            productId,
-            productWithSubstances: details?.productWithSubstances,
-            qualityModelId: details?.qualityModelId,
-        };
-        const body: IUpdateBodyReq = prepareUpdateBody(tableData, commonProductFields);
+        const isValidationPassed = tableData.every(
+            row => row.isValidStatus && row.isValidBlockOrders && row.isValidBlockPublics && row.isValidBlockSellings
+        );
 
-        try {
-            await postUpdateProduct({body, securityCode}).unwrap();
-        } catch (error) {
-            alert('Ошибка при обновлении продукта');
+        if (isValidationPassed) {
+            const commonProductFields = {
+                productId,
+                productWithSubstances: details?.productWithSubstances,
+                qualityModelId: details?.qualityModelId,
+            };
+            const body: IUpdateBodyReq = prepareUpdateBody(tableData, commonProductFields);
+
+            try {
+                await postUpdateProduct({body, securityCode}).unwrap();
+            } catch (error) {
+                alert('Ошибка при обновлении продукта');
+                discardChanges();
+            }
+            setIsChangesInData(false);
         }
-        setIsChangesInData(false);
     };
 
     const discardChanges = () => {

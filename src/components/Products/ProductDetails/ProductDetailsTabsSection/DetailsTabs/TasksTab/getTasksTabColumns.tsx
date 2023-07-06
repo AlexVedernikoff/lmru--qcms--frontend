@@ -99,7 +99,7 @@ export const getTasksTabColumns = (
         title: t('ProductDetails.ProductDetailsTabs.TasksTab.Fields.SupplierCode'),
         dataIndex: 'supDatasupplierRMSCode',
         width: 240,
-        render: (supDatasupplierRMSCode: string, record: IDataProductDetailsTabTasks) => (
+        render: (supDatasupplierRMSCode: string) => (
             <>
                 <Grid columns="2fr 0.5fr">
                     <Typography variant="s" size="body_short">
@@ -107,7 +107,7 @@ export const getTasksTabColumns = (
                     </Typography>
                     {supDatasupplierRMSCode !== '-' && supDatasupplierRMSCode && (
                         <RegularButton
-                            onClick={() => handleProvidersOpen(record.id)}
+                            onClick={() => handleProvidersOpen(supDatasupplierRMSCode)}
                             label="download"
                             variant="pseudo"
                             iconRight={<LinkIcon />}

@@ -37,7 +37,14 @@ const TasksTab: React.FC = () => {
             : [];
 
     return (
-        <CustomTable columns={columns} dataSource={data} scroll={{x: 400}} tableLayout="fixed" size="small" bordered />
+        <CustomTable
+            columns={columns}
+            dataSource={data}
+            scroll={{x: 400, y: 250}}
+            tableLayout="fixed"
+            size="small"
+            bordered
+        />
     );
 };
 

@@ -26,7 +26,7 @@ const DocumentsTab: React.FC = () => {
         <CustomTable
             columns={columns}
             dataSource={uploadedDocuments}
-            scroll={{x: 400}}
+            scroll={{x: 400, y: 250}}
             tableLayout="fixed"
             size="small"
             bordered

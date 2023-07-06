@@ -4,6 +4,7 @@ import {converStringToDateTime} from '../../../../../utils/convertDateFromServer
 
 export enum EQualityStatusesEng {
     MissingData = 'MISSING_DATA',
+    MissingDate = 'MISSING_DATE',
     QualificationInProgress = 'QUALIFICATION_IN_PROGRESS',
     DocumentCollection = 'DOCUMENT_COLLECTION',
     Certified = 'CERTIFIED',
@@ -13,6 +14,7 @@ export enum EQualityStatusesEng {
 
 export enum EQualityStatusesRu {
     MissingData = 'Отсутствуют данные о качестве',
+    MissingDate = 'Отсутствуют данные о качестве',
     QualificationInProgress = 'Квалификация',
     DocumentCollection = 'Сбор документации',
     Certified = 'Сертифицирован',
@@ -24,6 +26,10 @@ export const getQualityStatus = (lang: string, qualityStatus?: string) => {
     if (lang === 'ru') {
         const statusMissingDataRu =
             qualityStatus === EQualityStatusesEng.MissingData ? EQualityStatusesRu.MissingData : '';
+
+        const statusMissingDateRu =
+            qualityStatus === EQualityStatusesEng.MissingDate ? EQualityStatusesRu.MissingDate : '';
+
         const statusQualificationInProgressRu =
             qualityStatus === EQualityStatusesEng.QualificationInProgress
                 ? EQualityStatusesRu.QualificationInProgress
@@ -38,6 +44,8 @@ export const getQualityStatus = (lang: string, qualityStatus?: string) => {
 
         if (statusMissingDataRu) {
             return statusMissingDataRu;
+        } else if (statusMissingDateRu) {
+            return statusMissingDateRu;
         } else if (statusQualificationInProgressRu) {
             return statusQualificationInProgressRu;
         } else if (statusDocumentCollectionRu) {

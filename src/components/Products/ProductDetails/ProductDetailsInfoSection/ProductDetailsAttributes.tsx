@@ -82,7 +82,14 @@ const ProductDetailsAttributes: React.FC = () => {
             </Grid>
 
             <Grid rowGap={4} columns="1fr">
-                <CustomTable bordered columns={attr_columns} dataSource={attr_data} pagination={false} size="small" />
+                <CustomTable
+                    scroll={{y: 300}}
+                    bordered
+                    columns={attr_columns}
+                    dataSource={attr_data}
+                    pagination={false}
+                    size="small"
+                />
             </Grid>
         </Grid>
     );

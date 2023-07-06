@@ -82,7 +82,7 @@ export const getDocsTabColumns = (
                                 height: '7px',
                             }}
                         />
-                        <div style={{color: '#ECC600'}}>{text.productDescription}</div>
+                        <div style={{color: '#ECC600'}}>{text}</div>
                     </Grid>
                 );
             }
@@ -101,8 +101,7 @@ export const getDocsTabColumns = (
                         <div style={{color: '#5AB030'}}>{text}</div>
                     </Grid>
                 );
-            }
-            if (text === 'Отклонен') {
+            } else if (text === 'Отклонен') {
                 return (
                     <Grid columns="0.1fr 1fr">
                         <div
@@ -117,6 +116,8 @@ export const getDocsTabColumns = (
                         <div style={{color: '#FFBDBD'}}>{text}</div>
                     </Grid>
                 );
+            } else {
+                return <div>{'-'}</div>;
             }
         },
     },

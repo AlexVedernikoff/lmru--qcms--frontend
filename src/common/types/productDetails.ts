@@ -23,7 +23,7 @@ export interface ProductDetails {
     status?: string;
     customId?: string;
     projectId?: string;
-    productAVSDate?: Date;
+    productAVSDate?: string;
     buCode?: any[];
     ean?: string;
     regulatoryStatus?: string;
@@ -326,16 +326,20 @@ interface IqStatuses {
     blockOrders?: boolean;
     blockOrdersComment: string;
     isBlockOrderOpened: boolean;
+    isValidBlockOrders: boolean;
     blockSellings?: boolean;
     blockSellingsComment: string;
     isBlockSellingsOpened: boolean;
+    isValidBlockSellings: boolean;
     blockPublics?: boolean;
     blockPublicsComment: string;
     isBlockPublicsOpened: boolean;
+    isValidBlockPublics: boolean;
     ruStatus?: string;
     engStatus?: string;
     isStatusCommentOpened: boolean;
     statusComment: string;
+    isValidStatus: boolean;
     isStatusHistoryOpened: boolean;
     isOrdersHistoryOpened: boolean;
     isSellingsHistoryOpened: boolean;
@@ -384,11 +388,11 @@ export interface ProductUpdateReq {
 }
 
 export interface ProductQualityUpdateReq {
-    buCode?: string;
+    buCode?: number;
     quality?: QualityIUpdateReq;
-    orderBlocking: OrderBlocking;
-    publicationBlocking: PublicationBlocking;
-    sellingBlocking: SellingBlocking;
+    orderBlocking?: OrderBlocking;
+    publicationBlocking?: PublicationBlocking;
+    sellingBlocking?: SellingBlocking;
 }
 
 export interface OrderBlocking {

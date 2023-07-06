@@ -34,7 +34,8 @@
                 "Title": "Даты",
                 "Field": {
                     "creationDate": "Дата создания",
-                    "AVS": "AVS"
+                    "AVS": "Дата AVS",
+                    "ExpiredAt": "(Товар валиден до)"
                 }
             },
             "InfoDetails": {
@@ -80,6 +81,7 @@
                 "Columns": {},
                 "Statuses": {
                     "MISSING_DATA": "Отсутствуют данные о качестве",
+                    "MISSING_DATE": "Отсутствуют данные о качестве",
                     "QUALIFICATION_IN_PROGRESS": "Квалификация",
                     "DOCUMENT_COLLECTION": "Сбор документации",
                     "CERTIFIED": "Сертифицирован",

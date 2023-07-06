@@ -80,6 +80,7 @@ export const prepareQstatusesColumns = (
                             disabled={!record.isStatusCommentOpened}
                             placeholder="Комментарий..."
                             value={record.statusComment}
+                            error={!record.isValidStatus}
                             onChange={e => {
                                 handleStatusComment(record.id, e.target.value);
                             }}
@@ -125,6 +126,7 @@ export const prepareQstatusesColumns = (
                         placeholder="Комментарий..."
                         disabled={!record.isBlockOrderOpened}
                         value={record.blockOrdersComment}
+                        error={!record.isValidBlockOrders}
                         onChange={e => {
                             handleBlockersComments(record.id, e.target.value, EBlockers.BlockOrders);
                         }}
@@ -170,6 +172,7 @@ export const prepareQstatusesColumns = (
                         placeholder="Комментарий..."
                         disabled={!record.isBlockSellingsOpened}
                         value={record.blockSellingsComment}
+                        error={!record.isValidBlockSellings}
                         onChange={e => {
                             handleBlockersComments(record.id, e.target.value, EBlockers.BlockSellings);
                         }}
@@ -215,6 +218,7 @@ export const prepareQstatusesColumns = (
                         placeholder="Комментарий..."
                         disabled={!record.isBlockPublicsOpened}
                         value={record.blockPublicsComment}
+                        error={!record.isValidBlockPublics}
                         onChange={e => {
                             handleBlockersComments(record.id, e.target.value, EBlockers.BlockPublics);
                         }}
