@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Grid, RegularButton, Typography, Modal, ModalContent, ModalHeader} from 'fronton-react';
+import {Grid, RegularButton, Typography} from 'fronton-react';
 import {PlusIcon, TrashIcon} from '@fronton/icons-react';
 import {useParams} from 'react-router-dom';
 import CardView from '../../Common/CardView';
@@ -9,7 +9,6 @@ import MasterPlanTable from './MasterPlanTable';
 import MasterPlanAddModal from './MasterPlanAddModal';
 import {IMasterPlanTask} from '../../../common/types/models';
 import MasterPlanRemoveTaskModal from './MasterPlanRemoveTaskModal';
-import {IDeleteMasterPlanTasksParams} from '../../../common/types/models';
 
 interface IProps {
     tasks: IMasterPlanTask[];
@@ -17,8 +16,7 @@ interface IProps {
     handleRemoveModalClose: () => void;
     handleDeleteClick: () => void;
     isRemoveOpen: boolean;
-    setTasksToRemove: any;
-    // setTasksToRemove: () => number[];
+    setTasksToRemove: (rows: number[]) => void;
     tasksToRemove: number[];
 }
 
@@ -35,24 +33,7 @@ const MasterPlanRequirements: React.FC<IProps> = ({
     const {id = ''} = useParams();
     const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
 
-    const [deleteTasks] = modelsApi.useDeleteMasterPlanTasksMutation();
-
     const [isOpen, setIsOpen] = useState(false);
-    // const [isRemoveOpen, setIsRemoveOpen] = useState(false);
-    // const [tasksToRemove, setTasksToRemove] = useState<number[]>([]);
-
-    // const deleteTaskQueryArg: IDeleteMasterPlanTasksParams = {
-    //     id,
-    //     body: {
-    //         updatedBy: 'Alex',
-    //         taskIDs: tasksToRemove,
-    //     },
-    //     securityCode: 'security_code',
-    // };
-
-    console.log('tasks = ', tasks);
-    console.log('Задачи к удалению: ', tasksToRemove);
-    // console.log('task id = ', id);
 
     const handleCardClose = () => {};
 
@@ -65,24 +46,6 @@ const MasterPlanRequirements: React.FC<IProps> = ({
     const handleModalClose = () => {
         setIsOpen(false);
     };
-    // *************************************************
-    // const handleRemoveModalClose = () => {
-    //     //закрываем модальное окно
-    //     setIsRemoveOpen(false);
-    // };
-
-    // const handleDeleteClick = () => {
-    //     //открываем модальное окно
-    //     setIsRemoveOpen(true);
-    // };
-
-    // const handleConfirmDeletion = () => {
-    //     console.log('Вы подтвердили удаление задачи!');
-    //     deleteTasks(deleteTaskQueryArg);
-    //     setIsRemoveOpen(false);
-    // };
-
-    // *************************************************
 
     return (
         <Grid rowGap={24}>

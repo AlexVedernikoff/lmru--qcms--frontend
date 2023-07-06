@@ -16,9 +16,11 @@ const ModelDetailsMasterPlan: React.FC = () => {
 
     const [deleteTasks, result] = modelsApi.useDeleteMasterPlanTasksMutation();
 
-    let tasks = modelDetails?.masterPlanIds?.[0]?.tasks || result?.data?.tasks;
+    let tasks = result?.data?.tasks || modelDetails?.masterPlanIds?.[0]?.tasks;
     console.log('modelDetails = ', modelDetails?.masterPlanIds?.[0]?.tasks);
     console.log('result = ', result?.data?.tasks);
+
+    console.log('Задачи к удалению ', tasksToRemove);
 
     const planList = useMemo(() => {
         const manufacturerTasks = [];
@@ -55,8 +57,6 @@ const ModelDetailsMasterPlan: React.FC = () => {
         ];
     }, [tasks, t]);
 
-    // ************************************************************
-
     const deleteTaskQueryArg: IDeleteMasterPlanTasksParams = {
         id,
         body: {
@@ -67,23 +67,18 @@ const ModelDetailsMasterPlan: React.FC = () => {
     };
 
     const handleConfirmDeletion = async () => {
-        console.log('Вы подтвердили удаление задачи!');
         await deleteTasks(deleteTaskQueryArg);
-        // console.log('details2 = ', );
         setIsRemoveOpen(false);
+        setTasksToRemove([]);
     };
 
     const handleRemoveModalClose = () => {
-        //закрываем модальное окно
         setIsRemoveOpen(false);
     };
 
     const handleDeleteClick = () => {
-        //открываем модальное окно
         setIsRemoveOpen(true);
     };
-
-    // ************************************************************
 
     return (
         <div>
