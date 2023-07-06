@@ -12,41 +12,20 @@ const ModelDetailsMasterPlan: React.FC = () => {
     const {id = ''} = useParams();
     const [isRemoveOpen, setIsRemoveOpen] = useState(false);
     const [tasksToRemove, setTasksToRemove] = useState<number[]>([]);
-    const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
-
-    let details1 = details?.masterPlanIds?.[0]?.tasks;
-    console.log('details1 = ', details1);
+    const {data: modelDetails} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
 
     const [deleteTasks, result] = modelsApi.useDeleteMasterPlanTasksMutation();
 
+    let tasks = modelDetails?.masterPlanIds?.[0]?.tasks || result?.data?.tasks;
+    console.log('modelDetails = ', modelDetails?.masterPlanIds?.[0]?.tasks);
     console.log('result = ', result?.data?.tasks);
-
-    if (result?.data?.tasks) details1 = result?.data?.tasks;
 
     const planList = useMemo(() => {
         const manufacturerTasks = [];
         const importerTasks = [];
         const distributorTasks = [];
 
-        // TODO: Remove comments when design for master plans will be ready
-        // for (const plan of details?.masterPlanIds || []) {
-        //     for (const task of plan.tasks) {
-        //         switch (task.regulatoryType) {
-        //             case ERegulatoryType.DISTRIBUTOR:
-        //                 distributorTasks.push(task);
-        //                 break;
-        //             case ERegulatoryType.IMPORTER:
-        //                 importerTasks.push(task);
-        //                 break;
-        //             case ERegulatoryType.MANUFACTURER:
-        //                 manufacturerTasks.push(task);
-        //                 break;
-        //         }
-        //     }
-        // }
-
-        // for (const task of details?.masterPlanIds?.[0]?.tasks || []) {
-        for (const task of details1 || []) {
+        for (const task of tasks || []) {
             switch (task.regulatoryType) {
                 case ERegulatoryType.DISTRIBUTOR:
                     distributorTasks.push(task);
@@ -74,8 +53,7 @@ const ModelDetailsMasterPlan: React.FC = () => {
                 list: distributorTasks,
             },
         ];
-        // }, [details?.masterPlanIds, t]);
-    }, [details1, t]);
+    }, [tasks, t]);
 
     // ************************************************************
 
@@ -90,7 +68,7 @@ const ModelDetailsMasterPlan: React.FC = () => {
 
     const handleConfirmDeletion = async () => {
         console.log('Вы подтвердили удаление задачи!');
-        const details2 = await deleteTasks(deleteTaskQueryArg);
+        await deleteTasks(deleteTaskQueryArg);
         // console.log('details2 = ', );
         setIsRemoveOpen(false);
     };

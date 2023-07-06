@@ -17,9 +17,9 @@ const MasterPlanRemoveTaskModal: React.FC<IProps> = ({isOpen, onClose, handleCon
 
     return (
         <Modal show={isOpen} onClose={handleClose} size="s">
-            <ModalHeader title={t('Buttons.Delete')} />
+            <ModalHeader title={`${t('Buttons.Delete')}?`} />
             <ModalContent></ModalContent>
-            <ModalFooter className="css-1fi9pik">
+            <ModalFooter>
                 <RegularButton onClick={handleClose} size="l" variant="secondary" style={style}>
                     Отмена
                 </RegularButton>
