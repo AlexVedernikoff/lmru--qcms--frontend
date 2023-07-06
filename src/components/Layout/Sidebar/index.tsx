@@ -105,9 +105,10 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
             }
 
             if (
-                value !== location.pathname &&
-                !location.pathname.includes(value.toString()) &&
-                Object.values(PRODUCTS_ROUTES).some(v => v !== value)
+                value === APP_ROUTES.dashboard ||
+                (value !== location.pathname &&
+                    !location.pathname.includes(value.toString()) &&
+                    Object.values(PRODUCTS_ROUTES).some(v => v !== value))
             ) {
                 navigate(value as string);
             }
