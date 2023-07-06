@@ -36,8 +36,8 @@ export const taskDetailsApi = createApi({
                 url: serviceUrl.updateTaskDetails,
                 method: 'POST',
                 body: params,
-                invalidatesTags: ['TaskData'],
             }),
+            invalidatesTags: ['TaskData'],
         }),
         postTaskDocuments: builder.query({
             query: params => ({

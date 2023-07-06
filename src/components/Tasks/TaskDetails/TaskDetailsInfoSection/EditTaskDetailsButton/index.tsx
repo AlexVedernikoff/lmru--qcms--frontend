@@ -1,5 +1,5 @@
 import {Grid, RegularButton} from 'fronton-react';
-import EditIcon from '../../../Icons/EditIcon';
+import EditIcon from '../../../../Icons/EditIcon';
 import {useTranslation} from 'react-i18next';
 
 interface Props {

@@ -1,5 +1,14 @@
 // https://confluence.lmru.tech/display/QCMS/Quality+actions+update-batch
 
+export enum ActionStatus {
+    DRAFT = 'DRAFT',
+    СANCELLED = 'СANCELLED',
+    AWAITING_DOCUMENT_LOADING = 'AWAITING_DOCUMENT_LOADING',
+    AWAITING_RESOLUTION = 'AWAITING_RESOLUTION',
+    RETURNED_AWAITING_DOCUMENT_LOADING = 'RETURNED_AWAITING_DOCUMENT_LOADING',
+    RETURNED_AWAITING_RESOLUTION = 'RETURNED_AWAITING_RESOLUTION',
+}
+
 export type ITaskAwaitingDocument = {
     // optional, документы, необходимые для загрузки
     type: string; // required, тип документа
@@ -78,7 +87,7 @@ export interface ITaskDetailsPublicComment {
 
 export interface ITaskDetails {
     id: string; // required, идентификатор задачи
-    actionStatus: string; // required, статус задачи ENUM: ['DRAFT', 'СANCELLED', 'AWAITING_DOCUMENT_LOADING", "AWAITING_RESOLUTION", "RETURNED_AWAITING_DOCUMENT_LOADING", "RETURNED_AWAITING_RESOLUTION"]
+    actionStatus: ActionStatus; // required, статус задачи ENUM: ['DRAFT', 'СANCELLED', 'AWAITING_DOCUMENT_LOADING", "AWAITING_RESOLUTION", "RETURNED_AWAITING_DOCUMENT_LOADING", "RETURNED_AWAITING_RESOLUTION"]
     version: number; // required, версия записи в БД
     targetBuCodes: number[]; // required, целевые BU
     conclusion?: string; // optional, решение по задаче
@@ -133,7 +142,7 @@ export interface ITaskDetails {
             createdAt: string; // required, время создания задачи
             createdBy: string; // required, ldap или идентификатор системы, создавшей задачу
         };
-        lastUpdateInfomation: {
+        lastUpdateInformation: {
             updatedAt: string; // required, время создания задачи
             updatedBy: string; // required, ldap или идентификатор системы, обновившей задачу
         };
@@ -142,7 +151,7 @@ export interface ITaskDetails {
         createdAt: string; // required, время создания задачи
         createdBy: string; // required, ldap или идентификатор системы, создавшей документ
     };
-    lastUpdateInfomation: {
+    lastUpdateInformation: {
         updatedAt: string; // required, время изменения задачи
         updatedBy: string; // required, ldap или идентификатор системы, обновившей документ
     };
@@ -157,7 +166,7 @@ export interface ITaskUpdateInfoParams {
     updatedBy: string; // required - ldap или идентификатор системы, обновивший задачу
     qualityActions: {
         id: number; // required,
-        actionStatus?: string; // optional, ENUM: ['DRAFT', 'СANCELLED', 'AWAITING_DOCUMENT_LOADING", "AWAITING_RESOLUTION", "RETURNED_AWAITING_DOCUMENT_LOADING", "RETURNED_AWAITING_RESOLUTION"]
+        actionStatus?: ActionStatus; // optional, ENUM: ['DRAFT', 'СANCELLED', 'AWAITING_DOCUMENT_LOADING", "AWAITING_RESOLUTION", "RETURNED_AWAITING_DOCUMENT_LOADING", "RETURNED_AWAITING_RESOLUTION"]
         conclusion?: string; // optional, string
         approvers?: // optional
         {

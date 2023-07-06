@@ -1,8 +1,9 @@
 import {Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import styles from '../../../Common.module.css';
-import {convertDateFromServer} from '../../../../utils/convertDateFromServer';
-import {ITaskDetails} from '../../../../common/types/taskDetails';
+import {ITaskDetails} from '../../../../../common/types/taskDetails';
+import {convertDateFromServer} from '../../../../../utils/convertDateFromServer';
+
+import styles from '../../../../Common.module.css';
 
 interface Props {
     taskDetails: ITaskDetails;
@@ -19,7 +20,7 @@ const TaskDetailsDates: React.FC<Props> = ({taskDetails}) => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {'01.12.2022'}
+                    {convertDateFromServer(taskDetails.creationInformation.createdAt)}
                 </Typography>
             </div>
 
@@ -31,7 +32,7 @@ const TaskDetailsDates: React.FC<Props> = ({taskDetails}) => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {'01.22.2023'}
+                    {convertDateFromServer(taskDetails.lastUpdateInformation.updatedAt)}
                 </Typography>
             </div>
 

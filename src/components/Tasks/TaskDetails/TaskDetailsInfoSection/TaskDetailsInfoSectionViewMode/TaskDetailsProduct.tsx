@@ -1,9 +1,10 @@
 import {Grid, RegularButton, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import styles from '../../../Common.module.css';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import classes from './styles.module.css';
-import {ITaskDetails} from '../../../../common/types/taskDetails';
+import {ITaskDetails} from '../../../../../common/types/taskDetails';
+
+import styles from '../../../../Common.module.css';
 
 interface Props {
     taskDetails: ITaskDetails;

@@ -71,7 +71,9 @@
     "TaskDetails": {
         "Buttons": {
             "Edit": "Редактировать",
-            "SubmitReview": "Отправить на проверку"
+            "SubmitReview": "Отправить на проверку",
+            "StopEditing": "Отменить редактирование",
+            "SubmitEditDetailsForm": "Сохранить"
         },
         "DetailsProvider": {
             "Provider": "Поставщик",

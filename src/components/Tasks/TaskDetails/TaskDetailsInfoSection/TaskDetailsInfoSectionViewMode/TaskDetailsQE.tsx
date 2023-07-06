@@ -1,8 +1,9 @@
 import {Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import styles from '../../../Common.module.css';
-import classes from './styles.module.css';
-import {ITaskDetails} from '../../../../common/types/taskDetails';
+import {ITaskDetails} from '../../../../../common/types/taskDetails';
+
+import styles from '../../../../Common.module.css';
+import s from './styles.module.css';
 
 interface Props {
     taskDetails: ITaskDetails;
@@ -10,6 +11,11 @@ interface Props {
 
 const TaskDetailsQE: React.FC<Props> = ({taskDetails}) => {
     const {t} = useTranslation('tasks');
+
+    const taskDetailsResponsibleType = taskDetails.responsible[0]?.type;
+    const taskDetailsApproversType = taskDetails.approvers[0]?.type;
+    const taskDetailsApproversExternalId = taskDetails.approvers[0]?.externalId;
+    const taskDetailsResponsibleExternalId = taskDetails.responsible[0]?.externalId;
 
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">
@@ -19,7 +25,7 @@ const TaskDetailsQE: React.FC<Props> = ({taskDetails}) => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {taskDetails.responsible[0]?.type === 'QE' && taskDetails.responsible[0]?.type}
+                    {taskDetailsResponsibleType === 'QE' && 'QE'}
                 </Typography>
             </div>
 
@@ -31,7 +37,7 @@ const TaskDetailsQE: React.FC<Props> = ({taskDetails}) => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {taskDetails.approvers[0]?.type === 'SQM' && taskDetails.approvers[0]?.externalId}
+                    {taskDetailsApproversType === 'SQM' && taskDetailsApproversExternalId}
                 </Typography>
             </div>
 
@@ -43,7 +49,7 @@ const TaskDetailsQE: React.FC<Props> = ({taskDetails}) => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {taskDetails.responsible[0]?.type === 'SUPPLIER' && taskDetails.responsible[0]?.externalId}
+                    {taskDetailsResponsibleType === 'SUPPLIER' && taskDetailsResponsibleExternalId}
                 </Typography>
             </div>
 
@@ -55,7 +61,7 @@ const TaskDetailsQE: React.FC<Props> = ({taskDetails}) => {
                 </Typography>
                 <br />
                 <Typography variant="s" size="body_short">
-                    {taskDetails.approvers[0]?.type}
+                    {taskDetailsApproversType}
                 </Typography>
             </div>
 
@@ -78,7 +84,7 @@ const TaskDetailsQE: React.FC<Props> = ({taskDetails}) => {
                     {t('TaskDetails.DetailsQE.TaskStatus')}
                 </Typography>
                 <br />
-                <Typography className={classes.contractor} variant="s" size="body_short">
+                <Typography className={s.contractor} variant="s" size="body_short">
                     {taskDetails.actionStatus}
                 </Typography>
             </div>
