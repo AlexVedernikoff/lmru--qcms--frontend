@@ -1,6 +1,6 @@
 import {DatePicker, Input, Modal, ModalContent, ModalFooter, ModalHeader, RegularButton} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import {ITaskUploadedDocument} from '../../../../common/types/taskDetails';
+import {ITaskUploadedDocument, UpdateDocumentApprovingStatuses} from '../../../../common/types/taskDetails';
 import styles from './styles.module.css';
 import {ChangeEvent, useState} from 'react';
 import {taskDetailsApi} from '../api';
@@ -71,7 +71,7 @@ const TaskUpdateDocumentModal: React.FC<Props> = ({show, onClose, uploadedDocume
                             approvingStatuses: [
                                 {
                                     productId: Number(taskId!),
-                                    approvingStatus: 'APPROVED',
+                                    approvingStatus: UpdateDocumentApprovingStatuses.APPROVED,
                                 },
                             ],
                             // removeProductBundle: el.

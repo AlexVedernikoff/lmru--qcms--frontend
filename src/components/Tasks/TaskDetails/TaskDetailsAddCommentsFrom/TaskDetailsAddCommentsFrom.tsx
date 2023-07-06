@@ -38,15 +38,18 @@ const TaskDetailsAddCommentsForm: React.FC<Props> = ({taskDetails}) => {
             .then(
                 () => {
                     api.open({
-                        message: 'Запрос успешно отправлен!',
+                        message: 'Комментарий добавлен!',
                     });
                 },
                 () => {
                     api.open({
-                        message: 'Не удалось отправить запрос, повторите попытку позже',
+                        message: 'Не удалось добавить комментарий, повторите попытку позже',
                     });
                 }
-            );
+            )
+            .finally(() => {
+                setComment('');
+            });
     };
 
     return (

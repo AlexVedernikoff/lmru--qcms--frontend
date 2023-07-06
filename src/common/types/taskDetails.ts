@@ -190,26 +190,33 @@ export interface ITaskUpdateInfoResponse {
     ];
 }
 
+export enum UpdateDocumentApprovingStatuses {
+    REJECTED = 'REJECTED',
+    APPROVED = 'APPROVED',
+}
+
+export interface IUpdateDocumentParamsDocument {
+    id: number; // required, номер документа
+    status?: string; // optional, статус действия документа ['ACTIVE, 'INACTIVE', 'DELETED', 'IN_RENEWAL']
+    mask?: string; // optional, спец. название документа для проверки в россаккредитации
+    issueDate?: string; // optional, дата вступления в силу документа
+    expireDate?: string; // optional, дата окончания срока действия документа
+    rosAccreditationApproveStatus?: string; // optional, статус документа в РосАккредитации (доп. статус с информацией из россакредитации)
+    isForLot?: boolean; // optional, флаг, показывающий, что документ относится к партии товаров
+    fileName?: string; // optional, название файла
+    fileLink?: string; // optional, ссылка на файл в S3
+    approvingStatuses?: // optional
+    {
+        productId: number; // required
+        approvingStatus: UpdateDocumentApprovingStatuses; // required
+    }[];
+    removeProductBundle?: number[]; // optional
+    comment?: string; // optional
+}
+
 export interface IUpdateDocumentParams {
     updatedBy: string; // required
-    documents: {
-        id: number; // required, номер документа
-        status?: string; // optional, статус действия документа ['ACTIVE, 'INACTIVE', 'DELETED', 'IN_RENEWAL']
-        mask?: string; // optional, спец. название документа для проверки в россаккредитации
-        issueDate?: string; // optional, дата вступления в силу документа
-        expireDate?: string; // optional, дата окончания срока действия документа
-        rosAccreditationApproveStatus?: string; // optional, статус документа в РосАккредитации (доп. статус с информацией из россакредитации)
-        isForLot?: boolean; // optional, флаг, показывающий, что документ относится к партии товаров
-        fileName?: string; // optional, название файла
-        fileLink?: string; // optional, ссылка на файл в S3
-        approvingStatuses?: // optional
-        {
-            productId: number; // required
-            approvingStatus: string; // required
-        }[];
-        removeProductBundle?: number[]; // optional
-        comment?: string; // optional
-    }[];
+    documents: IUpdateDocumentParamsDocument[];
 }
 
 export interface IUpdateDocumentResponse {

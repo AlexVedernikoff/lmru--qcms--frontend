@@ -1,5 +1,4 @@
 import {useCallback, useMemo} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {ColumnsType} from 'antd/es/table';
 import CustomTable from '../../../../../Common/CustomTable';
@@ -9,6 +8,7 @@ import {IDataProductDetailsTabTasks} from '../../../../../../common/types/produc
 import {getTasksTabColumns} from './getTasksTabColumns';
 import {tasksTabMapping} from '../../../ProductDetailsMapping/ProductDetailsTabs/tasksTabMapping';
 import {PROVIDER_ROUTES} from '../../../../../../common/consts';
+import {useNavigate, useParams} from 'react-router-dom';
 
 const TasksTab: React.FC = () => {
     const {t} = useTranslation('products');
