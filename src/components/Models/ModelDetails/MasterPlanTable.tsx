@@ -14,9 +14,10 @@ type TDataType = TWithReactKey<IMasterPlanRequirementTableItem>;
 interface IProps {
     isEdit?: boolean;
     data: IMasterPlanTask[];
+    setTasksToRemove?: (rows: number[]) => void;
 }
 
-const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
+const MasterPlanTable: React.FC<IProps> = ({isEdit, data, setTasksToRemove}) => {
     const {t} = useTranslation('models');
 
     const columns = useMemo<ColumnsType<TDataType>>(
@@ -231,18 +232,18 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
     );
 
     const rowSelection = useMemo<TableRowSelection<TDataType>>(
-        () =>
-            isEdit
-                ? {
-                      type: 'checkbox',
-                      onChange: (selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
-                          // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-                      },
-                      fixed: 'left',
-                  }
-                : {},
-        [isEdit]
+        () => ({
+            type: 'checkbox',
+            onChange: (selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
+                // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                if (setTasksToRemove) setTasksToRemove(selectedRowKeys as number[]);
+            },
+            fixed: 'left',
+        }),
+        []
     );
+
+    // console.log('Список задач в таблице мастер плана: ', data);
 
     return (
         <CustomTable

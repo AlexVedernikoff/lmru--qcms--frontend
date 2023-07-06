@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Grid, RegularButton, Typography} from 'fronton-react';
+import {Grid, RegularButton, Typography, Modal, ModalContent, ModalHeader} from 'fronton-react';
 import {PlusIcon, TrashIcon} from '@fronton/icons-react';
 import {useParams} from 'react-router-dom';
 import CardView from '../../Common/CardView';
@@ -8,17 +8,51 @@ import modelsApi from '../modelsApi';
 import MasterPlanTable from './MasterPlanTable';
 import MasterPlanAddModal from './MasterPlanAddModal';
 import {IMasterPlanTask} from '../../../common/types/models';
+import MasterPlanRemoveTaskModal from './MasterPlanRemoveTaskModal';
+import {IDeleteMasterPlanTasksParams} from '../../../common/types/models';
 
 interface IProps {
     tasks: IMasterPlanTask[];
+    handleConfirmDeletion: () => void;
+    handleRemoveModalClose: () => void;
+    handleDeleteClick: () => void;
+    isRemoveOpen: boolean;
+    setTasksToRemove: any;
+    // setTasksToRemove: () => number[];
+    tasksToRemove: number[];
 }
 
-const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
+const MasterPlanRequirements: React.FC<IProps> = ({
+    tasks,
+    handleConfirmDeletion,
+    handleRemoveModalClose,
+    handleDeleteClick,
+    isRemoveOpen,
+    setTasksToRemove,
+    tasksToRemove,
+}) => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
     const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
 
+    const [deleteTasks] = modelsApi.useDeleteMasterPlanTasksMutation();
+
     const [isOpen, setIsOpen] = useState(false);
+    // const [isRemoveOpen, setIsRemoveOpen] = useState(false);
+    // const [tasksToRemove, setTasksToRemove] = useState<number[]>([]);
+
+    // const deleteTaskQueryArg: IDeleteMasterPlanTasksParams = {
+    //     id,
+    //     body: {
+    //         updatedBy: 'Alex',
+    //         taskIDs: tasksToRemove,
+    //     },
+    //     securityCode: 'security_code',
+    // };
+
+    console.log('tasks = ', tasks);
+    console.log('Задачи к удалению: ', tasksToRemove);
+    // console.log('task id = ', id);
 
     const handleCardClose = () => {};
 
@@ -31,8 +65,24 @@ const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
     const handleModalClose = () => {
         setIsOpen(false);
     };
+    // *************************************************
+    // const handleRemoveModalClose = () => {
+    //     //закрываем модальное окно
+    //     setIsRemoveOpen(false);
+    // };
 
-    const handleDeleteClick = () => {};
+    // const handleDeleteClick = () => {
+    //     //открываем модальное окно
+    //     setIsRemoveOpen(true);
+    // };
+
+    // const handleConfirmDeletion = () => {
+    //     console.log('Вы подтвердили удаление задачи!');
+    //     deleteTasks(deleteTaskQueryArg);
+    //     setIsRemoveOpen(false);
+    // };
+
+    // *************************************************
 
     return (
         <Grid rowGap={24}>
@@ -45,7 +95,12 @@ const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
                     <RegularButton onClick={handleAddClick} variant="pseudo" iconLeft={<PlusIcon />}>
                         {t('Buttons.Add')}
                     </RegularButton>
-                    <RegularButton onClick={handleDeleteClick} variant="pseudo" iconLeft={<TrashIcon />}>
+                    <RegularButton
+                        onClick={handleDeleteClick}
+                        variant="pseudo"
+                        iconLeft={<TrashIcon />}
+                        disabled={!Boolean(tasksToRemove.length)}
+                    >
                         {t('Buttons.Delete')}
                     </RegularButton>
                 </div>
@@ -70,8 +125,12 @@ const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
                 ))}
             </Grid>
 
-            <MasterPlanTable data={tasks} />
-
+            <MasterPlanTable data={tasks} setTasksToRemove={setTasksToRemove} />
+            <MasterPlanRemoveTaskModal
+                isOpen={isRemoveOpen}
+                onClose={handleRemoveModalClose}
+                handleConfirmDeletion={handleConfirmDeletion}
+            />
             <MasterPlanAddModal isOpen={isOpen} onClose={handleModalClose} />
         </Grid>
     );

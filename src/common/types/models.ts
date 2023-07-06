@@ -316,3 +316,18 @@ export type TTaskCategoryResponse = Array<{
         name: string;
     }>;
 }>;
+
+export interface IDeleteMasterPlanTasksResponse {
+    [key: string]: any;
+}
+
+export interface IDeleteMasterPlanTasksParams {
+    id: string;
+    body: DeleteMasterPlanTasksBody;
+    securityCode: string;
+}
+
+export interface DeleteMasterPlanTasksBody {
+    updatedBy: string;
+    taskIDs: number[];
+}
