@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useMemo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Dropdown, DropdownItem, Grid, IconButton} from 'fronton-react';
 import {UploadIcon} from '@fronton/icons-react';
@@ -8,15 +8,18 @@ import {IMasterPlanRequirementTableItem, TWithReactKey} from '../../../common/cl
 import CustomTable from '../../Common/CustomTable';
 import {CustomSwitch} from '../../Common/Switch/CustomSwitch';
 import {IMasterPlanTask} from '../../../common/types/models';
+import {IInitialState} from './ModelDetailsMasterPlan';
 
 type TDataType = TWithReactKey<IMasterPlanRequirementTableItem>;
 
 interface IProps {
     isEdit?: boolean;
     data: IMasterPlanTask[];
+    updateTasks?: (key: keyof IInitialState, value: number[]) => void;
+    removeTasksArr?: number[];
 }
 
-const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
+const MasterPlanTable: React.FC<IProps> = ({isEdit, data, updateTasks, removeTasksArr}) => {
     const {t} = useTranslation('models');
 
     const columns = useMemo<ColumnsType<TDataType>>(
@@ -231,17 +234,15 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
     );
 
     const rowSelection = useMemo<TableRowSelection<TDataType>>(
-        () =>
-            isEdit
-                ? {
-                      type: 'checkbox',
-                      onChange: (selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
-                          // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-                      },
-                      fixed: 'left',
-                  }
-                : {},
-        [isEdit]
+        () => ({
+            type: 'checkbox',
+            onChange: (selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
+                const key = data[0]?.regulatoryType as keyof IInitialState;
+                if (updateTasks) updateTasks(key, selectedRowKeys as number[]);
+            },
+            fixed: 'left',
+        }),
+        []
     );
 
     return (

@@ -10,7 +10,7 @@ import {IManagementNomenclature, IModelNomenclature, IProvidersParams} from '../
 import {setSuppliersFilter, ISuppliersFilter, initialState} from '../../../../store/slices/suppliersFilterSlice';
 import {prepareBody} from './prepareBody';
 import {usePostSearchSupplsMutation} from '../../../../api/postSearchSuppliers';
-import {setSuppliersTableData} from '../../../../store/slices/suppliersTableDataSlice';
+import {setSuppliersTableData, setSuppliersLoading} from '../../../../store/slices/suppliersTableDataSlice';
 
 interface Props {
     loadProvidersList: (value: IProvidersParams) => void;
@@ -37,7 +37,8 @@ const ProvidersFilter: React.FC<Props> = props => {
     };
 
     const suppliersFilterState: ISuppliersFilter = useSelector((state: TRootState) => state.suppliersFilter);
-    const [getProviders] = usePostSearchSupplsMutation();
+    const [getProviders, {isLoading}] = usePostSearchSupplsMutation();
+    if (isLoading) dispatch(setSuppliersLoading(isLoading));
 
     const {pageIndex: currentPage, pageSize} = suppliersFilterState.pageable;
 
@@ -49,7 +50,7 @@ const ProvidersFilter: React.FC<Props> = props => {
     const receiveProviders = async () => {
         const requestBody = prepareBody(suppliersFilterState);
         const providersTableData = await getProviders(requestBody);
-        dispatch(setSuppliersTableData(providersTableData));
+        dispatch(setSuppliersTableData({...providersTableData, isLoading}));
     };
 
     const {supplierKey, supplierValue, registrationStatus, billingCountry, supplierDepartmentCountry} =

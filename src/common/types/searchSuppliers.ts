@@ -1,6 +1,7 @@
 export interface ISearchSuppliersResponse {
     pageable: Pageable;
     content: ISuppliersContent[];
+    isLoading: boolean;
 }
 
 interface Pageable {
