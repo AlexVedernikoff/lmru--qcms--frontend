@@ -23,24 +23,30 @@ export interface ITaskListItem {
 
 export interface IMasterPlanRequirementTableItem {
     status: string;
-    category: string;
-    type: string;
+    category: {
+        id?: number;
+        name?: string;
+    };
+    type: {
+        id?: number;
+        name?: string;
+    };
     legal: {
-        id: string;
+        id: number;
         name: string;
     }[];
     documents: {
-        id: string;
+        id: number;
         name: string;
     }[];
     origin: {
-        id: string;
+        id: number;
         name: string;
     }[];
     process: boolean;
     responsiblePerson: string;
     approvingPerson: string;
-    documentTemplate: string;
+    documentTemplate: number;
     taskRequirement: boolean;
 }
 

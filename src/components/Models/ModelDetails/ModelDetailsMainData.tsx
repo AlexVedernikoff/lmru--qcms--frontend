@@ -1,8 +1,9 @@
 import {useMemo, useState} from 'react';
-import {Grid, IconButton, RegularButton, Typography} from 'fronton-react';
+import {Grid, RegularButton, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
 import {TreeSelect} from 'antd';
+import {DefaultOptionType} from 'antd/es/select';
 import NomenclatureRow from '../Common/NomenclatureRow';
 import TextBlock from '../Common/TextBlock';
 import styles from '../../Common.module.css';
@@ -35,28 +36,6 @@ const ModelDetailsMainData: React.FC = () => {
                 productModelNomenclatureId: productModelNomenclatureId
                     ? parseInt(productModelNomenclatureId, 10)
                     : undefined,
-                // qualityModelForMixtures: true,
-                // qualityModelLabel: 'Этикетка тестовая',
-                // qualityModelFullName: 'Полное наименование модели качества',
-                // qualityModelDescription: 'Описание модели качества',
-                // deleteRelationToNomenclature: true,
-                // productGroupRisks: {
-                //     productRiskLevel: 1,
-                //     personLevelRiskForCorrectUsage: 2,
-                //     personLevelRiskForNonCorrectUsage: 3,
-                //     sustainabilityRisk: 4,
-                //     regulatoryRisk: 5,
-                //     healthRisk: 6,
-                //     riskComments: 'Комментарий к группе риска',
-                // },
-                // regulatoryReferences: [1],
-                // assignedApprovers: [
-                //     {
-                //         userId: '1',
-                //         role: 'QE',
-                //         buId: 1,
-                //     },
-                // ],
                 updatedBy: 'currentUser',
             },
         });
@@ -68,20 +47,20 @@ const ModelDetailsMainData: React.FC = () => {
 
     const treeData = useMemo(
         () =>
-            nomenclature.map(el => ({
-                title: el.nameRu || el.code,
+            nomenclature.map<DefaultOptionType>(el => ({
+                label: el.nameRu || el.code,
                 value: `department ${el.code}`,
                 checkable: false,
                 children: el.subdepartments.map(subDep => ({
-                    title: subDep.nameRu || subDep.code,
+                    label: subDep.nameRu || subDep.code,
                     value: `subdepartment ${subDep.code}`,
                     checkable: false,
                     children: subDep.modelConsolidationGroups.map(modCon => ({
-                        title: modCon.nameRu || modCon.code,
+                        label: modCon.nameRu || modCon.code,
                         value: `consolidation ${modCon.code}`,
                         checkable: false,
                         children: modCon?.models?.map(mod => ({
-                            title: modCon.nameRu || modCon.code,
+                            label: modCon.nameRu || modCon.code,
                             value: `${mod.id}`,
                         })),
                     })),
@@ -103,9 +82,9 @@ const ModelDetailsMainData: React.FC = () => {
                     <RegularButton onClick={handleSaveClick}>{t('Buttons.Save')}</RegularButton>
                 ) : (
                     <Grid columns="48px" gap={16}>
-                        <IconButton aria-label="edit" size="s" onClick={handleEditClick}>
+                        <RegularButton variant="pseudo" aria-label="edit" size="s" onClick={handleEditClick}>
                             <EditIcon color="none" />
-                        </IconButton>
+                        </RegularButton>
                     </Grid>
                 )}
             </Grid>

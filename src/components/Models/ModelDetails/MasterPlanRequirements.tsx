@@ -1,13 +1,13 @@
 import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Grid, RegularButton, Typography} from 'fronton-react';
-import {PlusIcon, TrashIcon} from '@fronton/icons-react';
 import {useParams} from 'react-router-dom';
+import {Grid, RegularButton, Typography} from 'fronton-react';
+import {FloppyDiskIcon, PlusIcon, TrashIcon} from '@fronton/icons-react';
+import {IMasterPlanTask} from '../../../common/types/models';
 import CardView from '../../Common/CardView';
 import modelsApi from '../modelsApi';
 import MasterPlanTable from './MasterPlanTable';
 import MasterPlanAddModal from './MasterPlanAddModal';
-import {IMasterPlanTask} from '../../../common/types/models';
 
 interface IProps {
     tasks: IMasterPlanTask[];
@@ -16,13 +16,26 @@ interface IProps {
 const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
-    const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
+
+    const {data: details, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id, securityCode: 'security_code'});
+    const [updateModel] = modelsApi.endpoints.updateQualityModel.useMutation();
 
     const [isOpen, setIsOpen] = useState(false);
+    // const [editedRows, setEditedRows] = useState([]);
 
     const handleCardClose = () => {};
 
-    const handleSaveClick = () => {};
+    const handleSaveClick = async () => {
+        await updateModel({
+            id,
+            securityCode: 'security_code',
+            body: {
+                updatedBy: 'currentUser',
+            },
+        });
+
+        await refetch();
+    };
 
     const handleAddClick = () => {
         setIsOpen(true);
@@ -34,12 +47,14 @@ const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
 
     const handleDeleteClick = () => {};
 
+    const handleTableChange = () => {};
+
     return (
         <Grid rowGap={24}>
             <Grid columns="1fr auto">
                 <div />
                 <div>
-                    <RegularButton onClick={handleSaveClick} variant="pseudo" iconLeft={<PlusIcon />}>
+                    <RegularButton onClick={handleSaveClick} variant="pseudo" iconLeft={<FloppyDiskIcon />}>
                         {t('Buttons.Save')}
                     </RegularButton>
                     <RegularButton onClick={handleAddClick} variant="pseudo" iconLeft={<PlusIcon />}>
@@ -70,7 +85,7 @@ const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
                 ))}
             </Grid>
 
-            <MasterPlanTable data={tasks} />
+            <MasterPlanTable data={tasks} onChange={handleTableChange} />
 
             <MasterPlanAddModal isOpen={isOpen} onClose={handleModalClose} />
         </Grid>

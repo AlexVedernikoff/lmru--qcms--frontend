@@ -11,6 +11,7 @@ import ModelDetailsDescription from './ModelDetailsDescription';
 import ModelDetailsMasterPlan from './ModelDetailsMasterPlan';
 import ModelDetailsRiskMap from './ModelDetailsRiskMap';
 import modelsApi from '../modelsApi';
+import LoadingOverlay from '../../Common/LoadingOverlay';
 
 enum ETabs {
     masterPlan,
@@ -20,9 +21,16 @@ enum ETabs {
 const ModelDetails: React.FC = () => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
-    const {data: details} = modelsApi.endpoints.getModelDetails.useQuery({id, securityCode: 'security_code'});
+    const {
+        data: details,
+        isLoading,
+        isFetching,
+    } = modelsApi.endpoints.getModelDetails.useQuery({id, securityCode: 'security_code'});
 
-    const title = useMemo(() => `${details?.qualityModelFullName} - ${id}`, [details?.qualityModelFullName, id]);
+    const title = useMemo(
+        () => (details?.qualityModelFullName ? `${details?.qualityModelFullName} - ${id}` : '-'),
+        [details?.qualityModelFullName, id]
+    );
 
     const [activeTab, setActiveTab] = useState<ETabs>(ETabs.masterPlan);
 
@@ -40,15 +48,15 @@ const ModelDetails: React.FC = () => {
             </Grid>
 
             <Grid className={styles.panel} rowGap={24} columnGap={16}>
-                <Grid columnGap={16} columns="570px 1fr">
+                <Grid columnGap={16} columns="1fr auto">
                     <ModelDetailsMainData />
                     <ModelDetailsQualityManager />
                 </Grid>
 
                 <ModelDetailsCharacteristics />
 
-                <Grid columnGap={16} columns="auto 1fr">
-                    <ModelDetailsRiskLevel onResetClick={() => {}} />
+                <Grid columnGap={24} columns="auto 1fr">
+                    <ModelDetailsRiskLevel />
                     <ModelDetailsDescription />
                 </Grid>
 
@@ -66,6 +74,8 @@ const ModelDetails: React.FC = () => {
                     {activeTab === ETabs.riskMap && <ModelDetailsRiskMap />}
                 </Grid>
             </Grid>
+
+            {(isLoading || isFetching) && <LoadingOverlay />}
         </Grid>
     );
 };

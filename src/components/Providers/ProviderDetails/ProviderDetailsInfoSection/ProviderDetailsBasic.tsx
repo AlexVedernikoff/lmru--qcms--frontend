@@ -1,4 +1,4 @@
-import {Checkbox, Grid, Input, Typography} from 'fronton-react';
+import {Checkbox, Grid, Typography} from 'fronton-react';
 import {useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
@@ -11,7 +11,7 @@ const ProductDetailsProvider: React.FC = () => {
     const {t} = useTranslation('providers');
     const {id: supplierId = ''} = useParams();
 
-    const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
+    // const handleInputChange = (_: React.ChangeEvent<HTMLInputElement>, value: string) => {};
     const {data: supplierDetails = {}} = useGetSupplierDetsQuery(supplierId);
 
     const {

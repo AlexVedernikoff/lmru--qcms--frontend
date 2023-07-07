@@ -1,23 +1,81 @@
-import {useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Dropdown, DropdownItem, Grid, IconButton} from 'fronton-react';
 import {UploadIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
+import {DefaultOptionType} from 'antd/es/select';
 import {TableRowSelection} from 'antd/es/table/interface';
 import {IMasterPlanRequirementTableItem, TWithReactKey} from '../../../common/clientModels';
 import CustomTable from '../../Common/CustomTable';
 import {CustomSwitch} from '../../Common/Switch/CustomSwitch';
 import {IMasterPlanTask} from '../../../common/types/models';
+import modelsApi from '../modelsApi';
+import {TreeSelect} from 'antd';
+import styles from './ModelDetails.module.css';
 
 type TDataType = TWithReactKey<IMasterPlanRequirementTableItem>;
+
+interface ICustomTreeProps {
+    taskCategoryOptions: DefaultOptionType[];
+    onSelect: (value: string, recordId: string) => void;
+    selected: number;
+    record: TDataType;
+}
+
+const CustomTree: React.FC<ICustomTreeProps> = ({taskCategoryOptions, selected, onSelect, record}) => {
+    return (
+        <TreeSelect
+            className={styles.treeSelect}
+            size="large"
+            treeData={taskCategoryOptions}
+            value={selected ? [`type ${selected}`] : []}
+            onChange={value => onSelect(value?.[0]?.split(' ')?.[1], record.key as string)}
+            showCheckedStrategy="SHOW_CHILD"
+            treeCheckable
+            // multiple={false}
+        />
+    );
+};
 
 interface IProps {
     isEdit?: boolean;
     data: IMasterPlanTask[];
+    onChange: (data: IMasterPlanTask[]) => void;
 }
 
-const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
+const MasterPlanTable: React.FC<IProps> = ({isEdit, data, onChange}) => {
     const {t} = useTranslation('models');
+
+    const {data: taskCategories = []} = modelsApi.endpoints.getTaskCategory.useQuery({securityCode: 'security_code'});
+
+    const taskCategoryOptions = useMemo(
+        () =>
+            taskCategories.map<DefaultOptionType>(cat => ({
+                label: cat.name,
+                value: `task ${cat.id}`,
+                checkable: false,
+                children: cat.types.map(t => ({
+                    label: t.name,
+                    value: `type ${t.id}`,
+                })),
+            })),
+        [taskCategories]
+    );
+
+    // const handleEditField = () => {};
+
+    const handleSelectType = useCallback(
+        (value: string, recordId: string) => {
+            onChange(
+                data.map(d =>
+                    d.id.toString() === recordId
+                        ? {...d, categoryType: {...d.categoryType, id: value ? parseInt(value, 10) : undefined}}
+                        : d
+                )
+            );
+        },
+        [data, onChange]
+    );
 
     const columns = useMemo<ColumnsType<TDataType>>(
         () => [
@@ -33,16 +91,19 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.category'),
                 dataIndex: 'category',
-                render: (data: TDataType['category']) => <div>{data}</div>,
+                render: (data: TDataType['category']) => <div>{data.name}</div>,
                 width: 246,
             },
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.type'),
-                dataIndex: 'type',
-                render: (data: TDataType['type']) => (
-                    <Dropdown size="m" closeOnSelect placeholder={t('Common.Select')} value={data} onSelect={() => {}}>
-                        <DropdownItem text={data} value={data} />
-                    </Dropdown>
+                dataIndex: 'category',
+                render: (data: TDataType['type'], record: TDataType) => (
+                    <CustomTree
+                        taskCategoryOptions={taskCategoryOptions}
+                        onSelect={handleSelectType}
+                        selected={data.id!}
+                        record={record}
+                    />
                 ),
                 width: 246,
             },
@@ -54,7 +115,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
-                        value={data[0]?.id}
+                        value={data[0]?.id?.toString()}
                         onSelect={() => {}}
                     >
                         {data.map(d => (
@@ -72,7 +133,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
-                        value={data[0]?.id}
+                        value={data[0]?.id.toString()}
                         onSelect={() => {}}
                     >
                         {data.map(d => (
@@ -90,7 +151,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
-                        value={data[0]?.id}
+                        value={data[0]?.id.toString()}
                         onSelect={() => {}}
                     >
                         {data.map(d => (
@@ -208,7 +269,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
                 width: 180,
             },
         ],
-        [t]
+        [handleSelectType, t, taskCategoryOptions]
     );
 
     const dataSource = useMemo<TDataType[]>(
@@ -216,15 +277,15 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data}) => {
             data.map(d => ({
                 key: d.id,
                 status: d.regulatoryType,
-                category: d.categoryType?.category?.name,
-                type: d.categoryType?.name,
+                category: d.categoryType?.category || {},
+                type: d.categoryType || {},
                 legal: d.linkedRegulations,
                 documents: d.linkedRegulations,
                 origin: d.linkedRegulations,
                 process: d.manualProcessing,
                 responsiblePerson: d.responsible?.type,
                 approvingPerson: d.approvers?.[0]?.type,
-                documentTemplate: d.documentTemplates?.[0]?.toString() || '',
+                documentTemplate: d.documentTemplates?.[0] || 0,
                 taskRequirement: d.taskRequired,
             })) || [],
         [data]
