@@ -13,12 +13,15 @@ import {
     UpdateDocumentApprovingStatuses,
 } from '../../../../../../common/types/taskDetails';
 import {taskDetailsApi} from '../../../api';
+import {notification} from 'antd';
 
 interface Props {
     taskDetails: ITaskDetails;
 }
 
 const TasksTable: React.FC<Props> = ({taskDetails}) => {
+    const [notificationApi] = notification.useNotification();
+
     const {t} = useTranslation('tasks');
 
     const [selectedTaskProductsIds, setSelectedTaskProductsIds] = useState<number[]>([]);
@@ -58,13 +61,17 @@ const TasksTable: React.FC<Props> = ({taskDetails}) => {
     useEffect(() => {
         if (updateTaskDetailsRequestState.isUninitialized || updateTaskDetailsRequestState.isLoading) return;
         if (updateTaskDetailsRequestState.isError) {
-            alert('Не удалось отправить запрос. Повторите попытку позже.');
+            notificationApi.open({
+                message: 'Не удалось отправить запрос. Повторите попытку позже.',
+            });
         }
         if (updateTaskDetailsRequestState.isSuccess) {
-            alert('Запрос успешно отправлен.');
+            notificationApi.open({
+                message: 'Запрос успешно отправлен.',
+            });
         }
         updateTaskDetailsRequestState.reset();
-    }, [updateTaskDetailsRequestState]);
+    }, [updateTaskDetailsRequestState, notificationApi]);
 
     const handleViewProductDetails: React.MouseEventHandler<HTMLAnchorElement> = useCallback(e => {
         //TODO добавить детализацию

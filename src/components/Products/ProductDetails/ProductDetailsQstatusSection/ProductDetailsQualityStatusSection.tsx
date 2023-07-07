@@ -22,6 +22,7 @@ import {
     qaulityStatusSectionMapping,
 } from '../ProductDetailsMapping/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
 import {useParams} from 'react-router-dom';
+import {notification} from 'antd';
 
 export enum EBlockers {
     BlockOrders = 'blockOrders',
@@ -46,6 +47,8 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     const [tableData, setTableData] = useState<IDataDeatailsQstatus[]>([]);
     const [isChangesInData, setIsChangesInData] = useState(false);
     const [isDiscardChanges, setIsDiscardChanges] = useState(false);
+
+    const [notificationApi] = notification.useNotification();
 
     useEffect(() => {
         setIsDiscardChanges(false);
@@ -243,7 +246,9 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             try {
                 await postUpdateProduct({body, securityCode}).unwrap();
             } catch (error) {
-                alert('Ошибка при обновлении продукта');
+                notificationApi.open({
+                    message: 'Ошибка при обновлении продукта',
+                });
                 discardChanges();
             }
             setIsChangesInData(false);

@@ -4,8 +4,9 @@ import {IProduct} from '../../../../common/types/products';
 import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
 import FileUploadForm from '../../../Common/FileUploadForm';
 import withModelApi from '../withModelApi';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {ICreateTaskRequestBody} from '../../../../common/types/createTask';
+import {notification} from 'antd';
 
 import s from './styles.module.css';
 
@@ -89,31 +90,35 @@ const createTaskRequestMock: ICreateTaskRequestBody = {
 };
 
 const ProductsAddTasksModalWindow: React.FC<Props> = ({show, onClose, products}) => {
+    const [notificationApi] = notification.useNotification();
+
     const {t} = useTranslation('products');
 
-    const [createTask, createTaskResult] = withModelApi.useCreateTaskMutation();
+    const [createTask, createTaskRequestState] = withModelApi.useCreateTaskMutation();
 
     const [formState, setFormState] = useState<FormState>(initialFormState);
 
     const isFromValid = formState.file;
 
-    const clearForm = () => setFormState(initialFormState);
-
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         onClose();
-        clearForm();
-    };
+        setFormState(initialFormState);
+    }, [onClose]);
 
     useEffect(() => {
         if (!isFromValid) return;
-        if (createTaskResult.isError) {
-            alert('Не удалось создать задачу. Повторите попытку позже.');
+        if (createTaskRequestState.isError) {
+            notificationApi.open({
+                message: 'Не удалось создать задачу. Повторите попытку позже.',
+            });
         }
-        if (createTaskResult.isSuccess) {
-            alert('Задача успешно создана!');
+        if (createTaskRequestState.isSuccess) {
+            notificationApi.open({
+                message: 'Задача успешно создана!',
+            });
             handleClose();
         }
-    }, [createTaskResult, isFromValid]);
+    }, [createTaskRequestState, isFromValid, notificationApi, handleClose]);
 
     const handleSubmit = () => {
         if (!isFromValid) return;
@@ -158,7 +163,7 @@ const ProductsAddTasksModalWindow: React.FC<Props> = ({show, onClose, products})
                     </Grid>
                     <CustomSwitch
                         checked={false}
-                        handleChange={console.log}
+                        handleChange={() => undefined}
                         name={t('WithModels.addTaskModalWindow.dutyLabel')}
                     />
                     <FileUploadForm onFileSelect={handleFileSelect} />

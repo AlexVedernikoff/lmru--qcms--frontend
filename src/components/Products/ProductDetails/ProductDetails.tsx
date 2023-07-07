@@ -6,9 +6,11 @@ import ProductDetailsTabs from './ProductDetailsTabsSection/ProductDetailsTabs';
 import {useGetDetailsForProductsQuery} from './productDetailsApi';
 import {securityCode} from './mockProductDetails';
 import {useEffect} from 'react';
+import {notification} from 'antd';
 
 const ProductDetails: React.FC = () => {
     const {id: productId = ''} = useParams();
+    const [notificationApi] = notification.useNotification();
 
     const {
         data: details,
@@ -24,12 +26,12 @@ const ProductDetails: React.FC = () => {
             const message = err.data.errors[0].message;
 
             if (code && status && message) {
-                alert(`Ошибка! Код: ${code}, статус: ${status}, сообщение: ${message}`);
+                notificationApi.open({message: `Ошибка! Код: ${code}, статус: ${status}, сообщение: ${message}`});
             } else {
-                alert(`Ошибка!`);
+                notificationApi.open({message: `Ошибка!`});
             }
         }
-    }, [errorGet, isGetError]);
+    }, [errorGet, isGetError, notificationApi]);
 
     const title = details?.description;
 

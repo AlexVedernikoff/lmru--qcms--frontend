@@ -1,26 +1,32 @@
-import {IDocumentMetadata} from '../../../common/types/createDocument';
+import {ICreateDocumentResponse, IDocumentMetadata} from '../../../common/types/createDocument';
 import FileUploadForm from '../FileUploadForm';
 import {useEffect} from 'react';
 import {Loader} from 'fronton-react';
 import api from './api';
+import {SerializedError} from '@reduxjs/toolkit';
+import {FetchBaseQueryError} from '@reduxjs/toolkit/dist/query';
 
 import s from './styles.module.css';
 
 interface Props {
     documentMetadata: IDocumentMetadata;
+    onError: (error: FetchBaseQueryError | SerializedError) => void;
+    onSuccess: (createDocumentResponse: ICreateDocumentResponse) => void;
 }
 
-const FileImmediatelyUploadForm: React.FC<Props> = ({documentMetadata}) => {
-    const [createDocument, {isLoading, isSuccess, isError}] = api.useCreateDocumentMutation();
+const FileImmediatelyUploadForm: React.FC<Props> = ({documentMetadata, onError, onSuccess}) => {
+    const [createDocument, createDocumentRequestState] = api.useCreateDocumentMutation();
 
     useEffect(() => {
-        if (isError) {
-            alert('Не удалось загрузить файл. Повторите попытку позже.');
+        if (createDocumentRequestState.isUninitialized) return;
+        if (createDocumentRequestState.isError) {
+            onError(createDocumentRequestState.error);
         }
-        if (isSuccess) {
-            alert('Файл успешно загружен!');
+        if (createDocumentRequestState.isSuccess) {
+            onSuccess(createDocumentRequestState.data);
         }
-    }, [isSuccess, isError]);
+        createDocumentRequestState.reset();
+    }, [createDocumentRequestState, onError, onSuccess]);
 
     const handleFileSelect = (file?: File) => {
         if (!file) return;
@@ -38,7 +44,7 @@ const FileImmediatelyUploadForm: React.FC<Props> = ({documentMetadata}) => {
         });
     };
 
-    if (isLoading) {
+    if (createDocumentRequestState.isLoading) {
         return (
             <div className={s.root}>
                 <Loader />

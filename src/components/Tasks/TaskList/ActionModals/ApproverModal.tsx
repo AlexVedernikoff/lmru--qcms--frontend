@@ -13,8 +13,11 @@ import {
 } from 'fronton-react';
 import tasksApi from '../../tasksApi';
 import {IModalProps} from '../types';
+import {notification} from 'antd';
 
 const ApproverModal: React.FC<IModalProps> = ({isOpen, onClose, dataList}) => {
+    const [notificationApi] = notification.useNotification();
+
     const {t} = useTranslation('tasks');
 
     const [type, setType] = useState<string | undefined>();
@@ -34,9 +37,11 @@ const ApproverModal: React.FC<IModalProps> = ({isOpen, onClose, dataList}) => {
 
         if (updateTasksResult.isError) {
             type TDataError = {data: {errors: [{message: string}]}};
-            alert((updateTasksResult.error as unknown as TDataError)?.data?.errors?.[0]?.message);
+            notificationApi.open({
+                message: (updateTasksResult.error as unknown as TDataError)?.data?.errors?.[0]?.message,
+            });
         }
-    }, [updateTasksResult.error, updateTasksResult.isError, updateTasksResult.isSuccess, onClose]);
+    }, [updateTasksResult.error, updateTasksResult.isError, updateTasksResult.isSuccess, onClose, notificationApi]);
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser(e.target.value);

@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {IProduct} from '../../../../common/types/products';
 import {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import withModelApi from '../withModelApi';
+import {notification} from 'antd';
 
 interface Props {
     show: boolean;
@@ -12,9 +13,11 @@ interface Props {
 }
 
 const ProductsAddCommentModalWindow: React.FC<Props> = ({show, onClose, products}) => {
+    const [notificationApi] = notification.useNotification();
+
     const {t} = useTranslation('products');
 
-    const [updateProducts, {isLoading, isError, isSuccess}] = withModelApi.useUpdateProductsMutation();
+    const [updateProducts, updateProductsRequestState] = withModelApi.useUpdateProductsMutation();
 
     const [text, setText] = useState<string>('');
 
@@ -25,10 +28,10 @@ const ProductsAddCommentModalWindow: React.FC<Props> = ({show, onClose, products
     const clear = () => setText('');
 
     const handleClose = useCallback(() => {
-        if (isLoading) return;
+        if (updateProductsRequestState.isLoading) return;
         onClose();
         clear();
-    }, [isLoading, onClose]);
+    }, [updateProductsRequestState, onClose]);
 
     const handleSubmit = () => {
         if (!text) return;
@@ -44,15 +47,20 @@ const ProductsAddCommentModalWindow: React.FC<Props> = ({show, onClose, products
     };
 
     useEffect(() => {
-        if (!text) return;
-        if (isError) {
-            alert('Не удалось отправить запрос. Повторите попытку позже.');
+        if (updateProductsRequestState.isUninitialized) return;
+        if (updateProductsRequestState.isError) {
+            notificationApi.open({
+                message: 'Не удалось отправить запрос. Повторите попытку позже.',
+            });
         }
-        if (isSuccess) {
-            alert('Запрос успешно отправлен!');
+        if (updateProductsRequestState.isSuccess) {
+            notificationApi.open({
+                message: 'Запрос успешно отправлен!',
+            });
         }
+        updateProductsRequestState.reset();
         handleClose();
-    }, [isError, isSuccess, text, handleClose]);
+    }, [updateProductsRequestState, text, handleClose, notificationApi]);
 
     return (
         <Modal onClose={handleClose} show={show}>
@@ -65,7 +73,12 @@ const ProductsAddCommentModalWindow: React.FC<Props> = ({show, onClose, products
             </ModalContent>
             <ModalFooter>
                 <Grid justifyContent="right" columns="auto auto" columnGap="24px">
-                    <RegularButton variant="outline" size="l" disabled={isLoading} onClick={handleClose}>
+                    <RegularButton
+                        variant="outline"
+                        size="l"
+                        disabled={updateProductsRequestState.isLoading}
+                        onClick={handleClose}
+                    >
                         {t('WithModels.addCommentModalWindow.closeModalButton')}
                     </RegularButton>
                     <RegularButton variant="primary" size="l" disabled={!text} onClick={handleSubmit}>

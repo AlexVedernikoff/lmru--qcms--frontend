@@ -6,6 +6,7 @@ import FileUploadForm from '../../../Common/FileUploadForm';
 import {IDocumentMetaData} from '../../../../common/types/files';
 import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
 import {ITaskDetails} from '../../../../common/types/taskDetails';
+import {notification} from 'antd';
 
 import styles from './styles.module.css';
 
@@ -27,6 +28,8 @@ const initialFormState: FormState = {
 };
 
 const TaskUploadDocumentModal: React.FC<Props> = ({show, onClose}) => {
+    const [notificationApi] = notification.useNotification();
+
     const {t} = useTranslation('tasks');
 
     const [formState, setFormState] = useState<FormState>(initialFormState);
@@ -56,7 +59,9 @@ const TaskUploadDocumentModal: React.FC<Props> = ({show, onClose}) => {
 
         if (createDocumentResult.isError) {
             type TDataError = {data: {errors: [{message: string}]}};
-            alert((createDocumentResult.error as unknown as TDataError)?.data?.errors?.[0]?.message);
+            notificationApi.open({
+                message: (createDocumentResult.error as unknown as TDataError)?.data?.errors?.[0]?.message,
+            });
         }
     }, [
         createDocumentResult.error,
@@ -65,6 +70,7 @@ const TaskUploadDocumentModal: React.FC<Props> = ({show, onClose}) => {
         formState.file,
         handleClose,
         onClose,
+        notificationApi,
     ]);
 
     const handleStartDateChange = (date: string[]) => {

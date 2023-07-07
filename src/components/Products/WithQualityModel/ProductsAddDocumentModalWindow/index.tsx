@@ -6,6 +6,7 @@ import {IDocumentMetaData} from '../../../../common/types/files';
 import FileUploadForm from '../../../Common/FileUploadForm';
 import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
 import withModelApi from '../withModelApi';
+import {notification} from 'antd';
 
 import styles from './styles.module.css';
 
@@ -28,6 +29,8 @@ const initialFormState: FormState = {
 };
 
 const ProductsAddDocumentModalWindow: React.FC<Props> = ({show, onClose, products}) => {
+    const [notificationApi] = notification.useNotification();
+
     const {t} = useTranslation('products');
     const [formState, setFormState] = useState<FormState>(initialFormState);
 
@@ -56,7 +59,9 @@ const ProductsAddDocumentModalWindow: React.FC<Props> = ({show, onClose, product
 
         if (createDocumentResult.isError) {
             type TDataError = {data: {errors: [{message: string}]}};
-            alert((createDocumentResult.error as unknown as TDataError)?.data?.errors?.[0]?.message);
+            notificationApi.open({
+                message: (createDocumentResult.error as unknown as TDataError)?.data?.errors?.[0]?.message,
+            });
         }
     }, [
         createDocumentResult.error,
@@ -65,6 +70,7 @@ const ProductsAddDocumentModalWindow: React.FC<Props> = ({show, onClose, product
         formState.file,
         handleClose,
         onClose,
+        notificationApi,
     ]);
 
     const handleStartDateChange = (date: string[]) => {

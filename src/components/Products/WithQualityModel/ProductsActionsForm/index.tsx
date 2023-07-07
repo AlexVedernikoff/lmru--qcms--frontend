@@ -5,6 +5,7 @@ import {useState} from 'react';
 import ModalWindowsGroup from '../ModalWindowsGroup';
 import {IProduct} from '../../../../common/types/products';
 import withModelApi from '../withModelApi';
+import {notification} from 'antd';
 
 import s from './ProductsActionsForm.module.css';
 
@@ -21,6 +22,7 @@ interface Props {
 }
 
 const ProductsActionsForm: React.FC<Props> = ({products}) => {
+    const [notificationApi] = notification.useNotification();
     const {t} = useTranslation('products');
     const [action, setAction] = useState<ProductsActions | null>(null);
     const [submitedAction, setSubmitedAction] = useState<ProductsActions | null>(null);
@@ -47,10 +49,14 @@ const ProductsActionsForm: React.FC<Props> = ({products}) => {
             .unwrap()
             .then(
                 () => {
-                    alert('Запрос успешно отправлен!');
+                    notificationApi.open({
+                        message: 'Запрос успешно отправлен!',
+                    });
                 },
                 () => {
-                    alert('Не удалось отправить запрос, повторите попытку позже.');
+                    notificationApi.open({
+                        message: 'Не удалось отправить запрос, повторите попытку позже.',
+                    });
                 }
             );
     };
