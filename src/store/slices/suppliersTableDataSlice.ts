@@ -7,6 +7,7 @@ const initialState = {
         pageIndex: 10,
     },
     content: [],
+    isLoading: true,
 };
 
 export const suppliersTableData = createSlice({
@@ -14,9 +15,13 @@ export const suppliersTableData = createSlice({
     initialState,
     reducers: {
         setSuppliersTableData(state: ISearchSuppliersResponse, action) {
-            return {...action.payload.data};
+            const {data, isLoading} = action.payload;
+            return {...data, isLoading};
+        },
+        setSuppliersLoading(state: ISearchSuppliersResponse, action) {
+            state.isLoading = action.payload;
         },
     },
 });
 
-export const {setSuppliersTableData} = suppliersTableData.actions;
+export const {setSuppliersTableData, setSuppliersLoading} = suppliersTableData.actions;

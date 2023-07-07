@@ -12,6 +12,7 @@ import {IMasterPlanTask} from '../../../common/types/models';
 import modelsApi from '../modelsApi';
 import {TreeSelect} from 'antd';
 import styles from './ModelDetails.module.css';
+import {IInitialState} from './ModelDetailsMasterPlan';
 
 type TDataType = TWithReactKey<IMasterPlanRequirementTableItem>;
 
@@ -40,10 +41,12 @@ const CustomTree: React.FC<ICustomTreeProps> = ({taskCategoryOptions, selected, 
 interface IProps {
     isEdit?: boolean;
     data: IMasterPlanTask[];
-    onChange: (data: IMasterPlanTask[]) => void;
+    updateTasks?: (key: keyof IInitialState, value: number[]) => void;
+    removeTasksArr?: number[];
+    onChange?: (data: IMasterPlanTask[]) => void;
 }
 
-const MasterPlanTable: React.FC<IProps> = ({isEdit, data, onChange}) => {
+const MasterPlanTable: React.FC<IProps> = ({isEdit, data, updateTasks, removeTasksArr, onChange}) => {
     const {t} = useTranslation('models');
 
     const {data: taskCategories = []} = modelsApi.endpoints.getTaskCategory.useQuery({securityCode: 'security_code'});
@@ -66,13 +69,14 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data, onChange}) => {
 
     const handleSelectType = useCallback(
         (value: string, recordId: string) => {
-            onChange(
-                data.map(d =>
-                    d.id.toString() === recordId
-                        ? {...d, categoryType: {...d.categoryType, id: value ? parseInt(value, 10) : undefined}}
-                        : d
-                )
-            );
+            if (onChange)
+                onChange(
+                    data.map(d =>
+                        d.id.toString() === recordId
+                            ? {...d, categoryType: {...d.categoryType, id: value ? parseInt(value, 10) : undefined}}
+                            : d
+                    )
+                );
         },
         [data, onChange]
     );
@@ -292,17 +296,15 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data, onChange}) => {
     );
 
     const rowSelection = useMemo<TableRowSelection<TDataType>>(
-        () =>
-            isEdit
-                ? {
-                      type: 'checkbox',
-                      onChange: (selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
-                          // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-                      },
-                      fixed: 'left',
-                  }
-                : {},
-        [isEdit]
+        () => ({
+            type: 'checkbox',
+            onChange: (selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
+                const key = data[0]?.regulatoryType as keyof IInitialState;
+                if (updateTasks) updateTasks(key, selectedRowKeys as number[]);
+            },
+            fixed: 'left',
+        }),
+        []
     );
 
     return (

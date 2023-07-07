@@ -8,12 +8,16 @@ import CardView from '../../Common/CardView';
 import modelsApi from '../modelsApi';
 import MasterPlanTable from './MasterPlanTable';
 import MasterPlanAddModal from './MasterPlanAddModal';
+import {IInitialState} from './ModelDetailsMasterPlan';
 
 interface IProps {
     tasks: IMasterPlanTask[];
+    handleDeleteClick: () => void;
+    updateTasks: (key: keyof IInitialState, value: number[]) => void;
+    removeTasksArr: number[];
 }
 
-const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
+const MasterPlanRequirements: React.FC<IProps> = ({tasks, handleDeleteClick, updateTasks, removeTasksArr}) => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
 
@@ -21,7 +25,6 @@ const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
     const [updateModel] = modelsApi.endpoints.updateQualityModel.useMutation();
 
     const [isOpen, setIsOpen] = useState(false);
-    // const [editedRows, setEditedRows] = useState([]);
 
     const handleCardClose = () => {};
 
@@ -45,10 +48,6 @@ const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
         setIsOpen(false);
     };
 
-    const handleDeleteClick = () => {};
-
-    const handleTableChange = () => {};
-
     return (
         <Grid rowGap={24}>
             <Grid columns="1fr auto">
@@ -60,7 +59,12 @@ const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
                     <RegularButton onClick={handleAddClick} variant="pseudo" iconLeft={<PlusIcon />}>
                         {t('Buttons.Add')}
                     </RegularButton>
-                    <RegularButton onClick={handleDeleteClick} variant="pseudo" iconLeft={<TrashIcon />}>
+                    <RegularButton
+                        onClick={handleDeleteClick}
+                        variant="pseudo"
+                        iconLeft={<TrashIcon />}
+                        disabled={!removeTasksArr.length}
+                    >
                         {t('Buttons.Delete')}
                     </RegularButton>
                 </div>
@@ -84,9 +88,7 @@ const MasterPlanRequirements: React.FC<IProps> = ({tasks}) => {
                     </CardView>
                 ))}
             </Grid>
-
-            <MasterPlanTable data={tasks} onChange={handleTableChange} />
-
+            <MasterPlanTable data={tasks} updateTasks={updateTasks} removeTasksArr={removeTasksArr} />
             <MasterPlanAddModal isOpen={isOpen} onClose={handleModalClose} />
         </Grid>
     );

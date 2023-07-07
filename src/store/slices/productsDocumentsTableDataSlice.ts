@@ -3,6 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 export interface IProductsDocumentsTableData {
     pageable: Pageable;
     content: Content[];
+    isLoading: boolean;
 }
 
 export interface Content {
@@ -22,6 +23,7 @@ const initialState = {
         pageIndex: 10,
     },
     content: [],
+    isLoading: false,
 };
 
 export const productsDocumentsTableData = createSlice({

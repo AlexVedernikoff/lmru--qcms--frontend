@@ -12,6 +12,8 @@ import {
     IUpdateQualityModelParams,
     TTaskCategoryResponse,
     ITaskCategoryParams,
+    IDeleteMasterPlanTasksResponse,
+    IDeleteMasterPlanTasksParams,
 } from '../../common/types/models';
 
 const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/';
@@ -91,10 +93,18 @@ const modelsApi = createApi({
                 },
             }),
         }),
+        deleteMasterPlanTasks: builder.mutation<IDeleteMasterPlanTasksResponse, IDeleteMasterPlanTasksParams>({
+            query: queryArg => ({
+                url: `v1/delete-master-plan-tasks/${queryArg.id}`,
+                method: 'POST',
+                body: queryArg.body,
+                headers: {securityCode: queryArg.securityCode},
+            }),
+        }),
         getTaskCategory: builder.query<TTaskCategoryResponse, ITaskCategoryParams>({
             query: params => ({
                 method: 'GET',
-                url: 'regulatory-quality-management/master-plan/task-category',
+                url: `regulatory-quality-management/master-plan/task-category`,
                 headers: {
                     ...commonHeaders,
                     securityCode: params.securityCode,
@@ -103,5 +113,7 @@ const modelsApi = createApi({
         }),
     }),
 });
+
+export const {useDeleteMasterPlanTasksMutation} = modelsApi;
 
 export default modelsApi;
