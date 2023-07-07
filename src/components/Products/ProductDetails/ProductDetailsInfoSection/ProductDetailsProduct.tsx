@@ -21,6 +21,7 @@ import {
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import EditButton from '../EditProductDetailsButton/EditProductDetailsButton';
+import {notification} from 'antd';
 
 interface IQModalLabel {
     qualityModelLabel: string;
@@ -28,6 +29,8 @@ interface IQModalLabel {
 }
 
 const ProductDetailsProduct: React.FC = () => {
+    const [notificationApi] = notification.useNotification();
+
     const {t} = useTranslation('products');
     const {id: productId = ''} = useParams();
 
@@ -87,7 +90,9 @@ const ProductDetailsProduct: React.FC = () => {
                 setIsQModelEdit(false);
                 isChemistryChanged && setIsNoChemestryEdit(true);
             } catch (error) {
-                alert('Ошибка при обновлении продукта');
+                notificationApi.open({
+                    message: 'Ошибка при обновлении продукта',
+                });
             }
         }
     };
@@ -110,7 +115,9 @@ const ProductDetailsProduct: React.FC = () => {
 
                 qModalLabelArr && setqModalLabels(qModalLabelArr);
             } catch (error) {
-                alert('Ошибка при редактировании модели качества');
+                notificationApi.open({
+                    message: 'Ошибка при редактировании модели качества',
+                });
             }
         }
         setIsQModelEdit(!isQModelEdit);

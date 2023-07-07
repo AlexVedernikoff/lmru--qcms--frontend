@@ -7,9 +7,12 @@ import {IDocumentMetaData} from '../../../../common/types/files';
 import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
 import styles from './DocumentsModal.module.css';
 import {IModalProps} from '../types';
+import {notification} from 'antd';
 
 const DocumnentModal: React.FC<IModalProps> = ({isOpen, onClose, dataList}) => {
     const {t} = useTranslation('tasks');
+
+    const [notificationApi] = notification.useNotification();
 
     const [isPartial, setIsPartial] = useState(false);
     const [startDate, setStartDate] = useState<string | undefined>();
@@ -30,9 +33,17 @@ const DocumnentModal: React.FC<IModalProps> = ({isOpen, onClose, dataList}) => {
 
         if (createDocumentResult.isError) {
             type TDataError = {data: {errors: [{message: string}]}};
-            alert((createDocumentResult.error as unknown as TDataError)?.data?.errors?.[0]?.message);
+            notificationApi.open({
+                message: (createDocumentResult.error as unknown as TDataError)?.data?.errors?.[0]?.message,
+            });
         }
-    }, [createDocumentResult.error, createDocumentResult.isError, createDocumentResult.isSuccess, onClose]);
+    }, [
+        createDocumentResult.error,
+        createDocumentResult.isError,
+        createDocumentResult.isSuccess,
+        onClose,
+        notificationApi,
+    ]);
 
     const handleStartDateChange = (date: string[]) => {
         setStartDate(date[0]);

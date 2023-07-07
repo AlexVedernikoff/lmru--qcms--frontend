@@ -11,7 +11,7 @@ import {
     RegularButton,
 } from 'fronton-react';
 import {IProduct} from '../../../../common/types/products';
-import {Switch} from 'antd';
+import {Switch, notification} from 'antd';
 import {ChangeEvent, useState} from 'react';
 import api from './api';
 
@@ -41,6 +41,8 @@ const initFormState: IFormState = {
 };
 
 const ProductsBlockOrUnBlockModalWindow: React.FC<Props> = ({show, onClose, products, onSubmit}) => {
+    const [notificationApi] = notification.useNotification();
+
     const {t} = useTranslation('products');
 
     const [formState, setFormState] = useState<IFormState>(initFormState);
@@ -95,10 +97,14 @@ const ProductsBlockOrUnBlockModalWindow: React.FC<Props> = ({show, onClose, prod
             .unwrap()
             .then(
                 () => {
-                    alert('Данные продуктов успешно изменены!');
+                    notificationApi.open({
+                        message: 'Данные продуктов успешно изменены!',
+                    });
                 },
                 () => {
-                    alert('Не удалось отправить запрос. Повторите попытку позже.');
+                    notificationApi.open({
+                        message: 'Не удалось отправить запрос. Повторите попытку позже.',
+                    });
                 }
             )
             .finally(() => {

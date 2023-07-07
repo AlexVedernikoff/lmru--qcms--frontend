@@ -7,8 +7,10 @@ import TaskDetailsInfoEditForm from './TaskDetailsInfoEditForm';
 import {taskDetailsApi} from '../api';
 import EditTaskDetailsButton from './EditTaskDetailsButton';
 import StopEditingButton from './StopEditingButton';
+import {notification} from 'antd';
 
 import styles from './styles.module.css';
+
 interface Props {
     taskDetails: ITaskDetails;
 }
@@ -19,6 +21,8 @@ enum Status {
 }
 
 const ProductDetailsInfoSection: React.FC<Props> = ({taskDetails}) => {
+    const [notificationApi] = notification.useNotification();
+
     const title = `${taskDetails.categoryName} - ${taskDetails.categoryTypeName} - ${taskDetails.id}`;
 
     const [updateTaskDetails, updateTaskDetailsRequestState] = taskDetailsApi.useUpdateTaskDetailsMutation();
@@ -42,13 +46,17 @@ const ProductDetailsInfoSection: React.FC<Props> = ({taskDetails}) => {
         const {isLoading, isSuccess, isUninitialized} = updateTaskDetailsRequestState;
         if (isLoading || isUninitialized) return;
         if (isSuccess) {
-            alert('Данные успешно обновлены!');
+            notificationApi.open({
+                message: 'Данные успешно обновлены!',
+            });
         } else {
-            alert('Не удалось выполнить запрос. Повторите попытку позже.');
+            notificationApi.open({
+                message: 'Не удалось выполнить запрос. Повторите попытку позже.',
+            });
         }
         setStatus(Status.View);
         updateTaskDetailsRequestState.reset();
-    }, [status, updateTaskDetailsRequestState]);
+    }, [status, updateTaskDetailsRequestState, notificationApi]);
 
     if (status === Status.View) {
         return (
