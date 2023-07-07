@@ -17,7 +17,7 @@ const ModelDetailsRiskLevel: React.FC<IProps> = ({onResetClick}) => {
     const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
 
     const riskParams = useMemo(() => {
-        let style = styles.minorChip;
+        let style = '';
         let label = '';
 
         switch (details?.productGroupRisks.calculatedRisk) {

@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
-import {Grid, IconButton, RegularButton, Textarea, Typography} from 'fronton-react';
+import {Grid, RegularButton, Textarea, Typography} from 'fronton-react';
 import EditIcon from '../../Icons/EditIcon';
 import modelsApi from '../modelsApi';
 import styles from './ModelDetails.module.css';
@@ -54,9 +54,9 @@ const ModelDetailsDescription: React.FC = () => {
                     </Grid>
                 ) : (
                     <Grid columns="48px" gap={16}>
-                        <IconButton aria-label="edit" size="s" onClick={handleEditClick}>
+                        <RegularButton variant="pseudo" aria-label="edit" size="s" onClick={handleEditClick}>
                             <EditIcon color="none" />
-                        </IconButton>
+                        </RegularButton>
                     </Grid>
                 )}
             </Grid>

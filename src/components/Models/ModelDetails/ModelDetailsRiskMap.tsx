@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Dropdown, DropdownItem, Grid, GridItem, IconButton, RegularButton, Typography} from 'fronton-react';
+import {Dropdown, DropdownItem, Grid, GridItem, RegularButton, Typography} from 'fronton-react';
 import {useParams} from 'react-router-dom';
 import commonStyles from '../../Common.module.css';
 import modelsApi from '../modelsApi';
@@ -117,9 +117,9 @@ const ModelDetailsRiskMap: React.FC = () => {
                             </Grid>
                         ) : (
                             <Grid columns="48px" gap={16}>
-                                <IconButton aria-label="edit" size="s" onClick={handleEditClick}>
+                                <RegularButton variant="pseudo" aria-label="edit" size="s" onClick={handleEditClick}>
                                     <EditIcon color="none" />
-                                </IconButton>
+                                </RegularButton>
                             </Grid>
                         )}
                     </Grid>

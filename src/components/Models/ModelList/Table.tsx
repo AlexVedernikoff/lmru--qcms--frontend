@@ -163,7 +163,7 @@ const ModelsTable: React.FC<IProps> = ({sort, onSortChange, onPageChange, tableD
                     />
                 );
             },
-            width: 700,
+            width: 550,
         },
         {
             title: (

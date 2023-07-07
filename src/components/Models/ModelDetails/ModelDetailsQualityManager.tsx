@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Grid, IconButton, Input, RegularButton, Typography} from 'fronton-react';
+import {Grid, Input, RegularButton, Typography} from 'fronton-react';
 import {useParams} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import styles from '../../Common.module.css';
@@ -51,26 +51,10 @@ const ModelDetailsQualityManager: React.FC = () => {
             id,
             securityCode: 'security_code',
             body: {
-                // productModelNomenclatureId: 0,
-                // qualityModelForMixtures: true,
-                // qualityModelLabel: 'Этикетка тестовая',
-                // qualityModelFullName: 'Полное наименование модели качества',
-                // qualityModelDescription: 'Описание модели качества',
-                // deleteRelationToNomenclature: true,
-                // productGroupRisks: {
-                //     productRiskLevel: 1,
-                //     personLevelRiskForCorrectUsage: 2,
-                //     personLevelRiskForNonCorrectUsage: 3,
-                //     sustainabilityRisk: 4,
-                //     regulatoryRisk: 5,
-                //     healthRisk: 6,
-                //     riskComments: 'Комментарий к группе риска',
-                // },
-                // regulatoryReferences: [1],
                 assignedApprovers: [
                     {
-                        userId: SQM,
-                        role: QE,
+                        userId: SQM!,
+                        role: QE!,
                         buId: 9,
                     },
                 ],
@@ -95,9 +79,9 @@ const ModelDetailsQualityManager: React.FC = () => {
                     </Grid>
                 ) : (
                     <Grid columns="48px" gap={4}>
-                        <IconButton aria-label="edit" size="s" onClick={handleEditClick}>
+                        <RegularButton variant="pseudo" aria-label="edit" size="s" onClick={handleEditClick}>
                             <EditIcon color="none" />
-                        </IconButton>
+                        </RegularButton>
                     </Grid>
                 )}
             </Grid>

@@ -118,26 +118,26 @@ export enum ERegulatoryType {
 }
 
 export interface IMasterPlanTask {
-    id: string; // required - идентификатор задачи в БД
+    id: number; // required - идентификатор задачи в БД
     categoryType: {
-        id: number;
-        name: string;
-        category: {
-            id: number;
-            name: string;
+        id?: number;
+        name?: string;
+        category?: {
+            id?: number;
+            name?: string;
         };
     }; // required, - тип задачи из категории (содержит ссылку на категорию, к которой относится)
     version: number; // required - версия задачи
     regulatoryType: ERegulatoryType; // required - тип плана ENUM: [DISTRIBUTOR, IMPORTER, MANUFACTURER] (поставщик, СТМ, дистрибьютор)
     // otional, законодательное требование для протоколов сертификационных испытаний (из отдельной таблички)
     linkedRegulations: {
-        id: string; // required, идентификатор связанного законодательного требования
+        id: number; // required, идентификатор связанного законодательного требования
         name: string; // required, название связанного законодательного требования
         regionCodes: string[]; // requried, регион распространения законодательного требования
     }[];
     // required, - документы, необходимые в рамках квалификационного и сертификационного сбора
     packagingMaterialDocumentTypes: {
-        id: string; // required, идентификатор в базе
+        id: number; // required, идентификатор в базе
         description: string; // required, название документа
     }[];
     manualProcessing: boolean; // required, флаг показывающий, что задача на поставщика будет создана вручную или автоматически
@@ -288,10 +288,33 @@ export interface IModelDetailsResponse {
 
 export interface IUpdateQualityModelParams {
     application?: string;
-    accept: string;
+    accept?: string;
     securityCode?: string;
     id: string;
-    body: object;
+    body: {
+        productModelNomenclatureId?: number;
+        qualityModelForMixtures?: boolean;
+        qualityModelLabel?: string;
+        qualityModelFullName?: string;
+        qualityModelDescription?: string;
+        deleteRelationToNomenclature?: boolean;
+        productGroupRisks?: {
+            productRiskLevel?: number;
+            personLevelRiskForCorrectUsage?: number;
+            personLevelRiskForNonCorrectUsage?: number;
+            sustainabilityRisk?: number;
+            regulatoryRisk?: number;
+            healthRisk?: number;
+            riskComments?: string;
+        };
+        regulatoryReferences?: Array<number>;
+        assignedApprovers?: Array<{
+            userId: string;
+            role: string;
+            buId: number;
+        }>;
+        updatedBy: string;
+    };
 }
 
 export interface IUpdateQualityModelResponse {}
