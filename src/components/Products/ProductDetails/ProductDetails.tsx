@@ -10,7 +10,7 @@ import {notification} from 'antd';
 
 const ProductDetails: React.FC = () => {
     const {id: productId = ''} = useParams();
-    const [notificationApi] = notification.useNotification();
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
 
     const {
         data: details,
@@ -36,12 +36,15 @@ const ProductDetails: React.FC = () => {
     const title = details?.description;
 
     return (
-        <Grid rowGap={16}>
-            <Typography variant="h2">{title}</Typography>
-            <ProductDetailsInfoSection />
-            <ProductDetailsQualityStatusSection />
-            <ProductDetailsTabs />
-        </Grid>
+        <>
+            {notificationContextHolder}
+            <Grid rowGap={16}>
+                <Typography variant="h2">{title}</Typography>
+                <ProductDetailsInfoSection />
+                <ProductDetailsQualityStatusSection />
+                <ProductDetailsTabs />
+            </Grid>
+        </>
     );
 };
 

@@ -90,7 +90,7 @@ const createTaskRequestMock: ICreateTaskRequestBody = {
 };
 
 const ProductsAddTasksModalWindow: React.FC<Props> = ({show, onClose, products}) => {
-    const [notificationApi] = notification.useNotification();
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
 
     const {t} = useTranslation('products');
 
@@ -135,51 +135,54 @@ const ProductsAddTasksModalWindow: React.FC<Props> = ({show, onClose, products})
     };
 
     return (
-        <Modal onClose={handleClose} show={show} size="l">
-            <ModalHeader title={t('WithModels.Actions.actions.addTasks')} />
-            <ModalContent>
-                <Grid rowGap="20px">
-                    <Grid columns="1fr 1fr 1fr 1fr" columnGap="30px">
-                        <Grid rowGap="20px">
-                            <Dropdown label={t('WithModels.addTaskModalWindow.categoryLabel')} />
-                            <Dropdown label={t('WithModels.addTaskModalWindow.documentTypeLabel')} />
+        <>
+            {notificationContextHolder}
+            <Modal onClose={handleClose} show={show} size="l">
+                <ModalHeader title={t('WithModels.Actions.actions.addTasks')} />
+                <ModalContent>
+                    <Grid rowGap="20px">
+                        <Grid columns="1fr 1fr 1fr 1fr" columnGap="30px">
+                            <Grid rowGap="20px">
+                                <Dropdown label={t('WithModels.addTaskModalWindow.categoryLabel')} />
+                                <Dropdown label={t('WithModels.addTaskModalWindow.documentTypeLabel')} />
+                            </Grid>
+                            <Grid rowGap="20px">
+                                <Dropdown label={t('WithModels.addTaskModalWindow.typeLabel')} />
+                                <Dropdown label={t('WithModels.addTaskModalWindow.documentsLabel')} />
+                            </Grid>
+                            <Grid rowGap="20px">
+                                <Dropdown label={t('WithModels.addTaskModalWindow.responsiblePersonLabel')} />
+                                <Dropdown label={t('WithModels.addTaskModalWindow.BULabel')} />
+                            </Grid>
+                            <Grid rowGap="20px">
+                                <Dropdown label={t('WithModels.addTaskModalWindow.approverPersonLabel')} />
+                            </Grid>
                         </Grid>
-                        <Grid rowGap="20px">
-                            <Dropdown label={t('WithModels.addTaskModalWindow.typeLabel')} />
-                            <Dropdown label={t('WithModels.addTaskModalWindow.documentsLabel')} />
+                        <hr className={s.divider} />
+                        <Grid columns="1fr 1fr" columnGap="32px">
+                            <Dropdown label={t('WithModels.addTaskModalWindow.lawRequirements')} />
+                            <Dropdown label={t('WithModels.addTaskModalWindow.processLabel')} />
                         </Grid>
-                        <Grid rowGap="20px">
-                            <Dropdown label={t('WithModels.addTaskModalWindow.responsiblePersonLabel')} />
-                            <Dropdown label={t('WithModels.addTaskModalWindow.BULabel')} />
-                        </Grid>
-                        <Grid rowGap="20px">
-                            <Dropdown label={t('WithModels.addTaskModalWindow.approverPersonLabel')} />
-                        </Grid>
+                        <CustomSwitch
+                            checked={false}
+                            handleChange={() => undefined}
+                            name={t('WithModels.addTaskModalWindow.dutyLabel')}
+                        />
+                        <FileUploadForm onFileSelect={handleFileSelect} />
                     </Grid>
-                    <hr className={s.divider} />
-                    <Grid columns="1fr 1fr" columnGap="32px">
-                        <Dropdown label={t('WithModels.addTaskModalWindow.lawRequirements')} />
-                        <Dropdown label={t('WithModels.addTaskModalWindow.processLabel')} />
+                </ModalContent>
+                <ModalFooter>
+                    <Grid justifyContent="right" columns="auto auto" columnGap="24px">
+                        <RegularButton variant="outline" size="l" onClick={handleClose}>
+                            {t('WithModels.addTaskModalWindow.closeModalButton')}
+                        </RegularButton>
+                        <RegularButton variant="primary" size="l" disabled={!isFromValid} onClick={handleSubmit}>
+                            {t('WithModels.addTaskModalWindow.submitButton')}
+                        </RegularButton>
                     </Grid>
-                    <CustomSwitch
-                        checked={false}
-                        handleChange={() => undefined}
-                        name={t('WithModels.addTaskModalWindow.dutyLabel')}
-                    />
-                    <FileUploadForm onFileSelect={handleFileSelect} />
-                </Grid>
-            </ModalContent>
-            <ModalFooter>
-                <Grid justifyContent="right" columns="auto auto" columnGap="24px">
-                    <RegularButton variant="outline" size="l" onClick={handleClose}>
-                        {t('WithModels.addTaskModalWindow.closeModalButton')}
-                    </RegularButton>
-                    <RegularButton variant="primary" size="l" disabled={!isFromValid} onClick={handleSubmit}>
-                        {t('WithModels.addTaskModalWindow.submitButton')}
-                    </RegularButton>
-                </Grid>
-            </ModalFooter>
-        </Modal>
+                </ModalFooter>
+            </Modal>
+        </>
     );
 };
 

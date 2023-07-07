@@ -22,7 +22,7 @@ interface Props {
 }
 
 const ProductsActionsForm: React.FC<Props> = ({products}) => {
-    const [notificationApi] = notification.useNotification();
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
     const {t} = useTranslation('products');
     const [action, setAction] = useState<ProductsActions | null>(null);
     const [submitedAction, setSubmitedAction] = useState<ProductsActions | null>(null);
@@ -78,6 +78,7 @@ const ProductsActionsForm: React.FC<Props> = ({products}) => {
 
     return (
         <>
+            {notificationContextHolder}
             <ModalWindowsGroup onClose={handleModalClose} products={products} action={submitedAction} />
             <Grid
                 className={s.grid}

@@ -48,7 +48,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     const [isChangesInData, setIsChangesInData] = useState(false);
     const [isDiscardChanges, setIsDiscardChanges] = useState(false);
 
-    const [notificationApi] = notification.useNotification();
+    const [notificationApi, notificationContext] = notification.useNotification();
 
     useEffect(() => {
         setIsDiscardChanges(false);
@@ -320,62 +320,65 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     );
 
     return (
-        <Grid className={styles.panel} rowGap={16} columnGap={16}>
-            <Grid rowGap={16} columnGap={16} columns="1fr">
-                <Grid className={styles.sectionItem} rowGap={16} columnGap={16} columns="1fr" rows="36px">
-                    <Typography variant="h3">{t('ProductDetails.QualityStatusSection.Title')}</Typography>
+        <>
+            {notificationContext}
+            <Grid className={styles.panel} rowGap={16} columnGap={16}>
+                <Grid rowGap={16} columnGap={16} columns="1fr">
+                    <Grid className={styles.sectionItem} rowGap={16} columnGap={16} columns="1fr" rows="36px">
+                        <Typography variant="h3">{t('ProductDetails.QualityStatusSection.Title')}</Typography>
 
-                    <Typography variant="m" size="body_long">
-                        <BackofficeStatus align="left" text="" variant={'default'} />
-                        {t('ProductDetails.QualityStatusSection.Table.Empty')}
-                    </Typography>
+                        <Typography variant="m" size="body_long">
+                            <BackofficeStatus align="left" text="" variant={'default'} />
+                            {t('ProductDetails.QualityStatusSection.Table.Empty')}
+                        </Typography>
 
-                    <CustomTable
-                        scroll={{y: 400}}
-                        columns={attr_columns}
-                        dataSource={tableData}
-                        tableLayout="fixed"
-                        size="small"
-                    />
+                        <CustomTable
+                            scroll={{y: 400}}
+                            columns={attr_columns}
+                            dataSource={tableData}
+                            tableLayout="fixed"
+                            size="small"
+                        />
+                    </Grid>
                 </Grid>
-            </Grid>
 
-            {/* <Grid rowGap={16} columnGap={16} columns="1fr">
+                {/* <Grid rowGap={16} columnGap={16} columns="1fr">
                 <Typography variant="h3">{t('ProductDetails.QualityStatusSection.Comments')}</Typography>
                 <Textarea />
             </Grid> */}
-            <Grid columnGap={16} columns="repeat(7, 1fr)" className={productDetailsStyles.buttStyles}>
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
+                <Grid columnGap={16} columns="repeat(7, 1fr)" className={productDetailsStyles.buttStyles}>
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
 
-                <Grid columnGap={16}>
-                    <RegularButton
-                        disabled={!isChangesInData}
-                        onClick={() => discardChanges()}
-                        size="m"
-                        variant="outline"
-                    >
-                        {t('Buttons.Clear')}
-                    </RegularButton>
-                </Grid>
+                    <Grid columnGap={16}>
+                        <RegularButton
+                            disabled={!isChangesInData}
+                            onClick={() => discardChanges()}
+                            size="m"
+                            variant="outline"
+                        >
+                            {t('Buttons.Clear')}
+                        </RegularButton>
+                    </Grid>
 
-                <Grid columnGap={16}>
-                    <RegularButton
-                        disabled={!isChangesInData}
-                        onClick={() => {
-                            updateChangesOnServer();
-                        }}
-                        size="m"
-                        variant="primary"
-                    >
-                        {'Отправить'}
-                    </RegularButton>
+                    <Grid columnGap={16}>
+                        <RegularButton
+                            disabled={!isChangesInData}
+                            onClick={() => {
+                                updateChangesOnServer();
+                            }}
+                            size="m"
+                            variant="primary"
+                        >
+                            {'Отправить'}
+                        </RegularButton>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </>
     );
 };
 

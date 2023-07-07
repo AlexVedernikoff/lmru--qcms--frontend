@@ -16,7 +16,7 @@ import {IModalProps} from '../types';
 import {notification} from 'antd';
 
 const ApproverModal: React.FC<IModalProps> = ({isOpen, onClose, dataList}) => {
-    const [notificationApi] = notification.useNotification();
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
 
     const {t} = useTranslation('tasks');
 
@@ -75,54 +75,57 @@ const ApproverModal: React.FC<IModalProps> = ({isOpen, onClose, dataList}) => {
     };
 
     return (
-        <Modal show={isOpen} onClose={isButtonDisabled ? () => {} : handleClose} size="m">
-            <ModalHeader title="Изменение утверждающего" />
-            <ModalContent>
-                <Grid gap={24}>
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        label={t('TaskList.Filters.QE')}
-                        value={type}
-                        onSelect={handleSelect}
-                    >
-                        <DropdownItem text="Поставщик" value={'SUPPLIER'} />
-                        <DropdownItem text="QE" value={'QE'} />
-                        <DropdownItem text="SQM" value={'SQM'} />
-                        <DropdownItem text="Подрядчик" value={'SERVICE_PROVIDER'} />
-                    </Dropdown>
+        <>
+            {notificationContextHolder}
+            <Modal show={isOpen} onClose={isButtonDisabled ? () => {} : handleClose} size="m">
+                <ModalHeader title="Изменение утверждающего" />
+                <ModalContent>
+                    <Grid gap={24}>
+                        <Dropdown
+                            size="m"
+                            closeOnSelect
+                            placeholder={t('Common.Select')}
+                            label={t('TaskList.Filters.QE')}
+                            value={type}
+                            onSelect={handleSelect}
+                        >
+                            <DropdownItem text="Поставщик" value={'SUPPLIER'} />
+                            <DropdownItem text="QE" value={'QE'} />
+                            <DropdownItem text="SQM" value={'SQM'} />
+                            <DropdownItem text="Подрядчик" value={'SERVICE_PROVIDER'} />
+                        </Dropdown>
 
-                    <Input
-                        inputSize="m"
-                        autoComplete="off"
-                        label={'Утверждающий'}
-                        name={'user'}
-                        placeholder=""
-                        value={user}
-                        onChange={handleInput}
-                    />
-                </Grid>
-            </ModalContent>
-            <ModalFooter>
-                <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton
-                        onClick={() => {
-                            onClose();
-                        }}
-                        size="m"
-                        variant="outline"
-                        disabled={isButtonDisabled}
-                    >
-                        {t('Buttons.Cancel')}
-                    </RegularButton>
+                        <Input
+                            inputSize="m"
+                            autoComplete="off"
+                            label={'Утверждающий'}
+                            name={'user'}
+                            placeholder=""
+                            value={user}
+                            onChange={handleInput}
+                        />
+                    </Grid>
+                </ModalContent>
+                <ModalFooter>
+                    <Grid columnGap={16} columns="repeat(2, 1fr)">
+                        <RegularButton
+                            onClick={() => {
+                                onClose();
+                            }}
+                            size="m"
+                            variant="outline"
+                            disabled={isButtonDisabled}
+                        >
+                            {t('Buttons.Cancel')}
+                        </RegularButton>
 
-                    <RegularButton onClick={handleSave} disabled={isButtonDisabled}>
-                        {t('Buttons.Save')}
-                    </RegularButton>
-                </Grid>
-            </ModalFooter>
-        </Modal>
+                        <RegularButton onClick={handleSave} disabled={isButtonDisabled}>
+                            {t('Buttons.Save')}
+                        </RegularButton>
+                    </Grid>
+                </ModalFooter>
+            </Modal>
+        </>
     );
 };
 

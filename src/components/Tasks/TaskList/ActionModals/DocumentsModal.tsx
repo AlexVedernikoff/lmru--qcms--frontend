@@ -12,7 +12,7 @@ import {notification} from 'antd';
 const DocumnentModal: React.FC<IModalProps> = ({isOpen, onClose, dataList}) => {
     const {t} = useTranslation('tasks');
 
-    const [notificationApi] = notification.useNotification();
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
 
     const [isPartial, setIsPartial] = useState(false);
     const [startDate, setStartDate] = useState<string | undefined>();
@@ -119,62 +119,65 @@ const DocumnentModal: React.FC<IModalProps> = ({isOpen, onClose, dataList}) => {
     };
 
     return (
-        <Modal show={isOpen} onClose={createDocumentResult.isLoading ? () => {} : handleClose} size="m">
-            <ModalHeader title="Добавление документа" />
-            <ModalContent className={styles.content}>
-                <Grid gap={24} className={styles.grid}>
-                    <FileUploadForm onFileSelect={handleFileSelect} />
+        <>
+            {notificationContextHolder}
+            <Modal show={isOpen} onClose={createDocumentResult.isLoading ? () => {} : handleClose} size="m">
+                <ModalHeader title="Добавление документа" />
+                <ModalContent className={styles.content}>
+                    <Grid gap={24} className={styles.grid}>
+                        <FileUploadForm onFileSelect={handleFileSelect} />
 
-                    <CustomSwitch checked={isPartial} handleChange={handleSwitch} name="Партийный" />
+                        <CustomSwitch checked={isPartial} handleChange={handleSwitch} name="Партийный" />
 
-                    <Grid gap={36} columns="auto auto">
-                        <DatePicker
-                            date={[startDate!]}
-                            onChange={handleStartDateChange}
-                            label={'Дата начала действия'}
-                            size="s"
-                            view="single"
-                            mode="single"
-                            className={styles.dateInput}
-                        />
-
-                        {!isPartial && (
+                        <Grid gap={36} columns="auto auto">
                             <DatePicker
-                                date={[endDate!]}
-                                onChange={handleEndDateChange}
-                                label={'Дата окончания'}
+                                date={[startDate!]}
+                                onChange={handleStartDateChange}
+                                label={'Дата начала действия'}
                                 size="s"
                                 view="single"
                                 mode="single"
                                 className={styles.dateInput}
                             />
-                        )}
+
+                            {!isPartial && (
+                                <DatePicker
+                                    date={[endDate!]}
+                                    onChange={handleEndDateChange}
+                                    label={'Дата окончания'}
+                                    size="s"
+                                    view="single"
+                                    mode="single"
+                                    className={styles.dateInput}
+                                />
+                            )}
+                        </Grid>
+
+                        <br />
+                        <br />
+                        <br />
                     </Grid>
+                </ModalContent>
+                <ModalFooter>
+                    <Grid columnGap={16} columns="repeat(2, 1fr)">
+                        <RegularButton
+                            onClick={() => {
+                                onClose();
+                            }}
+                            size="m"
+                            variant="outline"
+                            disabled={isButtonDisabled}
+                        >
+                            {t('Buttons.Cancel')}
+                        </RegularButton>
 
-                    <br />
-                    <br />
-                    <br />
-                </Grid>
-            </ModalContent>
-            <ModalFooter>
-                <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton
-                        onClick={() => {
-                            onClose();
-                        }}
-                        size="m"
-                        variant="outline"
-                        disabled={isButtonDisabled}
-                    >
-                        {t('Buttons.Cancel')}
-                    </RegularButton>
-
-                    <RegularButton onClick={handleSave} disabled={isButtonDisabled}>
-                        {t('Buttons.Save')}
-                    </RegularButton>
-                </Grid>
-            </ModalFooter>
-        </Modal>
+                        <RegularButton onClick={handleSave} disabled={isButtonDisabled}>
+                            {t('Buttons.Save')}
+                        </RegularButton>
+                    </Grid>
+                </ModalFooter>
+            </Modal>
+        </>
     );
 };
 

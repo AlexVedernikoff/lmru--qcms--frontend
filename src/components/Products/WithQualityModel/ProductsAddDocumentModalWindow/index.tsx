@@ -29,7 +29,7 @@ const initialFormState: FormState = {
 };
 
 const ProductsAddDocumentModalWindow: React.FC<Props> = ({show, onClose, products}) => {
-    const [notificationApi] = notification.useNotification();
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
 
     const {t} = useTranslation('products');
     const [formState, setFormState] = useState<FormState>(initialFormState);
@@ -119,55 +119,58 @@ const ProductsAddDocumentModalWindow: React.FC<Props> = ({show, onClose, product
     };
 
     return (
-        <Modal show={show} onClose={handleClose} size="m">
-            <ModalHeader title={t('WithModels.Actions.actions.addDocument')} />
-            <ModalContent className={styles.content}>
-                <Grid gap={24} className={styles.grid}>
-                    <FileUploadForm onFileSelect={handleFileSelect} />
+        <>
+            {notificationContextHolder}
+            <Modal show={show} onClose={handleClose} size="m">
+                <ModalHeader title={t('WithModels.Actions.actions.addDocument')} />
+                <ModalContent className={styles.content}>
+                    <Grid gap={24} className={styles.grid}>
+                        <FileUploadForm onFileSelect={handleFileSelect} />
 
-                    <CustomSwitch checked={formState.isPartial} handleChange={handleSwitch} name="Партийный" />
+                        <CustomSwitch checked={formState.isPartial} handleChange={handleSwitch} name="Партийный" />
 
-                    <Grid gap={36} columns="auto auto">
-                        <DatePicker
-                            date={[formState.startDate!]}
-                            onChange={handleStartDateChange}
-                            label={'Дата начала действия'}
-                            size="s"
-                            view="single"
-                            mode="single"
-                            className={styles.dateInput}
-                        />
-
-                        {!formState.isPartial && (
+                        <Grid gap={36} columns="auto auto">
                             <DatePicker
-                                date={[formState.endDate!]}
-                                onChange={handleEndDateChange}
-                                label={'Дата окончания'}
+                                date={[formState.startDate!]}
+                                onChange={handleStartDateChange}
+                                label={'Дата начала действия'}
                                 size="s"
                                 view="single"
                                 mode="single"
                                 className={styles.dateInput}
                             />
-                        )}
+
+                            {!formState.isPartial && (
+                                <DatePicker
+                                    date={[formState.endDate!]}
+                                    onChange={handleEndDateChange}
+                                    label={'Дата окончания'}
+                                    size="s"
+                                    view="single"
+                                    mode="single"
+                                    className={styles.dateInput}
+                                />
+                            )}
+                        </Grid>
+
+                        <br />
+                        <br />
+                        <br />
                     </Grid>
+                </ModalContent>
+                <ModalFooter>
+                    <Grid columnGap={16} columns="repeat(2, 1fr)">
+                        <RegularButton onClick={onClose} size="m" variant="outline" disabled={isButtonDisabled}>
+                            {t('WithModels.addDocumentModalWindow.closeModalButton')}
+                        </RegularButton>
 
-                    <br />
-                    <br />
-                    <br />
-                </Grid>
-            </ModalContent>
-            <ModalFooter>
-                <Grid columnGap={16} columns="repeat(2, 1fr)">
-                    <RegularButton onClick={onClose} size="m" variant="outline" disabled={isButtonDisabled}>
-                        {t('WithModels.addDocumentModalWindow.closeModalButton')}
-                    </RegularButton>
-
-                    <RegularButton onClick={handleSubmit} disabled={isButtonDisabled}>
-                        {t('WithModels.addDocumentModalWindow.submitButton')}
-                    </RegularButton>
-                </Grid>
-            </ModalFooter>
-        </Modal>
+                        <RegularButton onClick={handleSubmit} disabled={isButtonDisabled}>
+                            {t('WithModels.addDocumentModalWindow.submitButton')}
+                        </RegularButton>
+                    </Grid>
+                </ModalFooter>
+            </Modal>
+        </>
     );
 };
 

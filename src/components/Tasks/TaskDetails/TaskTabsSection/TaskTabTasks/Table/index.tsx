@@ -20,7 +20,7 @@ interface Props {
 }
 
 const TasksTable: React.FC<Props> = ({taskDetails}) => {
-    const [notificationApi] = notification.useNotification();
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
 
     const {t} = useTranslation('tasks');
 
@@ -126,6 +126,7 @@ const TasksTable: React.FC<Props> = ({taskDetails}) => {
 
     return (
         <>
+            {notificationContextHolder}
             <CustomTable
                 rowSelection={rowSelection}
                 columns={columns}

@@ -21,7 +21,7 @@ enum Status {
 }
 
 const ProductDetailsInfoSection: React.FC<Props> = ({taskDetails}) => {
-    const [notificationApi] = notification.useNotification();
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
 
     const title = `${taskDetails.categoryName} - ${taskDetails.categoryTypeName} - ${taskDetails.id}`;
 
@@ -74,20 +74,23 @@ const ProductDetailsInfoSection: React.FC<Props> = ({taskDetails}) => {
     }
 
     return (
-        <Grid>
-            <Typography variant="h2">{title}</Typography>
-            <Grid columns="auto" justifyContent="end">
-                <StopEditingButton onClick={handleStopEditingButtonClick} />
+        <>
+            {notificationContextHolder}
+            <Grid>
+                <Typography variant="h2">{title}</Typography>
+                <Grid columns="auto" justifyContent="end">
+                    <StopEditingButton onClick={handleStopEditingButtonClick} />
+                </Grid>
+                <Grid className={styles.panel} gap={16}>
+                    <TaskDetailsInfoEditForm
+                        taskDetails={taskDetails}
+                        onSubmit={handleEditFormSubmit}
+                        isSubmitButtonDisabled={updateTaskDetailsRequestState.isLoading}
+                    />
+                    <TaskDetailsAddCommentsForm taskDetails={taskDetails} />
+                </Grid>
             </Grid>
-            <Grid className={styles.panel} gap={16}>
-                <TaskDetailsInfoEditForm
-                    taskDetails={taskDetails}
-                    onSubmit={handleEditFormSubmit}
-                    isSubmitButtonDisabled={updateTaskDetailsRequestState.isLoading}
-                />
-                <TaskDetailsAddCommentsForm taskDetails={taskDetails} />
-            </Grid>
-        </Grid>
+        </>
     );
 };
 

@@ -13,7 +13,7 @@ interface Props {
 }
 
 const ProductsAddCommentModalWindow: React.FC<Props> = ({show, onClose, products}) => {
-    const [notificationApi] = notification.useNotification();
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
 
     const {t} = useTranslation('products');
 
@@ -63,30 +63,33 @@ const ProductsAddCommentModalWindow: React.FC<Props> = ({show, onClose, products
     }, [updateProductsRequestState, text, handleClose, notificationApi]);
 
     return (
-        <Modal onClose={handleClose} show={show}>
-            <ModalHeader title={t('WithModels.Actions.actions.addComment')} />
-            <ModalContent>
-                <Textarea
-                    onChange={handleTextAreaChange}
-                    placeholder={t('WithModels.addCommentModalWindow.textAreaPlaceholder')}
-                />
-            </ModalContent>
-            <ModalFooter>
-                <Grid justifyContent="right" columns="auto auto" columnGap="24px">
-                    <RegularButton
-                        variant="outline"
-                        size="l"
-                        disabled={updateProductsRequestState.isLoading}
-                        onClick={handleClose}
-                    >
-                        {t('WithModels.addCommentModalWindow.closeModalButton')}
-                    </RegularButton>
-                    <RegularButton variant="primary" size="l" disabled={!text} onClick={handleSubmit}>
-                        {t('WithModels.addCommentModalWindow.submitButton')}
-                    </RegularButton>
-                </Grid>
-            </ModalFooter>
-        </Modal>
+        <>
+            {notificationContextHolder}
+            <Modal onClose={handleClose} show={show}>
+                <ModalHeader title={t('WithModels.Actions.actions.addComment')} />
+                <ModalContent>
+                    <Textarea
+                        onChange={handleTextAreaChange}
+                        placeholder={t('WithModels.addCommentModalWindow.textAreaPlaceholder')}
+                    />
+                </ModalContent>
+                <ModalFooter>
+                    <Grid justifyContent="right" columns="auto auto" columnGap="24px">
+                        <RegularButton
+                            variant="outline"
+                            size="l"
+                            disabled={updateProductsRequestState.isLoading}
+                            onClick={handleClose}
+                        >
+                            {t('WithModels.addCommentModalWindow.closeModalButton')}
+                        </RegularButton>
+                        <RegularButton variant="primary" size="l" disabled={!text} onClick={handleSubmit}>
+                            {t('WithModels.addCommentModalWindow.submitButton')}
+                        </RegularButton>
+                    </Grid>
+                </ModalFooter>
+            </Modal>
+        </>
     );
 };
 

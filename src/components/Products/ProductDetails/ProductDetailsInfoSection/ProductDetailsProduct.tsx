@@ -29,7 +29,7 @@ interface IQModalLabel {
 }
 
 const ProductDetailsProduct: React.FC = () => {
-    const [notificationApi] = notification.useNotification();
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
 
     const {t} = useTranslation('products');
     const {id: productId = ''} = useParams();
@@ -135,137 +135,140 @@ const ProductDetailsProduct: React.FC = () => {
     };
 
     return (
-        <Grid className={styles.sectionItem} rowGap={24} columnGap={24}>
-            <Typography variant="h3">{t('ProductDetails.Info.Product.Title')}</Typography>
+        <>
+            {notificationContextHolder}
+            <Grid className={styles.sectionItem} rowGap={24} columnGap={24}>
+                <Typography variant="h3">{t('ProductDetails.Info.Product.Title')}</Typography>
 
-            <Grid rowGap={4} columns="1fr 3fr repeat(2, 1fr)">
+                <Grid rowGap={4} columns="1fr 3fr repeat(2, 1fr)">
+                    <div>
+                        <Typography variant="s" size="body_long" color="text-minor">
+                            {t('ProductDetails.Info.Product.Field.productCode')}
+                        </Typography>
+                        <br />
+                        <Typography variant="s" size="body_short">
+                            {productSection?.code}
+                        </Typography>
+                    </div>
+
+                    <div>
+                        <Typography variant="s" size="body_long" color="text-minor">
+                            {t('ProductDetails.Info.Product.Field.EAN')}
+                        </Typography>
+                        <br />
+                        <Typography variant="s" size="body_short">
+                            {productSection?.ean}
+                        </Typography>
+                    </div>
+
+                    <div>
+                        <Typography variant="s" size="body_long" color="text-minor">
+                            {t('ProductDetails.Info.Product.Field.TN_VED_Code')}
+                        </Typography>
+                        <br />
+                        <Typography variant="s" size="body_short">
+                            {productSection?.customId}
+                        </Typography>
+                    </div>
+                </Grid>
+
+                <Grid rowGap={4} columns="1fr 3fr repeat(2, 1fr)">
+                    <div>
+                        <Typography variant="s" size="body_long" color="text-minor">
+                            {t('ProductDetails.Info.Product.Field.risk')}
+                        </Typography>
+                        <br />
+                        <Typography variant="s" size="body_short">
+                            {productSection?.riskOption}
+                        </Typography>
+                    </div>
+                    <div>
+                        <Grid rowGap={1} columnGap={10} columns="max-content max-content">
+                            {!isQModelEdit ? (
+                                <>
+                                    <Typography variant="s" size="body_long" color="text-minor">
+                                        {t('ProductDetails.Info.Product.Field.qualityModel')}
+                                    </Typography>
+
+                                    <EditButton onClick={handleQModel} />
+
+                                    <Typography variant="s" size="body_short">
+                                        {productSection?.qualityModelLabel}
+                                    </Typography>
+                                    <div />
+                                </>
+                            ) : (
+                                <>
+                                    <Dropdown
+                                        size="s"
+                                        closeOnSelect
+                                        className={productDetailsStyles.dropdown}
+                                        label={t('ProductDetails.Info.Product.Field.qualityModel')}
+                                        value={qModalLabel.qualityModelLabel}
+                                        onSelect={e => handleSelectLabel(e)}
+                                    >
+                                        <div className={productDetailsStyles.editWrapper}>
+                                            {qModalLabels.map(
+                                                (el, i) =>
+                                                    el.qualityModelLabel &&
+                                                    el.qualityModalId && (
+                                                        <DropdownItem
+                                                            className={productDetailsStyles.dropdownItem}
+                                                            text={el.qualityModelLabel}
+                                                            value={el.qualityModalId}
+                                                            key={i}
+                                                        />
+                                                    )
+                                            )}
+                                        </div>
+                                    </Dropdown>
+
+                                    <Checkbox checked={true} onClick={() => updateBoxes(false)} />
+                                </>
+                            )}
+                        </Grid>
+                    </div>
+                </Grid>
+
                 <div>
                     <Typography variant="s" size="body_long" color="text-minor">
-                        {t('ProductDetails.Info.Product.Field.productCode')}
+                        {t('ProductDetails.Info.Product.Field.productModel')}
                     </Typography>
                     <br />
                     <Typography variant="s" size="body_short">
-                        {productSection?.code}
+                        {productSection?.productModelValueStr}
                     </Typography>
                 </div>
 
-                <div>
-                    <Typography variant="s" size="body_long" color="text-minor">
-                        {t('ProductDetails.Info.Product.Field.EAN')}
-                    </Typography>
-                    <br />
-                    <Typography variant="s" size="body_short">
-                        {productSection?.ean}
-                    </Typography>
-                </div>
+                <Grid rowGap={1} columnGap={10} columns="max-content max-content">
+                    <Checkbox
+                        onClick={() => updateBoxes(true)}
+                        checked={productSection?.isChemical || false}
+                        disabled={isNoChemestryEdit}
+                        label={t('ProductDetails.Info.Product.Field.isChemical')}
+                    />
+                    {isNoChemestryEdit && <EditButton onClick={handleChemistry} />}
+                </Grid>
 
-                <div>
-                    <Typography variant="s" size="body_long" color="text-minor">
-                        {t('ProductDetails.Info.Product.Field.TN_VED_Code')}
-                    </Typography>
-                    <br />
-                    <Typography variant="s" size="body_short">
-                        {productSection?.customId}
-                    </Typography>
-                </div>
+                <Grid rowGap={4} columns="165px 250px 200px 1fr">
+                    <Checkbox
+                        disabled={true}
+                        checked={productSection?.isSTM || false}
+                        label={t('ProductDetails.Info.Product.Field.STM')}
+                    />
+                    <Checkbox
+                        checked={productSection?.isImport || false}
+                        label={t('ProductDetails.Info.Product.Field.intImport')}
+                        disabled={true}
+                    />
+                    <Checkbox
+                        checked={productSection?.isFromProject || false}
+                        label={t('ProductDetails.Info.Product.Field.fromProject')}
+                        disabled={true}
+                    />
+                </Grid>
             </Grid>
-
-            <Grid rowGap={4} columns="1fr 3fr repeat(2, 1fr)">
-                <div>
-                    <Typography variant="s" size="body_long" color="text-minor">
-                        {t('ProductDetails.Info.Product.Field.risk')}
-                    </Typography>
-                    <br />
-                    <Typography variant="s" size="body_short">
-                        {productSection?.riskOption}
-                    </Typography>
-                </div>
-                <div>
-                    <Grid rowGap={1} columnGap={10} columns="max-content max-content">
-                        {!isQModelEdit ? (
-                            <>
-                                <Typography variant="s" size="body_long" color="text-minor">
-                                    {t('ProductDetails.Info.Product.Field.qualityModel')}
-                                </Typography>
-
-                                <EditButton onClick={handleQModel} />
-
-                                <Typography variant="s" size="body_short">
-                                    {productSection?.qualityModelLabel}
-                                </Typography>
-                                <div />
-                            </>
-                        ) : (
-                            <>
-                                <Dropdown
-                                    size="s"
-                                    closeOnSelect
-                                    className={productDetailsStyles.dropdown}
-                                    label={t('ProductDetails.Info.Product.Field.qualityModel')}
-                                    value={qModalLabel.qualityModelLabel}
-                                    onSelect={e => handleSelectLabel(e)}
-                                >
-                                    <div className={productDetailsStyles.editWrapper}>
-                                        {qModalLabels.map(
-                                            (el, i) =>
-                                                el.qualityModelLabel &&
-                                                el.qualityModalId && (
-                                                    <DropdownItem
-                                                        className={productDetailsStyles.dropdownItem}
-                                                        text={el.qualityModelLabel}
-                                                        value={el.qualityModalId}
-                                                        key={i}
-                                                    />
-                                                )
-                                        )}
-                                    </div>
-                                </Dropdown>
-
-                                <Checkbox checked={true} onClick={() => updateBoxes(false)} />
-                            </>
-                        )}
-                    </Grid>
-                </div>
-            </Grid>
-
-            <div>
-                <Typography variant="s" size="body_long" color="text-minor">
-                    {t('ProductDetails.Info.Product.Field.productModel')}
-                </Typography>
-                <br />
-                <Typography variant="s" size="body_short">
-                    {productSection?.productModelValueStr}
-                </Typography>
-            </div>
-
-            <Grid rowGap={1} columnGap={10} columns="max-content max-content">
-                <Checkbox
-                    onClick={() => updateBoxes(true)}
-                    checked={productSection?.isChemical || false}
-                    disabled={isNoChemestryEdit}
-                    label={t('ProductDetails.Info.Product.Field.isChemical')}
-                />
-                {isNoChemestryEdit && <EditButton onClick={handleChemistry} />}
-            </Grid>
-
-            <Grid rowGap={4} columns="165px 250px 200px 1fr">
-                <Checkbox
-                    disabled={true}
-                    checked={productSection?.isSTM || false}
-                    label={t('ProductDetails.Info.Product.Field.STM')}
-                />
-                <Checkbox
-                    checked={productSection?.isImport || false}
-                    label={t('ProductDetails.Info.Product.Field.intImport')}
-                    disabled={true}
-                />
-                <Checkbox
-                    checked={productSection?.isFromProject || false}
-                    label={t('ProductDetails.Info.Product.Field.fromProject')}
-                    disabled={true}
-                />
-            </Grid>
-        </Grid>
+        </>
     );
 };
 
