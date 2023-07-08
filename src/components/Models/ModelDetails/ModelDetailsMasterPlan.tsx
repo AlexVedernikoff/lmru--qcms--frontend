@@ -1,191 +1,137 @@
-import {useEffect, useMemo, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import AccordionPanel from '../../Common/AccordionPanel';
+import {useParams} from 'react-router-dom';
+import {Grid, RegularButton, Typography} from 'fronton-react';
+import {FloppyDiskIcon, PlusIcon, TrashIcon} from '@fronton/icons-react';
+import {notification} from 'antd';
+import {ERegulatoryType, IMasterPlanTask} from 'common/types/models';
+import CardView from '../../Common/CardView';
 import modelsApi from '../modelsApi';
-import MasterPlanRequirements from './MasterPlanRequirements';
-import {ERegulatoryType} from '../../../common/types/models';
-import {IDeleteMasterPlanTasksParams} from '../../../common/types/models';
+import MasterPlanTable from './MasterPlanTable';
+import MasterPlanAddModal from './MasterPlanAddModal';
 import MasterPlanRemoveTaskModal from './MasterPlanRemoveTaskModal';
-import {notification, Button, Space} from 'antd';
+import EditIcon from 'components/Icons/EditIcon';
 
-export interface IInitialState {
-    IMPORTER: number[];
-    DISTRIBUTOR: number[];
-    MANUFACTURER: number[];
+interface IProps {
+    masterPlanId: number;
+    tasks: IMasterPlanTask[];
 }
 
-enum MasterPlansCodes {
-    Russia = '9',
-}
-
-const ModelDetailsMasterPlan: React.FC = () => {
+const ModelDetailsMasterPlan: React.FC<IProps> = ({masterPlanId, tasks}) => {
+    const [notificationApi, notificationContext] = notification.useNotification();
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
-    const [isRemoveOpen, setIsRemoveOpen] = useState(false);
-    const [removeTaskError, setRemoveTaskError] = useState(false);
-    const [api, contextHolder] = notification.useNotification();
 
-    const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id});
+    const {data: modelDetails, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id});
+    const [updateModel] = modelsApi.endpoints.updateQualityModel.useMutation();
+    const [deleteTasks, deleteTasksResult] = modelsApi.endpoints.deleteMasterPlanTasks.useMutation();
 
-    const initialState: IInitialState = {
-        IMPORTER: [],
-        DISTRIBUTOR: [],
-        MANUFACTURER: [],
-    };
-
-    const [tasksToRemove, setTasksToRemove] = useState(initialState);
-
-    const updateTasks = (key: keyof IInitialState, value: number[]) => {
-        setTasksToRemove(prevTasks => {
-            prevTasks[key] = value;
-            return {...prevTasks};
-        });
-    };
-    const removeTasksArr: number[] = [];
-
-    for (let key in tasksToRemove) {
-        removeTasksArr.push(...tasksToRemove[key as keyof IInitialState]);
-    }
-
-    const {data: modelDetails} = modelsApi.endpoints.getModelDetails.useQueryState({id});
-
-    const [deleteTasks, result] = modelsApi.useDeleteMasterPlanTasksMutation();
-
-    let tasks = useMemo(() => {
-        return result?.data?.tasks || modelDetails?.masterPlanIds?.[0]?.tasks || [];
-    }, [result, modelDetails]);
-
-    const openNotification = () => {
-        const btn = (
-            <Space>
-                <Button
-                    type="primary"
-                    onClick={() => {
-                        api.destroy();
-                        setRemoveTaskError(false);
-                    }}
-                >
-                    Принять
-                </Button>
-            </Space>
-        );
-        api.open({
-            message: 'Ошибка!',
-            description: 'Во время выполнения запроса произошла ошибка.',
-            btn,
-            duration: 0,
-        });
-    };
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [isRemoveTaskOpen, setIsRemoveTaskOpen] = useState(false);
+    const [selectedTasks, setSelectedTasks] = useState<number[]>([]);
 
     useEffect(() => {
-        if (result.isError && !removeTaskError) {
-            openNotification();
-            setRemoveTaskError(true);
+        if (deleteTasksResult.isError) {
+            notificationApi.error({
+                message: 'Ошибка!',
+                description: 'Во время выполнения запроса произошла ошибка.',
+            });
         }
-        if (result.data) {
-            setTasksToRemove(initialState);
+    }, [deleteTasksResult.isError, notificationApi]);
+
+    useEffect(() => {
+        if (deleteTasksResult.data) {
+            setSelectedTasks([]);
         }
+    }, [deleteTasksResult.data]);
 
-        // eslint-disable-next-line
-    }, [result]);
+    const updateTasks = useCallback((key: ERegulatoryType, value: number[]) => {
+        setSelectedTasks(value);
+    }, []);
 
-    const planList = useMemo(() => {
-        const manufacturerTasks = [];
-        const importerTasks = [];
-        const distributorTasks = [];
+    const handleCardClose = () => {};
 
-        // TODO: Remove comments when design for master plans will be ready
-        // for (const plan of details?.masterPlanIds || []) {
-        //     for (const task of plan.tasks) {
-        //         switch (task.regulatoryType) {
-        //             case ERegulatoryType.DISTRIBUTOR:
-        //                 distributorTasks.push(task);
-        //                 break;
-        //             case ERegulatoryType.IMPORTER:
-        //                 importerTasks.push(task);
-        //                 break;
-        //             case ERegulatoryType.MANUFACTURER:
-        //                 manufacturerTasks.push(task);
-        //                 break;
-        //         }
-        //     }
-        // }
-
-        // TODO: will be more master plans for model details
-        const ruMP = details?.masterPlanIds?.find(mp => mp.bu.code === MasterPlansCodes.Russia);
-
-        for (const task of ruMP?.tasks || []) {
-            switch (task.regulatoryType) {
-                case ERegulatoryType.DISTRIBUTOR:
-                    distributorTasks.push(task);
-                    break;
-                case ERegulatoryType.IMPORTER:
-                    importerTasks.push(task);
-                    break;
-                case ERegulatoryType.MANUFACTURER:
-                    manufacturerTasks.push(task);
-                    break;
-            }
-        }
-
-        return [
-            {
-                label: t('ModelDetails.MasterPlan.Section.MANUFACTURER.Title'),
-                list: manufacturerTasks,
-            },
-            {
-                label: t('ModelDetails.MasterPlan.Section.IMPORTER.Title'),
-                list: importerTasks,
-            },
-            {
-                label: t('ModelDetails.MasterPlan.Section.DISTRIBUTOR.Title'),
-                list: distributorTasks,
-            },
-        ];
-    }, [tasks, t]);
-
-    const deleteTaskQueryArg: IDeleteMasterPlanTasksParams = {
-        id,
-        body: {
-            updatedBy: 'Alex', //имя пользователя localStorage пока не содержится.
-            taskIDs: removeTasksArr,
-        },
-        securityCode: 'security_code',
+    const handleEditClick = () => {
+        setIsEditMode(true);
     };
 
-    const handleConfirmDeletion = async () => {
-        await deleteTasks(deleteTaskQueryArg);
-        setIsRemoveOpen(false);
+    const handleSaveClick = async () => {
+        await updateModel({id, body: {updatedBy: 'currentUser'}});
+        await refetch();
+        setIsEditMode(false);
     };
 
-    const handleRemoveModalClose = () => {
-        setIsRemoveOpen(false);
-    };
+    const handleAddClick = () => setIsOpen(true);
+    const handleModalClose = () => setIsOpen(false);
 
-    const handleDeleteClick = () => {
-        setIsRemoveOpen(true);
+    const handleRemoveModalClose = () => setIsRemoveTaskOpen(false);
+    const handleDeleteClick = () => setIsRemoveTaskOpen(true);
+
+    const handleConfirmDeletion = async (masterPlanId: number) => {
+        setIsRemoveTaskOpen(false);
+        await deleteTasks({id: masterPlanId, body: {taskIDs: selectedTasks, updatedBy: 'currentUser'}});
+        await refetch();
     };
 
     return (
-        <div>
-            {contextHolder}
-            {planList.map((section, index) => (
-                <AccordionPanel key={index} numberIcon={index + 1} header={section.label}>
-                    <MasterPlanRequirements
-                        tasks={section.list}
-                        handleDeleteClick={handleDeleteClick}
-                        updateTasks={updateTasks}
-                        removeTasksArr={removeTasksArr}
-                    />
-                </AccordionPanel>
-            ))}
+        <Grid rowGap={24}>
+            <Grid columns="1fr auto">
+                <div />
+                <div>
+                    {isEditMode ? (
+                        <RegularButton onClick={handleSaveClick} variant="pseudo" iconLeft={<FloppyDiskIcon />}>
+                            {t('Buttons.Save')}
+                        </RegularButton>
+                    ) : (
+                        <RegularButton onClick={handleEditClick} variant="pseudo" iconLeft={<EditIcon />}>
+                            {t('Buttons.Edit')}
+                        </RegularButton>
+                    )}
+                    <RegularButton onClick={handleAddClick} variant="pseudo" iconLeft={<PlusIcon />}>
+                        {t('Buttons.Add')}
+                    </RegularButton>
+                    <RegularButton
+                        onClick={handleDeleteClick}
+                        variant="pseudo"
+                        iconLeft={<TrashIcon />}
+                        disabled={!selectedTasks.length}
+                    >
+                        {t('Buttons.Delete')}
+                    </RegularButton>
+                </div>
+            </Grid>
+
+            <Grid columns="auto auto auto" columnGap={24} rowGap={24}>
+                {modelDetails?.regulatoryReferences?.map((data, index) => (
+                    <CardView
+                        key={index}
+                        header={
+                            data.required
+                                ? t('ModelDetails.MasterPlan.Requirement.Type.Required')
+                                : t('ModelDetails.MasterPlan.Requirement.Type.Optional')
+                        }
+                        onClose={handleCardClose}
+                        infoLink={data.hyperlink}
+                    >
+                        <Typography variant="s" size="body_accent">
+                            {data.title}
+                        </Typography>
+                    </CardView>
+                ))}
+            </Grid>
+
+            <MasterPlanTable isEditMode={isEditMode} data={tasks} updateTasks={updateTasks} />
+
+            <MasterPlanAddModal isOpen={isOpen} onClose={handleModalClose} />
             <MasterPlanRemoveTaskModal
-                isOpen={isRemoveOpen}
+                isOpen={isRemoveTaskOpen}
                 onClose={handleRemoveModalClose}
-                handleConfirmDeletion={handleConfirmDeletion}
+                onConfirm={handleConfirmDeletion}
+                masterPlanId={masterPlanId}
             />
-        </div>
+            {notificationContext}
+        </Grid>
     );
 };
 

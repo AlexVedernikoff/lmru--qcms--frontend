@@ -1,25 +1,21 @@
+import {useEffect, useRef, useState} from 'react';
 import {Grid} from 'fronton-react';
-import React, {useEffect, useRef, useState, useCallback} from 'react';
 
 interface IProps {
     arr: string[];
     sliceBeforePointers: number;
 }
 
-export const PointersComponent: React.FC<IProps> = ({arr, sliceBeforePointers}) => {
-    const [showAllValues, setShowAllValues] = useState(false);
+const PointersComponent: React.FC<IProps> = ({arr, sliceBeforePointers}) => {
     const ellipsisRef = useRef<HTMLDivElement>(null);
-
-    const handleMouseEnter = useCallback(() => {
-        setShowAllValues(!showAllValues);
-    }, [showAllValues]);
-
-    const handleMouseLeave = useCallback(() => {
-        setShowAllValues(showAllValues);
-    }, [showAllValues]);
+    const [showAllValues, setShowAllValues] = useState(false);
 
     useEffect(() => {
+        const handleMouseEnter = () => setShowAllValues(true);
+        const handleMouseLeave = () => setShowAllValues(false);
+
         const ellipsisElement = ellipsisRef.current;
+
         if (ellipsisElement) {
             ellipsisElement.addEventListener('mouseenter', handleMouseEnter);
             ellipsisElement.addEventListener('mouseleave', handleMouseLeave);
@@ -31,7 +27,6 @@ export const PointersComponent: React.FC<IProps> = ({arr, sliceBeforePointers}) 
                 ellipsisElement.removeEventListener('mouseleave', handleMouseLeave);
             }
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -55,3 +50,5 @@ export const PointersComponent: React.FC<IProps> = ({arr, sliceBeforePointers}) 
         </div>
     );
 };
+
+export default PointersComponent;

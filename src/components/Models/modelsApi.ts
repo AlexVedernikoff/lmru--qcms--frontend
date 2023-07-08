@@ -13,7 +13,9 @@ import {
     TTaskCategoryResponse,
     ITaskCategoryParams,
     IDeleteMasterPlanTasksResponse,
-    IDeleteMasterPlanTasksParams,
+    IMasterPlanDeleteTasksParams,
+    TPermissiveDocumentsResponse,
+    IPermissiveDocumentsParams,
 } from '../../common/types/models';
 
 const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/';
@@ -52,31 +54,30 @@ const modelsApi = createApi({
         }),
         updateQualityModel: builder.mutation<IUpdateQualityModelResponse, IUpdateQualityModelParams>({
             query: queryArg => ({
-                url: `v1/update-quality-model/${queryArg.id}`,
                 method: 'PATCH',
+                url: `v1/update-quality-model/${queryArg.id}`,
                 body: queryArg.body,
             }),
         }),
         updateMasterPlanTasks: builder.mutation<IUpdateMasterPlanTasksResponse, IUpdateMasterPlanTasksParams>({
             query: queryArg => ({
-                url: `v1/update-master-plan-tasks/${queryArg.id}`,
                 method: 'POST',
+                url: `v1/update-master-plan-tasks/${queryArg.id}`,
                 body: queryArg.body,
             }),
         }),
         createMasterPlanTasks: builder.mutation<IUpdateMasterPlanTasksResponse, IUpdateMasterPlanTasksParams>({
             query: queryArg => ({
-                url: `v1/create-master-plan-tasks/${queryArg.id}`,
                 method: 'POST',
+                url: `v1/create-master-plan-tasks/${queryArg.id}`,
                 body: queryArg.body,
             }),
         }),
-        deleteMasterPlanTasks: builder.mutation<IDeleteMasterPlanTasksResponse, IDeleteMasterPlanTasksParams>({
+        deleteMasterPlanTasks: builder.mutation<IDeleteMasterPlanTasksResponse, IMasterPlanDeleteTasksParams>({
             query: queryArg => ({
-                url: `v1/delete-master-plan-tasks/${queryArg.id}`,
                 method: 'POST',
+                url: `v1/delete-master-plan-tasks/${queryArg.id}`,
                 body: queryArg.body,
-                headers: {securityCode: queryArg.securityCode},
             }),
         }),
         getTaskCategory: builder.query<TTaskCategoryResponse, ITaskCategoryParams>({
@@ -85,9 +86,13 @@ const modelsApi = createApi({
                 url: `regulatory-quality-management/master-plan/task-category`,
             }),
         }),
+        getPermissiveDocuments: builder.query<TPermissiveDocumentsResponse, IPermissiveDocumentsParams>({
+            query: () => ({
+                method: 'GET',
+                url: 'v1/permissive-documents',
+            }),
+        }),
     }),
 });
-
-export const {useDeleteMasterPlanTasksMutation} = modelsApi;
 
 export default modelsApi;

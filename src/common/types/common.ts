@@ -13,3 +13,7 @@ export interface IErrorBasic {
 export interface IErrorResponse {
     errors: IErrorBasic[];
 }
+
+export enum EBUCodes {
+    Russia = '9',
+}
