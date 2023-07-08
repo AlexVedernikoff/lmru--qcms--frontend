@@ -40,7 +40,7 @@ interface IProps {
 }
 
 const ModelsFilter: React.FC<IProps> = ({onSubmit}) => {
-    const {data: nomenclature = []} = modelsApi.useGetModelNomenclatureQuery({securityCode: 'security_code'});
+    const {data: nomenclature = []} = modelsApi.useGetModelNomenclatureQuery({});
     const {isLoading, isFetching} = modelsApi.endpoints.getModels.useQueryState(skipToken);
     const [formState, setFormState] = useState<IFilterFormState>({});
 

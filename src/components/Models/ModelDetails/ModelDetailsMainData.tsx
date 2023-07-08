@@ -15,7 +15,7 @@ const ModelDetailsMainData: React.FC = () => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
 
-    const {data: nomenclature = []} = modelsApi.useGetModelNomenclatureQuery({securityCode: 'security_code'});
+    const {data: nomenclature = []} = modelsApi.useGetModelNomenclatureQuery({});
     const {data: details, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id});
     const [updateModel] = modelsApi.endpoints.updateQualityModel.useMutation();
 
@@ -31,7 +31,7 @@ const ModelDetailsMainData: React.FC = () => {
         await updateModel({
             accept: 'application/json',
             id,
-            securityCode: 'security_code',
+
             body: {
                 productModelNomenclatureId: productModelNomenclatureId
                     ? parseInt(productModelNomenclatureId, 10)
@@ -83,7 +83,7 @@ const ModelDetailsMainData: React.FC = () => {
                 ) : (
                     <Grid columns="48px" gap={16}>
                         <RegularButton variant="pseudo" aria-label="edit" size="s" onClick={handleEditClick}>
-                            <EditIcon color="none" />
+                            <EditIcon />
                         </RegularButton>
                     </Grid>
                 )}

@@ -8,7 +8,7 @@ import ModelDetailsQualityManager from './ModelDetailsQualityManager';
 import ModelDetailsCharacteristics from './ModelDetailsCharacteristics';
 import ModelDetailsRiskLevel from './ModelDetailsRiskLevel';
 import ModelDetailsDescription from './ModelDetailsDescription';
-import ModelDetailsMasterPlan from './ModelDetailsMasterPlan';
+import ModelDetailsMasterPlanList from './ModelDetailsMasterPlanList';
 import ModelDetailsRiskMap from './ModelDetailsRiskMap';
 import modelsApi from '../modelsApi';
 import LoadingOverlay from '../../Common/LoadingOverlay';
@@ -66,7 +66,7 @@ const ModelDetails: React.FC = () => {
                 </TabList>
 
                 <Grid>
-                    {activeTab === ETabs.masterPlan && <ModelDetailsMasterPlan />}
+                    {activeTab === ETabs.masterPlan && <ModelDetailsMasterPlanList />}
                     {activeTab === ETabs.riskMap && <ModelDetailsRiskMap />}
                 </Grid>
             </Grid>

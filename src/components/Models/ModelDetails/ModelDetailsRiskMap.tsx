@@ -65,7 +65,7 @@ const ModelDetailsRiskMap: React.FC = () => {
         await updateModel({
             accept: 'application/json',
             id,
-            securityCode: 'security_code',
+
             body: {
                 // productModelNomenclatureId: undefined,
                 // qualityModelForMixtures: true,
@@ -118,7 +118,7 @@ const ModelDetailsRiskMap: React.FC = () => {
                         ) : (
                             <Grid columns="48px" gap={16}>
                                 <RegularButton variant="pseudo" aria-label="edit" size="s" onClick={handleEditClick}>
-                                    <EditIcon color="none" />
+                                    <EditIcon />
                                 </RegularButton>
                             </Grid>
                         )}

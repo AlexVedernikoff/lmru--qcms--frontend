@@ -4,15 +4,19 @@ import {useTranslation} from 'react-i18next';
 interface IProps {
     isOpen: boolean;
     onClose: () => void;
-    handleConfirmDeletion: () => void;
+    onConfirm: (masterPlanId: number) => void;
+    masterPlanId: number;
 }
 
-const style = {width: '50%'};
-
-const MasterPlanRemoveTaskModal: React.FC<IProps> = ({isOpen, onClose, handleConfirmDeletion}) => {
+const MasterPlanRemoveTaskModal: React.FC<IProps> = ({isOpen, onClose, onConfirm, masterPlanId}) => {
     const {t} = useTranslation('models');
+
     const handleClose = () => {
         onClose();
+    };
+
+    const handleConfirm = () => {
+        onConfirm(masterPlanId);
     };
 
     return (
@@ -20,12 +24,14 @@ const MasterPlanRemoveTaskModal: React.FC<IProps> = ({isOpen, onClose, handleCon
             <ModalHeader title={`${t('Buttons.Delete')}?`} />
             <ModalContent></ModalContent>
             <ModalFooter>
-                <RegularButton onClick={handleClose} size="l" variant="secondary" style={style}>
-                    Отмена
-                </RegularButton>
-                <RegularButton onClick={handleConfirmDeletion} size="l" variant="primary" style={style}>
-                    Подтвердить
-                </RegularButton>
+                <Grid columns="1fr 1fr" gap={24}>
+                    <RegularButton onClick={handleClose} size="l" variant="secondary">
+                        Отмена
+                    </RegularButton>
+                    <RegularButton onClick={handleConfirm} size="l" variant="primary">
+                        Подтвердить
+                    </RegularButton>
+                </Grid>
             </ModalFooter>
         </Modal>
     );

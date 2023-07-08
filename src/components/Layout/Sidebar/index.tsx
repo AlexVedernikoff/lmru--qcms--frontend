@@ -137,7 +137,7 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
                         ));
 
                         return (
-                            <div key={index} onMouseOver={isMinified ? handleHover : undefined}>
+                            <div key={index} title={item.text} onMouseOver={isMinified ? handleHover : undefined}>
                                 <ListItem
                                     className={isSectionOpened ? styles.selected : styles.item}
                                     iconLeft={

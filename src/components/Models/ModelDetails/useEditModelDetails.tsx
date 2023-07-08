@@ -40,7 +40,7 @@ const useEditModelDetails = (props: IProps): IResult => {
         await updateModel({
             id,
             accept: 'application/json',
-            securityCode: 'security_code',
+
             body: {
                 ...updatedData,
                 updatedBy: 'currentUser',
@@ -62,7 +62,7 @@ const useEditModelDetails = (props: IProps): IResult => {
             ) : (
                 <Grid columns="48px" gap={16}>
                     <RegularButton variant="pseudo" aria-label="edit" size="s" onClick={handleEditClick}>
-                        <EditIcon color="none" />
+                        <EditIcon />
                     </RegularButton>
                 </Grid>
             )}

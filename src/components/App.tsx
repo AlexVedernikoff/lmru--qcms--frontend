@@ -20,17 +20,17 @@ import TaskDetails from './Tasks/TaskDetails';
 import styles from './App.module.css';
 
 const App: React.FC = () => {
-    const [isMinified, setIsMinified] = useState(false);
+    const [isMinified, setIsMinified] = useState(localStorage.getItem('isSidebarMinified') === 'true' || false);
 
     const handleSidebarToggle = (isMinified: boolean) => {
         setIsMinified(isMinified);
+        localStorage.setItem('isSidebarMinified', isMinified + '');
     };
 
     const Context = createContext({name: 'Default'});
 
     return (
         <Context.Provider value={{name: 'Default'}}>
-            {' '}
             <div className={styles.app}>
                 <div className={styles.header}>
                     <Header />

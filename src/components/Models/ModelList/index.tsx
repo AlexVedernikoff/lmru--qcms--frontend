@@ -42,9 +42,7 @@ const ModelList: React.FC = () => {
 
     const {data, isLoading, isFetching} = modelsApi.useGetModelsQuery(
         {
-            header: {
-                securityCode: 'security_code',
-            },
+            header: {},
             body: {
                 ...page,
                 ...sort,

@@ -4,6 +4,21 @@ export enum ERiskLevel {
     'CRITICAL' = 'CRITICAL',
 }
 
+interface IBu {
+    id: number;
+    code: string;
+}
+
+interface ICreationInformation {
+    createdAt: string;
+    createdBy: string;
+}
+
+interface ILastUpdateInformation {
+    updatedAt: string;
+    updatedBy: string;
+}
+
 interface IModelsBodyParams {
     pageIndex: number; // required, номер страницы
     pageSize: number; // required, количество элементов на странице
@@ -33,7 +48,7 @@ interface IModelsBodyParams {
 }
 
 interface IModelsHeaderParams {
-    securityCode: string;
+    securityCode?: string;
 }
 
 export interface IModelsParams {
@@ -64,14 +79,8 @@ export interface IModelItem {
     productModelNomenclatureSubDepartmentCode?: string; // optional, поиск по саб департаменту (логическое или)
     productModelNomenclatureConsolidationCode?: string; // optional, поиск по группе (логическое или)
     productModelNomenclatureModelCode?: string; // optional, поиск по модели (логическое или)
-    creationInformation: {
-        createdAt: string; // required - дата создания модели качества
-        createdBy: string; // required - ldap или идентификатор системы, создавший модель качества
-    };
-    lastUpdateInformation: {
-        updatedAt: string; // required - дата изменения модели качества
-        updatedBy: string; // required - ldap или идентификатор системы, обновивший модель качества
-    };
+    creationInformation: ICreationInformation;
+    lastUpdateInformation: ILastUpdateInformation;
 }
 
 export interface IModelsResponse {
@@ -102,12 +111,13 @@ interface INomenclatureDepartment extends INomenclatureBasic {
 export type TModelNomenclatureResponse = INomenclatureDepartment[];
 
 export interface IModelNomenclatureParams {
-    securityCode: string;
     application?: string;
+    securityCode?: string;
 }
 
 export interface IModelDetailsParams {
     id: string;
+    securityCode?: string;
 }
 
 export enum ERegulatoryType {
@@ -152,33 +162,17 @@ export interface IMasterPlanTask {
         externalId?: string; // optional - подтверждающий выполнение задачи
     }[];
     documentTemplates?: number[]; // optional - id шаблона документа, запрашиваемого в рамках задачи
-    creationInformation: {
-        createdAt: string; // required - дата создания задачи
-        createdBy: string; // required - ldap или идентификатор системы, создавший задачу
-    };
-    lastUpdateInformation: {
-        updatedAt: string; // required - дата изменения задачи
-        updatedBy: string; // required - ldap или идентификатор системы, обновивший задачу
-    };
+    creationInformation: ICreationInformation;
+    lastUpdateInformation: ILastUpdateInformation;
 }
 
 export interface IMasterPlan {
     id: number; // required - идентификатор мастер плана в БД
     version: number; // required - версия мастер плана
     qualityModelId: string; // required - номер модели качества
-    // required - бизнес юнит на который распространяется мастер план
-    bu: {
-        id: number; // идентификатор бизнес юнита
-        code: string; // код бизнес юнита
-    };
-    creationInformation: {
-        createdAt: string; // required - дата создания мастер плана
-        createdBy: string; // required - ldap или идентификатор системы, создавший мастер план
-    };
-    lastUpdateInfomation: {
-        updatedAt: string; // required - дата изменения мастер плана
-        updatedBy: string; // required - ldap или идентификатор системы, обновивший мастер план
-    };
+    bu: IBu;
+    creationInformation: ICreationInformation;
+    lastUpdateInformation: ILastUpdateInformation;
     // задачи, которые необходимо выполнить для листинга товара
     tasks: IMasterPlanTask[];
 }
@@ -264,25 +258,13 @@ export interface IModelDetailsResponse {
         safetyRules?: string; // optional - правила безопасности
         test?: string; // optional - тестирование продукта
         keyPoints?: string; // optional, ключевые моменты
-        creationInformation: {
-            createdAt: string; // required, время создания задачи
-            createdBy: string; // required, ldap или идентификатор системы, создавшей документ
-        };
-        lastUpdateInfomation: {
-            updatedAt: string; // required, время создания задачи
-            updatedBy: string; // required, ldap или идентификатор системы, обновившей документ
-        };
+        creationInformation: ICreationInformation;
+        lastUpdateInfomation: ILastUpdateInformation;
     }[];
     // required, ссылка на мастер планы, связанные с моделью качества
     masterPlanIds: IMasterPlan[];
-    creationInformation: {
-        createdAt: string; // required - дата создания модели качества
-        createdBy: string; // required - ldap или идентификатор системы, создавший модель качества
-    };
-    lastUpdateInfomation: {
-        updatedAt: string; // required - дата изменения модели качества
-        updatedBy: string; // required - ldap или идентификатор системы, обновивший модель качества
-    };
+    creationInformation: ICreationInformation;
+    lastUpdateInfomation: ILastUpdateInformation;
 }
 
 export interface IUpdateQualityModelParams {
@@ -326,9 +308,9 @@ export type IUpdateMasterPlanTasksParams = {
 
 export interface IUpdateMasterPlanTasksResponse {}
 
-export type ITaskCategoryParams = {
+export interface ITaskCategoryParams {
     securityCode?: string;
-};
+}
 
 export type TTaskCategoryResponse = Array<{
     id: number;
@@ -343,34 +325,35 @@ export interface IDeleteMasterPlanTasksResponse {
     id: number;
     qualityModelId: number;
     version: number;
-    creationInformation: CreationInformation;
-    lastUpdateInformation: LastUpdateInformation;
+    creationInformation: ICreationInformation;
+    lastUpdateInformation: ILastUpdateInformation;
     tasks: IMasterPlanTask[];
-    bu: Bu;
+    bu: IBu;
 }
 
-interface Bu {
+export interface IMasterPlanDeleteTasksParams {
     id: number;
-    code: string;
+    body: IMasterPlanDeleteTasksBody;
+    securityCode?: string;
 }
 
-interface CreationInformation {
-    createdAt: Date;
-    createdBy: string;
-}
-
-interface LastUpdateInformation {
-    updatedAt: Date;
-    updatedBy: string;
-}
-
-export interface IDeleteMasterPlanTasksParams {
-    id: string;
-    body: DeleteMasterPlanTasksBody;
-    securityCode: string;
-}
-
-export interface DeleteMasterPlanTasksBody {
+export interface IMasterPlanDeleteTasksBody {
     updatedBy: string;
     taskIDs: number[];
 }
+
+export interface IPermissiveDocumentsParams {
+    securityCode?: string;
+}
+
+export type TPermissiveDocumentsResponse = Array<{
+    id: number; // required, идентификатор типа документа в БД
+    name: string; // required, короткое название документа
+    type: string; // required, ENUM: ['REGULATORY', 'PACKAGING'], тип документа
+    masks?: string[]; // optional
+    mandatoryForSupplierType: Array<{
+        supplierType: string; // required, тип поставщика
+        status: string; // required, статус обязательности документа для поставщика
+    }>;
+    regulatoryReferences: number[];
+}>;

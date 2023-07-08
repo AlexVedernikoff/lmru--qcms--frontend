@@ -32,7 +32,7 @@ const ModelDetailsDescription: React.FC = () => {
         await updateModel({
             id,
             accept: 'application/json',
-            securityCode: 'security_code',
+
             body: {
                 qualityModelDescription: text,
                 updatedBy: 'currentUser',
@@ -55,7 +55,7 @@ const ModelDetailsDescription: React.FC = () => {
                 ) : (
                     <Grid columns="48px" gap={16}>
                         <RegularButton variant="pseudo" aria-label="edit" size="s" onClick={handleEditClick}>
-                            <EditIcon color="none" />
+                            <EditIcon />
                         </RegularButton>
                     </Grid>
                 )}
