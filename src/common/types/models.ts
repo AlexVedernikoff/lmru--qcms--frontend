@@ -108,7 +108,6 @@ export interface IModelNomenclatureParams {
 
 export interface IModelDetailsParams {
     id: string;
-    securityCode: string;
 }
 
 export enum ERegulatoryType {
@@ -131,8 +130,8 @@ export interface IMasterPlanTask {
     regulatoryType: ERegulatoryType; // required - тип плана ENUM: [DISTRIBUTOR, IMPORTER, MANUFACTURER] (поставщик, СТМ, дистрибьютор)
     // otional, законодательное требование для протоколов сертификационных испытаний (из отдельной таблички)
     linkedRegulations: {
-        id: number; // required, идентификатор связанного законодательного требования
-        name: string; // required, название связанного законодательного требования
+        id: string; // required, идентификатор связанного законодательного требования
+        title: string; // required, название связанного законодательного требования
         regionCodes: string[]; // requried, регион распространения законодательного требования
     }[];
     // required, - документы, необходимые в рамках квалификационного и сертификационного сбора

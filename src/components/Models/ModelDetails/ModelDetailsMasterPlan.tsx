@@ -15,12 +15,18 @@ export interface IInitialState {
     MANUFACTURER: number[];
 }
 
+enum MasterPlansCodes {
+    Russia = '9',
+}
+
 const ModelDetailsMasterPlan: React.FC = () => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
     const [isRemoveOpen, setIsRemoveOpen] = useState(false);
     const [removeTaskError, setRemoveTaskError] = useState(false);
     const [api, contextHolder] = notification.useNotification();
+
+    const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id});
 
     const initialState: IInitialState = {
         IMPORTER: [],
@@ -42,7 +48,7 @@ const ModelDetailsMasterPlan: React.FC = () => {
         removeTasksArr.push(...tasksToRemove[key as keyof IInitialState]);
     }
 
-    const {data: modelDetails} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
+    const {data: modelDetails} = modelsApi.endpoints.getModelDetails.useQueryState({id});
 
     const [deleteTasks, result] = modelsApi.useDeleteMasterPlanTasksMutation();
 
@@ -106,7 +112,10 @@ const ModelDetailsMasterPlan: React.FC = () => {
         //     }
         // }
 
-        for (const task of tasks || []) {
+        // TODO: will be more master plans for model details
+        const ruMP = details?.masterPlanIds?.find(mp => mp.bu.code === MasterPlansCodes.Russia);
+
+        for (const task of ruMP?.tasks || []) {
             switch (task.regulatoryType) {
                 case ERegulatoryType.DISTRIBUTOR:
                     distributorTasks.push(task);

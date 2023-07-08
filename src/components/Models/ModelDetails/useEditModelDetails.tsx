@@ -22,7 +22,7 @@ const useEditModelDetails = (props: IProps): IResult => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
 
-    const {refetch} = modelsApi.endpoints.getModelDetails.useQuery({id, securityCode: 'security_code'});
+    const {refetch} = modelsApi.endpoints.getModelDetails.useQuery({id});
     const [updateModel] = modelsApi.endpoints.updateQualityModel.useMutation();
 
     const [isEditMode, setIsEditMode] = useState(false);

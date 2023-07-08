@@ -1,7 +1,7 @@
-import {useCallback, useMemo} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Dropdown, DropdownItem, Grid, IconButton} from 'fronton-react';
-import {UploadIcon} from '@fronton/icons-react';
+import {Dropdown, DropdownItem, Grid, RegularButton} from 'fronton-react';
+import {DownloadIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {DefaultOptionType} from 'antd/es/select';
 import {TableRowSelection} from 'antd/es/table/interface';
@@ -9,10 +9,12 @@ import {IMasterPlanRequirementTableItem, TWithReactKey} from '../../../common/cl
 import CustomTable from '../../Common/CustomTable';
 import {CustomSwitch} from '../../Common/Switch/CustomSwitch';
 import {IMasterPlanTask} from '../../../common/types/models';
+import {PointersComponent} from './PointersComponent';
+import {downloadFile} from '../../../api/downloadQualityDocument';
+import {IInitialState} from './ModelDetailsMasterPlan';
 import modelsApi from '../modelsApi';
 import {TreeSelect} from 'antd';
 import styles from './ModelDetails.module.css';
-import {IInitialState} from './ModelDetailsMasterPlan';
 
 type TDataType = TWithReactKey<IMasterPlanRequirementTableItem>;
 
@@ -39,15 +41,16 @@ const CustomTree: React.FC<ICustomTreeProps> = ({taskCategoryOptions, selected, 
 };
 
 interface IProps {
-    isEdit?: boolean;
     data: IMasterPlanTask[];
     updateTasks?: (key: keyof IInitialState, value: number[]) => void;
     removeTasksArr?: number[];
     onChange?: (data: IMasterPlanTask[]) => void;
 }
 
-const MasterPlanTable: React.FC<IProps> = ({isEdit, data, updateTasks, removeTasksArr, onChange}) => {
+const MasterPlanTable: React.FC<IProps> = ({data, updateTasks, removeTasksArr, onChange}) => {
     const {t} = useTranslation('models');
+
+    const [isEdit] = useState(false);
 
     const {data: taskCategories = []} = modelsApi.endpoints.getTaskCategory.useQuery({securityCode: 'security_code'});
 
@@ -64,8 +67,6 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data, updateTasks, removeTas
             })),
         [taskCategories]
     );
-
-    // const handleEditField = () => {};
 
     const handleSelectType = useCallback(
         (value: string, recordId: string) => {
@@ -100,166 +101,213 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data, updateTasks, removeTas
             },
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.type'),
-                dataIndex: 'category',
-                render: (data: TDataType['type'], record: TDataType) => (
-                    <CustomTree
-                        taskCategoryOptions={taskCategoryOptions}
-                        onSelect={handleSelectType}
-                        selected={data.id!}
-                        record={record}
-                    />
-                ),
+                dataIndex: 'type',
+                render: (data: TDataType['type'], record: TDataType) => {
+                    if (isEdit) {
+                        return (
+                            <CustomTree
+                                taskCategoryOptions={taskCategoryOptions}
+                                onSelect={handleSelectType}
+                                selected={data.id!}
+                                record={record}
+                            />
+                        );
+                    } else {
+                        return <div>{data.name}</div>;
+                    }
+                },
                 width: 246,
             },
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.legal'),
                 dataIndex: 'legal',
-                render: (data: TDataType['legal']) => (
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        value={data[0]?.id?.toString()}
-                        onSelect={() => {}}
-                    >
-                        {data.map(d => (
-                            <DropdownItem key={d.id} text={d.name} value={d.id} />
-                        ))}
-                    </Dropdown>
-                ),
+                render: (data: TDataType['legal']) => {
+                    if (isEdit) {
+                        return (
+                            <Dropdown
+                                size="m"
+                                closeOnSelect
+                                placeholder={t('Common.Select')}
+                                value={data[0]?.id?.toString()}
+                                onSelect={() => {}}
+                            >
+                                {data.map(el => (
+                                    <DropdownItem key={el.id} text={el.title} value={el.id} />
+                                ))}
+                            </Dropdown>
+                        );
+                    } else {
+                        return <PointersComponent arr={data.map(el => el.title)} sliceBeforePointers={2} />;
+                    }
+                },
                 width: 600,
             },
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.documents'),
                 dataIndex: 'documents',
-                render: (data: TDataType['documents']) => (
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        value={data[0]?.id.toString()}
-                        onSelect={() => {}}
-                    >
-                        {data.map(d => (
-                            <DropdownItem key={d.id} text={d.name} value={d.id} />
-                        ))}
-                    </Dropdown>
-                ),
+                render: (data: TDataType['documents']) => {
+                    if (isEdit) {
+                        return (
+                            <Dropdown
+                                size="m"
+                                closeOnSelect
+                                placeholder={t('Common.Select')}
+                                value={data[0]?.id.toString()}
+                                onSelect={() => {}}
+                            >
+                                {data.map(el => (
+                                    <DropdownItem key={el.id} text={el.description} value={el.id} />
+                                ))}
+                            </Dropdown>
+                        );
+                    } else {
+                        return <PointersComponent arr={data.map(el => el.description)} sliceBeforePointers={2} />;
+                    }
+                },
                 width: 350,
             },
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.origin'),
                 dataIndex: 'origin',
-                render: (data: TDataType['origin']) => (
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        value={data[0]?.id.toString()}
-                        onSelect={() => {}}
-                    >
-                        {data.map(d => (
-                            <DropdownItem key={d.id} text={d.name} value={d.id} />
-                        ))}
-                    </Dropdown>
-                ),
-                // render: (data: TDataType['origin']) => (
-                //     <Grid columns="auto 1fr auto">
-                //         <div>{data}</div>
-                //         <span />
-                //         <IconButton href={'#'} rel={''} aria-label={''}>
-                //             <FileSearchIcon />
-                //         </IconButton>
-                //     </Grid>
-                // ),
-                width: 500,
+                render: (data: TDataType['origin']) => data.createdBy,
+                width: 246,
             },
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.process'),
                 dataIndex: 'process',
-                render: (data: TDataType['process']) => (
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        value={data ? 'MANUAL' : 'AUTO'}
-                        onSelect={() => {}}
-                    >
-                        {[
-                            {label: 'Ручной', value: 'MANUAL'},
-                            {label: 'Автоматический', value: 'AUTO'},
-                        ].map(d => (
-                            <DropdownItem key={d.label} text={d.label} value={d.value} />
-                        ))}
-                    </Dropdown>
-                ),
+                render: (data: TDataType['process']) => {
+                    if (isEdit) {
+                        return (
+                            <Dropdown
+                                size="m"
+                                closeOnSelect
+                                placeholder={t('Common.Select')}
+                                value={data ? 'MANUAL' : 'AUTO'}
+                                onSelect={() => {}}
+                            >
+                                {[
+                                    {label: 'Ручной', value: 'MANUAL'},
+                                    {label: 'Автоматический', value: 'AUTO'},
+                                ].map(d => (
+                                    <DropdownItem key={d.label} text={d.label} value={d.value} />
+                                ))}
+                            </Dropdown>
+                        );
+                    } else {
+                        return data ? 'Ручной' : 'Автоматический';
+                    }
+                },
                 width: 180,
             },
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.responsiblePerson'),
-                dataIndex: 'responsiblePerson',
-                render: (data: TDataType['responsiblePerson']) => (
-                    <Dropdown size="m" closeOnSelect placeholder={t('Common.Select')} value={data} onSelect={() => {}}>
-                        {['SUPPLIER', 'QE', 'SQM', 'SERVICE_PROVIDER'].map(d => (
-                            <DropdownItem
-                                key={d}
-                                // @ts-ignore-next-line
-                                text={t(`ModelDetails.MasterPlan.Table.Options.Role.${d}`)}
-                                value={d}
-                            />
-                        ))}
-                    </Dropdown>
-                ),
+                dataIndex: 'responsible',
+                render: (data: TDataType['responsible']) => {
+                    if (isEdit) {
+                        return (
+                            <Dropdown
+                                size="m"
+                                closeOnSelect
+                                placeholder={t('Common.Select')}
+                                value={data.type}
+                                onSelect={() => {}}
+                            >
+                                {['SUPPLIER', 'QE', 'SQM', 'SERVICE_PROVIDER'].map(d => (
+                                    <DropdownItem
+                                        key={d}
+                                        // @ts-ignore-next-line
+                                        text={t(`ModelDetails.MasterPlan.Table.Options.Role.${d}`)}
+                                        value={d}
+                                    />
+                                ))}
+                            </Dropdown>
+                        );
+                    } else {
+                        if (data.type === 'SERVICE_PROVIDER') {
+                            return (
+                                <Grid columns="1fr 1fr" justifyItems="center">
+                                    {
+                                        // @ts-ignore-next-line
+                                        <>
+                                            <div>{t(`ModelDetails.MasterPlan.Table.Options.Role.${data.type}`)}</div>
+                                            <div>{data?.externalId}</div>
+                                        </>
+                                    }
+                                </Grid>
+                            );
+                        } else {
+                            // @ts-ignore-next-line
+                            return <div>{t(`ModelDetails.MasterPlan.Table.Options.Role.${data.type}`)}</div>;
+                        }
+                    }
+                },
+
                 width: 180,
             },
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.approvingPerson'),
-                dataIndex: 'approvingPerson',
-                render: (data: TDataType['approvingPerson']) => (
-                    <Dropdown size="m" closeOnSelect placeholder={t('Common.Select')} value={data} onSelect={() => {}}>
-                        {['SUPPLIER', 'QE', 'SQM', 'SERVICE_PROVIDER'].map(d => (
-                            <DropdownItem
-                                key={d}
-                                // @ts-ignore-next-line
-                                text={t(`ModelDetails.MasterPlan.Table.Options.Role.${d}`)}
-                                value={d}
-                            />
-                        ))}
-                    </Dropdown>
-                ),
-                // render: (data: TDataType['approvingPerson']) => (
-                //     <Grid columns="auto auto">
-                //         <Dropdown
-                //             size="m"
-                //             closeOnSelect
-                //             placeholder={t('Common.Select')}
-                //             value={data.type}
-                //             onSelect={() => {}}
-                //         >
-                //             <DropdownItem text={data.type} value={data.type} />
-                //         </Dropdown>
-
-                //         <Dropdown
-                //             size="m"
-                //             closeOnSelect
-                //             placeholder={t('Common.Select')}
-                //             value={data.place}
-                //             onSelect={() => {}}
-                //         >
-                //             <DropdownItem text={data.place} value={data.place} />
-                //         </Dropdown>
-                //     </Grid>
-                // ),
+                dataIndex: 'approvers',
+                render: (data: TDataType['approvers']) => {
+                    if (isEdit) {
+                        return (
+                            <Dropdown
+                                size="m"
+                                closeOnSelect
+                                placeholder={t('Common.Select')}
+                                value={data[0].type}
+                                onSelect={() => {}}
+                            >
+                                {['SUPPLIER', 'QE', 'SQM', 'SERVICE_PROVIDER'].map(d => (
+                                    <DropdownItem
+                                        key={d}
+                                        // @ts-ignore-next-line
+                                        text={t(`ModelDetails.MasterPlan.Table.Options.Role.${d}`)}
+                                        value={d}
+                                    />
+                                ))}
+                            </Dropdown>
+                        );
+                    } else {
+                        return (
+                            <>
+                                {data?.map(el => {
+                                    if (el.externalId === 'SERVICE_PROVIDER') {
+                                        return (
+                                            <Grid columns="1fr 1fr" justifyItems="center">
+                                                {
+                                                    // @ts-ignore-next-line
+                                                    <>{t(`ModelDetails.MasterPlan.Table.Options.Role.${el.type}`)}</>
+                                                }
+                                                <div>{el?.externalId}</div>
+                                            </Grid>
+                                        );
+                                    } else {
+                                        // @ts-ignore-next-line
+                                        return <>{t(`ModelDetails.MasterPlan.Table.Options.Role.${el.type}`)}</>;
+                                    }
+                                })}
+                            </>
+                        );
+                    }
+                },
                 width: 280,
             },
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.documentTemplate'),
                 dataIndex: 'documentTemplate',
-                render: (_data: TDataType['documentTemplate']) => (
-                    <Grid>
-                        <IconButton href={'#'} rel={''} aria-label={''} disabled>
-                            <UploadIcon />
-                        </IconButton>
+                render: (ids: TDataType['documentTemplate']) => (
+                    <Grid columns="1fr 1fr" justifyItems="center" alignItems="center">
+                        {ids.map(id => (
+                            <>
+                                <RegularButton
+                                    iconRight={<DownloadIcon />}
+                                    onClick={() => downloadFile(id)}
+                                    variant="pseudo"
+                                />
+
+                                <div>{id}</div>
+                            </>
+                        ))}
                     </Grid>
                 ),
                 width: 150,
@@ -267,31 +315,45 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data, updateTasks, removeTas
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.taskRequirement'),
                 dataIndex: 'taskRequirement',
-                render: (data: TDataType['taskRequirement']) => (
-                    <CustomSwitch checked={data} name="" handleChange={() => {}} />
-                ),
+                render: (data: TDataType['taskRequirement']) => {
+                    if (isEdit) {
+                        return (
+                            <Grid justifyContent="center">
+                                <CustomSwitch checked={data} name="" handleChange={() => {}} />
+                            </Grid>
+                        );
+                    } else {
+                        return (
+                            <Grid justifyContent="center">
+                                <CustomSwitch checked={data} name="" handleChange={() => {}} />
+                            </Grid>
+                        );
+                    }
+                },
                 width: 180,
             },
         ],
-        [handleSelectType, t, taskCategoryOptions]
+        [handleSelectType, isEdit, t, taskCategoryOptions]
     );
 
     const dataSource = useMemo<TDataType[]>(
         () =>
-            data.map(d => ({
-                key: d.id,
-                status: d.regulatoryType,
-                category: d.categoryType?.category || {},
-                type: d.categoryType || {},
-                legal: d.linkedRegulations,
-                documents: d.linkedRegulations,
-                origin: d.linkedRegulations,
-                process: d.manualProcessing,
-                responsiblePerson: d.responsible?.type,
-                approvingPerson: d.approvers?.[0]?.type,
-                documentTemplate: d.documentTemplates?.[0] || 0,
-                taskRequirement: d.taskRequired,
-            })) || [],
+            data.map(d => {
+                return {
+                    key: d.id,
+                    status: d.regulatoryType,
+                    category: d.categoryType?.category || {},
+                    type: d.categoryType || {},
+                    legal: d.linkedRegulations,
+                    documents: d.packagingMaterialDocumentTypes,
+                    origin: d.creationInformation,
+                    process: d.manualProcessing,
+                    responsible: d.responsible,
+                    approvers: d.approvers,
+                    documentTemplate: d?.documentTemplates ? d.documentTemplates : [],
+                    taskRequirement: d.taskRequired,
+                };
+            }) || [],
         [data]
     );
 
@@ -304,7 +366,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEdit, data, updateTasks, removeTas
             },
             fixed: 'left',
         }),
-        []
+        [data, updateTasks]
     );
 
     return (

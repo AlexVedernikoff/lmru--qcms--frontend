@@ -27,7 +27,7 @@ const ModelDetailsRiskMap: React.FC = () => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
 
-    const {data: details, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id, securityCode: 'security_code'});
+    const {data: details, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id});
     const [updateModel] = modelsApi.endpoints.updateQualityModel.useMutation();
 
     const [isEditMode, setIsEditMode] = useState(false);

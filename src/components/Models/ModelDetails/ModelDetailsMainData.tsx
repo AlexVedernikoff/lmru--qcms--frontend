@@ -16,7 +16,7 @@ const ModelDetailsMainData: React.FC = () => {
     const {id = ''} = useParams();
 
     const {data: nomenclature = []} = modelsApi.useGetModelNomenclatureQuery({securityCode: 'security_code'});
-    const {data: details, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id, securityCode: 'security_code'});
+    const {data: details, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id});
     const [updateModel] = modelsApi.endpoints.updateQualityModel.useMutation();
 
     const [isEditMode, setIsEditMode] = useState(false);

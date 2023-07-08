@@ -31,22 +31,31 @@ export interface IMasterPlanRequirementTableItem {
         id?: number;
         name?: string;
     };
+
     legal: {
-        id: number;
-        name: string;
+        id: string;
+        title: string;
     }[];
     documents: {
         id: number;
-        name: string;
+        description: string;
     }[];
     origin: {
-        id: number;
-        name: string;
-    }[];
+        createdAt: string;
+        createdBy: string;
+    };
     process: boolean;
-    responsiblePerson: string;
-    approvingPerson: string;
-    documentTemplate: number;
+    responsible: {
+        id: number;
+        type: string;
+        externalId?: string;
+    };
+    approvers: {
+        id: number;
+        type: string;
+        externalId?: string;
+    }[];
+    documentTemplate: number[];
     taskRequirement: boolean;
 }
 

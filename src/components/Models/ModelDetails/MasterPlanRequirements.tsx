@@ -21,7 +21,7 @@ const MasterPlanRequirements: React.FC<IProps> = ({tasks, handleDeleteClick, upd
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
 
-    const {data: details, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id, securityCode: 'security_code'});
+    const {data: details, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id});
     const [updateModel] = modelsApi.endpoints.updateQualityModel.useMutation();
 
     const [isOpen, setIsOpen] = useState(false);

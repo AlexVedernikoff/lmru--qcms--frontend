@@ -14,7 +14,7 @@ interface IProps {
 const ModelDetailsRiskLevel: React.FC<IProps> = ({onResetClick}) => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
-    const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
+    const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id});
 
     const riskParams = useMemo(() => {
         let style = '';

@@ -8,7 +8,7 @@ import styles from './ModelDetails.module.css';
 const ModelDetailsCharacteristics: React.FC = () => {
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
-    const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id, securityCode: 'security_code'});
+    const {data: details} = modelsApi.endpoints.getModelDetails.useQueryState({id});
 
     const [items, setItems] = useState(
         details?.qualityModelCharacteristics?.map(v => ({

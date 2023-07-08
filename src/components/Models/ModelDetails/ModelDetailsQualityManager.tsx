@@ -16,7 +16,7 @@ const ModelDetailsQualityManager: React.FC = () => {
     const [QE, setQE] = useState<string | undefined>(undefined);
     const [SQM, setSQM] = useState<string | undefined>(undefined);
 
-    const {data: details, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id, securityCode: 'security_code'});
+    const {data: details, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id});
     const [updateModel] = modelsApi.endpoints.updateQualityModel.useMutation();
 
     useEffect(() => {
