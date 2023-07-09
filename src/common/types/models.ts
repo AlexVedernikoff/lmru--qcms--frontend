@@ -127,8 +127,8 @@ export enum ERegulatoryType {
 }
 
 export interface IMasterPlanTask {
-    id: number; // required - идентификатор задачи в БД
-    categoryType: {
+    id?: number; // required - идентификатор задачи в БД
+    categoryType?: {
         id?: number;
         name?: string;
         category?: {
@@ -136,10 +136,10 @@ export interface IMasterPlanTask {
             name?: string;
         };
     }; // required, - тип задачи из категории (содержит ссылку на категорию, к которой относится)
-    version: number; // required - версия задачи
+    version?: number; // required - версия задачи
     regulatoryType: ERegulatoryType; // required - тип плана ENUM: [DISTRIBUTOR, IMPORTER, MANUFACTURER] (поставщик, СТМ, дистрибьютор)
     // otional, законодательное требование для протоколов сертификационных испытаний (из отдельной таблички)
-    linkedRegulations: {
+    linkedRegulations?: {
         id: string; // required, идентификатор связанного законодательного требования
         title: string; // required, название связанного законодательного требования
         regionCodes: string[]; // requried, регион распространения законодательного требования
@@ -162,8 +162,8 @@ export interface IMasterPlanTask {
         externalId?: string; // optional - подтверждающий выполнение задачи
     }[];
     documentTemplates?: number[]; // optional - id шаблона документа, запрашиваемого в рамках задачи
-    creationInformation: ICreationInformation;
-    lastUpdateInformation: ILastUpdateInformation;
+    creationInformation?: ICreationInformation;
+    lastUpdateInformation?: ILastUpdateInformation;
 }
 
 export interface IMasterPlan {
