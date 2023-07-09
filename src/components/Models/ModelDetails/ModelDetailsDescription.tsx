@@ -45,7 +45,7 @@ const ModelDetailsDescription: React.FC = () => {
     };
 
     return (
-        <Grid rowGap={16} columnGap={16} columns="1fr" alignContent="start" justifyContent="start">
+        <Grid gap={16} columns="1fr" alignContent="start" justifyContent="start">
             <Grid columns="1fr auto" gap={16}>
                 <Typography variant="h3">{t('ModelDetails.Description.Title')}</Typography>
                 {isEditMode ? (

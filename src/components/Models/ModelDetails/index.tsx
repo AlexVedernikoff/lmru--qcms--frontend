@@ -38,9 +38,6 @@ const ModelDetails: React.FC = () => {
         <Grid rowGap={16} rows="auto 1fr">
             <Grid columnGap={16} columns="1fr auto">
                 <Typography variant="h2">{title}</Typography>
-                {/* <div>
-                    <RegularButton>{t('Buttons.Edit')}</RegularButton>
-                </div> */}
             </Grid>
 
             <Grid className={styles.panel} rowGap={24} columnGap={16}>
@@ -49,11 +46,13 @@ const ModelDetails: React.FC = () => {
                     <ModelDetailsQualityManager />
                 </Grid>
 
-                <ModelDetailsCharacteristics />
+                <Grid gap={24} style={{margin: '0 12px'}}>
+                    <ModelDetailsCharacteristics />
 
-                <Grid columnGap={24} columns="auto 1fr">
-                    <ModelDetailsRiskLevel />
-                    <ModelDetailsDescription />
+                    <Grid columnGap={24} columns="auto 1fr">
+                        <ModelDetailsRiskLevel />
+                        <ModelDetailsDescription />
+                    </Grid>
                 </Grid>
 
                 <TabList active={activeTab} onChangeTab={handleTabChange} className={styles.tabs} size="l">

@@ -77,7 +77,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
             if (onChange)
                 onChange(
                     data.map(d =>
-                        d.id.toString() === recordId
+                        d.id!.toString() === recordId
                             ? {...d, categoryType: {...d.categoryType, id: value ? parseInt(value, 10) : undefined}}
                             : d
                     )
@@ -91,7 +91,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
             if (onChange)
                 onChange(
                     data.map(d =>
-                        d.id.toString() === recordId
+                        d.id!.toString() === recordId
                             ? {
                                   ...d,
                                   packagingMaterialDocumentTypes: value.map(v => ({
@@ -272,7 +272,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                                 size="m"
                                 closeOnSelect
                                 placeholder={t('Common.Select')}
-                                value={data[0].type}
+                                value={data[0]?.type}
                                 onSelect={() => {}}
                             >
                                 {['SUPPLIER', 'QE', 'SQM', 'SERVICE_PROVIDER'].map(d => (
@@ -358,13 +358,13 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
     const dataSource = useMemo<TDataType[]>(
         () =>
             data.map(d => ({
-                key: d.id,
+                key: d.id!,
                 status: d.regulatoryType,
                 category: d.categoryType?.category || {},
                 type: d.categoryType || {},
-                legal: d.linkedRegulations,
+                legal: d.linkedRegulations || [],
                 documents: d.packagingMaterialDocumentTypes,
-                origin: d.creationInformation,
+                origin: d.creationInformation || {createdAt: '', createdBy: ''},
                 process: d.manualProcessing,
                 responsible: d.responsible,
                 approvers: d.approvers,

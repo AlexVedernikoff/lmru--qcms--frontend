@@ -27,8 +27,9 @@ const ModelDetailsMasterPlan: React.FC<IProps> = ({masterPlanId, tasks}) => {
     const [deleteTasks, deleteTasksResult] = modelsApi.endpoints.deleteMasterPlanTasks.useMutation();
 
     const [isEditMode, setIsEditMode] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
+    const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
     const [isRemoveTaskOpen, setIsRemoveTaskOpen] = useState(false);
+
     const [selectedTasks, setSelectedTasks] = useState<number[]>([]);
 
     useEffect(() => {
@@ -62,11 +63,11 @@ const ModelDetailsMasterPlan: React.FC<IProps> = ({masterPlanId, tasks}) => {
         setIsEditMode(false);
     };
 
-    const handleAddClick = () => setIsOpen(true);
-    const handleModalClose = () => setIsOpen(false);
+    const handleAddClick = () => setIsAddTaskOpen(true);
+    const handleAddModalClose = () => setIsAddTaskOpen(false);
 
-    const handleRemoveModalClose = () => setIsRemoveTaskOpen(false);
     const handleDeleteClick = () => setIsRemoveTaskOpen(true);
+    const handleRemoveModalClose = () => setIsRemoveTaskOpen(false);
 
     const handleConfirmDeletion = async (masterPlanId: number) => {
         setIsRemoveTaskOpen(false);
@@ -123,7 +124,7 @@ const ModelDetailsMasterPlan: React.FC<IProps> = ({masterPlanId, tasks}) => {
 
             <MasterPlanTable isEditMode={isEditMode} data={tasks} updateTasks={updateTasks} />
 
-            <MasterPlanAddModal isOpen={isOpen} onClose={handleModalClose} />
+            <MasterPlanAddModal isOpen={isAddTaskOpen} onClose={handleAddModalClose} />
             <MasterPlanRemoveTaskModal
                 isOpen={isRemoveTaskOpen}
                 onClose={handleRemoveModalClose}
