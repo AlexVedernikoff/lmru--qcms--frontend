@@ -1,11 +1,11 @@
 import {Dropdown, DropdownItem, Grid, IconButton, RegularButton} from 'fronton-react';
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
-import DownloadIcon from '../../../../../Icons/DownloadIcon';
 import {CustomSwitch} from '../../../../../Common/Switch/CustomSwitch';
 import {ITaskUploadedDocument} from '../../../../../../common/types/taskDetails';
 import {convertDateFromServer} from '../../../../../../utils/convertDateFromServer';
 import BasketIcon from '../../../../../Icons/BasketIcon';
+import DownloadIcon from '../../../../../Icons/DownloadIcon';
 
 export interface IDataType extends ITaskUploadedDocument {
     key: React.Key;
@@ -41,7 +41,10 @@ const downloadDocument = (id: number) => {
         });
 };
 
-export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): ColumnsType<ITaskUploadedDocument> => [
+export const getTableColumns = (
+    t: TFunction<'tasks', undefined, 'tasks'>,
+    deleteDocument: (document: ITaskUploadedDocument) => void
+): ColumnsType<ITaskUploadedDocument> => [
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.documentType'),
         dataIndex: 'type',
@@ -126,9 +129,15 @@ export const getTableColumns = (t: TFunction<'tasks', undefined, 'tasks'>): Colu
         title: undefined,
         dataIndex: undefined,
         width: 48,
-        render: () => (
+        render: id => (
             <div style={{textAlign: 'center'}}>
-                <IconButton href="" rel="" aria-label="" style={{verticalAlign: 'middle'}}>
+                <IconButton
+                    href=""
+                    rel=""
+                    aria-label=""
+                    style={{verticalAlign: 'middle'}}
+                    onClick={() => deleteDocument(id)}
+                >
                     <BasketIcon />
                 </IconButton>
             </div>

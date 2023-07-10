@@ -1,7 +1,7 @@
 import {useTranslation} from 'react-i18next';
 import {RegularButton} from 'fronton-react';
 import {useRef} from 'react';
-import DownloadIcon from '../../Icons/DownloadIcon';
+import UploadIcon from '../../Icons/UploadIcon';
 
 import s from './styles.module.css';
 
@@ -29,7 +29,7 @@ const SelectFilesToUploadButton: React.FC<Props> = ({onFilesSelect}) => {
         <RegularButton
             size="l"
             variant="primary"
-            iconLeft={<DownloadIcon type="outline" />}
+            iconLeft={<UploadIcon type="outline" />}
             className={s.button}
             onClick={handleButtonClick}
         >
