@@ -106,7 +106,8 @@
                     "approvingPerson": "Утверждающее лицо",
                     "documentTemplate": "Шаблон документа",
                     "taskRequirement": "Обязательность задачи"
-                }
+                },
+                "ShowMore": "Показать больше"
             }
         },
         "RiskMap": {

@@ -1,19 +1,18 @@
 import {useCallback, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Dropdown, DropdownItem, Grid, RegularButton} from 'fronton-react';
-import {DownloadIcon} from '@fronton/icons-react';
+import {Dropdown, DropdownItem, Grid} from 'fronton-react';
 import {ColumnsType} from 'antd/es/table';
 import {TreeSelect} from 'antd';
 import {DefaultOptionType} from 'antd/es/select';
 import {TableRowSelection} from 'antd/es/table/interface';
 import {IMasterPlanRequirementTableItem, TWithReactKey} from 'common/clientModels';
 import {ERegulatoryType, IMasterPlanTask} from 'common/types/models';
-import {downloadFile} from 'api/downloadQualityDocument';
 import CustomTable from '../../Common/CustomTable';
 import {CustomSwitch} from '../../Common/Switch/CustomSwitch';
-import PointersComponent from './PointersComponent';
+import ShowMoreStrComponent from './ShowMoreStrComponent';
 import modelsApi from '../modelsApi';
 import styles from './ModelDetails.module.css';
+import ShowMoreDocsComponent from './ShowMoreDocsComponent';
 
 type TDataType = TWithReactKey<IMasterPlanRequirementTableItem>;
 
@@ -157,7 +156,9 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                             />
                         );
                     } else {
-                        return <PointersComponent arr={data.map(el => el.description)} sliceBeforePointers={2} />;
+                        return (
+                            <ShowMoreStrComponent arr={data.map(el => el.description)} sliceBeforePointers={2} t={t} />
+                        );
                     }
                 },
                 width: 350,
@@ -181,7 +182,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                             </Dropdown>
                         );
                     } else {
-                        return <PointersComponent arr={data.map(el => el.title)} sliceBeforePointers={2} />;
+                        return <ShowMoreStrComponent arr={data.map(el => el.title)} sliceBeforePointers={2} t={t} />;
                     }
                 },
                 width: 600,
@@ -246,11 +247,12 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                     } else {
                         if (data.type === 'SERVICE_PROVIDER') {
                             return (
-                                <Grid columns="1fr 1fr" justifyItems="center">
+                                <Grid columns="auto auto auto" justifyContent="space-between">
                                     <div>
                                         {/* @ts-ignore-next-line */}
                                         {t(`ModelDetails.MasterPlan.Table.Options.Role.${data.type}`)}
                                     </div>
+                                    <div>id:</div>
                                     <div>{data?.externalId}</div>
                                 </Grid>
                             );
@@ -260,7 +262,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                         }
                     }
                 },
-                width: 180,
+                width: 280,
             },
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.approvingPerson'),
@@ -291,11 +293,12 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                                 {data?.map(el => (
                                     <div key={el.id}>
                                         {el.externalId === 'SERVICE_PROVIDER' ? (
-                                            <Grid columns="1fr 1fr" justifyItems="center">
+                                            <Grid columns="auto auto auto" justifyContent="space-between">
                                                 <div>
                                                     {/* @ts-ignore-next-line */}
                                                     {t(`ModelDetails.MasterPlan.Table.Options.Role.${el.type}`)}
                                                 </div>
+                                                <div>id:</div>
                                                 <div>{el?.externalId}</div>
                                             </Grid>
                                         ) : (
@@ -316,20 +319,23 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                 title: t('ModelDetails.MasterPlan.Table.Columns.documentTemplate'),
                 dataIndex: 'documentTemplate',
                 render: (ids: TDataType['documentTemplate']) => (
-                    <Grid columns="1fr 1fr" justifyItems="center" alignItems="center">
-                        {ids.map(id => (
-                            <RegularButton
-                                key={id}
-                                iconRight={<DownloadIcon />}
-                                onClick={() => downloadFile(id)}
-                                variant="pseudo"
-                            >
-                                {id}
-                            </RegularButton>
-                        ))}
-                    </Grid>
+                    <>
+                        {/* {ids.map(id => (
+                            <Grid columns="auto auto auto" justifyContent="space-between" alignItems="center">
+                                <RegularButton
+                                    key={id}
+                                    iconRight={<DownloadIcon />}
+                                    onClick={() => downloadFile(id)}
+                                    variant="pseudo"
+                                />
+                                <div>id:</div>
+                                <div>{id}</div>
+                            </Grid>
+                        ))} */}
+                        <ShowMoreDocsComponent arr={ids.map(id => id)} sliceBeforePointers={2} t={t} />
+                    </>
                 ),
-                width: 150,
+                width: 240,
             },
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.taskRequirement'),
