@@ -13,7 +13,7 @@ const EditButton: React.FC<Props> = ({onClick}) => {
             variant="pseudo"
             style={{verticalAlign: 'middle', padding: '0px 7px'}}
         >
-            <EditIcon style={{}} color="none" />
+            <EditIcon />
         </RegularButton>
     );
 };

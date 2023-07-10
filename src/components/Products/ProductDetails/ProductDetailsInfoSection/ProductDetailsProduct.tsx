@@ -4,13 +4,15 @@ import styles from '../../../Common.module.css';
 
 import productDetailsStyles from './productDetailsInfo.module.css';
 
+import {Loader} from 'fronton-react';
+
 import {
     useGetDetailsForProductsQuery,
     usePostSearchQModelsMutation,
     usePostUpdateProductMutation,
 } from '../productDetailsApi';
 
-import {mockUser, securityCode} from '../mockProductDetails';
+import {mockUser} from '../mockProductDetails';
 import {productDetailsProductMapping} from '../ProductDetailsMapping/ProductDetailsInfoSection/ProductDetailsProduct/productDetailsProductMapping';
 import {
     ProductDetails,
@@ -34,15 +36,16 @@ const ProductDetailsProduct: React.FC = () => {
     const {t} = useTranslation('products');
     const {id: productId = ''} = useParams();
 
-    const {data} = useGetDetailsForProductsQuery({productId, securityCode});
+    const {data} = useGetDetailsForProductsQuery({productId});
 
     const [postUpdateProduct] = usePostUpdateProductMutation();
-    const [postSearchQModels] = usePostSearchQModelsMutation();
+    const [postSearchQModels, {isLoading: isQModelLoading}] = usePostSearchQModelsMutation();
 
     const [details, setDetails] = useState<ProductDetails>();
     const [productSection, setProductSection] = useState<IProductDeatilsProductMapping>();
 
     const [isQModelEdit, setIsQModelEdit] = useState(false);
+
     const [isNoChemestryEdit, setIsNoChemestryEdit] = useState(true);
 
     const [qModalLabels, setqModalLabels] = useState<IQModalLabel[]>([]);
@@ -86,7 +89,7 @@ const ProductDetailsProduct: React.FC = () => {
             };
 
             try {
-                await postUpdateProduct({body, securityCode}).unwrap();
+                await postUpdateProduct({body}).unwrap();
                 setIsQModelEdit(false);
                 isChemistryChanged && setIsNoChemestryEdit(true);
             } catch (error) {
@@ -107,7 +110,7 @@ const ProductDetailsProduct: React.FC = () => {
                 },
             };
             try {
-                const searchQModels = await postSearchQModels({body, securityCode}).unwrap();
+                const searchQModels = await postSearchQModels({body}).unwrap();
                 const qModalLabelArr = searchQModels?.content?.map(qModal => ({
                     qualityModelLabel: qModal.qualityModelLabel ? qModal.qualityModelLabel : '',
                     qualityModalId: qModal.id ? `${qModal.id}` : '',
@@ -183,50 +186,54 @@ const ProductDetailsProduct: React.FC = () => {
                         </Typography>
                     </div>
                     <div>
-                        <Grid rowGap={1} columnGap={10} columns="max-content max-content">
-                            {!isQModelEdit ? (
-                                <>
-                                    <Typography variant="s" size="body_long" color="text-minor">
-                                        {t('ProductDetails.Info.Product.Field.qualityModel')}
-                                    </Typography>
+                        {!isQModelLoading ? (
+                            <Grid rowGap={1} columnGap={10} columns="max-content max-content">
+                                {!isQModelEdit ? (
+                                    <>
+                                        <Typography variant="s" size="body_long" color="text-minor">
+                                            {t('ProductDetails.Info.Product.Field.qualityModel')}
+                                        </Typography>
 
-                                    <EditButton onClick={handleQModel} />
+                                        <EditButton onClick={handleQModel} />
 
-                                    <Typography variant="s" size="body_short">
-                                        {productSection?.qualityModelLabel}
-                                    </Typography>
-                                    <div />
-                                </>
-                            ) : (
-                                <>
-                                    <Dropdown
-                                        size="s"
-                                        closeOnSelect
-                                        className={productDetailsStyles.dropdown}
-                                        label={t('ProductDetails.Info.Product.Field.qualityModel')}
-                                        value={qModalLabel.qualityModelLabel}
-                                        onSelect={e => handleSelectLabel(e)}
-                                    >
-                                        <div className={productDetailsStyles.editWrapper}>
-                                            {qModalLabels.map(
-                                                (el, i) =>
-                                                    el.qualityModelLabel &&
-                                                    el.qualityModalId && (
-                                                        <DropdownItem
-                                                            className={productDetailsStyles.dropdownItem}
-                                                            text={el.qualityModelLabel}
-                                                            value={el.qualityModalId}
-                                                            key={i}
-                                                        />
-                                                    )
-                                            )}
-                                        </div>
-                                    </Dropdown>
+                                        <Typography variant="s" size="body_short">
+                                            {productSection?.qualityModelLabel}
+                                        </Typography>
+                                        <div />
+                                    </>
+                                ) : (
+                                    <>
+                                        <Dropdown
+                                            size="s"
+                                            closeOnSelect
+                                            className={productDetailsStyles.dropdown}
+                                            label={t('ProductDetails.Info.Product.Field.qualityModel')}
+                                            value={qModalLabel.qualityModelLabel ? qModalLabel.qualityModelLabel : '-'}
+                                            onSelect={e => handleSelectLabel(e)}
+                                        >
+                                            <div className={productDetailsStyles.editWrapper}>
+                                                {qModalLabels.map(
+                                                    (el, i) =>
+                                                        el.qualityModelLabel &&
+                                                        el.qualityModalId && (
+                                                            <DropdownItem
+                                                                className={productDetailsStyles.dropdownItem}
+                                                                text={el.qualityModelLabel}
+                                                                value={el.qualityModalId}
+                                                                key={i}
+                                                            />
+                                                        )
+                                                )}
+                                            </div>
+                                        </Dropdown>
 
-                                    <Checkbox checked={true} onClick={() => updateBoxes(false)} />
-                                </>
-                            )}
-                        </Grid>
+                                        <Checkbox checked={true} onClick={() => updateBoxes(false)} />
+                                    </>
+                                )}
+                            </Grid>
+                        ) : (
+                            <Loader />
+                        )}
                     </div>
                 </Grid>
 
@@ -247,6 +254,7 @@ const ProductDetailsProduct: React.FC = () => {
                         disabled={isNoChemestryEdit}
                         label={t('ProductDetails.Info.Product.Field.isChemical')}
                     />
+
                     {isNoChemestryEdit && <EditButton onClick={handleChemistry} />}
                 </Grid>
 

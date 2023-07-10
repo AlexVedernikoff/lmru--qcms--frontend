@@ -4,7 +4,6 @@ import ProductDetailsInfoSection from './ProductDetailsInfoSection';
 import ProductDetailsQualityStatusSection from './ProductDetailsQstatusSection/ProductDetailsQualityStatusSection';
 import ProductDetailsTabs from './ProductDetailsTabsSection/ProductDetailsTabs';
 import {useGetDetailsForProductsQuery} from './productDetailsApi';
-import {securityCode} from './mockProductDetails';
 import {useEffect} from 'react';
 import {notification} from 'antd';
 
@@ -12,11 +11,7 @@ const ProductDetails: React.FC = () => {
     const {id: productId = ''} = useParams();
     const [notificationApi, notificationContextHolder] = notification.useNotification();
 
-    const {
-        data: details,
-        error: errorGet,
-        isError: isGetError,
-    } = useGetDetailsForProductsQuery({productId, securityCode});
+    const {data: details, error: errorGet, isError: isGetError} = useGetDetailsForProductsQuery({productId});
 
     useEffect(() => {
         if (isGetError) {

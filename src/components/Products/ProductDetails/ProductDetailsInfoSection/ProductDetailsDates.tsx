@@ -2,8 +2,6 @@ import {Checkbox, Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
 import {useGetDetailsForProductsQuery} from '../productDetailsApi';
-
-import {securityCode} from '../mockProductDetails';
 import {convertDateFromServer} from '../../../../utils/convertDateFromServer';
 import {useParams} from 'react-router-dom';
 
@@ -11,7 +9,7 @@ const ProductDetailsDates: React.FC = () => {
     const {t} = useTranslation('products');
     const {id: productId = ''} = useParams();
 
-    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
+    const {data: details} = useGetDetailsForProductsQuery({productId});
 
     const createdAt = details?.creationInformation?.createdAt
         ? convertDateFromServer(details.creationInformation.createdAt)

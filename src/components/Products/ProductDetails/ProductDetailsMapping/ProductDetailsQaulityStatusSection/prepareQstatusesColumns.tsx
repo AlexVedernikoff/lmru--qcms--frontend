@@ -2,15 +2,12 @@ import {Dropdown, DropdownItem, RegularButton, Input} from 'fronton-react';
 import {IDataDeatailsQstatus} from '../../../../../common/types/productDetails';
 import HistoryBackIcon from '../../../../Icons/HistoryBackIcon';
 import {CustomSwitch} from '../../../../Common/Switch/CustomSwitch';
-import {EBlockers} from '../../ProductDetailsQstatusSection/ProductDetailsQualityStatusSection';
 import {ColumnsType} from 'antd/es/table';
 import styles from '../../ProductDetailsQstatusSection/productDetailsQstatuses.module.css';
 import HistoryTabModal from '../../ProductDetailsQstatusSection/HistoryTabModal';
 
-type HandleSelectType = (recordId: string) => (value: string | null) => void;
-type HandleChangeType = (recordId: string, value: string) => void;
-type HandleStatusCommentType = (recordId: string, comment: string) => void;
-type HandleBlockersCommentsType = (recordId: string, comment: string, value: string) => void;
+type HandleChangeType = (recordId: string, value: string, selectedValue?: string | null) => void;
+type HandleCommentsType = (recordId: string, comment: string, value: string) => void;
 type HandleHistoryTablesType = (recordId: string, dataIndex: string) => void;
 
 export enum DataIndexQtable {
@@ -22,10 +19,8 @@ export enum DataIndexQtable {
 }
 
 export const prepareQstatusesColumns = (
-    handleSelect: HandleSelectType,
     handleChange: HandleChangeType,
-    handleStatusComment: HandleStatusCommentType,
-    handleBlockersComments: HandleBlockersCommentsType,
+    handleComments: HandleCommentsType,
     handleHistoryTables: HandleHistoryTablesType
 ): ColumnsType<IDataDeatailsQstatus> => {
     return [
@@ -48,7 +43,9 @@ export const prepareQstatusesColumns = (
                                 size="m"
                                 closeOnSelect
                                 value={record.ruStatus}
-                                onSelect={handleSelect(record.id)}
+                                onSelect={selectedValue =>
+                                    handleChange(record.id, DataIndexQtable.Statuses, selectedValue)
+                                }
                             >
                                 {statuses.map((status, i) => (
                                     <DropdownItem
@@ -82,7 +79,7 @@ export const prepareQstatusesColumns = (
                             value={record.statusComment}
                             error={!record.isValidStatus}
                             onChange={e => {
-                                handleStatusComment(record.id, e.target.value);
+                                handleComments(record.id, e.target.value, DataIndexQtable.Statuses);
                             }}
                         />
 
@@ -104,7 +101,7 @@ export const prepareQstatusesColumns = (
                 <>
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                         <CustomSwitch
-                            handleChange={() => handleChange(record.id, EBlockers.BlockOrders)}
+                            handleChange={() => handleChange(record.id, DataIndexQtable.BlockOrders)}
                             name=""
                             checked={record?.blockOrders ? record.blockOrders : false}
                         />
@@ -128,7 +125,7 @@ export const prepareQstatusesColumns = (
                         value={record.blockOrdersComment}
                         error={!record.isValidBlockOrders}
                         onChange={e => {
-                            handleBlockersComments(record.id, e.target.value, EBlockers.BlockOrders);
+                            handleComments(record.id, e.target.value, DataIndexQtable.BlockOrders);
                         }}
                     />
 
@@ -150,7 +147,7 @@ export const prepareQstatusesColumns = (
                 <>
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                         <CustomSwitch
-                            handleChange={() => handleChange(record.id, EBlockers.BlockSellings)}
+                            handleChange={() => handleChange(record.id, DataIndexQtable.BlockSellings)}
                             name=""
                             checked={record?.blockSellings ? record.blockSellings : false}
                         />
@@ -174,7 +171,7 @@ export const prepareQstatusesColumns = (
                         value={record.blockSellingsComment}
                         error={!record.isValidBlockSellings}
                         onChange={e => {
-                            handleBlockersComments(record.id, e.target.value, EBlockers.BlockSellings);
+                            handleComments(record.id, e.target.value, DataIndexQtable.BlockSellings);
                         }}
                     />
 
@@ -196,7 +193,7 @@ export const prepareQstatusesColumns = (
                 <>
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
                         <CustomSwitch
-                            handleChange={() => handleChange(record.id, EBlockers.BlockPublics)}
+                            handleChange={() => handleChange(record.id, DataIndexQtable.BlockPublics)}
                             name=""
                             checked={record?.blockPublics ? record.blockPublics : false}
                         />
@@ -220,7 +217,7 @@ export const prepareQstatusesColumns = (
                         value={record.blockPublicsComment}
                         error={!record.isValidBlockPublics}
                         onChange={e => {
-                            handleBlockersComments(record.id, e.target.value, EBlockers.BlockPublics);
+                            handleComments(record.id, e.target.value, DataIndexQtable.BlockPublics);
                         }}
                     />
 

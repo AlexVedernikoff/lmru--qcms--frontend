@@ -5,7 +5,6 @@ import {ColumnsType} from 'antd/es/table';
 import styles from '../../../Common.module.css';
 import CustomTable from '../../../Common/CustomTable';
 import {useGetDetailsForProductsQuery} from '../productDetailsApi';
-import {securityCode} from '../mockProductDetails';
 import {productDetailsAttributesMapping} from '../ProductDetailsMapping/ProductDetailsInfoSection/ProductDetailsAttributes/productDetailsAttributesMapping';
 import {useParams} from 'react-router-dom';
 
@@ -24,7 +23,7 @@ const ProductDetailsAttributes: React.FC = () => {
     const {t} = useTranslation('products');
     const {id: productId = ''} = useParams();
 
-    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
+    const {data: details} = useGetDetailsForProductsQuery({productId});
     const [tableData, setTableData] = useState<IAttributes[]>([]);
 
     useEffect(() => {

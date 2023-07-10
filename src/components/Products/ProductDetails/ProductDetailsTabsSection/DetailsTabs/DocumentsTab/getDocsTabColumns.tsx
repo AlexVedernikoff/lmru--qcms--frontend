@@ -124,25 +124,29 @@ export const getDocsTabColumns = (
     {
         title: t('ProductDetails.ProductDetailsTabs.DocumentsTab.Fields.IsParty'),
         dataIndex: 'isForLot',
-        width: 240,
-        render: d => <CustomSwitch checked={d} handleChange={() => {}} name="" />,
+        width: 100,
+        render: d => (
+            <Grid justifyContent="center">
+                <CustomSwitch checked={d} handleChange={() => {}} name="" />
+            </Grid>
+        ),
     },
     {
         title: t('ProductDetails.ProductDetailsTabs.DocumentsTab.Fields.UploadedAt'),
         dataIndex: 'createdAt',
-        width: 240,
+        width: 160,
         render: d => <div>{d ? converStringToDateTime(d) : '-'}</div>,
     },
     {
         title: t('ProductDetails.ProductDetailsTabs.DocumentsTab.Fields.IssueDate'),
         dataIndex: 'issueDate',
-        width: 240,
+        width: 180,
         render: d => <div>{d ? converStringToDateTime(d) : '-'}</div>,
     },
     {
         title: t('ProductDetails.ProductDetailsTabs.DocumentsTab.Fields.ExpiredAt'),
         dataIndex: 'expireDate',
-        width: 240,
+        width: 140,
         render: d => <div>{d ? convertDateFromServer(d) : '-'}</div>,
     },
     {

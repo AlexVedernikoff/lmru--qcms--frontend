@@ -1,23 +1,16 @@
 import {Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import styles from '../../../Common.module.css';
-
-import {securityCode} from '../mockProductDetails';
-
 import {useGetDetailsForProductsQuery} from '../productDetailsApi';
 import {useParams} from 'react-router-dom';
+import LoadingOverlay from 'components/Common/LoadingOverlay';
 
 const ProductDetailsProvider: React.FC = () => {
     const {t} = useTranslation('products');
 
     const {id: productId = ''} = useParams();
 
-    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
-    // const handleProvidersOpen = (id: any) => {
-    //     if (id) {
-    //         navigate(PROVIDER_ROUTES.details.replace(':id', id));
-    //     }
-    // };
+    const {data: details, isFetching, isLoading} = useGetDetailsForProductsQuery({productId});
 
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16} rows="36px 36px 16px 36px">
@@ -44,6 +37,8 @@ const ProductDetailsProvider: React.FC = () => {
                     {t('ProductDetails.Info.Provider.Field.distributor')}
                 </Typography>
             </div>
+
+            {(isLoading || isFetching) && <LoadingOverlay />}
         </Grid>
     );
 };

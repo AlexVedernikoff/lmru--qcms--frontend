@@ -3,7 +3,6 @@ import {useTranslation} from 'react-i18next';
 import {ColumnsType} from 'antd/es/table';
 import CustomTable from '../../../../../Common/CustomTable';
 import {useGetDetailsForProductsQuery} from '../../../productDetailsApi';
-import {securityCode} from '../../../mockProductDetails';
 import {IDataProductDetailsTabTasks} from '../../../../../../common/types/productDetails';
 import {getTasksTabColumns} from './getTasksTabColumns';
 import {tasksTabMapping} from '../../../ProductDetailsMapping/ProductDetailsTabs/tasksTabMapping';
@@ -15,7 +14,7 @@ const TasksTab: React.FC = () => {
     const {id: productId = ''} = useParams();
     const navigate = useNavigate();
 
-    const {data: details} = useGetDetailsForProductsQuery({productId, securityCode});
+    const {data: details} = useGetDetailsForProductsQuery({productId});
 
     const handleProvidersOpen = useCallback(
         (id: string) => {

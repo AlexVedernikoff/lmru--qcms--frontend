@@ -1,6 +1,5 @@
 export interface IQualityProductDetailsParams {
     productId?: string;
-    securityCode: string;
     body?: IUpdateBodyReq;
 }
 
@@ -511,6 +510,5 @@ export interface IQsearchModelsPageable {
 
 export interface IQsearchModelsParams {
     productId?: string;
-    securityCode: string;
     body?: IQsearchModelsReq;
 }

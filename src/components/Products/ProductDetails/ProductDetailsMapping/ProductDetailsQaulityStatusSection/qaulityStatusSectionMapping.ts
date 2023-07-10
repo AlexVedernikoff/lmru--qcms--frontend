@@ -2,8 +2,9 @@ import {TFunction} from 'i18next';
 import {History, QualityStatus} from '../../../../../common/types/productDetails';
 import {converStringToDateTime} from '../../../../../utils/convertDateFromServer';
 
+// to do: err enum on BE. After fix change MissingDate to MissingData
+
 export enum EQualityStatusesEng {
-    MissingData = 'MISSING_DATA',
     MissingDate = 'MISSING_DATE',
     QualificationInProgress = 'QUALIFICATION_IN_PROGRESS',
     DocumentCollection = 'DOCUMENT_COLLECTION',
@@ -13,7 +14,6 @@ export enum EQualityStatusesEng {
 }
 
 export enum EQualityStatusesRu {
-    MissingData = 'Отсутствуют данные о качестве',
     MissingDate = 'Отсутствуют данные о качестве',
     QualificationInProgress = 'Квалификация',
     DocumentCollection = 'Сбор документации',
@@ -25,7 +25,7 @@ export enum EQualityStatusesRu {
 export const getQualityStatus = (lang: string, qualityStatus?: string) => {
     if (lang === 'ru') {
         const statusMissingDataRu =
-            qualityStatus === EQualityStatusesEng.MissingData ? EQualityStatusesRu.MissingData : '';
+            qualityStatus === EQualityStatusesEng.MissingDate ? EQualityStatusesRu.MissingDate : '';
 
         const statusMissingDateRu =
             qualityStatus === EQualityStatusesEng.MissingDate ? EQualityStatusesRu.MissingDate : '';
@@ -61,7 +61,7 @@ export const getQualityStatus = (lang: string, qualityStatus?: string) => {
         }
     } else {
         const statusMissingDataEng =
-            qualityStatus === EQualityStatusesRu.MissingData ? EQualityStatusesEng.MissingData : '';
+            qualityStatus === EQualityStatusesRu.MissingDate ? EQualityStatusesEng.MissingDate : '';
         const statusQualificationInProgressEng =
             qualityStatus === EQualityStatusesRu.QualificationInProgress
                 ? EQualityStatusesEng.QualificationInProgress
@@ -93,7 +93,7 @@ export const getQualityStatus = (lang: string, qualityStatus?: string) => {
 };
 
 const arrQstatusesRu = [
-    EQualityStatusesRu.MissingData,
+    EQualityStatusesRu.MissingDate,
     EQualityStatusesRu.QualificationInProgress,
     EQualityStatusesRu.DocumentCollection,
     EQualityStatusesRu.Certified,
@@ -128,6 +128,7 @@ const sortAndFormateDatesArray = (array: History[]) => {
 
 export const qaulityStatusSectionMapping = (
     t: TFunction<'products', undefined, 'products'>,
+    i: number,
     qStatus?: QualityStatus
 ) => {
     const buCodeText =
@@ -154,17 +155,34 @@ export const qaulityStatusSectionMapping = (
         qStatus?.publicationBlockHistory && sortAndFormateDatesArray(qStatus.publicationBlockHistory);
 
     return {
-        buCode,
-        buCodeText,
-        ruStatus,
-        engStatus,
-        blockedForOrders,
-        blockedForSellings,
-        blockedForPublics,
-        arrQstatusesRu,
-        statusRowHistory,
-        ordersRowHistory,
-        sellingsRowHistory,
-        publicationsRowHistory,
+        id: `${i}`,
+        bu: buCode,
+        buCodeText: buCodeText,
+        statuses: arrQstatusesRu,
+        blockOrders: blockedForOrders,
+        blockOrdersComment: '',
+        isBlockOrderOpened: false,
+        isValidBlockOrders: true,
+        blockSellings: blockedForSellings,
+        blockSellingsComment: '',
+        isBlockSellingsOpened: false,
+        isValidBlockSellings: true,
+        blockPublics: blockedForPublics,
+        blockPublicsComment: '',
+        isBlockPublicsOpened: false,
+        isValidBlockPublics: true,
+        ruStatus: ruStatus,
+        engStatus: engStatus,
+        isStatusCommentOpened: false,
+        statusComment: '',
+        isValidStatus: true,
+        isStatusHistoryOpened: false,
+        statusRowHistory: statusRowHistory,
+        isOrdersHistoryOpened: false,
+        ordersRowHistory: ordersRowHistory,
+        isSellingsHistoryOpened: false,
+        sellingsRowHistory: sellingsRowHistory,
+        isPublicationsHistoryOpened: false,
+        publicationsRowHistory: publicationsRowHistory,
     };
 };

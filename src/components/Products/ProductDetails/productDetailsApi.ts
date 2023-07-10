@@ -16,18 +16,21 @@ const serviceUrl = {
 
 export const productDetailsApi = createApi({
     reducerPath: 'productDetailsApi',
-    baseQuery: fetchBaseQuery({baseUrl: hostUrl}),
+    baseQuery: fetchBaseQuery({
+        baseUrl: hostUrl,
+        prepareHeaders: (headers, {getState}) => {
+            headers.set('securityCode', 'security_code');
+            headers.set('Content-Type', 'application/json');
+            headers.set('Accept', 'application/json');
+            return headers;
+        },
+    }),
     tagTypes: ['Update'],
     endpoints: builder => ({
         getDetailsForProducts: builder.query<ProductDetails, IQualityProductDetailsParams>({
             query: params => ({
                 method: 'GET',
                 url: `${serviceUrl.getDetailsForProducts}/${params.productId}`,
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    securityCode: params.securityCode,
-                },
             }),
             providesTags: ['Update'],
         }),
@@ -36,9 +39,6 @@ export const productDetailsApi = createApi({
                 method: 'POST',
                 url: serviceUrl.updateProduct,
                 body: params.body,
-                headers: {
-                    securityCode: params.securityCode,
-                },
             }),
             invalidatesTags: ['Update'],
         }),
@@ -47,9 +47,6 @@ export const productDetailsApi = createApi({
                 method: 'POST',
                 url: serviceUrl.searchQmodels,
                 body: params.body,
-                headers: {
-                    securityCode: params.securityCode,
-                },
             }),
         }),
     }),

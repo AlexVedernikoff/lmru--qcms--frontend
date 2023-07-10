@@ -9,8 +9,6 @@ import {useEffect, useState} from 'react';
 
 import {useGetDetailsForProductsQuery, usePostUpdateProductMutation} from '../productDetailsApi';
 
-import {securityCode} from '../mockProductDetails';
-
 import {IDataDeatailsQstatus, IUpdateBodyReq, ProductDetails} from '../../../../common/types/productDetails';
 import {prepareUpdateBody} from '../ProductDetailsMapping/ProductDetailsQaulityStatusSection/prepareUpdateBody';
 import {
@@ -24,12 +22,6 @@ import {
 import {useParams} from 'react-router-dom';
 import {notification} from 'antd';
 
-export enum EBlockers {
-    BlockOrders = 'blockOrders',
-    BlockSellings = 'blockSellings',
-    BlockPublics = 'blockPublics',
-}
-
 export enum ELanguages {
     RU = 'ru',
     ENG = 'eng',
@@ -41,7 +33,7 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
     const [postUpdateProduct] = usePostUpdateProductMutation();
 
-    const {data} = useGetDetailsForProductsQuery({productId, securityCode});
+    const {data} = useGetDetailsForProductsQuery({productId});
 
     const [details, setDetails] = useState<ProductDetails>();
     const [tableData, setTableData] = useState<IDataDeatailsQstatus[]>([]);
@@ -58,174 +50,97 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     useEffect(() => {
         if (details?.qualityStatuses && details?.qualityStatuses?.length > 0) {
             const arrQRowsVal: IDataDeatailsQstatus[] = details.qualityStatuses.map((el, i: number) => {
-                const mapping = qaulityStatusSectionMapping(t, el);
-
-                return {
-                    id: `${i}`,
-                    bu: mapping.buCode,
-                    buCodeText: mapping.buCodeText,
-                    statuses: mapping.arrQstatusesRu,
-                    blockOrders: mapping.blockedForOrders,
-                    blockOrdersComment: '',
-                    isBlockOrderOpened: false,
-                    isValidBlockOrders: true,
-                    blockSellings: mapping.blockedForSellings,
-                    blockSellingsComment: '',
-                    isBlockSellingsOpened: false,
-                    isValidBlockSellings: true,
-                    blockPublics: mapping.blockedForPublics,
-                    blockPublicsComment: '',
-                    isBlockPublicsOpened: false,
-                    isValidBlockPublics: true,
-                    ruStatus: mapping.ruStatus,
-                    engStatus: mapping.engStatus,
-                    isStatusCommentOpened: false,
-                    statusComment: '',
-                    isValidStatus: true,
-                    isStatusHistoryOpened: false,
-                    statusRowHistory: mapping.statusRowHistory,
-                    isOrdersHistoryOpened: false,
-                    ordersRowHistory: mapping.ordersRowHistory,
-                    isSellingsHistoryOpened: false,
-                    sellingsRowHistory: mapping.sellingsRowHistory,
-                    isPublicationsHistoryOpened: false,
-                    publicationsRowHistory: mapping.publicationsRowHistory,
-                };
+                const mapping = qaulityStatusSectionMapping(t, i, el);
+                return mapping;
             });
 
             setTableData(arrQRowsVal);
         }
     }, [details?.qualityStatuses, t]);
 
-    const handleChange = (recordId: string, value: string) => {
+    const handleChange = (recordId: string, value: string, selectedValue?: string | null) => {
         setIsChangesInData(true);
 
-        if (value === EBlockers.BlockOrders) {
-            setTableData(prevState =>
-                prevState.map(el =>
-                    el.id === recordId
-                        ? {...el, blockOrders: !el.blockOrders, isBlockOrderOpened: true, isValidBlockOrders: false}
-                        : el
-                )
-            );
-        }
-        if (value === EBlockers.BlockSellings) {
-            setTableData(prevState =>
-                prevState.map(el =>
-                    el.id === recordId
-                        ? {
-                              ...el,
-                              blockSellings: !el.blockSellings,
-                              isBlockSellingsOpened: true,
-                              isValidBlockSellings: false,
-                          }
-                        : el
-                )
-            );
-        }
-        if (value === EBlockers.BlockPublics) {
-            setTableData(prevState =>
-                prevState.map(el =>
-                    el.id === recordId
-                        ? {
-                              ...el,
-                              blockPublics: !el.blockPublics,
-                              isBlockPublicsOpened: true,
-                              isValidBlockPublics: false,
-                          }
-                        : el
-                )
-            );
-        }
+        setTableData(prevState =>
+            prevState.map(el => {
+                if (el.id === recordId) {
+                    switch (value) {
+                        case DataIndexQtable.Statuses:
+                            if (selectedValue) {
+                                return {
+                                    ...el,
+                                    ruStatus: selectedValue,
+                                    engStatus: getQualityStatus(ELanguages.ENG, selectedValue),
+                                    isStatusCommentOpened: true,
+                                    isValidStatus: false,
+                                };
+                            }
+                            break;
+                        case DataIndexQtable.BlockOrders:
+                            return {
+                                ...el,
+                                blockOrders: !el.blockOrders,
+                                isBlockOrderOpened: true,
+                                isValidBlockOrders: false,
+                            };
+                        case DataIndexQtable.BlockSellings:
+                            return {
+                                ...el,
+                                blockSellings: !el.blockSellings,
+                                isBlockSellingsOpened: true,
+                                isValidBlockSellings: false,
+                            };
+                        case DataIndexQtable.BlockPublics:
+                            return {
+                                ...el,
+                                blockPublics: !el.blockPublics,
+                                isBlockPublicsOpened: true,
+                                isValidBlockPublics: false,
+                            };
+                        default:
+                            break;
+                    }
+                }
+                return el;
+            })
+        );
     };
 
-    const handleBlockersComments = (recordId: string, comment: string, value: string) => {
-        if (value === EBlockers.BlockOrders) {
-            setTableData(prevState =>
-                prevState.map(el => {
-                    if (el.id === recordId) {
-                        setIsChangesInData(true);
-
-                        if (comment) {
-                            return {...el, blockOrdersComment: comment, isValidBlockOrders: true};
-                        } else {
-                            return {...el, blockOrdersComment: comment, isValidBlockOrders: false};
-                        }
-                    } else {
-                        return el;
-                    }
-                })
-            );
-        }
-        if (value === EBlockers.BlockSellings) {
-            setTableData(prevState =>
-                prevState.map(el => {
-                    if (el.id === recordId) {
-                        setIsChangesInData(true);
-                        if (comment) {
-                            return {...el, blockSellingsComment: comment, isValidBlockSellings: true};
-                        } else {
-                            return {...el, blockSellingsComment: comment, isValidBlockSellings: false};
-                        }
-                    } else {
-                        return el;
-                    }
-                })
-            );
-        }
-        if (value === EBlockers.BlockPublics) {
-            setTableData(prevState =>
-                prevState.map(el => {
-                    if (el.id === recordId) {
-                        setIsChangesInData(true);
-
-                        if (comment) {
-                            return {...el, blockPublicsComment: comment, isValidBlockPublics: true};
-                        } else {
-                            return {...el, blockPublicsComment: comment, isValidBlockPublics: false};
-                        }
-                    } else {
-                        return el;
-                    }
-                })
-            );
-        }
-    };
-
-    const handleSelect = (recordId: string) => (value: string | null) => {
-        if (value) {
-            setTableData(prevState =>
-                prevState.map(el => {
-                    if (el.id === recordId) {
-                        setIsChangesInData(true);
-                        return {
-                            ...el,
-                            ruStatus: value,
-                            engStatus: getQualityStatus(ELanguages.ENG, value),
-                            isStatusCommentOpened: true,
-                            isValidStatus: false,
-                        };
-                    } else {
-                        return el;
-                    }
-                })
-            );
-        }
-    };
-
-    const handleStatusComment = (recordId: string, comment: string) => {
+    const handleComments = (recordId: string, comment: string, value: string) => {
         setTableData(prevState =>
             prevState.map(el => {
                 if (el.id === recordId) {
                     setIsChangesInData(true);
-                    if (comment) {
-                        return {...el, statusComment: comment, isValidStatus: true};
-                    } else {
-                        return {...el, statusComment: comment, isValidStatus: false};
+                    switch (value) {
+                        case DataIndexQtable.Statuses:
+                            return {
+                                ...el,
+                                statusComment: comment,
+                                isValidStatus: comment ? true : false,
+                            };
+                        case DataIndexQtable.BlockOrders:
+                            return {
+                                ...el,
+                                blockOrdersComment: comment,
+                                isValidBlockOrders: comment ? true : false,
+                            };
+                        case DataIndexQtable.BlockSellings:
+                            return {
+                                ...el,
+                                blockSellingsComment: comment,
+                                isValidBlockSellings: comment ? true : false,
+                            };
+                        case DataIndexQtable.BlockPublics:
+                            return {
+                                ...el,
+                                blockPublicsComment: comment,
+                                isValidBlockPublics: comment ? true : false,
+                            };
+                        default:
+                            break;
                     }
-                } else {
-                    return el;
                 }
+                return el;
             })
         );
     };
@@ -239,12 +154,12 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
             const commonProductFields = {
                 productId,
                 productWithSubstances: details?.productWithSubstances,
-                qualityModelId: details?.qualityModelId,
+                qualityModelId: details?.qualityModelId ? details?.qualityModelId : '',
             };
             const body: IUpdateBodyReq = prepareUpdateBody(tableData, commonProductFields);
 
             try {
-                await postUpdateProduct({body, securityCode}).unwrap();
+                await postUpdateProduct({body}).unwrap();
             } catch (error) {
                 notificationApi.open({
                     message: 'Ошибка при обновлении продукта',
@@ -262,62 +177,28 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
     };
 
     const handleHistoryTables = (recordId: string, dataIndex: string) => {
-        if (dataIndex === DataIndexQtable.Statuses) {
-            setTableData(prevState =>
-                prevState.map(el => {
-                    if (el.id === recordId) {
-                        return {...el, isStatusHistoryOpened: !el.isStatusHistoryOpened};
-                    } else {
-                        return el;
+        setTableData(prevState =>
+            prevState.map(el => {
+                if (el.id === recordId) {
+                    switch (dataIndex) {
+                        case DataIndexQtable.Statuses:
+                            return {...el, isStatusHistoryOpened: !el.isStatusHistoryOpened};
+                        case DataIndexQtable.BlockOrders:
+                            return {...el, isOrdersHistoryOpened: !el.isOrdersHistoryOpened};
+                        case DataIndexQtable.BlockSellings:
+                            return {...el, isSellingsHistoryOpened: !el.isSellingsHistoryOpened};
+                        case DataIndexQtable.BlockPublics:
+                            return {...el, isPublicationsHistoryOpened: !el.isPublicationsHistoryOpened};
+                        default:
+                            break;
                     }
-                })
-            );
-        }
-
-        if (dataIndex === DataIndexQtable.BlockOrders) {
-            setTableData(prevState =>
-                prevState.map(el => {
-                    if (el.id === recordId) {
-                        return {...el, isOrdersHistoryOpened: !el.isOrdersHistoryOpened};
-                    } else {
-                        return el;
-                    }
-                })
-            );
-        }
-
-        if (dataIndex === DataIndexQtable.BlockSellings) {
-            setTableData(prevState =>
-                prevState.map(el => {
-                    if (el.id === recordId) {
-                        return {...el, isSellingsHistoryOpened: !el.isSellingsHistoryOpened};
-                    } else {
-                        return el;
-                    }
-                })
-            );
-        }
-
-        if (dataIndex === DataIndexQtable.BlockPublics) {
-            setTableData(prevState =>
-                prevState.map(el => {
-                    if (el.id === recordId) {
-                        return {...el, isPublicationsHistoryOpened: !el.isPublicationsHistoryOpened};
-                    } else {
-                        return el;
-                    }
-                })
-            );
-        }
+                }
+                return el;
+            })
+        );
     };
 
-    const attr_columns = prepareQstatusesColumns(
-        handleSelect,
-        handleChange,
-        handleStatusComment,
-        handleBlockersComments,
-        handleHistoryTables
-    );
+    const attr_columns = prepareQstatusesColumns(handleChange, handleComments, handleHistoryTables);
 
     return (
         <>
@@ -342,10 +223,6 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                     </Grid>
                 </Grid>
 
-                {/* <Grid rowGap={16} columnGap={16} columns="1fr">
-                <Typography variant="h3">{t('ProductDetails.QualityStatusSection.Comments')}</Typography>
-                <Textarea />
-            </Grid> */}
                 <Grid columnGap={16} columns="repeat(7, 1fr)" className={productDetailsStyles.buttStyles}>
                     <span />
                     <span />
