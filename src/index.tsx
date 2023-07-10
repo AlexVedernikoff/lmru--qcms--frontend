@@ -4,10 +4,10 @@ import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
 import {ThemeProvider} from 'fronton-react';
 import {store} from './store';
-import App from './components/App';
 import 'antd/dist/reset.css';
 import './locales/i18n';
 import './index.css';
+import App from 'components/App';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);

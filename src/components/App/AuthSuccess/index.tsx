@@ -1,25 +1,26 @@
 import {createContext, useState} from 'react';
 import {Routes, Route, Navigate} from 'react-router-dom';
 import {Empty} from 'antd';
-import {APP_ROUTES, MODELS_ROUTES, PRODUCTS_ROUTES, PROVIDER_ROUTES, TASKS_ROUTES} from '../common/consts';
-import Header from './Layout/Header';
-import Sidebar from './Layout/Sidebar';
-import ProductsWithQualityModel from './Products/WithQualityModel';
-import ProductsWithoutQualityModel from './Products/WithoutQualityModel';
-import ProductsWithDocuments from './Products/WithDocuments';
-import ProductDetails from './Products/ProductDetails/ProductDetails';
-import ProviderDetails from './Providers/ProviderDetails/ProductDetails';
-import ModelDetails from './Models/ModelDetails';
-import Transfer from './Products/Transfer';
-import Providers from './Providers';
-import Products from './Products';
-import Models from './Models';
-import Tasks from './Tasks';
-import Dashboard from './Dashboard';
-import TaskDetails from './Tasks/TaskDetails';
-import styles from './App.module.css';
+import {APP_ROUTES, MODELS_ROUTES, PRODUCTS_ROUTES, PROVIDER_ROUTES, TASKS_ROUTES} from '../../../common/consts';
+import Header from '../../Layout/Header';
+import Sidebar from '../../Layout/Sidebar';
+import ProductsWithQualityModel from '../../Products/WithQualityModel';
+import ProductsWithoutQualityModel from '../../Products/WithoutQualityModel';
+import ProductsWithDocuments from '../../Products/WithDocuments';
+import ProductDetails from '../../Products/ProductDetails/ProductDetails';
+import ProviderDetails from '../../Providers/ProviderDetails/ProductDetails';
+import ModelDetails from '../../Models/ModelDetails';
+import Transfer from '../../Products/Transfer';
+import Providers from '../../Providers';
+import Products from '../../Products';
+import Models from '../../Models';
+import Tasks from '../../Tasks';
+import Dashboard from '../../Dashboard';
+import TaskDetails from '../../Tasks/TaskDetails';
 
-const App: React.FC = () => {
+import styles from './AuthSuccess.module.css';
+
+const AuthSuccess: React.FC = () => {
     const [isMinified, setIsMinified] = useState(localStorage.getItem('isSidebarMinified') === 'true' || false);
 
     const handleSidebarToggle = (isMinified: boolean) => {
@@ -76,4 +77,4 @@ const App: React.FC = () => {
     );
 };
 
-export default App;
+export default AuthSuccess;

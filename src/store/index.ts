@@ -20,6 +20,9 @@ import {providersApi} from '../components/Providers/services';
 import {suppliersFilter} from './slices/suppliersFilterSlice';
 import {postSearchSuppliers} from '../api/postSearchSuppliers';
 import {suppliersTableData} from './slices/suppliersTableDataSlice';
+import {errorHandlingMiddleware} from './errorHandlingMiddleware';
+import {userReducer} from './slices/authSlice';
+import {authApi} from 'api/auth';
 
 const rootReducer = {
     [getManagementNomenclature.reducerPath]: getManagementNomenclature.reducer,
@@ -36,11 +39,13 @@ const rootReducer = {
     [tasksApi.reducerPath]: tasksApi.reducer,
     [withModelApi.reducerPath]: withModelApi.reducer,
     [withoutModelApi.reducerPath]: withoutModelApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
     productsDocumentsFilters: productsDocumentsFilters.reducer,
     productsDocumentsTableData: productsDocumentsTableData.reducer,
     suppliersFilter: suppliersFilter.reducer,
     [postSearchSuppliers.reducerPath]: postSearchSuppliers.reducer,
     suppliersTableData: suppliersTableData.reducer,
+    userStore: userReducer,
 };
 
 const createReducer = (injectedReducers = {}) =>
@@ -68,12 +73,15 @@ const makeStore = () =>
                 postSearchSuppliers.middleware,
                 productDetailsApi.middleware,
                 tasksApi.middleware,
-                withoutModelApi.middleware
+                withoutModelApi.middleware,
+                authApi.middleware,
+                errorHandlingMiddleware
             ),
         devTools: process.env.NODE_ENV === 'development',
     });
 
 export const store = makeStore();
+
 setupListeners(store.dispatch);
 
 export type TAppDispatch = typeof store.dispatch;
