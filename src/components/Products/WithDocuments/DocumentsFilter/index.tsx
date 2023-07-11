@@ -33,9 +33,9 @@ const DocumentsFilter: React.FC = () => {
 
     const productsDocumentsFiltersState: IFilters = useSelector((state: TRootState) => state.productsDocumentsFilters);
 
-    const currentPage = productsDocumentsFiltersState.pageable.pageIndex;
+    const {pageIndex: currentPage, pageSize} = productsDocumentsFiltersState.pageable;
 
-    const {data: permissiveDocuments = []} = useGetPermissiveDocsQuery(true);
+    const {data: permissiveDocuments = []} = useGetPermissiveDocsQuery();
     const [qualityDocuments] = usePostSearchQualityDocsMutation();
 
     const receiveQualityDocuments = async () => {
@@ -47,7 +47,7 @@ const DocumentsFilter: React.FC = () => {
     useEffect(() => {
         receiveQualityDocuments();
         // eslint-disable-next-line
-    }, [currentPage]);
+    }, [currentPage, pageSize]);
 
     const documentsTypes = useMemo(
         () => Array.from(new Set(permissiveDocuments.map((el: IPermissiveDocumentsResponse) => el.type))),
