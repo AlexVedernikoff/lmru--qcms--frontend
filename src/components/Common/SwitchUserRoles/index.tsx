@@ -30,6 +30,9 @@ const SwitchUserRoles = () => {
                         onClick={() => clickRole(role)}
                     />
                 ))}
+                <button onClick={handleButtonClick} className={s.button}>
+                    Закрыть
+                </button>
             </div>
         );
     }
