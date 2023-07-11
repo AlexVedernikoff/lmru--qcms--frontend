@@ -5,36 +5,7 @@ import {Grid, RegularButton, Typography} from 'fronton-react';
 import {DownloadIcon} from '@fronton/icons-react';
 import {CustomSwitch} from '../../../../../Common/Switch/CustomSwitch';
 import {converStringToDateTime, convertDateFromServer} from '../../../../../../utils/convertDateFromServer';
-
-const downloadDocument = (id: number) => {
-    let fileName: string | null | undefined = '';
-
-    fetch(`https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/${id}`, {
-        headers: {
-            securityCode: 'security_code',
-        },
-    })
-        .then(response => {
-            if (String(response.status)[0] === '4') {
-                alert(`Ошибка! Файла с id = ${id} не существует.`);
-                return;
-            }
-
-            fileName = response.headers.get('Content-Disposition')?.split("'").slice(-1)[0];
-            return response.blob();
-        })
-        .then(blob => {
-            if (blob != null) {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = fileName as string;
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-            }
-        });
-};
+import {downloadFile} from 'api/downloadQualityDocument';
 
 export const getDocsTabColumns = (
     t: TFunction<'products', undefined, 'products'>
@@ -58,7 +29,7 @@ export const getDocsTabColumns = (
                         variant="pseudo"
                         iconRight={<DownloadIcon />}
                         onClick={() => {
-                            downloadDocument(Number(record.id));
+                            downloadFile(Number(record.id));
                         }}
                     />
                 </Grid>

@@ -4,38 +4,9 @@ import {IDataProductDetailsTabTasks} from '../../../../../../common/types/produc
 import {Grid, RegularButton, Typography} from 'fronton-react';
 import LinkIcon from '../../../../../Icons/LinkIcon';
 import {DownloadIcon} from '@fronton/icons-react';
+import {downloadFile} from 'api/downloadQualityDocument';
 
 type handleProvidersOpen = (id: any) => void;
-
-const downloadDocument = (id: number) => {
-    let fileName: string | null | undefined = '';
-
-    fetch(`https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/download-quality-document/${id}`, {
-        headers: {
-            securityCode: 'security_code',
-        },
-    })
-        .then(response => {
-            if (String(response.status)[0] === '4') {
-                alert(`Ошибка! Файла с id = ${id} не существует.`);
-                return;
-            }
-
-            fileName = response.headers.get('Content-Disposition')?.split("'").slice(-1)[0];
-            return response.blob();
-        })
-        .then(blob => {
-            if (blob != null) {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = fileName as string;
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-            }
-        });
-};
 
 export const getTasksTabColumns = (
     t: TFunction<'products', undefined, 'products'>,
@@ -81,7 +52,7 @@ export const getTasksTabColumns = (
                                 label="download"
                                 iconRight={<DownloadIcon />}
                                 onClick={() => {
-                                    downloadDocument(Number(uploadedDocumentId));
+                                    downloadFile(Number(uploadedDocumentId));
                                 }}
                             />
                         )}
