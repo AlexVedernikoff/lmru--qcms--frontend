@@ -54,22 +54,6 @@ const ProductsWithQualityModel: React.FC = () => {
             productModelNomenclatureSubdepartmentId,
             productModelNomenclatureConsolidationId,
             productModelNomenclatureCodeId,
-            // productModelNomenclature:
-            //     filters.productModelNomenclatureDepartmentCode ||
-            //     filters.productModelNomenclatureSubDepartmentCode ||
-            //     filters.productModelNomenclatureConsolidationCode ||
-            //     filters.productModelNomenclatureModelCode
-            //         ? [
-            //               {
-            //                   productModelNomenclatureDepartmentCode: filters.productModelNomenclatureDepartmentCode,
-            //                   productModelNomenclatureSubDepartmentCode:
-            //                       filters.productModelNomenclatureSubDepartmentCode,
-            //                   productModelNomenclatureConsolidationCode:
-            //                       filters.productModelNomenclatureConsolidationCode,
-            //                   productModelNomenclatureModelCode: filters.productModelNomenclatureModelCode,
-            //               },
-            //           ]
-            //         : undefined,
             status: filters.status ? filters.status : undefined,
             regulatoryStatus: filters.regulatoryStatus ? filters.regulatoryStatus : undefined,
             buCode: filters.buCode ? [parseInt(filters.buCode, 10)] : undefined,

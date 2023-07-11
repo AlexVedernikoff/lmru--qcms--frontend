@@ -4,8 +4,6 @@ import {Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react'
 import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
 import ProductsAdditionalFilter, {EDateType} from './ProductsAdditionalFilter';
 import styles from '../../../Common.module.css';
-// import {TreeSelect} from 'antd';
-import withModelApi from '../withModelApi';
 import {СustomTreeSelect, TNomenclatureValue} from '../../../Common/CustomTreeSelect';
 import {modNomKeys} from '../../../Common/CustomTreeSelect/consts';
 
@@ -26,25 +24,15 @@ export interface IFilterFormState {
     productWithSubstances?: string; // optional
     regulatoryStatuses?: string[]; // (логическое или) ??
     conformityStatuses?: string[]; // (логическое или) ??
-
     customId?: string;
     supplierRMSCode?: string;
     value?: string;
     attributeCode?: string;
     buCode?: string;
-    // productModelNomenclatureModelCode?: string;
-    // productModelNomenclatureConsolidationCode?: string;
-    // productModelNomenclatureSubDepartmentCode?: string;
-    // productModelNomenclatureDepartmentCode?: string;
-
-    // ***********************************************
     productModelNomenclatureDepartmentId?: string[] | undefined;
     productModelNomenclatureSubdepartmentId?: string[] | undefined;
     productModelNomenclatureConsolidationId?: string[] | undefined;
     productModelNomenclatureCodeId?: string[] | undefined;
-
-    // ***********************************************
-
     productModel?: string[];
     status?: string;
     regulatoryStatus?: string;
@@ -52,7 +40,6 @@ export interface IFilterFormState {
     startDate?: string;
     endDate?: string;
     dateType?: EDateType;
-
     fromProject?: boolean;
     withoutTransfer?: boolean;
     dataForProduct?: boolean;
@@ -67,11 +54,6 @@ interface IProps {
 
 const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
     const {t} = useTranslation('products');
-    // const {data: nomenclature = []} = withModelApi.useGetProductsNomenclatureQuery({
-    //     header: {
-    //         securityCode: 'security_code',
-    //     },
-    // });
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
     const [formState, setFormState] = useState<IFilterFormState>({});
 
@@ -90,92 +72,9 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
 
     const modelNomenclatureValue = treeSelectValue(modNomKeys);
 
-    console.log('formState = ', formState);
-    console.log('managementNomenclatureValue = ', modelNomenclatureValue);
-
-    // const onTreeChange = () => {
-    //     console.log('Вы вызвали onTreeChange()');
-    // };
-
     const onTreeChange = (result: TNomenclatureValue) => {
         setFormState({...formState, ...result});
     };
-
-    // const treeData = useMemo(
-    //     () =>
-    //         nomenclature.map(el => ({
-    //             title: el.code,
-    //             value: `department ${el.code}`,
-    //             children: el.subdepartments.map(subDep => ({
-    //                 title: subDep.code,
-    //                 value: `subdepartment ${subDep.code}`,
-    //                 children: subDep.modelConsolidationGroups.map(modCon => ({
-    //                     title: modCon.code,
-    //                     value: `consolidation ${modCon.code}`,
-    //                     children: modCon?.models?.map(mod => ({
-    //                         title: mod.code,
-    //                         value: `model ${mod.code}`,
-    //                     })),
-    //                 })),
-    //             })),
-    //         })),
-    //     [nomenclature]
-    // );
-
-    // const handleProductModelChange = (value: string[]) => {
-    //     setFormState({...formState, productModel: value.length > 0 ? value : undefined});
-
-    //     for (const selected of value) {
-    //         const [type, code] = selected.split(' ');
-    //         switch (type) {
-    //             case 'department':
-    //                 setFormState({
-    //                     ...formState,
-    //                     productModelNomenclatureDepartmentCode: nomenclature
-    //                         .filter(v => v.code === code)
-    //                         .map(v => v.code)
-    //                         .join(''),
-    //                 });
-    //                 break;
-    //             case 'subdepartment':
-    //                 setFormState({
-    //                     ...formState,
-    //                     productModelNomenclatureSubDepartmentCode: nomenclature
-    //                         .flatMap(v => v.subdepartments.filter(s => s.code === code))
-    //                         .map(v => v.code)
-    //                         .join(''),
-    //                 });
-    //                 break;
-    //             case 'consolidation':
-    //                 setFormState({
-    //                     ...formState,
-    //                     productModelNomenclatureConsolidationCode: nomenclature
-    //                         .flatMap(v =>
-    //                             v.subdepartments.flatMap(s => s.modelConsolidationGroups.filter(c => c.code === code))
-    //                         )
-    //                         .map(v => v.code)
-    //                         .join(''),
-    //                 });
-    //                 break;
-    //             case 'model':
-    //                 setFormState({
-    //                     ...formState,
-    //                     productModelNomenclatureModelCode: nomenclature
-    //                         .flatMap(v =>
-    //                             v.subdepartments.flatMap(
-    //                                 s =>
-    //                                     s.modelConsolidationGroups?.flatMap(
-    //                                         c => c?.models?.filter(m => m?.code === code)
-    //                                     )
-    //                             )
-    //                         )
-    //                         .map(v => v?.code)
-    //                         .join(''),
-    //                 });
-    //                 break;
-    //         }
-    //     }
-    // };
 
     const handleShowMoreFiltersClick = () => {
         setIsMoreFiltersActive(prevState => !prevState);
@@ -262,18 +161,8 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
                 </Grid>
 
                 <Grid columnGap={16} columns="1fr" alignItems="baseline" rowGap="25px">
-                    {/* TODO очищать селект и отображать nameRU */}
                     {/**************** Фильтр "Номенклатура товарной модели" **************** */}
                     <СustomTreeSelect nomenclatureValue={modelNomenclatureValue} handleChange={onTreeChange} />
-                    {/* <TreeSelect
-                        size="large"
-                        treeData={treeData}
-                        value={formState.productModel}
-                        onChange={handleProductModelChange}
-                        placeholder={t('WithModels.Filters.nomenclature')}
-                        showCheckedStrategy="SHOW_PARENT"
-                        treeCheckable
-                    /> */}
                     {/* TODO валидация чтоб ельзя было вводить ничего кроме чисел */}
                     <Input
                         inputSize="m"
