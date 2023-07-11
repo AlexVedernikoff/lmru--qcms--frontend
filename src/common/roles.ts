@@ -1,7 +1,9 @@
 export enum EUserRole {
-    SUPPLIER = 'SUPPLIER',
-    SERVICE_PROVIDER = 'SERVICE_PROVIDER',
-    SQM = 'SQM',
+    Admin = 'Admin',
+    KeyUser = 'Key user',
     QE = 'QE',
-    KEY_USER = 'KEY_USER',
+    Supplier = 'Supplier',
+    SQM = 'SQM',
+    InternalUser = 'Internal user',
+    ServiceProvider = 'Service provider',
 }

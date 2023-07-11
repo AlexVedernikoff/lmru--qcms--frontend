@@ -1,3 +1,5 @@
+import {EUserRole} from 'common/roles';
+
 export interface AuthRequestHeader {
     securityCode: string;
     accesstoken?: string;
@@ -13,7 +15,7 @@ export interface UserData {
     userName: string;
     accessToken: string;
     refreshToken: string;
-    roles: string;
+    roles: EUserRole[];
     supplierCommercialIds: string;
 }
 
