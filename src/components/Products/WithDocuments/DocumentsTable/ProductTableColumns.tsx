@@ -1,7 +1,7 @@
 import {ColumnsType} from 'antd/es/table/interface';
 import {TFunction} from 'i18next';
 import {IProviderTableWithDocuments} from '../../../../common/clientModels';
-import UploadIcon from '../../../Icons/UploadIcon';
+import DownloadIcon from '../../../Icons/DownloadIcon';
 import {Grid, IconButton} from 'fronton-react';
 import LinkIcon from '../../../Icons/LinkIcon';
 import {downloadFile} from '../../../../api/downloadQualityDocument';
@@ -23,7 +23,7 @@ export const getProductTableColumns = (t: TFunction<'products', undefined, 'prod
                         downloadFile(Number(text));
                     }}
                 >
-                    <UploadIcon />{' '}
+                    <DownloadIcon />
                 </IconButton>
             </Grid>
         ),

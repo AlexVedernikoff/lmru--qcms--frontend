@@ -20,11 +20,12 @@ const DocumentsTable = () => {
 
     const dispatch = useDispatch();
 
-    const onPageChange = (page: number) => {
+    const onPageChange = (page: number, size: number) => {
         dispatch(
             setProductsDocumentsFilters([
                 {
                     ...pageable,
+                    pageSize: size,
                     pageIndex: page - 1,
                 },
                 'pageable',

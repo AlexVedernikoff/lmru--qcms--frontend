@@ -6,19 +6,12 @@ import {Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react'
 import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
 import AdditionalFilter from './AdditionalFilter';
 import styles from '../../../Common.module.css';
-import {IManagementNomenclature, IModelNomenclature, IProvidersParams} from '../../../../common/types/providers';
 import {setSuppliersFilter, ISuppliersFilter, initialState} from '../../../../store/slices/suppliersFilterSlice';
 import {prepareBody} from './prepareBody';
 import {usePostSearchSupplsMutation} from '../../../../api/postSearchSuppliers';
 import {setSuppliersTableData, setSuppliersLoading} from '../../../../store/slices/suppliersTableDataSlice';
 
-interface Props {
-    loadProvidersList: (value: IProvidersParams) => void;
-    modelNomenclature: IModelNomenclature | undefined;
-    managementNomenclature: IManagementNomenclature | undefined;
-}
-
-const ProvidersFilter: React.FC<Props> = props => {
+const ProvidersFilter: React.FC = () => {
     const {t} = useTranslation('providers');
     const dispatch = useDispatch();
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);

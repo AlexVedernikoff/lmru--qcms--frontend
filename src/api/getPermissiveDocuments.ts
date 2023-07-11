@@ -13,8 +13,8 @@ export const getPermissiveDocuments = createApi({
         },
     }),
     endpoints: builder => ({
-        getPermissiveDocs: builder.query<IPermissiveDocumentsResponse[], boolean>({
-            query: flag => `permissive-documents?regulatory=${flag}`,
+        getPermissiveDocs: builder.query<IPermissiveDocumentsResponse[], boolean | void>({
+            query: flag => (flag ? `permissive-documents?regulatory=${flag}` : `permissive-documents`),
         }),
     }),
 });

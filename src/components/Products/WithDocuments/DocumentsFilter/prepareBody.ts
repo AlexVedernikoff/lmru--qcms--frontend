@@ -18,6 +18,7 @@ export const prepareBody = (productsDocumentsFiltersState: IFilters) => {
     const newDateArr = ['createDate', 'updateDate'];
 
     requsetBody.pageIndex = pageable.pageIndex;
+    requsetBody.pageSize = pageable.pageSize;
 
     requsetBody.searchBy = {
         [productNumberKey]: productNumberValue,

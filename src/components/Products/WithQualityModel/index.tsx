@@ -34,6 +34,12 @@ const ProductsWithQualityModel: React.FC = () => {
     });
 
     const handleFiltersSubmit = (filters: IFilterFormState) => {
+        const {
+            productModelNomenclatureDepartmentId,
+            productModelNomenclatureSubdepartmentId,
+            productModelNomenclatureConsolidationId,
+            productModelNomenclatureCodeId,
+        } = filters;
         setSearchBy(p => ({
             ...p,
             code: filters.code ? filters.code : undefined,
@@ -44,22 +50,10 @@ const ProductsWithQualityModel: React.FC = () => {
             supplierName: filters.supplierName ? filters.supplierName : undefined,
             supplierCode: filters.supplierRMSCode ? filters.supplierRMSCode : undefined,
             supplierTaxIndetifier: filters.supplierTaxIndetifier ? filters.supplierTaxIndetifier : undefined,
-            productModelNomenclature:
-                filters.productModelNomenclatureDepartmentCode ||
-                filters.productModelNomenclatureSubDepartmentCode ||
-                filters.productModelNomenclatureConsolidationCode ||
-                filters.productModelNomenclatureModelCode
-                    ? [
-                          {
-                              productModelNomenclatureDepartmentCode: filters.productModelNomenclatureDepartmentCode,
-                              productModelNomenclatureSubDepartmentCode:
-                                  filters.productModelNomenclatureSubDepartmentCode,
-                              productModelNomenclatureConsolidationCode:
-                                  filters.productModelNomenclatureConsolidationCode,
-                              productModelNomenclatureModelCode: filters.productModelNomenclatureModelCode,
-                          },
-                      ]
-                    : undefined,
+            productModelNomenclatureDepartmentId,
+            productModelNomenclatureSubdepartmentId,
+            productModelNomenclatureConsolidationId,
+            productModelNomenclatureCodeId,
             status: filters.status ? filters.status : undefined,
             regulatoryStatus: filters.regulatoryStatus ? filters.regulatoryStatus : undefined,
             buCode: filters.buCode ? [parseInt(filters.buCode, 10)] : undefined,
