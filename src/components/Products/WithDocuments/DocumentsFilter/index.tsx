@@ -17,6 +17,7 @@ import {setProductsDocumentsTableData} from '../../../../store/slices/productsDo
 import {TRootState} from '../../../../store/index';
 import styles from '../../../Common.module.css';
 import {prepareBody} from './prepareBody';
+import stylesDatePicker from './datePicker.module.css';
 
 const DocumentsFilter: React.FC = () => {
     const dispatch = useDispatch();
@@ -218,35 +219,38 @@ const DocumentsFilter: React.FC = () => {
                             <DropdownItem text={t('WithDocuments.Table.ISSUE')} value={'issueDate'} />
                             <DropdownItem text={t('WithDocuments.Table.EXPIRY')} value={'expireDate'} />
                         </Dropdown>
-                        <DatePicker
-                            date={[
-                                productsDocumentsFiltersState.dates.startDate,
-                                productsDocumentsFiltersState.dates.endDate,
-                            ]}
-                            mode="range"
-                            view="double"
-                            onChange={function noRefCheck(e) {
-                                const datesArr = [dates.startDate, dates.endDate];
-                                const datesArrRemoveEmpty = datesArr.filter(el => el);
+                        <div className={stylesDatePicker.datePicker_container}>
+                            <DatePicker
+                                label={'Даты'}
+                                date={[
+                                    productsDocumentsFiltersState.dates.startDate,
+                                    productsDocumentsFiltersState.dates.endDate,
+                                ]}
+                                mode="range"
+                                view="double"
+                                onChange={function noRefCheck(e) {
+                                    const datesArr = [dates.startDate, dates.endDate];
+                                    const datesArrRemoveEmpty = datesArr.filter(el => el);
 
-                                if (datesArrRemoveEmpty.length < 2) {
-                                    datesArrRemoveEmpty.push(e.slice(-1)[0]);
-                                } else {
-                                    datesArrRemoveEmpty.splice(0, datesArrRemoveEmpty.length);
-                                    datesArrRemoveEmpty.push(e[0]);
-                                }
+                                    if (datesArrRemoveEmpty.length < 2) {
+                                        datesArrRemoveEmpty.push(e.slice(-1)[0]);
+                                    } else {
+                                        datesArrRemoveEmpty.splice(0, datesArrRemoveEmpty.length);
+                                        datesArrRemoveEmpty.push(e[0]);
+                                    }
 
-                                datesArrRemoveEmpty.sort();
-                                onHandleFilterChange(
-                                    {
-                                        ...dates,
-                                        startDate: datesArrRemoveEmpty[0],
-                                        endDate: datesArrRemoveEmpty[1],
-                                    },
-                                    'dates'
-                                );
-                            }}
-                        />
+                                    datesArrRemoveEmpty.sort();
+                                    onHandleFilterChange(
+                                        {
+                                            ...dates,
+                                            startDate: datesArrRemoveEmpty[0],
+                                            endDate: datesArrRemoveEmpty[1],
+                                        },
+                                        'dates'
+                                    );
+                                }}
+                            />
+                        </div>
                     </Grid>
                 </Grid>
             </Grid>
