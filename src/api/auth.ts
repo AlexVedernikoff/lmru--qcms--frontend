@@ -17,6 +17,7 @@ export const authApi = createApi({
                     securityCode: request.header.securityCode,
                     accesstoken: request.header.accesstoken,
                     refreshtoken: request.header.refreshtoken,
+                    authorizationcode: request.header.authorizationcode,
                 },
             }),
             // Данный метод вызывается только, если запрос успешно отработал.
