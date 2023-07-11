@@ -1,4 +1,4 @@
-import {useCallback, useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Dropdown, DropdownItem, Grid} from 'fronton-react';
 import {ColumnsType} from 'antd/es/table';
@@ -6,7 +6,7 @@ import {TreeSelect} from 'antd';
 import {DefaultOptionType} from 'antd/es/select';
 import {TableRowSelection} from 'antd/es/table/interface';
 import {IMasterPlanRequirementTableItem, TWithReactKey} from 'common/clientModels';
-import {ERegulatoryType, IMasterPlanTask} from 'common/types/models';
+import {ERegulatoryType, EUserRole, IMasterPlanTask} from 'common/types/models';
 import CustomTable from '../../Common/CustomTable';
 import {CustomSwitch} from '../../Common/Switch/CustomSwitch';
 import ShowMoreStrComponent from './ShowMoreStrComponent';
@@ -37,13 +37,15 @@ const TaskCategorySelect: React.FC<ICustomTreeProps> = ({taskCategoryOptions, se
 
 interface IProps {
     data: IMasterPlanTask[];
-    updateTasks?: (key: ERegulatoryType, value: number[]) => void;
+    updateTasks?: (value: number[]) => void;
     onChange?: (data: IMasterPlanTask[]) => void;
     isEditMode: boolean;
 }
 
 const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onChange}) => {
     const {t} = useTranslation('models');
+
+    const [editedTasks, setEditedTasks] = useState<IMasterPlanTask[]>([]);
 
     const {data: taskCategories = []} = modelsApi.endpoints.getTaskCategory.useQuery({});
     const {data: permissiveDocuments = []} = modelsApi.endpoints.getPermissiveDocuments.useQuery({});
@@ -71,25 +73,29 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
         [permissiveDocuments]
     );
 
+    useEffect(() => {
+        setEditedTasks(data);
+    }, [data]);
+
     const handleSelectTaskCategory = useCallback(
         (value: string, recordId: string) => {
             if (onChange)
                 onChange(
-                    data.map(d =>
+                    editedTasks.map(d =>
                         d.id!.toString() === recordId
                             ? {...d, categoryType: {...d.categoryType, id: value ? parseInt(value, 10) : undefined}}
                             : d
                     )
                 );
         },
-        [data, onChange]
+        [editedTasks, onChange]
     );
 
     const handleSelectDocuments = useCallback(
         (value: DefaultOptionType[] = [], recordId: string) => {
             if (onChange)
                 onChange(
-                    data.map(d =>
+                    editedTasks.map(d =>
                         d.id!.toString() === recordId
                             ? {
                                   ...d,
@@ -102,7 +108,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                     )
                 );
         },
-        [data, onChange]
+        [editedTasks, onChange]
     );
 
     const columns = useMemo<ColumnsType<TDataType>>(
@@ -110,8 +116,8 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
             {
                 title: t('ModelDetails.MasterPlan.Table.Columns.status'),
                 dataIndex: 'status',
-                // @ts-ignore-next-line
-                render: (data: TDataType['status']) => t(`ModelDetails.MasterPlan.Table.Options.Person.${data}`),
+                render: (data: TDataType['status']) =>
+                    t(`ModelDetails.MasterPlan.Table.Options.Person.${data as ERegulatoryType}`),
                 width: 246,
             },
             {
@@ -237,8 +243,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                                 {['SUPPLIER', 'QE', 'SQM', 'SERVICE_PROVIDER'].map(d => (
                                     <DropdownItem
                                         key={d}
-                                        // @ts-ignore-next-line
-                                        text={t(`ModelDetails.MasterPlan.Table.Options.Role.${d}`)}
+                                        text={t(`ModelDetails.MasterPlan.Table.Options.Role.${d as EUserRole}`)}
                                         value={d}
                                     />
                                 ))}
@@ -249,16 +254,14 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                             return (
                                 <Grid columns="auto auto auto" justifyContent="space-between">
                                     <div>
-                                        {/* @ts-ignore-next-line */}
-                                        {t(`ModelDetails.MasterPlan.Table.Options.Role.${data.type}`)}
+                                        {t(`ModelDetails.MasterPlan.Table.Options.Role.${data.type as EUserRole}`)}
                                     </div>
                                     <div>id:</div>
                                     <div>{data?.externalId}</div>
                                 </Grid>
                             );
                         } else {
-                            // @ts-ignore-next-line
-                            return t(`ModelDetails.MasterPlan.Table.Options.Role.${data.type}`);
+                            return t(`ModelDetails.MasterPlan.Table.Options.Role.${data.type as EUserRole}`);
                         }
                     }
                 },
@@ -280,8 +283,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                                 {['SUPPLIER', 'QE', 'SQM', 'SERVICE_PROVIDER'].map(d => (
                                     <DropdownItem
                                         key={d}
-                                        // @ts-ignore-next-line
-                                        text={t(`ModelDetails.MasterPlan.Table.Options.Role.${d}`)}
+                                        text={t(`ModelDetails.MasterPlan.Table.Options.Role.${d as EUserRole}`)}
                                         value={d}
                                     />
                                 ))}
@@ -295,17 +297,17 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                                         {el.externalId === 'SERVICE_PROVIDER' ? (
                                             <Grid columns="auto auto auto" justifyContent="space-between">
                                                 <div>
-                                                    {/* @ts-ignore-next-line */}
-                                                    {t(`ModelDetails.MasterPlan.Table.Options.Role.${el.type}`)}
+                                                    {t(
+                                                        `ModelDetails.MasterPlan.Table.Options.Role.${
+                                                            el.type as EUserRole
+                                                        }`
+                                                    )}
                                                 </div>
                                                 <div>id:</div>
                                                 <div>{el?.externalId}</div>
                                             </Grid>
                                         ) : (
-                                            <>
-                                                {/* @ts-ignore-next-line */}
-                                                {t(`ModelDetails.MasterPlan.Table.Options.Role.${el.type}`)}
-                                            </>
+                                            t(`ModelDetails.MasterPlan.Table.Options.Role.${el.type as EUserRole}`)
                                         )}
                                     </div>
                                 ))}
@@ -319,21 +321,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                 title: t('ModelDetails.MasterPlan.Table.Columns.documentTemplate'),
                 dataIndex: 'documentTemplate',
                 render: (ids: TDataType['documentTemplate']) => (
-                    <>
-                        {/* {ids.map(id => (
-                            <Grid columns="auto auto auto" justifyContent="space-between" alignItems="center">
-                                <RegularButton
-                                    key={id}
-                                    iconRight={<DownloadIcon />}
-                                    onClick={() => downloadFile(id)}
-                                    variant="pseudo"
-                                />
-                                <div>id:</div>
-                                <div>{id}</div>
-                            </Grid>
-                        ))} */}
-                        <ShowMoreDocsComponent arr={ids.map(id => id)} sliceBeforePointers={2} t={t} />
-                    </>
+                    <ShowMoreDocsComponent arr={ids.map(id => id)} sliceBeforePointers={2} t={t} />
                 ),
                 width: 240,
             },
@@ -363,7 +351,7 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
 
     const dataSource = useMemo<TDataType[]>(
         () =>
-            data.map(d => ({
+            editedTasks.map(d => ({
                 key: d.id!,
                 status: d.regulatoryType,
                 category: d.categoryType?.category || {},
@@ -377,21 +365,20 @@ const MasterPlanTable: React.FC<IProps> = ({isEditMode, data, updateTasks, onCha
                 documentTemplate: d?.documentTemplates ? d.documentTemplates : [],
                 taskRequirement: d.taskRequired,
             })) || [],
-        [data]
+        [editedTasks]
     );
 
     const rowSelection = useMemo<TableRowSelection<TDataType>>(
         () => ({
             type: 'checkbox',
-            onChange: (selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
-                const key = data[0]?.regulatoryType;
+            onChange: (selectedRowKeys: React.Key[]) => {
                 if (updateTasks) {
-                    updateTasks(key, selectedRowKeys as number[]);
+                    updateTasks(selectedRowKeys as number[]);
                 }
             },
             fixed: 'left',
         }),
-        [data, updateTasks]
+        [updateTasks]
     );
 
     return (

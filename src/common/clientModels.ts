@@ -1,5 +1,10 @@
 import {IconComponent} from '@fronton/icons-react';
 
+export enum ETranslation {
+    RU = 'ru',
+    EN = 'en',
+}
+
 export type TWithReactKey<P = unknown> = P & {key: React.Key};
 
 export interface ITaskListItem {

@@ -1,6 +1,8 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
+import {ETranslation} from 'common/clientModels';
 import products_ru from './ru/products.json';
+import products_en from './en/products.json';
 import models_ru from './ru/models.json';
 import tasks_ru from './ru/tasks.json';
 import tasks_en from './en/tasks.json';
@@ -14,8 +16,8 @@ import checkbox_en from './en/checkbox.json';
 import files_ru from './ru/files.json';
 
 const resources = {
-    en: {
-        products: products_ru,
+    [ETranslation.EN]: {
+        products: products_en,
         models: models_ru,
         providers: providers_en,
         tasks: tasks_en,
@@ -24,7 +26,7 @@ const resources = {
         checkbox: checkbox_en,
         files: files_ru,
     },
-    ru: {
+    [ETranslation.RU]: {
         products: products_ru,
         models: models_ru,
         providers: providers_ru,
@@ -39,14 +41,14 @@ const resources = {
 declare module 'i18next' {
     interface CustomTypeOptions {
         defaultNS: 'translation';
-        resources: typeof resources.ru;
+        resources: (typeof resources)[ETranslation];
     }
 }
 
 i18n.use(initReactI18next).init({
     debug: process.env.NODE_ENV === 'development',
     resources,
-    lng: 'ru',
+    lng: ETranslation.RU,
     interpolation: {
         escapeValue: false,
     },

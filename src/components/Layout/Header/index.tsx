@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import {APP_ROUTES} from '../../../common/consts';
 import Logo from '../Logo';
 import styles from './Header.module.css';
+import TranslationSelect from './TranslationSelect';
 
 const user = {
     name: 'Ivan Ivanov',
@@ -28,6 +29,8 @@ const Header: React.FC = () => {
             </BaseButton>
 
             <div className={styles.items}>
+                <TranslationSelect />
+
                 {false && (
                     <BaseButton>
                         <QuestionIcon type="outline" size="l" color="text-minor" />
@@ -39,7 +42,6 @@ const Header: React.FC = () => {
                         <BellIcon type="outline" size="l" color="text-minor" />
                     </BaseButton>
                 )}
-
                 <div className={styles.row}>
                     <Avatar
                         name={user.name}
@@ -56,7 +58,6 @@ const Header: React.FC = () => {
                         <div className={styles.columnItem}>{user.role}</div>
                     </div>
                 </div>
-
                 <BaseButton onClick={handleSignOut}>
                     <SignOutIcon type="fill" size="l" color="text-minor" />
                 </BaseButton>

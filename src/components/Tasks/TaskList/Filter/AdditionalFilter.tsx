@@ -47,29 +47,29 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
                 <CustomCheckbox
                     name="fromProject"
                     onChange={handleCheck}
-                    // @ts-ignore-next-line
-                    value={formState.fromProject as boolean}
+                    value={undefined}
+                    // value={formState.fromProject as boolean}
                     label={t('TaskList.Filters.fromProject')}
                 />
                 <CustomCheckbox
                     name="withProviderActiveLink"
                     onChange={handleCheck}
-                    // @ts-ignore-next-line
-                    value={formState.withProviderActiveLink as boolean}
+                    value={undefined}
+                    // value={formState.withProviderActiveLink as boolean}
                     label={t('TaskList.Filters.withProviderActiveLink')}
                 />
                 <CustomCheckbox
                     name="withoutTransfer"
                     onChange={handleCheck}
-                    // @ts-ignore-next-line
-                    value={formState.withoutTransfer as boolean}
+                    value={undefined}
+                    // value={formState.withoutTransfer as boolean}
                     label={t('TaskList.Filters.withoutTransfer')}
                 />
                 <CustomCheckbox
                     name="containsSubstanceLimit"
                     onChange={handleCheck}
-                    // @ts-ignore-next-line
-                    value={formState.containsSubstanceLimit as boolean}
+                    value={undefined}
+                    // value={formState.scontainsSubstanceLimit as boolean}
                     label={t('TaskList.Filters.containsSubstanceLimit')}
                 />
             </Grid>

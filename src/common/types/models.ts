@@ -1,7 +1,14 @@
 export enum ERiskLevel {
-    'MINOR' = 'MINOR',
-    'MAJOR' = 'MAJOR',
-    'CRITICAL' = 'CRITICAL',
+    MINOR = 'MINOR',
+    MAJOR = 'MAJOR',
+    CRITICAL = 'CRITICAL',
+}
+
+export enum EUserRole {
+    SUPPLIER = 'SUPPLIER',
+    QE = 'QE',
+    SQM = 'SQM',
+    SERVICE_PROVIDER = 'SERVICE_PROVIDER',
 }
 
 interface IBu {

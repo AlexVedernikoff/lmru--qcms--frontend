@@ -1,0 +1,341 @@
+{
+    "Title": "Products",
+    "Buttons": {
+        "Apply": "Apply",
+        "Search": "Search",
+        "Clear": "Clear",
+        "More": "More",
+        "Less": "Less",
+        "AddModel": "Add model",
+        "SelectAll": "Select all",
+        "SelectDocumentsWithoutTransfer": "Select documents without transfer",
+        "Make": "Run"
+    },
+    "Common": {
+        "Yes": "Yes",
+        "No": "No",
+        "Select": "Select",
+        "Input": "Input",
+        "Actions": "Actions"
+    },
+    "ProductDetails": {
+        "Info": {
+            "Attributes": {
+                "Title": "Attributes",
+                "Table": {
+                    "Columns": {
+                        "characteristics": "Characteristics",
+                        "available": "Values",
+                        "type": "Type"
+                    }
+                }
+            },
+            "Dates": {
+                "Title": "Dates",
+                "Field": {
+                    "creationDate": "Creation date",
+                    "AVS": "AVS date",
+                    "ExpiredAt": "(valid to)"
+                }
+            },
+            "InfoDetails": {
+                "Title": "Detailed information",
+                "Field": {
+                    "gamma": "Gamma",
+                    "link": "Link"
+                }
+            },
+            "Provider": {
+                "Title": "Supplier",
+                "Field": {
+                    "providerName": "Supplier name",
+                    "providerStatus": "Supplier status",
+                    "distributor": "Distributor"
+                }
+            },
+            "Product": {
+                "Title": "Product",
+                "Field": {
+                    "productCode": "Product code",
+                    "EAN": "EAN",
+                    "TN_VED_Code": "Custom code",
+                    "risk": "Risk",
+                    "qualityModel": "Quality model",
+                    "productModel": "Product model",
+                    "isChemical": "Chemical",
+                    "STM": "STM",
+                    "intImport": "Internatioanl import",
+                    "fromProject": "From project"
+                },
+                "RiskOptions": {
+                    "minor": "Minor",
+                    "major": "Major",
+                    "critical": "Critical"
+                }
+            }
+        },
+        "QualityStatusSection": {
+            "Title": "Quality status",
+            "Table": {
+                "Empty": "No data",
+                "Columns": {},
+                "Statuses": {
+                    "MISSING_DATA": "Missing data",
+                    "MISSING_DATE": "Missing data",
+                    "QUALIFICATION_IN_PROGRESS": "Qualification",
+                    "DOCUMENT_COLLECTION": "Document collection",
+                    "CERTIFIED": "Certified",
+                    "NOT_CERTIFIED": "Not certified",
+                    "TEMPORARILY_ALLOWED": "Temporarily allowed"
+                }
+            },
+            "Comments": "Comments"
+        },
+        "ProductDetailsTabs": {
+            "DocumentsTab": {
+                "Title": "Documents",
+                "StatusesOptions": {
+                    "APPROVED": "Approved",
+                    "REJECTED": "Rejected",
+                    "NEEDS_APPROVAL": "Needs approval"
+                },
+                "Fields": {
+                    "Type": "Document type",
+                    "FileName": "Document name",
+                    "Status": "Document status",
+                    "IsParty": "Is Party",
+                    "UploadedAt": "Uploaded at",
+                    "IssueDate": "Issue date",
+                    "ExpiredAt": "Expired at",
+                    "DocumentMask": "Document mask"
+                }
+            },
+            "TasksTab": {
+                "Title": "Tasks",
+                "StatusesOptions": {
+                    "APPROVED": "Approved",
+                    "DRAFT": "Draft",
+                    "СANCELLED": "Canceled",
+                    "AWAITING_DOCUMENT_LOADING": "Awaiting document",
+                    "AWAITING_RESOLUTION": "Awaiting resolution",
+                    "RETURNED_AWAITING_DOCUMENT_LOADING": "Returned awaiting document",
+                    "RETURNED_AWAITING_RESOLUTION": "Returned awaiting resolution"
+                },
+                "Fields": {
+                    "Type": "Type",
+                    "Status": "Status",
+                    "UploadedDocs": "Uploaded docs",
+                    "SupplierName": "Supplier name",
+                    "SupplierCode": "Supplier code",
+                    "QE": "QE",
+                    "SQM": "SQM",
+                    "Number": "№",
+                    "AwaitedDocs": "Awaited documents",
+                    "CategoryName": "Action category",
+                    "CreatedAt": "Created at",
+                    "ApprovalDueDate": "Approval due date",
+                    "Responsible": "Responsible"
+                }
+            }
+        }
+    },
+    "WithModels": {
+        "Filters": {
+            "productCode": "Product code",
+            "supplierCode": "Supplier code",
+            "nomenclature": "Nomenclature",
+            "qualityStatus": "Quality status",
+            "qualityModel": "Quality model",
+            "providerName": "Provider name",
+            "productName": "Product name",
+            "providerStatus": "Provider status",
+            "filter": "Filter",
+            "INN": "Tax indetifier",
+            "EAN": "EAN",
+            "TNVD": "TNVD",
+            "businessLicenseNumber": "Business license number"
+        },
+        "Actions": {
+            "chooseActionLabel": "Actions",
+            "chooseActionPlaceholder": "Choose",
+            "applyAction": "Apply",
+            "actions": {
+                "sendQualityStatusMessage": "Send quality status message",
+                "addComment": "Add comment",
+                "addTasks": "Add tasks",
+                "addDocument": "Add document",
+                "blockOrUnBlock": "Block/Unblock"
+            }
+        },
+        "Table": {
+            "Columns": {
+                "providerStatus": "Supplier status",
+                "productCode": "Product code",
+                "productName": "Product name",
+                "providerCode": "Supplier code",
+                "providerName": "Supplier name",
+                "qualityStatus": "Quality status",
+                "QE": "QE",
+                "qualityModel": "Quality model",
+                "EAN": "EAN",
+                "lastProductStatusDate": "Last product status date",
+                "qualityModelNumber": "Quality model number",
+                "qualityModelManager": "Quality model manager",
+                "productDataCompleteness": "Product data completeness",
+                "productTopAVS": "Product Top AVS",
+                "productCreationDate": "Product creation date",
+                "productActionsBy": "Product actions by",
+                "departmentCode": "Department code",
+                "subDepartmentCode": "Subdepartment code",
+                "TN_VED_Code": "Custom code",
+                "departmentName": "Department name",
+                "nomenclature": "Nomenclatureа"
+            }
+        },
+        "blockOrUnBlockModalWindow": {
+            "buCodeLabel": "BU",
+            "blockedForOrderingLabel": "Block ordering",
+            "blockedForSellingLabel": "Block selling",
+            "blockedForPublicationLabel": "Block publication",
+            "blockCommentLabel": "Comment",
+            "closeModalButton": "Cancel",
+            "submitButton": "Add"
+        },
+        "addDocumentModalWindow": {
+            "closeModalButton": "Cancel",
+            "submitButton": "Add"
+        },
+        "addTaskModalWindow": {
+            "categoryLabel": "Category",
+            "documentTypeLabel": "Document type",
+            "typeLabel": "Type",
+            "documentsLabel": "Documents",
+            "responsiblePersonLabel": "Responsible",
+            "BULabel": "BU",
+            "approverPersonLabel": "Approver",
+            "lawRequirements": "Legal documents",
+            "processLabel": "Process",
+            "dutyLabel": "Requirement",
+            "closeModalButton": "Cancel",
+            "submitButton": "Add"
+        },
+        "addCommentModalWindow": {
+            "textAreaPlaceholder": "Your comment",
+            "closeModalButton": "Cancel",
+            "submitButton": "Ok"
+        }
+    },
+    "WithoutModels": {
+        "Filters": {
+            "nomenclature": "Nomenclature",
+            "QE": "QE",
+            "filter": "Filter",
+            "providerName": "Supplier name",
+            "regulatoryStatus": "Regulatory status",
+            "fromProject": "From project"
+        },
+        "Table": {
+            "SelectModel": "Please select quality model",
+            "Columns": {
+                "providerCodeNumber": "Supplier code number",
+                "productCode": "Product code",
+                "productName": "Product name",
+                "params": "Params"
+            }
+        }
+    },
+    "Transfer": {
+        "Title": "Transfer",
+        "Filters": {
+            "providerStatus": "Supplier status",
+            "QE": "QE",
+            "activeProducts": "Active products",
+            "productCode": "Product code",
+            "productName": "Product name",
+            "providerCode": "Supplier code",
+            "providerName": "Supplier name",
+            "qualityStatus": "Quality status",
+            "filter": "Filter"
+        },
+        "Info": {
+            "Title": "Information",
+            "WithActiveProvider": "With active supplier: ",
+            "WithoutTransfer": "Without transfer: ",
+            "QE": "QE: ",
+            "QEData": "Подключенный инженер по контролю качества"
+        },
+        "Table": {
+            "Header": {
+                "providerName": "Supplier",
+                "storeCode": "Store code",
+                "EAN": "EAN",
+                "providerStatus": "Supplier status",
+                "creationDate": "Creation date"
+            },
+            "Columns": {
+                "creationDate": "Creation date",
+                "productCodeAdeo": "Product code Adeo",
+                "productCode": "Product code",
+                "productName": "Product name",
+                "providerName": "Supplier name"
+            }
+        }
+    },
+    "WithDocuments": {
+        "Filters": {
+            "productCode": "Product code",
+            "supplierName": "Supplier name",
+            "productNumberKey": "Product number",
+            "RegulatoryStatus": "Regulatory status",
+            "DocumentType": "Document type",
+            "FileName": "Filename",
+            "DocumentStatus": "Document status",
+            "ComplianceStatus": "Compliance status",
+            "DateSearch": "Search by date",
+            "Dates": "Dates"
+        },
+        "DetailFilters": {
+            "QE": "QE",
+            "Country": "Страна",
+            "QualityModel": "Модель качества",
+            "ProductModelNomenclature": "Номенклатура товарной модели",
+            "ManagementNomenclature": "Управленческая номенклатура",
+            "IncludingOutdatedDocuments": "Включая устаревшие документы"
+        },
+        "Table": {
+            "DocumentNumber": "Document number",
+            "Type": "Type",
+            "ProductCode": "Product code",
+            "EAN": "EAN",
+            "TNVED": "Custom code",
+            "Name": "Name",
+            "ReleaseDate": "Release date",
+            "EndDate": "End date",
+            "Status": "Status",
+            "ConfirmationStatus": "Confirmation status",
+            "UploadDate": "Upload date",
+            "NameSupplier": "Supplier name",
+            "SupplierCodeRMS": "Supplier code RMS",
+            "INN": "Tax indetifier",
+            "BusinessLicenseNumber": "Business license number",
+            "SSMCode": "SSM code",
+            "Role": "Role",
+            "DownloadCompleted": "Completed",
+            "SupplierName": "Supplier name",
+            "SupplierTaxIndetifier": "Supplier tax indetifier",
+            "IMPORTER": "Importer",
+            "MANUFACTURER": "Distributor",
+            "SUPPLIER": "Supplier",
+            "ACTIVE": "Active",
+            "INACTIVE": "Inactive",
+            "Russia": "Russia",
+            "APPROVED": "Approved",
+            "REJECTED": "Rejected",
+            "NEEDS_APPROVAL": "Needs approval",
+            "CREATED": "Created at",
+            "UPDATED": "Updated at",
+            "ISSUE": "Document created at",
+            "EXPIRY": "Expired at"
+        }
+    }
+}
