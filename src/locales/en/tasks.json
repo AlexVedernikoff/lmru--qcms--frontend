@@ -3,8 +3,10 @@
         "Apply": "Apply",
         "Search": "Search",
         "Clear": "Clear",
+        "Cancel": "Cancel",
         "More": "More",
         "Less": "Less",
+        "Save": "Save",
         "AddModel": "Add model",
         "SelectAll": "Select all"
     },
@@ -69,7 +71,9 @@
     "TaskDetails": {
         "Buttons": {
             "Edit": "Edit",
-            "SubmitReview": "Submit to review"
+            "SubmitReview": "Submit to review",
+            "StopEditing": "Cancel edit",
+            "SubmitEditDetailsForm": "Save"
         },
         "DetailsProvider": {
             "Provider": "Supplier",
@@ -106,6 +110,15 @@
         "Buttons": {
             "Reject": "Reject",
             "Approve": "Approve"
+        },
+        "Actions": {
+            "chooseActionLabel": "Actions",
+            "chooseActionPlaceholder": "Choose",
+            "applyAction": "Run",
+            "actions": {
+                "updateDocument": "Edit document",
+                "uploadDocument": "Upload document"
+            }
         },
         "Documents": {
             "Title": "Documents",

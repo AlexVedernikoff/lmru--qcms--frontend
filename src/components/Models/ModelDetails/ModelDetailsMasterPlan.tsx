@@ -4,7 +4,7 @@ import {useParams} from 'react-router-dom';
 import {Grid, RegularButton, Typography} from 'fronton-react';
 import {FloppyDiskIcon, PlusIcon, TrashIcon} from '@fronton/icons-react';
 import {notification} from 'antd';
-import {ERegulatoryType, IMasterPlanTask} from 'common/types/models';
+import {IMasterPlanTask} from 'common/types/models';
 import CardView from '../../Common/CardView';
 import modelsApi from '../modelsApi';
 import MasterPlanTable from './MasterPlanTable';
@@ -47,7 +47,7 @@ const ModelDetailsMasterPlan: React.FC<IProps> = ({masterPlanId, tasks}) => {
         }
     }, [deleteTasksResult.data]);
 
-    const updateTasks = useCallback((key: ERegulatoryType, value: number[]) => {
+    const updateTasks = useCallback((value: number[]) => {
         setSelectedTasks(value);
     }, []);
 
@@ -70,8 +70,8 @@ const ModelDetailsMasterPlan: React.FC<IProps> = ({masterPlanId, tasks}) => {
     const handleRemoveModalClose = () => setIsRemoveTaskOpen(false);
 
     const handleConfirmDeletion = async (masterPlanId: number) => {
-        setIsRemoveTaskOpen(false);
         await deleteTasks({id: masterPlanId, body: {taskIDs: selectedTasks, updatedBy: 'currentUser'}});
+        setIsRemoveTaskOpen(false);
         await refetch();
     };
 
