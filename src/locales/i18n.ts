@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import {ETranslation} from 'common/clientModels';
+import auth_ru from './ru/auth.json';
 import products_ru from './ru/products.json';
 import products_en from './en/products.json';
 import models_ru from './ru/models.json';
@@ -17,6 +18,7 @@ import files_ru from './ru/files.json';
 
 const resources = {
     [ETranslation.EN]: {
+        auth: auth_ru,
         products: products_en,
         models: models_ru,
         providers: providers_en,
@@ -27,6 +29,7 @@ const resources = {
         files: files_ru,
     },
     [ETranslation.RU]: {
+        auth: auth_ru,
         products: products_ru,
         models: models_ru,
         providers: providers_ru,
