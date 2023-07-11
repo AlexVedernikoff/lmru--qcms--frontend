@@ -1,10 +1,25 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import {EUserRole} from 'common/roles';
 import {UserData} from 'common/types/auth';
 import {UserState, AuthStatus} from 'common/types/user';
+import {isDevEnvironment} from 'utils/isDevEnvironment';
 
-const initialState = {
-    authStatus: AuthStatus.UnAuthorized,
-} as UserState;
+const mockUserState: UserState = {
+    authStatus: AuthStatus.AuthSuccess,
+    userData: {
+        userName: 'Тест Тестович',
+        accessToken: 'accessToken',
+        refreshToken: 'refreshToken',
+        roles: [],
+        supplierCommercialIds: '',
+    },
+};
+
+const initialState = isDevEnvironment()
+    ? mockUserState
+    : {
+          authStatus: AuthStatus.UnAuthorized,
+      };
 
 const name = 'userStore';
 
@@ -36,6 +51,22 @@ const slice = createSlice({
             localStorage.removeItem(name);
             return {
                 authStatus: AuthStatus.UnAuthorized,
+            };
+        },
+        clickRole(state, action: PayloadAction<EUserRole>) {
+            const {userData} = state;
+            if (!isDevEnvironment() || !userData) return state;
+            const clickedRole = action.payload;
+            const {roles} = userData;
+
+            return {
+                ...state,
+                userData: {
+                    ...userData,
+                    roles: roles.includes(clickedRole)
+                        ? roles.filter(role => role !== clickedRole)
+                        : [...roles, clickedRole],
+                },
             };
         },
     },

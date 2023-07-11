@@ -17,8 +17,10 @@ import Models from '../../Models';
 import Tasks from '../../Tasks';
 import Dashboard from '../../Dashboard';
 import TaskDetails from '../../Tasks/TaskDetails';
+import SwitchUserRoles from 'components/Common/SwitchUserRoles';
 
 import styles from './AuthSuccess.module.css';
+import {isDevEnvironment} from 'utils/isDevEnvironment';
 
 const AuthSuccess: React.FC = () => {
     const [isMinified, setIsMinified] = useState(localStorage.getItem('isSidebarMinified') === 'true' || false);
@@ -33,6 +35,8 @@ const AuthSuccess: React.FC = () => {
     return (
         <Context.Provider value={{name: 'Default'}}>
             <div className={styles.app}>
+                {isDevEnvironment() && <SwitchUserRoles />}
+
                 <div className={styles.header}>
                     <Header />
                 </div>

@@ -1,0 +1,12 @@
+.root {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    padding: 1rem;
+    background-color: #f8f8d9;
+    z-index: 999;
+}
+
+.button {
+    cursor: pointer;
+}

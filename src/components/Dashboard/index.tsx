@@ -7,18 +7,18 @@ import {DashboardKeyUser} from './DashboardKeyUser';
 import {EUserRole} from '../../common/roles';
 import {DashboardQEorSQM} from './DashboardQEorSQM';
 
-let role: EUserRole = EUserRole.SUPPLIER;
+let role: EUserRole = EUserRole.Supplier;
 
 const Dashboard: React.FC = () => {
     const {t} = useTranslation('dashboard');
 
     const item = useMemo(() => {
         switch (role) {
-            case EUserRole.SUPPLIER:
+            case EUserRole.Supplier:
                 return <DashboardSupplierRole />;
-            case EUserRole.SERVICE_PROVIDER:
+            case EUserRole.ServiceProvider:
                 return <DashboardServiceProviderRole />;
-            case EUserRole.KEY_USER:
+            case EUserRole.KeyUser:
                 return <DashboardKeyUser />;
             case EUserRole.QE:
             case EUserRole.SQM:

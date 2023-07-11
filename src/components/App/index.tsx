@@ -6,7 +6,6 @@ import AuthSuccess from './AuthSuccess';
 
 const App = () => {
     const userStore = useAppSelector(state => state.userStore);
-    console.log(userStore);
 
     if (userStore.authStatus === AuthStatus.AuthSuccess) {
         return <AuthSuccess />;
