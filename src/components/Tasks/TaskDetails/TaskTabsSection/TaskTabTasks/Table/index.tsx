@@ -9,48 +9,49 @@ import {Grid, RegularButton} from 'fronton-react';
 import {
     ITaskDetails,
     ITaskProductDetails,
-    IUpdateDocumentParamsDocument,
     UpdateDocumentApprovingStatuses,
 } from '../../../../../../common/types/taskDetails';
 import {taskDetailsApi} from '../../../api';
 import {notification} from 'antd';
+import {useParams} from 'react-router-dom';
 
 interface Props {
     taskDetails: ITaskDetails;
 }
 
+type ISelectTasks = {
+    id?: number;
+    qualityActionId?: number;
+    productId?: number;
+}[];
+
 const TasksTable: React.FC<Props> = ({taskDetails}) => {
     const [notificationApi, notificationContextHolder] = notification.useNotification();
 
     const {t} = useTranslation('tasks');
-
-    const [selectedTaskProductsIds, setSelectedTaskProductsIds] = useState<number[]>([]);
-
+    const {id} = useParams();
+    const [selectedTaskProductsIds, setSelectedTaskProductsIds] = useState<ISelectTasks>([]);
     const [updateTaskDetails, updateTaskDetailsRequestState] = taskDetailsApi.useUpdateStatusDocumentMutation();
 
     const handleSubmit = (approvingStatus: UpdateDocumentApprovingStatuses) => {
         if (updateTaskDetailsRequestState.isLoading) return;
 
-        const documents = taskDetails.documents.uploadedDocuments.reduce<IUpdateDocumentParamsDocument[]>(
-            (accumulator, document) => {
-                if (!document.productsDetails) return accumulator;
-                const selectedTaskProducts = document.productsDetails.filter(({id}) =>
-                    selectedTaskProductsIds.includes(id)
+        const documents = taskDetails.documents.uploadedDocuments
+            .map(el => {
+                const selectedTaskProducts = el.productsDetails?.filter(({qualityActionId, id}) =>
+                    selectedTaskProductsIds.some(el => el.qualityActionId === qualityActionId && el.id === id)
                 );
-                if (!selectedTaskProducts.length) return accumulator;
-                const documentInfo: IUpdateDocumentParamsDocument = {
-                    id: document.id,
+                return {
+                    id: el.id,
+                    approvingStatuses: selectedTaskProducts?.map(({productId}) => ({
+                        productId,
+                        approvingStatus,
+                    })),
                 };
-                return [
-                    ...accumulator,
-                    {
-                        ...documentInfo,
-                        approvingStatuses: selectedTaskProducts.map(({id}) => ({productId: id, approvingStatus})),
-                    },
-                ];
-            },
-            []
-        );
+            })
+            .filter(el => {
+                return !!el.approvingStatuses?.length;
+            });
 
         updateTaskDetails({
             updatedBy: 'Matvey',
@@ -113,13 +114,21 @@ const TasksTable: React.FC<Props> = ({taskDetails}) => {
     );
 
     const data = useMemo<ITaskProductDetails[]>(
-        () => taskProductsDetails.map(taskProductDetails => ({...taskProductDetails, key: taskProductDetails.id})),
-        [taskProductsDetails]
+        () =>
+            taskProductsDetails
+                .map(taskProductDetails => ({...taskProductDetails, key: taskProductDetails.id}))
+                .filter(el => el.qualityActionId.toString() !== id),
+        [id, taskProductsDetails]
     );
 
     const rowSelection = useMemo<TableRowSelection<ITaskProductDetails>>(
         () => ({
-            onChange: selectedTaskProductsIds => setSelectedTaskProductsIds(selectedTaskProductsIds as number[]),
+            onChange: (_, selectedRows: ITaskProductDetails[]) => {
+                const res = selectedRows.map(el => {
+                    return {productId: el.productId, qualityActionId: el.qualityActionId, id: el.id};
+                });
+                setSelectedTaskProductsIds(res);
+            },
         }),
         []
     );
@@ -143,7 +152,7 @@ const TasksTable: React.FC<Props> = ({taskDetails}) => {
                     onClick={() => handleSubmit(UpdateDocumentApprovingStatuses.REJECTED)}
                     size="m"
                     variant="outline"
-                    disabled={updateTaskDetailsRequestState.isLoading}
+                    disabled={updateTaskDetailsRequestState.isLoading || !selectedTaskProductsIds.length}
                 >
                     {t('TaskTabs.Buttons.Reject')}
                 </RegularButton>
@@ -152,7 +161,7 @@ const TasksTable: React.FC<Props> = ({taskDetails}) => {
                     onClick={() => handleSubmit(UpdateDocumentApprovingStatuses.APPROVED)}
                     size="m"
                     variant="primary"
-                    disabled={updateTaskDetailsRequestState.isLoading}
+                    disabled={updateTaskDetailsRequestState.isLoading || !selectedTaskProductsIds.length}
                 >
                     {t('TaskTabs.Buttons.Approve')}
                 </RegularButton>
