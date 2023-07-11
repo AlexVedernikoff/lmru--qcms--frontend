@@ -51,6 +51,7 @@ const AuthInProgress = () => {
         if (authRequestState.isError) {
             const {error} = authRequestState;
             if (isUnauthorizedError(error)) {
+                alert('Запрос на авторизацию вернул редирект-ссылку.');
                 window.location.href = error.data.redirect_uri;
             } else {
                 dispatch(userStoreActions.setAuthErrorState());
@@ -74,13 +75,19 @@ const AuthInProgress = () => {
             return;
         }
 
+        alert('Пробуем достать данные юзера из localstorage');
         const userDataFromLocalStorage = getUserDataFromLocalStorage();
         if (userDataFromLocalStorage) {
+            alert('Данные юзера найдены в localstorage. Авторизация успешно завершена.');
             handleAuthSuccess(userDataFromLocalStorage);
             return;
         }
 
         const authorizationcode = queryParams.get('code') || undefined;
+
+        alert(
+            `В localstorage отсутствуют данные юзера. Отсылаем запрос на авторизацию (authorizationcode=${authorizationcode})`
+        );
 
         auth({
             header: {
