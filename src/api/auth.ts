@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {AuthRequest, UserData} from 'common/types/auth';
+import {decodeUriSafely} from 'utils/decodeUriSafely';
 
 const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/';
 
@@ -22,9 +23,11 @@ export const authApi = createApi({
             }),
             // Данный метод вызывается только, если запрос успешно отработал.
             transformResponse(response: any, meta, request) {
+                const userNameURI = meta?.response?.headers.get('username') || '';
+
                 return {
-                    userName: meta?.response?.headers.get('username') || '',
-                    accessToken: meta?.response?.headers.get('response') || '',
+                    userName: decodeUriSafely(userNameURI),
+                    accessToken: meta?.response?.headers.get('accesstoken') || '',
                     refreshToken: meta?.response?.headers.get('refreshtoken') || '',
                     roles: meta?.response?.headers.get('roles') || '',
                     supplierCommercialIds: meta?.response?.headers.get('suppliercommercialids') || '',
