@@ -160,6 +160,9 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
             try {
                 await postUpdateProduct({body}).unwrap();
+                notificationApi.open({
+                    message: 'Продукт успешно обновлен',
+                });
             } catch (error) {
                 notificationApi.open({
                     message: 'Ошибка при обновлении продукта',

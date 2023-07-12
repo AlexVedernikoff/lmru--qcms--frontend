@@ -92,6 +92,10 @@ const ProductDetailsProduct: React.FC = () => {
                 await postUpdateProduct({body}).unwrap();
                 setIsQModelEdit(false);
                 isChemistryChanged && setIsNoChemestryEdit(true);
+
+                notificationApi.open({
+                    message: 'Продукт обновлен',
+                });
             } catch (error) {
                 notificationApi.open({
                     message: 'Ошибка при обновлении продукта',
