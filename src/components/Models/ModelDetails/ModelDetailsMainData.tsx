@@ -9,9 +9,15 @@ import TextBlock from '../Common/TextBlock';
 import styles from '../../Common.module.css';
 import modelsApi from '../modelsApi';
 import EditIcon from '../../Icons/EditIcon';
+import {useAppSelector} from 'store';
+import {EUserRole} from 'common/roles';
+
 import s from './ModelDetails.module.css';
 
 const ModelDetailsMainData: React.FC = () => {
+    const roles = useAppSelector(store => store.userStore.userData!.roles);
+    const hasUserEditQualityModelPermission =
+        roles.includes(EUserRole.Admin) || roles.includes(EUserRole.KeyUser) || roles.includes(EUserRole.QE);
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
 
@@ -74,73 +80,74 @@ const ModelDetailsMainData: React.FC = () => {
         setProductModelNomenclatureId(v);
     };
 
+    if (isEditMode) {
+        return (
+            <Grid className={styles.sectionItem} rowGap={8} columnGap={16}>
+                <Grid columns="1fr auto" gap={16}>
+                    <Typography variant="h3">{t('ModelDetails.MainData.Title')}</Typography>
+                    <RegularButton onClick={handleSaveClick}>{t('Buttons.Save')}</RegularButton>
+                </Grid>
+
+                <div />
+
+                <TreeSelect
+                    className={s.treeSelect}
+                    size="large"
+                    treeData={treeData}
+                    value={productModelNomenclatureId ? [productModelNomenclatureId] : []}
+                    onChange={handleProductModelChange}
+                    placeholder={t('ModelList.Filters.productModel')}
+                    showCheckedStrategy="SHOW_CHILD"
+                    treeCheckable
+                    multiple={false}
+                />
+
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+            </Grid>
+        );
+    }
+
     return (
         <Grid className={styles.sectionItem} rowGap={8} columnGap={16}>
             <Grid columns="1fr auto" gap={16}>
                 <Typography variant="h3">{t('ModelDetails.MainData.Title')}</Typography>
-                {isEditMode ? (
-                    <RegularButton onClick={handleSaveClick}>{t('Buttons.Save')}</RegularButton>
-                ) : (
-                    <Grid columns="48px" gap={16}>
+                <Grid columns="48px" gap={16}>
+                    {hasUserEditQualityModelPermission && (
                         <RegularButton variant="pseudo" aria-label="edit" size="s" onClick={handleEditClick}>
                             <EditIcon />
                         </RegularButton>
-                    </Grid>
-                )}
+                    )}
+                </Grid>
             </Grid>
 
             <div />
 
-            {isEditMode ? (
-                <>
-                    <TreeSelect
-                        className={s.treeSelect}
-                        size="large"
-                        treeData={treeData}
-                        value={productModelNomenclatureId ? [productModelNomenclatureId] : []}
-                        onChange={handleProductModelChange}
-                        placeholder={t('ModelList.Filters.productModel')}
-                        showCheckedStrategy="SHOW_CHILD"
-                        treeCheckable
-                        multiple={false}
-                    />
-                </>
-            ) : (
-                <>
-                    <TextBlock
-                        label={t('ModelDetails.MainData.Field.nomenclature')}
-                        text={details?.productModelNomenclature?.modelName}
-                    />
-                    <br />
-                    <NomenclatureRow
-                        code={{
-                            department: details?.productModelNomenclature?.departmentCode,
-                            subdepartment: details?.productModelNomenclature?.subDepartmentCode,
-                            consolidation: details?.productModelNomenclature?.modelConsolidationCode,
-                            model: details?.productModelNomenclature?.modelCode,
-                        }}
-                        name={{
-                            department: details?.productModelNomenclature?.departmentName,
-                            subdepartment: details?.productModelNomenclature?.subDepartmentName,
-                            consolidation: details?.productModelNomenclature?.modelConsolidationName,
-                            model: details?.productModelNomenclature?.modelName,
-                        }}
-                    />
-                </>
-            )}
-
-            {isEditMode && (
-                <>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                </>
-            )}
+            <TextBlock
+                label={t('ModelDetails.MainData.Field.nomenclature')}
+                text={details?.productModelNomenclature?.modelName}
+            />
+            <br />
+            <NomenclatureRow
+                code={{
+                    department: details?.productModelNomenclature?.departmentCode,
+                    subdepartment: details?.productModelNomenclature?.subDepartmentCode,
+                    consolidation: details?.productModelNomenclature?.modelConsolidationCode,
+                    model: details?.productModelNomenclature?.modelCode,
+                }}
+                name={{
+                    department: details?.productModelNomenclature?.departmentName,
+                    subdepartment: details?.productModelNomenclature?.subDepartmentName,
+                    consolidation: details?.productModelNomenclature?.modelConsolidationName,
+                    model: details?.productModelNomenclature?.modelName,
+                }}
+            />
         </Grid>
     );
 };

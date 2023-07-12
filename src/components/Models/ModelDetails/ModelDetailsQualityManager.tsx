@@ -5,8 +5,13 @@ import {useTranslation} from 'react-i18next';
 import styles from '../../Common.module.css';
 import modelsApi from '../modelsApi';
 import EditIcon from '../../Icons/EditIcon';
+import {useAppSelector} from 'store';
+import {EUserRole} from 'common/roles';
 
 const ModelDetailsQualityManager: React.FC = () => {
+    const roles = useAppSelector(store => store.userStore.userData!.roles);
+    const hasUserEditQualityModelPermission =
+        roles.includes(EUserRole.Admin) || roles.includes(EUserRole.KeyUser) || roles.includes(EUserRole.QE);
     const {t} = useTranslation('models');
     const {id = ''} = useParams();
 
@@ -67,30 +72,23 @@ const ModelDetailsQualityManager: React.FC = () => {
         setIsEditMode(false);
     };
 
-    return (
-        <Grid className={styles.sectionItem} rowGap={8} columnGap={16}>
-            <Grid columns="1fr auto" gap={16} alignItems="start">
-                <Typography variant="h3">{t('ModelDetails.QualityManager.Title')}</Typography>
-                {isEditMode ? (
+    if (isEditMode) {
+        return (
+            <Grid className={styles.sectionItem} rowGap={8} columnGap={16}>
+                <Grid columns="1fr auto" gap={16} alignItems="start">
+                    <Typography variant="h3">{t('ModelDetails.QualityManager.Title')}</Typography>
+
                     <Grid columns="120px" gap={16}>
                         <RegularButton size="m" onClick={handleSaveClick}>
                             {t('Buttons.Save')}
                         </RegularButton>
                     </Grid>
-                ) : (
-                    <Grid columns="48px" gap={4}>
-                        <RegularButton variant="pseudo" aria-label="edit" size="s" onClick={handleEditClick}>
-                            <EditIcon />
-                        </RegularButton>
-                    </Grid>
-                )}
-            </Grid>
+                </Grid>
 
-            <br />
-            <br />
-            <br />
+                <br />
+                <br />
+                <br />
 
-            {isEditMode ? (
                 <Grid columnGap={24} columns="repeat(3, 1fr)">
                     <Input
                         inputSize="m"
@@ -120,34 +118,59 @@ const ModelDetailsQualityManager: React.FC = () => {
                         onChange={handleInputChange}
                     />
                 </Grid>
-            ) : (
-                <Grid columnGap={24} columns="repeat(3, 1fr)" alignItems="start">
-                    <Grid>
-                        <Typography variant="s" size="subtitle">
-                            {t('ModelDetails.QualityManager.Field.BU')}
-                        </Typography>
-                        <Typography variant="s" size="body_long">
-                            {BU || '-'}
-                        </Typography>
+
+                <br />
+                <br />
+                <br />
+                <br />
+            </Grid>
+        );
+    }
+
+    return (
+        <Grid className={styles.sectionItem} rowGap={8} columnGap={16}>
+            <Grid columns="1fr auto" gap={16} alignItems="start">
+                <Typography variant="h3">{t('ModelDetails.QualityManager.Title')}</Typography>
+
+                {hasUserEditQualityModelPermission && (
+                    <Grid columns="48px" gap={4}>
+                        <RegularButton variant="pseudo" aria-label="edit" size="s" onClick={handleEditClick}>
+                            <EditIcon />
+                        </RegularButton>
                     </Grid>
-                    <Grid>
-                        <Typography variant="s" size="subtitle">
-                            {t('ModelDetails.QualityManager.Field.QE')}
-                        </Typography>
-                        <Typography variant="s" size="body_long">
-                            {QE || '-'}
-                        </Typography>
-                    </Grid>
-                    <Grid>
-                        <Typography variant="s" size="subtitle">
-                            {t('ModelDetails.QualityManager.Field.SCM')}
-                        </Typography>
-                        <Typography variant="s" size="body_long">
-                            {SQM || '-'}
-                        </Typography>
-                    </Grid>
+                )}
+            </Grid>
+
+            <br />
+            <br />
+            <br />
+
+            <Grid columnGap={24} columns="repeat(3, 1fr)" alignItems="start">
+                <Grid>
+                    <Typography variant="s" size="subtitle">
+                        {t('ModelDetails.QualityManager.Field.BU')}
+                    </Typography>
+                    <Typography variant="s" size="body_long">
+                        {BU || '-'}
+                    </Typography>
                 </Grid>
-            )}
+                <Grid>
+                    <Typography variant="s" size="subtitle">
+                        {t('ModelDetails.QualityManager.Field.QE')}
+                    </Typography>
+                    <Typography variant="s" size="body_long">
+                        {QE || '-'}
+                    </Typography>
+                </Grid>
+                <Grid>
+                    <Typography variant="s" size="subtitle">
+                        {t('ModelDetails.QualityManager.Field.SCM')}
+                    </Typography>
+                    <Typography variant="s" size="body_long">
+                        {SQM || '-'}
+                    </Typography>
+                </Grid>
+            </Grid>
 
             <br />
             <br />

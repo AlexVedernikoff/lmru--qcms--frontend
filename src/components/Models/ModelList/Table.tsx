@@ -15,6 +15,8 @@ import NotFound from '../../Icons/NotFound';
 import {QualityModelsSortableFields} from '../../../common/types/searchQualityModels';
 import SwitchSortButton from './SwitchSortButton';
 import {Sort} from '.';
+import {useAppSelector} from 'store';
+import {EUserRole} from 'common/roles';
 
 type TDataType = TWithReactKey<IModelItem>;
 
@@ -27,39 +29,28 @@ interface IProps {
 }
 
 const ModelsTable: React.FC<IProps> = ({sort, onSortChange, onPageChange, tableData, isLoading}) => {
+    const roles = useAppSelector(store => store.userStore.userData!.roles);
+    const hasUserViewQualityModelPermission =
+        roles.includes(EUserRole.Admin) ||
+        roles.includes(EUserRole.KeyUser) ||
+        roles.includes(EUserRole.QE) ||
+        roles.includes(EUserRole.SQM) ||
+        roles.includes(EUserRole.InternalUser);
     const navigate = useNavigate();
     const {t} = useTranslation('models');
 
     const handleDetailsOpen: React.MouseEventHandler<HTMLAnchorElement> = useCallback(
         e => {
+            if (!hasUserViewQualityModelPermission) return;
             const {id} = e.currentTarget.dataset;
             if (id) {
                 navigate(MODELS_ROUTES.details.replace(':id', id));
             }
         },
-        [navigate]
+        [navigate, hasUserViewQualityModelPermission]
     );
 
-    const columns: ColumnsType<TDataType> = [
-        {
-            title: '',
-            dataIndex: undefined,
-            width: 57,
-            render: (_value: string, record: TDataType) => (
-                <RegularButton
-                    data-id={record.id}
-                    onClick={handleDetailsOpen}
-                    href=""
-                    rel=""
-                    aria-label=""
-                    variant="pseudo"
-                    iconOnly
-                >
-                    <MagnifyingGlassIcon />
-                </RegularButton>
-            ),
-            fixed: 'left',
-        },
+    const columnsFormAllRoles: ColumnsType<TDataType> = [
         {
             title: (
                 <Grid columns="auto auto" justifyContent="space-between" alignItems="center">
@@ -196,6 +187,32 @@ const ModelsTable: React.FC<IProps> = ({sort, onSortChange, onPageChange, tableD
             width: 246,
         },
     ];
+
+    const сolumnsForRolesThatHaveViewQualityModelPermission: ColumnsType<TDataType> = [
+        {
+            title: '',
+            dataIndex: undefined,
+            width: 57,
+            render: (_value: string, record: TDataType) => (
+                <RegularButton
+                    data-id={record.id}
+                    onClick={handleDetailsOpen}
+                    href=""
+                    rel=""
+                    aria-label=""
+                    variant="pseudo"
+                    iconOnly
+                >
+                    <MagnifyingGlassIcon />
+                </RegularButton>
+            ),
+            fixed: 'left',
+        },
+    ];
+
+    const columns = hasUserViewQualityModelPermission
+        ? [...сolumnsForRolesThatHaveViewQualityModelPermission, ...columnsFormAllRoles]
+        : columnsFormAllRoles;
 
     const dataSource = useMemo<TDataType[]>(
         () => (tableData?.content || []).map(d => ({...d, key: d.id})),
