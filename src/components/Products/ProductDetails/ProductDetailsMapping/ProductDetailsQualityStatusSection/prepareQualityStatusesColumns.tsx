@@ -3,8 +3,8 @@ import {IDataDeatailsQstatus} from '../../../../../common/types/productDetails';
 import HistoryBackIcon from '../../../../Icons/HistoryBackIcon';
 import {CustomSwitch} from '../../../../Common/Switch/CustomSwitch';
 import {ColumnsType} from 'antd/es/table';
-import styles from '../../ProductDetailsQstatusSection/productDetailsQstatuses.module.css';
-import HistoryTabModal from '../../ProductDetailsQstatusSection/HistoryTabModal';
+import styles from '../../ProductDetailsQualityStatusSection/productDetailsQualityStatuses.module.css';
+import HistoryTabModal from '../../ProductDetailsQualityStatusSection/HistoryTabModal';
 
 type HandleChangeType = (recordId: string, value: string, selectedValue?: string | null) => void;
 type HandleCommentsType = (recordId: string, comment: string, value: string) => void;

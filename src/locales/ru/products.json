@@ -86,7 +86,9 @@
                     "DOCUMENT_COLLECTION": "Сбор документации",
                     "CERTIFIED": "Сертифицирован",
                     "NOT_CERTIFIED": "Не сертифицирован",
-                    "TEMPORARILY_ALLOWED": "Временно сертифицирован"
+                    "TEMPORARILY_ALLOWED": "Временно сертифицирован",
+                    "BLOCKED": "Заблокирован",
+                    "UNBLOCKED": "Разблокирован"
                 }
             },
             "Comments": "Публичные комментарии"

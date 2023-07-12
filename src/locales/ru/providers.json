@@ -47,7 +47,7 @@
         },
         "ProviderTabs": {
             "ProjectCommand": {
-                "Title": "Проектная комманда",
+                "Title": "Проектная команда",
                 "userServiceNumber": "Табельный номер пользователя",
                 "surname": "Фамилия",
                 "name": "Имя",

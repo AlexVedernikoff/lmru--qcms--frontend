@@ -1,10 +1,20 @@
 import {TFunction} from 'i18next';
 import {QualityAction} from '../../../../../common/types/productDetails';
-import {converStringToDateTime, convertDateFromServer} from '../../../../../utils/convertDateFromServer';
+import {getDateTimeUtcThree} from '../../../../../utils/convertDateFromServer';
 
 enum Approvers {
     QE = 'QE',
     SQM = 'SQM',
+}
+
+enum ETaskStatusesOptions {
+    APPROVED = 'APPROVED',
+    DRAFT = 'DRAFT',
+    СANCELLED = 'СANCELLED',
+    AWAITING_DOCUMENT_LOADING = 'AWAITING_DOCUMENT_LOADING',
+    AWAITING_RESOLUTION = 'AWAITING_RESOLUTION',
+    RETURNED_AWAITING_DOCUMENT_LOADING = 'RETURNED_AWAITING_DOCUMENT_LOADING',
+    RETURNED_AWAITING_RESOLUTION = 'RETURNED_AWAITING_RESOLUTION',
 }
 
 export const tasksTabMapping = (
@@ -14,8 +24,9 @@ export const tasksTabMapping = (
 ) => {
     const qActionsRows = qualityActions.map(qAction => {
         const status = qAction?.actionStatus;
-        // @ts-ignore-next-line
-        const translateStatus = t(`ProductDetails.ProductDetailsTabs.TasksTab.StatusesOptions.${status}`) as string;
+        const translateStatus = t(
+            `ProductDetails.ProductDetailsTabs.TasksTab.StatusesOptions.${status as ETaskStatusesOptions}`
+        ) as string;
         const translatedStatus = status ? translateStatus : '';
 
         const uploadedDocumentId = qAction?.documents?.uploadedDocuments?.find(doc => doc.id === productId)?.id;
@@ -36,9 +47,11 @@ export const tasksTabMapping = (
                 : '-',
             categoryName: qAction?.categoryName ? qAction?.categoryName : '-',
             createdAt: qAction?.creationInformation?.createdAt
-                ? converStringToDateTime(qAction.creationInformation.createdAt)
+                ? getDateTimeUtcThree(qAction.creationInformation.createdAt, 'yyyy.MM.dd HH:mm:ss')
                 : '-',
-            approvalDueDate: qAction?.approvalDueDate ? convertDateFromServer(qAction.approvalDueDate) : '-',
+            approvalDueDate: qAction?.approvalDueDate
+                ? getDateTimeUtcThree(qAction.approvalDueDate, 'dd.MM.yyyy')
+                : '-',
             responsible:
                 qAction?.responsible && qAction?.responsible[0]?.externalId ? qAction?.responsible[0]?.externalId : '-',
             publicComments: qAction?.publicComments && qAction?.publicComments.length > 0 ? qAction.publicComments : [],

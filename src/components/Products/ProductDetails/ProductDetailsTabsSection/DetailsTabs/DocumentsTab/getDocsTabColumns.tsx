@@ -4,7 +4,7 @@ import {IDataProductDetailsTabDoc} from '../../../../../../common/types/productD
 import {Grid, RegularButton, Typography} from 'fronton-react';
 import {DownloadIcon} from '@fronton/icons-react';
 import {CustomSwitch} from '../../../../../Common/Switch/CustomSwitch';
-import {converStringToDateTime, convertDateFromServer} from '../../../../../../utils/convertDateFromServer';
+import {getDateTimeUtcThree} from '../../../../../../utils/convertDateFromServer';
 import {downloadFile} from 'api/downloadQualityDocument';
 
 export const getDocsTabColumns = (
@@ -106,19 +106,19 @@ export const getDocsTabColumns = (
         title: t('ProductDetails.ProductDetailsTabs.DocumentsTab.Fields.UploadedAt'),
         dataIndex: 'createdAt',
         width: 160,
-        render: d => <div>{d ? converStringToDateTime(d) : '-'}</div>,
+        render: d => <div>{d ? getDateTimeUtcThree(d, 'yyyy.MM.dd HH:mm:ss') : '-'}</div>,
     },
     {
         title: t('ProductDetails.ProductDetailsTabs.DocumentsTab.Fields.IssueDate'),
         dataIndex: 'issueDate',
         width: 180,
-        render: d => <div>{d ? converStringToDateTime(d) : '-'}</div>,
+        render: d => <div>{d ? getDateTimeUtcThree(d, 'yyyy.MM.dd HH:mm:ss') : '-'}</div>,
     },
     {
         title: t('ProductDetails.ProductDetailsTabs.DocumentsTab.Fields.ExpiredAt'),
         dataIndex: 'expireDate',
         width: 140,
-        render: d => <div>{d ? convertDateFromServer(d) : '-'}</div>,
+        render: d => <div>{d ? getDateTimeUtcThree(d, 'dd.MM.yyyy') : '-'}</div>,
     },
     {
         title: t('ProductDetails.ProductDetailsTabs.DocumentsTab.Fields.DocumentMask'),

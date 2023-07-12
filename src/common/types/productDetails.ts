@@ -322,15 +322,15 @@ interface IqStatuses {
     bu?: string;
     buCodeText?: string | number;
     statuses: string[];
-    blockOrders?: boolean;
+    blockOrders: boolean;
     blockOrdersComment: string;
     isBlockOrderOpened: boolean;
     isValidBlockOrders: boolean;
-    blockSellings?: boolean;
+    blockSellings: boolean;
     blockSellingsComment: string;
     isBlockSellingsOpened: boolean;
     isValidBlockSellings: boolean;
-    blockPublics?: boolean;
+    blockPublics: boolean;
     blockPublicsComment: string;
     isBlockPublicsOpened: boolean;
     isValidBlockPublics: boolean;
@@ -347,6 +347,15 @@ interface IqStatuses {
     ordersRowHistory?: History[];
     sellingsRowHistory?: History[];
     publicationsRowHistory?: History[];
+    initialStatusRu?: string;
+    initialStatusEng?: string;
+    isStatusChanged: boolean;
+    initialBlockOrders: boolean;
+    initialBlockSellings: boolean;
+    initialBlockPublics: boolean;
+    isBlockOredersChanged: boolean;
+    isBlockSellingsChanged: boolean;
+    isBlockPublicsChanged: boolean;
 }
 
 export interface IDataDeatailsQstatus extends IqStatuses {

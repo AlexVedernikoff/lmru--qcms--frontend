@@ -1,9 +1,12 @@
 import {Grid, Modal, ModalContent, ModalHeader, RegularButton} from 'fronton-react';
 import CustomTable from '../../../Common/CustomTable';
-import {prepareHistoryColumns} from '../ProductDetailsMapping/ProductDetailsQaulityStatusSection/prepareHistoryColumns';
+import {prepareHistoryColumns} from '../ProductDetailsMapping/ProductDetailsQualityStatusSection/prepareHistoryColumns';
 import {History} from '../../../../common/types/productDetails';
 
-import styles from './productDetailsQstatuses.module.css';
+import styles from './productDetailsQualityStatuses.module.css';
+import {useMemo} from 'react';
+import {ColumnsType} from 'antd/es/table';
+import {useTranslation} from 'react-i18next';
 
 interface IProps {
     isOpen: boolean;
@@ -12,9 +15,17 @@ interface IProps {
 }
 
 const HistoryTabModal: React.FC<IProps> = ({isOpen, onClose, rowHistory}) => {
+    const {t} = useTranslation('products');
+
     const handleClose = () => {
         onClose();
     };
+
+    const columns = useMemo<ColumnsType<History>>(
+        () => prepareHistoryColumns(t),
+
+        [t]
+    );
 
     return (
         <Modal show={isOpen} onClose={handleClose} size="l">
@@ -23,7 +34,7 @@ const HistoryTabModal: React.FC<IProps> = ({isOpen, onClose, rowHistory}) => {
 
                 <CustomTable
                     className={styles.table}
-                    columns={prepareHistoryColumns(rowHistory)}
+                    columns={columns}
                     dataSource={rowHistory}
                     pagination={false}
                     size="small"

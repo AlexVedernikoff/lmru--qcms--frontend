@@ -1,6 +1,6 @@
 import {TFunction} from 'i18next';
 import {History, QualityStatus} from '../../../../../common/types/productDetails';
-import {converStringToDateTime} from '../../../../../utils/convertDateFromServer';
+import {converStringToDateTime, getDateTimeUtcThree} from '../../../../../utils/convertDateFromServer';
 
 // to do: err enum on BE. After fix change MissingDate to MissingData
 
@@ -11,6 +11,8 @@ export enum EQualityStatusesEng {
     Certified = 'CERTIFIED',
     NotCertified = 'NOT_CERTIFIED',
     TemporarilyAllowed = 'TEMPORARILY_ALLOWED',
+    Blocked = 'BLOCKED',
+    Unblocked = 'UNBLOCKED',
 }
 
 export enum EQualityStatusesRu {
@@ -104,7 +106,7 @@ const arrQstatusesRu = [
 const sortAndFormateDatesArray = (array: History[]) => {
     const formatedDateHistory = [...array].map(el => {
         if (el.statusUpdatedAt) {
-            return {...el, statusUpdatedAt: converStringToDateTime(el.statusUpdatedAt)};
+            return {...el, statusUpdatedAt: getDateTimeUtcThree(el.statusUpdatedAt, 'yyyy.MM.dd HH:mm:ss')};
         } else {
             return el;
         }
@@ -159,30 +161,43 @@ export const qaulityStatusSectionMapping = (
         bu: buCode,
         buCodeText: buCodeText,
         statuses: arrQstatusesRu,
-        blockOrders: blockedForOrders,
-        blockOrdersComment: '',
-        isBlockOrderOpened: false,
-        isValidBlockOrders: true,
-        blockSellings: blockedForSellings,
-        blockSellingsComment: '',
-        isBlockSellingsOpened: false,
-        isValidBlockSellings: true,
-        blockPublics: blockedForPublics,
-        blockPublicsComment: '',
-        isBlockPublicsOpened: false,
-        isValidBlockPublics: true,
+
         ruStatus: ruStatus,
         engStatus: engStatus,
+        initialStatusRu: ruStatus,
+        initialStatusEng: engStatus,
         isStatusCommentOpened: false,
         statusComment: '',
         isValidStatus: true,
         isStatusHistoryOpened: false,
         statusRowHistory: statusRowHistory,
+        isStatusChanged: false,
+
+        blockOrders: blockedForOrders || false,
+        initialBlockOrders: blockedForOrders || false,
+        blockOrdersComment: '',
+        isBlockOrderOpened: false,
+        isValidBlockOrders: true,
         isOrdersHistoryOpened: false,
         ordersRowHistory: ordersRowHistory,
+        isBlockOredersChanged: false,
+
+        blockSellings: blockedForSellings || false,
+        initialBlockSellings: blockedForSellings || false,
+        blockSellingsComment: '',
+        isBlockSellingsOpened: false,
+        isValidBlockSellings: true,
         isSellingsHistoryOpened: false,
         sellingsRowHistory: sellingsRowHistory,
+        isBlockSellingsChanged: false,
+
+        blockPublics: blockedForPublics || false,
+        initialBlockPublics: blockedForPublics || false,
+        blockPublicsComment: '',
+        isBlockPublicsOpened: false,
+        isValidBlockPublics: true,
         isPublicationsHistoryOpened: false,
         publicationsRowHistory: publicationsRowHistory,
+        isBlockPublicsChanged: false,
     };
 };

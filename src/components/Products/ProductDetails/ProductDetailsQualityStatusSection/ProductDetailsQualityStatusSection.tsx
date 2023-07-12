@@ -3,22 +3,22 @@ import {useTranslation} from 'react-i18next';
 import CustomTable from '../../../Common/CustomTable';
 import styles from '../../../Common.module.css';
 
-import productDetailsStyles from './productDetailsQstatuses.module.css';
+import productDetailsStyles from './productDetailsQualityStatuses.module.css';
 
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {useGetDetailsForProductsQuery, usePostUpdateProductMutation} from '../productDetailsApi';
 
-import {IDataDeatailsQstatus, IUpdateBodyReq, ProductDetails} from '../../../../common/types/productDetails';
-import {prepareUpdateBody} from '../ProductDetailsMapping/ProductDetailsQaulityStatusSection/prepareUpdateBody';
+import {IDataDeatailsQstatus, IUpdateBodyReq} from '../../../../common/types/productDetails';
+import {prepareUpdateBody} from '../ProductDetailsMapping/ProductDetailsQualityStatusSection/prepareUpdateBody';
 import {
     DataIndexQtable,
     prepareQstatusesColumns,
-} from '../ProductDetailsMapping/ProductDetailsQaulityStatusSection/prepareQstatusesColumns';
+} from '../ProductDetailsMapping/ProductDetailsQualityStatusSection/prepareQualityStatusesColumns';
 import {
     getQualityStatus,
     qaulityStatusSectionMapping,
-} from '../ProductDetailsMapping/ProductDetailsQaulityStatusSection/qaulityStatusSectionMapping';
+} from '../ProductDetailsMapping/ProductDetailsQualityStatusSection/qaulityStatusSectionMapping';
 import {useParams} from 'react-router-dom';
 import {notification} from 'antd';
 
@@ -33,21 +33,13 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
 
     const [postUpdateProduct] = usePostUpdateProductMutation();
 
-    const {data} = useGetDetailsForProductsQuery({productId});
+    const {data: details} = useGetDetailsForProductsQuery({productId});
 
-    const [details, setDetails] = useState<ProductDetails>();
     const [tableData, setTableData] = useState<IDataDeatailsQstatus[]>([]);
-    const [isChangesInData, setIsChangesInData] = useState(false);
-    const [isDiscardChanges, setIsDiscardChanges] = useState(false);
 
     const [notificationApi, notificationContext] = notification.useNotification();
 
-    useEffect(() => {
-        setIsDiscardChanges(false);
-        data && setDetails(data);
-    }, [data, isDiscardChanges]);
-
-    useEffect(() => {
+    const makeMapping = useCallback(() => {
         if (details?.qualityStatuses && details?.qualityStatuses?.length > 0) {
             const arrQRowsVal: IDataDeatailsQstatus[] = details.qualityStatuses.map((el, i: number) => {
                 const mapping = qaulityStatusSectionMapping(t, i, el);
@@ -58,45 +50,115 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         }
     }, [details?.qualityStatuses, t]);
 
-    const handleChange = (recordId: string, value: string, selectedValue?: string | null) => {
-        setIsChangesInData(true);
+    useEffect(() => {
+        makeMapping();
+    }, [makeMapping]);
 
+    const isChangesInData = useMemo(
+        () =>
+            tableData.some(
+                row =>
+                    row.isStatusChanged ||
+                    row.isBlockOredersChanged ||
+                    row.isBlockSellingsChanged ||
+                    row.isBlockPublicsChanged
+            ),
+        [tableData]
+    );
+
+    const handleChange = (recordId: string, value: string, selectedValue?: string | null) => {
         setTableData(prevState =>
             prevState.map(el => {
                 if (el.id === recordId) {
                     switch (value) {
                         case DataIndexQtable.Statuses:
                             if (selectedValue) {
-                                return {
-                                    ...el,
-                                    ruStatus: selectedValue,
-                                    engStatus: getQualityStatus(ELanguages.ENG, selectedValue),
-                                    isStatusCommentOpened: true,
-                                    isValidStatus: false,
-                                };
+                                if (selectedValue !== el.initialStatusEng && selectedValue !== el.initialStatusRu) {
+                                    return {
+                                        ...el,
+                                        ruStatus: selectedValue,
+                                        engStatus: getQualityStatus(ELanguages.ENG, selectedValue),
+                                        isStatusCommentOpened: true,
+                                        isValidStatus: false,
+                                        statusComment: '',
+                                        isStatusChanged: true,
+                                    };
+                                } else {
+                                    return {
+                                        ...el,
+                                        ruStatus: el.initialStatusRu,
+                                        engStatus: el.initialStatusEng,
+                                        isStatusCommentOpened: false,
+                                        isValidStatus: true,
+                                        statusComment: '',
+                                        isStatusChanged: false,
+                                    };
+                                }
                             }
                             break;
                         case DataIndexQtable.BlockOrders:
-                            return {
-                                ...el,
-                                blockOrders: !el.blockOrders,
-                                isBlockOrderOpened: true,
-                                isValidBlockOrders: false,
-                            };
+                            if (!el.blockOrders !== el.initialBlockOrders) {
+                                return {
+                                    ...el,
+                                    blockOrders: !el.blockOrders,
+                                    isBlockOrderOpened: true,
+                                    isValidBlockOrders: false,
+                                    blockOrdersComment: '',
+                                    isBlockOredersChanged: true,
+                                };
+                            } else {
+                                return {
+                                    ...el,
+                                    blockOrders: el.initialBlockOrders,
+                                    isBlockOrderOpened: false,
+                                    isValidBlockOrders: true,
+                                    blockOrdersComment: '',
+                                    isBlockOredersChanged: false,
+                                };
+                            }
+
                         case DataIndexQtable.BlockSellings:
-                            return {
-                                ...el,
-                                blockSellings: !el.blockSellings,
-                                isBlockSellingsOpened: true,
-                                isValidBlockSellings: false,
-                            };
+                            if (!el.blockSellings !== el.initialBlockSellings) {
+                                return {
+                                    ...el,
+                                    blockSellings: !el.blockSellings,
+                                    isBlockSellingsOpened: true,
+                                    isValidBlockSellings: false,
+                                    blockSellingsComment: '',
+                                    isBlockSellingsChanged: true,
+                                };
+                            } else {
+                                return {
+                                    ...el,
+                                    blockSellings: el.initialBlockSellings,
+                                    isBlockSellingsOpened: false,
+                                    isValidBlockSellings: true,
+                                    blockSellingsComment: '',
+                                    isBlockSellingsChanged: false,
+                                };
+                            }
+
                         case DataIndexQtable.BlockPublics:
-                            return {
-                                ...el,
-                                blockPublics: !el.blockPublics,
-                                isBlockPublicsOpened: true,
-                                isValidBlockPublics: false,
-                            };
+                            if (!el.blockPublics !== el.initialBlockPublics) {
+                                return {
+                                    ...el,
+                                    blockPublics: !el.blockPublics,
+                                    isBlockPublicsOpened: true,
+                                    isValidBlockPublics: false,
+                                    blockPublicsComment: '',
+                                    isBlockPublicsChanged: true,
+                                };
+                            } else {
+                                return {
+                                    ...el,
+                                    blockPublics: !el.blockPublics,
+                                    isBlockPublicsOpened: false,
+                                    isValidBlockPublics: true,
+                                    blockPublicsComment: '',
+                                    isBlockPublicsChanged: false,
+                                };
+                            }
+
                         default:
                             break;
                     }
@@ -110,7 +172,6 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
         setTableData(prevState =>
             prevState.map(el => {
                 if (el.id === recordId) {
-                    setIsChangesInData(true);
                     switch (value) {
                         case DataIndexQtable.Statuses:
                             return {
@@ -169,14 +230,11 @@ const ProductDetailsQualityStatusSection: React.FC = () => {
                 });
                 discardChanges();
             }
-            setIsChangesInData(false);
         }
     };
 
     const discardChanges = () => {
-        setDetails(undefined);
-        setIsDiscardChanges(true);
-        setIsChangesInData(false);
+        makeMapping();
     };
 
     const handleHistoryTables = (recordId: string, dataIndex: string) => {

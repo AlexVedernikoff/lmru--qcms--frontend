@@ -86,7 +86,9 @@
                     "DOCUMENT_COLLECTION": "Document collection",
                     "CERTIFIED": "Certified",
                     "NOT_CERTIFIED": "Not certified",
-                    "TEMPORARILY_ALLOWED": "Temporarily allowed"
+                    "TEMPORARILY_ALLOWED": "Temporarily allowed",
+                    "BLOCKED": "Blocked",
+                    "UNBLOCKED": "Unblocked"
                 }
             },
             "Comments": "Comments"
