@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {TRootState} from '../../../../store/index';
+import {TRootState, useAppSelector} from '../../../../store/index';
 import {useTranslation} from 'react-i18next';
 import {Dropdown, DropdownItem, Grid, Input, RegularButton} from 'fronton-react';
 import {ChevronDownIcon, ChevronUpIcon} from '@fronton/icons-react';
@@ -10,10 +10,12 @@ import {setSuppliersFilter, ISuppliersFilter, initialState} from '../../../../st
 import {prepareBody} from './prepareBody';
 import {usePostSearchSupplsMutation} from '../../../../api/postSearchSuppliers';
 import {setSuppliersTableData, setSuppliersLoading} from '../../../../store/slices/suppliersTableDataSlice';
+import {EUserRole} from 'common/roles';
 
 const ProvidersFilter: React.FC = () => {
     const {t} = useTranslation('providers');
     const dispatch = useDispatch();
+    const roles = useAppSelector(store => store.userStore.userData!.roles);
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
     const handleShowMoreFiltersClick = () => {
         setIsMoreFiltersActive(prevState => !prevState);
@@ -42,6 +44,12 @@ const ProvidersFilter: React.FC = () => {
 
     const receiveProviders = async () => {
         const requestBody = prepareBody(suppliersFilterState);
+
+        // TODO доделать, когда будем получать  supplierRMSCode
+        // const providersTableData = roles.includes(EUserRole.Supplier)
+        //     ? await getProviders({...requestBody, searchBy: {...requestBody.searchBy, supplierRMSCode: '1'}})
+        //     : await getProviders(requestBody);
+
         const providersTableData = await getProviders(requestBody);
         dispatch(setSuppliersTableData({...providersTableData, isLoading}));
     };
@@ -62,6 +70,7 @@ const ProvidersFilter: React.FC = () => {
                             label={t('ProvidersList.Filters.filter')}
                             value={supplierKey}
                             onSelect={e => onHandleFilterChange(e!, 'supplierKey')}
+                            disabled={roles.includes(EUserRole.Supplier)}
                         >
                             <DropdownItem text={t('ProvidersList.Filters.providerName')} value={'supplierName'} />
                             <DropdownItem text={t('ProvidersList.Filters.providerCode')} value={'supplierRMSCode'} />
@@ -77,7 +86,7 @@ const ProvidersFilter: React.FC = () => {
                             label=""
                             placeholder=""
                             value={supplierValue}
-                            disabled={!supplierKey}
+                            disabled={!supplierKey || roles.includes(EUserRole.Supplier)}
                             onChange={e => {
                                 onHandleFilterChange(e.target.value, 'supplierValue');
                             }}
@@ -91,6 +100,7 @@ const ProvidersFilter: React.FC = () => {
                         label={t('ProvidersList.Filters.supplierRegistrationStatus')}
                         value={registrationStatus}
                         onSelect={e => onHandleFilterChange(e!, 'registrationStatus')}
+                        disabled={roles.includes(EUserRole.Supplier)}
                     >
                         <DropdownItem text="Возможное значение 1" value={'Возможное значение 1'} />
                         <DropdownItem text="Возможное значение 2" value={'Возможное значение 2'} />
@@ -106,6 +116,7 @@ const ProvidersFilter: React.FC = () => {
                         label={t('ProvidersList.Filters.billingCountry')}
                         value={billingCountry}
                         onSelect={e => onHandleFilterChange(e!, 'billingCountry')}
+                        disabled={roles.includes(EUserRole.Supplier)}
                     >
                         <DropdownItem text="Россия" value={'Russia'} />
                     </Dropdown>
@@ -119,6 +130,7 @@ const ProvidersFilter: React.FC = () => {
                         label={t('ProvidersList.Filters.countryLocationSupplier')}
                         value={supplierDepartmentCountry}
                         onSelect={e => onHandleFilterChange(e!, 'supplierDepartmentCountry')}
+                        disabled={roles.includes(EUserRole.Supplier)}
                     >
                         <DropdownItem text="Россия" value={'Russia'} />
                     </Dropdown>
@@ -290,6 +302,7 @@ const ProvidersFilter: React.FC = () => {
                         }}
                         size="m"
                         variant="outline"
+                        disabled={roles.includes(EUserRole.Supplier)}
                     >
                         {t('Buttons.Clear')}
                     </RegularButton>
@@ -300,6 +313,7 @@ const ProvidersFilter: React.FC = () => {
                         }}
                         size="m"
                         variant="primary"
+                        disabled={roles.includes(EUserRole.Supplier)}
                     >
                         {t('Buttons.Search')}
                     </RegularButton>

@@ -20,10 +20,12 @@ import TaskDetails from '../../Tasks/TaskDetails';
 import SwitchUserRoles from 'components/Common/SwitchUserRoles';
 
 import styles from './AuthSuccess.module.css';
+import {useAppSelector} from 'store';
+import {EUserRole} from 'common/roles';
 
 const AuthSuccess: React.FC = () => {
     const [isMinified, setIsMinified] = useState(localStorage.getItem('isSidebarMinified') === 'true' || false);
-
+    const roles = useAppSelector(store => store.userStore.userData!.roles);
     const handleSidebarToggle = (isMinified: boolean) => {
         setIsMinified(isMinified);
         localStorage.setItem('isSidebarMinified', isMinified + '');
@@ -48,7 +50,9 @@ const AuthSuccess: React.FC = () => {
                     <div className={isMinified ? styles.containerFull : styles.container}>
                         <Routes>
                             <Route path={APP_ROUTES.dashboard} element={<Dashboard />} />
-                            <Route path={APP_ROUTES.providers} element={<Providers />} />
+                            {!roles.includes(EUserRole.ServiceProvider) && (
+                                <Route path={APP_ROUTES.providers} element={<Providers />} />
+                            )}
                             <Route path={PROVIDER_ROUTES.details} element={<ProviderDetails />} />
                             <Route path={APP_ROUTES.products} element={<Products />}>
                                 <Route path={PRODUCTS_ROUTES.withModels} element={<ProductsWithQualityModel />} />
