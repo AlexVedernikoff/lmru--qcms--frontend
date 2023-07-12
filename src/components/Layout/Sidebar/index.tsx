@@ -22,6 +22,7 @@ interface IItem {
     text: string;
     value: string;
     icon?: IconComponent | React.FC;
+    notPermission?: EUserRole;
     children?: IItem[];
 }
 
@@ -92,6 +93,7 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
                 icon: TruckIcon,
                 text: t('Items.Providers'),
                 value: APP_ROUTES.providers,
+                notPermission: EUserRole.ServiceProvider,
             },
             {
                 icon: CubeIcon,
@@ -140,62 +142,64 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
         <div className={styles.sidebar}>
             <div>
                 <List>
-                    {items.map((item, index) => {
-                        const isSectionOpened: boolean =
-                            (location.pathname.includes(item.value) && item.value.length > 1) ||
-                            (item.value === APP_ROUTES.dashboard && location.pathname === item.value);
+                    {items
+                        .filter(({notPermission}) => !roles.includes(notPermission!))
+                        .map((item, index) => {
+                            const isSectionOpened: boolean =
+                                (location.pathname.includes(item.value) && item.value.length > 1) ||
+                                (item.value === APP_ROUTES.dashboard && location.pathname === item.value);
 
-                        const subitems = item.children?.map((c, i) => (
-                            <ListItem
-                                key={`sub-${i}`}
-                                className={c.value === location.pathname ? styles.selectedAccordeon : styles.item}
-                                iconLeft={<></>}
-                                text={c.text}
-                                value={c.value}
-                                onClick={handleItemClick}
-                            />
-                        ));
-
-                        return (
-                            <div key={index} title={item.text} onMouseOver={isMinified ? handleHover : undefined}>
+                            const subitems = item.children?.map((c, i) => (
                                 <ListItem
-                                    className={isSectionOpened ? styles.selected : styles.item}
-                                    iconLeft={
-                                        item.icon ? (
-                                            <item.icon color={isSectionOpened ? '#5AB030' : undefined} />
-                                        ) : undefined
-                                    }
-                                    text={isMinified ? '' : item.text}
-                                    value={item.value}
+                                    key={`sub-${i}`}
+                                    className={c.value === location.pathname ? styles.selectedAccordeon : styles.item}
+                                    iconLeft={<></>}
+                                    text={c.text}
+                                    value={c.value}
                                     onClick={handleItemClick}
-                                    iconRight={
-                                        !!item.children?.length ? (
-                                            isSectionOpened && isAccordionOpen ? (
-                                                <ChevronDownIcon />
-                                            ) : (
-                                                <ChevronRightIcon />
-                                            )
-                                        ) : undefined
-                                    }
-                                >
-                                    {isSectionOpened && !!item.children && isAccordionOpen ? (
-                                        isMinified ? (
-                                            isHovered ? (
-                                                <div
-                                                    className={styles.notification}
-                                                    onMouseOut={isMinified ? handleHoverOut : undefined}
-                                                >
-                                                    {subitems}
-                                                </div>
+                                />
+                            ));
+
+                            return (
+                                <div key={index} title={item.text} onMouseOver={isMinified ? handleHover : undefined}>
+                                    <ListItem
+                                        className={isSectionOpened ? styles.selected : styles.item}
+                                        iconLeft={
+                                            item.icon ? (
+                                                <item.icon color={isSectionOpened ? '#5AB030' : undefined} />
                                             ) : undefined
-                                        ) : (
-                                            subitems
-                                        )
-                                    ) : undefined}
-                                </ListItem>
-                            </div>
-                        );
-                    })}
+                                        }
+                                        text={isMinified ? '' : item.text}
+                                        value={item.value}
+                                        onClick={handleItemClick}
+                                        iconRight={
+                                            !!item.children?.length ? (
+                                                isSectionOpened && isAccordionOpen ? (
+                                                    <ChevronDownIcon />
+                                                ) : (
+                                                    <ChevronRightIcon />
+                                                )
+                                            ) : undefined
+                                        }
+                                    >
+                                        {isSectionOpened && !!item.children && isAccordionOpen ? (
+                                            isMinified ? (
+                                                isHovered ? (
+                                                    <div
+                                                        className={styles.notification}
+                                                        onMouseOut={isMinified ? handleHoverOut : undefined}
+                                                    >
+                                                        {subitems}
+                                                    </div>
+                                                ) : undefined
+                                            ) : (
+                                                subitems
+                                            )
+                                        ) : undefined}
+                                    </ListItem>
+                                </div>
+                            );
+                        })}
                 </List>
             </div>
 

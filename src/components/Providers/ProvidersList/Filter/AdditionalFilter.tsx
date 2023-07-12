@@ -1,15 +1,16 @@
 import {Checkbox, Dropdown, DropdownItem, Grid, Typography, Input} from 'fronton-react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-import {TRootState} from '../../../../store/index';
+import {TRootState, useAppSelector} from '../../../../store/index';
 import {setSuppliersFilter, ISuppliersFilter} from '../../../../store/slices/suppliersFilterSlice';
 import {СustomTreeSelect, TNomenclatureValue} from '../../../Common/CustomTreeSelect';
 import {modNomKeys, manNomKeys} from '../../../Common/CustomTreeSelect/consts';
 import styles from './styles.module.css';
+import {EUserRole} from 'common/roles';
 const AdditionalFilter: React.FC = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation('providers');
-
+    const roles = useAppSelector(store => store.userStore.userData!.roles);
     const suppliersFilterState: ISuppliersFilter = useSelector((state: TRootState) => state.suppliersFilter);
 
     const onHandleFilterChange = (e: ISuppliersFilter[keyof ISuppliersFilter], k: string) => {
@@ -42,9 +43,17 @@ const AdditionalFilter: React.FC = () => {
                     {t('ProvidersList.DetailFilters.relatedProducts')}
                 </Typography>
                 {/**************** Фильтр "11 Номенклатура товарной модели" *****************/}
-                <СustomTreeSelect nomenclatureValue={modelNomenclatureValue} handleChange={onTreeChange} />
+                <СustomTreeSelect
+                    nomenclatureValue={modelNomenclatureValue}
+                    handleChange={onTreeChange}
+                    disabled={roles.includes(EUserRole.Supplier)}
+                />
                 {/**************** Фильтр "12 Управленческая номенклатура" *****************/}
-                <СustomTreeSelect nomenclatureValue={managementNomenclatureValue} handleChange={onTreeChange} />
+                <СustomTreeSelect
+                    nomenclatureValue={managementNomenclatureValue}
+                    handleChange={onTreeChange}
+                    disabled={roles.includes(EUserRole.Supplier)}
+                />
 
                 {/**************** Фильтр "07 Модель качества" *****************/}
 
@@ -57,6 +66,7 @@ const AdditionalFilter: React.FC = () => {
                     onChange={e => {
                         onHandleFilterChange(e.target.value, 'qualityRating');
                     }}
+                    disabled={roles.includes(EUserRole.Supplier)}
                 />
 
                 {/**************** Фильтр "" *****************/}
@@ -66,6 +76,7 @@ const AdditionalFilter: React.FC = () => {
                     closeOnSelect
                     placeholder={t('Common.Select')}
                     label={t('ProvidersList.DetailFilters.certificationStatus')}
+                    disabled={roles.includes(EUserRole.Supplier)}
                     value={undefined}
                     // // onSelect={handleSelect}
                 >
@@ -83,6 +94,7 @@ const AdditionalFilter: React.FC = () => {
                         closeOnSelect
                         placeholder={t('Common.Select')}
                         label={t('ProvidersList.DetailFilters.сharacteristic')}
+                        disabled={roles.includes(EUserRole.Supplier)}
                         value={undefined}
                         className={styles.dropdown}
                         // // onSelect={handleSelect}
@@ -98,6 +110,7 @@ const AdditionalFilter: React.FC = () => {
                         placeholder={t('Common.Select')}
                         label={t('ProvidersList.DetailFilters.meaning')}
                         value={undefined}
+                        disabled={roles.includes(EUserRole.Supplier)}
                         // // onSelect={handleSelect}
                     >
                         <DropdownItem text="test" value={'test'} />
@@ -107,8 +120,16 @@ const AdditionalFilter: React.FC = () => {
                 </Grid>
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
                     <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="baseline" alignContent="baseline">
-                        <Checkbox checked={false} label={t('Common.Yes')} />
-                        <Checkbox checked={false} label={t('Common.No')} />
+                        <Checkbox
+                            checked={false}
+                            label={t('Common.Yes')}
+                            disabled={roles.includes(EUserRole.Supplier)}
+                        />
+                        <Checkbox
+                            checked={false}
+                            label={t('Common.No')}
+                            disabled={roles.includes(EUserRole.Supplier)}
+                        />
                     </Grid>
                     <Typography variant="s" size="body_short">
                         {t('ProvidersList.DetailFilters.withCTMProduct')}
@@ -116,8 +137,16 @@ const AdditionalFilter: React.FC = () => {
                 </Grid>
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
                     <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="baseline" alignContent="baseline">
-                        <Checkbox checked={false} label={t('Common.Yes')} />
-                        <Checkbox checked={false} label={t('Common.No')} />
+                        <Checkbox
+                            checked={false}
+                            label={t('Common.Yes')}
+                            disabled={roles.includes(EUserRole.Supplier)}
+                        />
+                        <Checkbox
+                            checked={false}
+                            label={t('Common.No')}
+                            disabled={roles.includes(EUserRole.Supplier)}
+                        />
                     </Grid>
                     <Typography variant="s" size="body_short">
                         {t('ProvidersList.DetailFilters.productDistributorOnly')}
@@ -125,8 +154,16 @@ const AdditionalFilter: React.FC = () => {
                 </Grid>
                 <Grid columnGap={16} columns="120px 1fr" alignItems="center" alignContent="baseline">
                     <Grid columnGap={8} columns="repeat(2, 1fr)" alignItems="baseline" alignContent="baseline">
-                        <Checkbox checked={false} label={t('Common.Yes')} />
-                        <Checkbox checked={false} label={t('Common.No')} />
+                        <Checkbox
+                            checked={false}
+                            label={t('Common.Yes')}
+                            disabled={roles.includes(EUserRole.Supplier)}
+                        />
+                        <Checkbox
+                            checked={false}
+                            label={t('Common.No')}
+                            disabled={roles.includes(EUserRole.Supplier)}
+                        />
                     </Grid>
                     <Typography variant="s" size="body_short">
                         {t('ProvidersList.DetailFilters.withoutСontact')}

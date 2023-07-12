@@ -15,11 +15,17 @@ interface IProps {
     className?: string;
     nomenclatureValue: TNomenclatureValue;
     handleChange: (result: TNomenclatureValue) => void;
+    disabled?: boolean;
 }
 
 type TProps = React.PropsWithChildren<IProps>;
 
-export const СustomTreeSelect: React.FC<TProps> = ({className, nomenclatureValue, handleChange: onTreeChange}) => {
+export const СustomTreeSelect: React.FC<TProps> = ({
+    className,
+    nomenclatureValue,
+    handleChange: onTreeChange,
+    disabled,
+}) => {
     const {t} = useTranslation('providers');
     const {data: productModelNomenclature = []} = useGetProductModelNomenclatureQuery();
     const {data: managementNomenclature = []} = useGetManagementNomenclatureQuery();
@@ -128,6 +134,7 @@ export const СustomTreeSelect: React.FC<TProps> = ({className, nomenclatureValu
         style: {
             width: '100%',
         },
+        disabled,
     };
 
     return <TreeSelect {...treeProps} />;
