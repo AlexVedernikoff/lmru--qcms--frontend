@@ -2,7 +2,6 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {EUserRole} from 'common/roles';
 import {UserData} from 'common/types/auth';
 import {UserState, AuthStatus} from 'common/types/user';
-import {isDevEnvironment} from 'utils/isDevEnvironment';
 
 const mockUserState: UserState = {
     authStatus: AuthStatus.AuthSuccess,
@@ -15,11 +14,12 @@ const mockUserState: UserState = {
     },
 };
 
-const initialState = isDevEnvironment()
-    ? mockUserState
-    : {
-          authStatus: AuthStatus.UnAuthorized,
-      };
+const initialState =
+    process.env.NODE_ENV === 'development'
+        ? mockUserState
+        : {
+              authStatus: AuthStatus.UnAuthorized,
+          };
 
 const name = 'userStore';
 
@@ -55,7 +55,7 @@ const slice = createSlice({
         },
         clickRole(state, action: PayloadAction<EUserRole>) {
             const {userData} = state;
-            if (!isDevEnvironment() || !userData) return state;
+            if (process.env.NODE_ENV !== 'development' || !userData) return state;
             const clickedRole = action.payload;
             const {roles} = userData;
 
