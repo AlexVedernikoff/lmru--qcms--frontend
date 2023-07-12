@@ -6,6 +6,7 @@ import {
     IUpdateDocumentParams,
     IUpdateDocumentResponse,
 } from '../../../common/types/taskDetails';
+import {ITaskUploadDocumentResponse, ITaskUploadDocumentParams} from 'common/types/tasks';
 
 const hostUrl = 'https://orchestrator-qcms-test-stage.platformeco.lmru.tech/v1/';
 
@@ -54,6 +55,15 @@ export const taskDetailsApi = createApi({
             }),
             invalidatesTags: ['TaskData'],
         }),
+        addDocument: builder.mutation<ITaskUploadDocumentResponse, ITaskUploadDocumentParams>({
+            query: queryArg => ({
+                url: `create-quality-document`,
+                method: 'POST',
+                body: queryArg.body,
+                headers: queryArg.header,
+            }),
+            invalidatesTags: ['TaskData'],
+        }),
     }),
 });
 
@@ -62,4 +72,5 @@ export const {
     useUpdateTaskDetailsMutation,
     usePostTaskDocumentsQuery,
     useUpdateStatusDocumentMutation,
+    useAddDocumentMutation,
 } = taskDetailsApi;

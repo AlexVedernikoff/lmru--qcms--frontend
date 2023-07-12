@@ -85,6 +85,20 @@ export interface ITaskDetailsPublicComment {
     createdBy: string; // required, пользователь, оставивший комментарий
 }
 
+interface IProductManagementNomenclature {
+    departmentId: number;
+    subDepartmentId: number;
+    subTypeId: number;
+    typeId: number;
+}
+
+interface IProductModelNomenclature {
+    modelDepartmentId?: string;
+    modelSubDepartmentId?: string;
+    modelConsolidationId?: string;
+    modelCodeId?: string;
+}
+
 export interface ITaskDetails {
     id: string; // required, идентификатор задачи
     actionStatus: ActionStatus; // required, статус задачи ENUM: ['DRAFT', 'СANCELLED', 'AWAITING_DOCUMENT_LOADING", "AWAITING_RESOLUTION", "RETURNED_AWAITING_DOCUMENT_LOADING", "RETURNED_AWAITING_RESOLUTION"]
@@ -99,13 +113,13 @@ export interface ITaskDetails {
         {
             type: string; // required, тип подтверждающего сотрудника ENUM: ['SUPPLIER', 'SERVICE_PROVIDER', 'QE','SQM']
             externalId: string; // required, идентификатор согласующего или название компании
-        }
+        },
     ];
     responsible: [
         {
             type: string; // required, ENUM: ['SUPPLIER', 'SERVICE_PROVIDER', 'QE','SQM'] тип подтверждающего сотрудника
             externalId: string; // required, идентификатор согласующего или название компании
-        }
+        },
     ];
     supplierData: {
         // required
@@ -126,6 +140,8 @@ export interface ITaskDetails {
         adeoRisk: string; // required, риск ADEO - нужен?
         regulatoryStatus: string;
         ean: string;
+        productManagementNomenclature: IProductManagementNomenclature;
+        productModelNomenclature: IProductModelNomenclature;
     };
     publicComments?: ITaskDetailsPublicComment[];
     documents: {
@@ -186,7 +202,7 @@ export interface ITaskUpdateInfoResponse {
     content: [
         {
             //  "Quality actions"
-        }
+        },
     ];
 }
 
@@ -255,7 +271,7 @@ export interface IUpdateDocumentResponse {
                 supplierId: 'integer'; // required, идентификатор поставщика
                 qualityActionId: 'integer'; // required, идентификатор задачи для которой был загружен документ
                 buCodes: ['string']; // required, BU в которых действует документ (должен быть хотя бы один элемент массива)
-            }
+            },
         ];
         mask: 'string'; // optional, спец. название документа для проверки в россаккредитации
         issueDate: 'datetime'; // optional, дата вступления в силу документа

@@ -1,7 +1,6 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {DatePicker, Grid, Modal, ModalContent, ModalFooter, ModalHeader, RegularButton} from 'fronton-react';
-import tasksApi from '../../tasksApi';
 import FileUploadForm from '../../../Common/FileUploadForm';
 import {IDocumentMetaData} from '../../../../common/types/files';
 import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
@@ -9,6 +8,7 @@ import {ITaskDetails} from '../../../../common/types/taskDetails';
 import {notification} from 'antd';
 
 import styles from './styles.module.css';
+import {taskDetailsApi} from '../api';
 
 export interface Props {
     show: boolean;
@@ -27,14 +27,14 @@ const initialFormState: FormState = {
     isPartial: false,
 };
 
-const TaskUploadDocumentModal: React.FC<Props> = ({show, onClose}) => {
+const TaskUploadDocumentModal: React.FC<Props> = ({show, onClose, taskDetails}) => {
     const [notificationApi, notificationContextHolder] = notification.useNotification();
 
     const {t} = useTranslation('tasks');
 
     const [formState, setFormState] = useState<FormState>(initialFormState);
 
-    const [createDocument, createDocumentResult] = tasksApi.endpoints.createDocument.useMutation();
+    const [createDocument, createDocumentResult] = taskDetailsApi.endpoints.addDocument.useMutation();
 
     const isButtonDisabled = useMemo(
         () =>
@@ -103,7 +103,33 @@ const TaskUploadDocumentModal: React.FC<Props> = ({show, onClose}) => {
             fileName: formState.file.name,
             issueDate: formState.startDate,
             expireDate: formState.endDate,
-            productsDetails: [], // TODO - замегнить пустой массив на нужные данные
+            productsDetails: [
+                {
+                    approvingStatus: 'WAITING_FOR_APPROVAL',
+                    productId: parseInt(taskDetails.product.id, 10),
+                    productDescription: taskDetails.product.name,
+                    productCode: taskDetails.product.code,
+                    ean: taskDetails.product.ean,
+                    supplierId: parseInt(taskDetails.supplierData.id, 10),
+                    supplierRMSCode: taskDetails.supplierData.supplierRMSCode,
+                    supplierName: taskDetails.supplierData.name,
+                    supplierTaxIdentifier: taskDetails.supplierData.supplierTaxIdentifier,
+                    qualityActionId: parseInt(taskDetails.id, 10),
+                    buCodes: taskDetails.targetBuCodes.map(String),
+                    productManagementNomenclature: {
+                        departmentId: taskDetails.product.productManagementNomenclature.departmentId,
+                        subdepartmentId: taskDetails.product.productManagementNomenclature.subDepartmentId,
+                        subtypeId: taskDetails.product.productManagementNomenclature.typeId,
+                        typeId: taskDetails.product.productManagementNomenclature.subTypeId,
+                    },
+                    productModelNomenclature: {
+                        departmentId: taskDetails.product.productModelNomenclature.modelDepartmentId,
+                        subdepartmentId: taskDetails.product.productModelNomenclature.modelSubDepartmentId,
+                        consolidationId: taskDetails.product.productModelNomenclature.modelConsolidationId,
+                        codeId: taskDetails.product.productModelNomenclature.modelCodeId,
+                    },
+                },
+            ],
         };
 
         const body = new FormData();
