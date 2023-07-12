@@ -41,12 +41,30 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
 
     const roles = useAppSelector(store => store.userStore.userData!.roles);
 
-    const hasUserProdDocsPermission =
+    const prodDocsPermission =
         roles.includes(EUserRole.Admin) ||
         roles.includes(EUserRole.KeyUser) ||
         roles.includes(EUserRole.QE) ||
         roles.includes(EUserRole.SQM) ||
         roles.includes(EUserRole.InternalUser);
+
+    const prodWithQualityModelPermission =
+        roles.includes(EUserRole.Admin) ||
+        roles.includes(EUserRole.KeyUser) ||
+        roles.includes(EUserRole.QE) ||
+        roles.includes(EUserRole.Supplier) ||
+        roles.includes(EUserRole.InternalUser);
+
+    const permissions = [
+        {access: prodDocsPermission, link: PRODUCTS_ROUTES.documents},
+        {access: prodWithQualityModelPermission, link: PRODUCTS_ROUTES.withModels},
+    ];
+
+    const disabledValues = permissions.reduce((acc: string[], perm) => {
+        const {access, link} = perm;
+        if (!access) acc.push(link);
+        return acc;
+    }, []);
 
     const handleHover = () => {
         setIsHovered(true);
@@ -56,7 +74,7 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
         setIsHovered(false);
     };
 
-    const linksInProductsSectionForAllRoles = [
+    const linksInProductsSection = [
         {
             text: t('Items.WithQualityModel'),
             value: PRODUCTS_ROUTES.withModels,
@@ -69,18 +87,11 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
             text: t('Items.Transfer'),
             value: PRODUCTS_ROUTES.transfer,
         },
-    ];
-
-    const linksInProductsSectionForUsersWithViewDocsPermission = [
         {
             text: t('Items.Documents'),
             value: PRODUCTS_ROUTES.documents,
         },
     ];
-
-    const linksInProductsSection = hasUserProdDocsPermission
-        ? [...linksInProductsSectionForAllRoles, ...linksInProductsSectionForUsersWithViewDocsPermission]
-        : linksInProductsSectionForAllRoles;
 
     const items: IItem[] = useMemo(
         () => [
@@ -149,16 +160,20 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
                                 (location.pathname.includes(item.value) && item.value.length > 1) ||
                                 (item.value === APP_ROUTES.dashboard && location.pathname === item.value);
 
-                            const subitems = item.children?.map((c, i) => (
-                                <ListItem
-                                    key={`sub-${i}`}
-                                    className={c.value === location.pathname ? styles.selectedAccordeon : styles.item}
-                                    iconLeft={<></>}
-                                    text={c.text}
-                                    value={c.value}
-                                    onClick={handleItemClick}
-                                />
-                            ));
+                            const subitems = item.children
+                                ?.filter(el => !disabledValues.includes(el.value))
+                                .map((c, i) => (
+                                    <ListItem
+                                        key={`sub-${i}`}
+                                        className={
+                                            c.value === location.pathname ? styles.selectedAccordeon : styles.item
+                                        }
+                                        iconLeft={<></>}
+                                        text={c.text}
+                                        value={c.value}
+                                        onClick={handleItemClick}
+                                    />
+                                ));
 
                             return (
                                 <div key={index} title={item.text} onMouseOver={isMinified ? handleHover : undefined}>
