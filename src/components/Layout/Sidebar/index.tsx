@@ -15,6 +15,8 @@ import {APP_ROUTES, PRODUCTS_ROUTES} from '../../../common/consts';
 import styles from './Sidebar.module.css';
 import ModelsIcon from '../../Icons/ModelsIcon';
 import {useTranslation} from 'react-i18next';
+import {useAppSelector} from 'store';
+import {EUserRole} from 'common/roles';
 
 interface IItem {
     text: string;
@@ -36,6 +38,15 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
+    const roles = useAppSelector(store => store.userStore.userData!.roles);
+
+    const hasUserProdDocsPermission =
+        roles.includes(EUserRole.Admin) ||
+        roles.includes(EUserRole.KeyUser) ||
+        roles.includes(EUserRole.QE) ||
+        roles.includes(EUserRole.SQM) ||
+        roles.includes(EUserRole.InternalUser);
+
     const handleHover = () => {
         setIsHovered(true);
     };
@@ -43,6 +54,32 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
     const handleHoverOut = () => {
         setIsHovered(false);
     };
+
+    const linksInProductsSectionForAllRoles = [
+        {
+            text: t('Items.WithQualityModel'),
+            value: PRODUCTS_ROUTES.withModels,
+        },
+        {
+            text: t('Items.WithoutQualityModel'),
+            value: PRODUCTS_ROUTES.withoutModels,
+        },
+        {
+            text: t('Items.Transfer'),
+            value: PRODUCTS_ROUTES.transfer,
+        },
+    ];
+
+    const linksInProductsSectionForUsersWithViewDocsPermission = [
+        {
+            text: t('Items.Documents'),
+            value: PRODUCTS_ROUTES.documents,
+        },
+    ];
+
+    const linksInProductsSection = hasUserProdDocsPermission
+        ? [...linksInProductsSectionForAllRoles, ...linksInProductsSectionForUsersWithViewDocsPermission]
+        : linksInProductsSectionForAllRoles;
 
     const items: IItem[] = useMemo(
         () => [
@@ -60,24 +97,7 @@ const Sidebar: React.FC<IProps> = ({isMinified, onToggle}) => {
                 icon: CubeIcon,
                 text: t('Items.Products'),
                 value: APP_ROUTES.products,
-                children: [
-                    {
-                        text: t('Items.WithQualityModel'),
-                        value: PRODUCTS_ROUTES.withModels,
-                    },
-                    {
-                        text: t('Items.WithoutQualityModel'),
-                        value: PRODUCTS_ROUTES.withoutModels,
-                    },
-                    {
-                        text: t('Items.Transfer'),
-                        value: PRODUCTS_ROUTES.transfer,
-                    },
-                    {
-                        text: t('Items.Documents'),
-                        value: PRODUCTS_ROUTES.documents,
-                    },
-                ],
+                children: linksInProductsSection,
             },
             {
                 icon: FileIcon,
