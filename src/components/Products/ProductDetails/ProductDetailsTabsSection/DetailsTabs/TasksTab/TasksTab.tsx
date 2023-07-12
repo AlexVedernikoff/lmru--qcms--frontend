@@ -6,8 +6,8 @@ import {useGetDetailsForProductsQuery} from '../../../productDetailsApi';
 import {IDataProductDetailsTabTasks} from '../../../../../../common/types/productDetails';
 import {getTasksTabColumns} from './getTasksTabColumns';
 import {tasksTabMapping} from '../../../ProductDetailsMapping/ProductDetailsTabs/tasksTabMapping';
-import {PROVIDER_ROUTES} from '../../../../../../common/consts';
 import {useNavigate, useParams} from 'react-router-dom';
+import {RoutePath} from 'common/routes';
 
 const TasksTab: React.FC = () => {
     const {t} = useTranslation('products');
@@ -19,7 +19,7 @@ const TasksTab: React.FC = () => {
     const handleProvidersOpen = useCallback(
         (id: string) => {
             if (id) {
-                navigate(PROVIDER_ROUTES.details.replace(':id', id));
+                navigate(RoutePath.ProviderDetails.replace(':id', id));
             }
         },
         [navigate]

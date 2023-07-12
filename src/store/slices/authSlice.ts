@@ -9,7 +9,7 @@ const mockUserState: UserState = {
         userName: 'Тест Тестович',
         accessToken: 'accessToken',
         refreshToken: 'refreshToken',
-        roles: [],
+        roles: [EUserRole.Admin],
         supplierCommercialIds: '',
     },
 };

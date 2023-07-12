@@ -5,7 +5,6 @@ import {Grid, Label, RegularButton, Typography} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {MODELS_ROUTES} from '../../../common/consts';
 import CustomTable from '../../Common/CustomTable';
 import NomenclatureRow from '../Common/NomenclatureRow';
 import {IModelItem, IModelsResponse} from '../../../common/types/models';
@@ -17,6 +16,7 @@ import SwitchSortButton from './SwitchSortButton';
 import {Sort} from '.';
 import {useAppSelector} from 'store';
 import {EUserRole} from 'common/roles';
+import {RoutePath} from 'common/routes';
 
 type TDataType = TWithReactKey<IModelItem>;
 
@@ -44,7 +44,7 @@ const ModelsTable: React.FC<IProps> = ({sort, onSortChange, onPageChange, tableD
             if (!hasUserViewQualityModelPermission) return;
             const {id} = e.currentTarget.dataset;
             if (id) {
-                navigate(MODELS_ROUTES.details.replace(':id', id));
+                navigate(RoutePath.ModelsDetails.replace(':id', id));
             }
         },
         [navigate, hasUserViewQualityModelPermission]

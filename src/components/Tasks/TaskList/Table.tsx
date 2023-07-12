@@ -4,7 +4,6 @@ import {useTranslation} from 'react-i18next';
 import {RegularButton} from 'fronton-react';
 import {ChatIcon, ChatTextIcon, MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
-import {TASKS_ROUTES} from '../../../common/consts';
 import CustomTable from '../../Common/CustomTable';
 import {ITaskListResponse} from '../../../common/types/tasks';
 import {convertDateFromServer} from '../../../utils/convertDateFromServer';
@@ -13,6 +12,7 @@ import DocumnentModal from './ActionModals/DocumentsModal';
 import ApproverModal from './ActionModals/ApproverModal';
 import {EModalVariant, TDataType} from './types';
 import NotFound from '../../Icons/NotFound';
+import {RoutePath} from 'common/routes';
 
 interface IProps {
     onPageChange: (page: number, size: number) => void;
@@ -42,7 +42,7 @@ const Table: React.FC<IProps> = ({
         e => {
             const {id} = e.currentTarget.dataset;
             if (id) {
-                navigate(TASKS_ROUTES.details.replace(':id', id));
+                navigate(RoutePath.TaskDetails.replace(':id', id));
             }
         },
         [navigate]

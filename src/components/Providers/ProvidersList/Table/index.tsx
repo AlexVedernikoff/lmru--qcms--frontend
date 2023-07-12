@@ -6,13 +6,13 @@ import {RegularButton} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {PROVIDER_ROUTES} from '../../../../common/consts';
 import {getProviderTableColumns} from './TableColumns';
 import CustomTable from '../../../Common/CustomTable';
 import {setSuppliersFilter} from '../../../../store/slices/suppliersFilterSlice';
 import {TRootState} from '../../../../store/index';
 import {ISearchSuppliersResponse, ISuppliersContent} from '../../../../common/types/searchSuppliers';
 import NotFound from '../../../Icons/NotFound';
+import {RoutePath} from 'common/routes';
 
 export type RawTable = Pick<ISuppliersContent, 'supplierName' | 'supplierRMSCode' | 'id'>;
 
@@ -37,7 +37,7 @@ const ProvidersTable: React.FC = () => {
         e => {
             const {id} = e.currentTarget.dataset;
             if (id) {
-                navigate(PROVIDER_ROUTES.details.replace(':id', id));
+                navigate(RoutePath.ProviderDetails.replace(':id', id));
             }
         },
         [navigate]

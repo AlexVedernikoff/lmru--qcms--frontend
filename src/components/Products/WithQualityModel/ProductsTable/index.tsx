@@ -4,13 +4,13 @@ import {useTranslation} from 'react-i18next';
 import {RegularButton} from 'fronton-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {PRODUCTS_ROUTES} from '../../../../common/consts';
 import {getProductTableColumns} from './ProductTableColumns';
 import CustomTable from '../../../Common/CustomTable';
 import {TWithReactKey} from '../../../../common/clientModels';
 import {IProduct, IProductsResponse} from '../../../../common/types/products';
 import NotFound from '../../../Icons/NotFound';
 import MagnifyingGlassIcon from '../../../Icons/MagnifyingGlassIcon';
+import {RoutePath} from 'common/routes';
 
 export type RawTable = Pick<IProduct, 'id'>;
 
@@ -33,7 +33,7 @@ const ProductsTable: React.FC<IProps> = ({onPageChange, onProductsSelect, tableD
         e => {
             const {id} = e.currentTarget.dataset;
             if (id) {
-                navigate(PRODUCTS_ROUTES.details.replace(':id', id));
+                navigate(RoutePath.ProductDetails.replace(':id', id));
             }
         },
         [navigate]

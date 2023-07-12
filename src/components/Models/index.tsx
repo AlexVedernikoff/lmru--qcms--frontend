@@ -2,7 +2,7 @@ import {Breadcrumbs, BreadcrumbsItem, Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import {Outlet, useNavigate, useParams} from 'react-router-dom';
 import ModelList from './ModelList';
-import {APP_ROUTES} from '../../common/consts';
+import {RoutePath} from 'common/routes';
 
 const Products: React.FC = () => {
     const {t} = useTranslation('models');
@@ -10,7 +10,7 @@ const Products: React.FC = () => {
     const {id} = useParams();
 
     const handleBackToTitle = () => {
-        navigate(APP_ROUTES.models);
+        navigate(RoutePath.Models);
     };
 
     return id ? (

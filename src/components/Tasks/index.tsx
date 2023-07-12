@@ -2,7 +2,7 @@ import {Breadcrumbs, BreadcrumbsItem, Grid, Typography} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import {Outlet, useNavigate, useParams} from 'react-router-dom';
 import TaskList from './TaskList';
-import {APP_ROUTES} from '../../common/consts';
+import {RoutePath} from 'common/routes';
 
 const Tasks: React.FC = () => {
     const {t} = useTranslation('tasks');
@@ -10,7 +10,7 @@ const Tasks: React.FC = () => {
     const {id} = useParams();
 
     const handleBackToTitle = () => {
-        navigate(APP_ROUTES.tasks);
+        navigate(RoutePath.Tasks);
     };
 
     return id ? (

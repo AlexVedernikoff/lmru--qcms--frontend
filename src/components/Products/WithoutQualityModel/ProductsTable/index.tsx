@@ -5,11 +5,11 @@ import {RegularButton} from 'fronton-react';
 import {MagnifyingGlassIcon} from '@fronton/icons-react';
 import {ColumnsType} from 'antd/es/table';
 import {TableRowSelection} from 'antd/es/table/interface';
-import {PRODUCTS_ROUTES} from '../../../../common/consts';
 import {getProductTableColumns} from './TableColumns';
 import CustomTable from '../../../Common/CustomTable';
 import {TWithReactKey} from '../../../../common/clientModels';
 import {IProduct, IProductsResponse} from '../../../../common/types/products';
+import {RoutePath} from 'common/routes';
 
 interface IProps {
     onPageChange: (page: number, size: number) => void;
@@ -28,7 +28,7 @@ const ProductsTable: React.FC<IProps> = ({onPageChange, onProductsSelect, tableD
         e => {
             const {id} = e.currentTarget.dataset;
             if (id) {
-                navigate(PRODUCTS_ROUTES.details.replace(':id', id));
+                navigate(RoutePath.ProductDetails.replace(':id', id));
             }
         },
         [navigate]
