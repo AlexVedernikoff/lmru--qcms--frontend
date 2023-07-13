@@ -95,7 +95,7 @@ const modelsApi = createApi({
         createDocument: builder.mutation<{}, {body: FormData}>({
             query: queryArg => ({
                 method: 'POST',
-                url: '/v1/create-quality-document',
+                url: 'v1/create-quality-document',
                 body: queryArg.body,
             }),
         }),
