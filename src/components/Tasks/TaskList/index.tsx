@@ -8,6 +8,8 @@ import Table from './Table';
 import tasksApi from '../tasksApi';
 import styles from './styles.module.css';
 import {EModalVariant, TDataType} from './types';
+import {EUserRole} from 'common/roles';
+import {useAppSelector} from 'store';
 
 const TaskList: React.FC = () => {
     const {t} = useTranslation('tasks');
@@ -35,6 +37,20 @@ const TaskList: React.FC = () => {
         },
         {refetchOnMountOrArgChange: true}
     );
+
+    const userData = useAppSelector(store => store.userStore.userData!);
+    const hasUserSelectActionsPermission =
+        userData.roles.includes(EUserRole.Admin) ||
+        userData.roles.includes(EUserRole.KeyUser) ||
+        userData.roles.includes(EUserRole.QE);
+
+    const hasUserActionsPermission =
+        userData.roles.includes(EUserRole.Admin) ||
+        userData.roles.includes(EUserRole.KeyUser) ||
+        userData.roles.includes(EUserRole.QE) ||
+        userData.roles.includes(EUserRole.SQM) ||
+        userData.roles.includes(EUserRole.ServiceProvider) ||
+        userData.roles.includes(EUserRole.Supplier);
 
     const handleSelectRows = (_selectedRowKeys: React.Key[], selectedRows: TDataType[]) => {
         setSelected(selectedRows);
@@ -88,30 +104,36 @@ const TaskList: React.FC = () => {
         <Grid rowGap={16}>
             <Filter onSubmit={handleFiltersSubmit} />
             <Grid rowGap={16} className={commonStyles.panel}>
-                <div className={styles.actionsBlock}>
-                    <Dropdown
-                        size="m"
-                        closeOnSelect
-                        placeholder={t('Common.Select')}
-                        value={action as unknown as string}
-                        onSelect={handleSelect}
-                        disabled={isLoading || isFetching}
-                        className={styles.actionsSelect}
-                    >
-                        <DropdownItem text="Добавить документы" value={EModalVariant.documents} />
-                        <DropdownItem text="Изменение утверждающего" value={EModalVariant.approver} />
-                        <DropdownItem text="Изменение исполнителя" value={EModalVariant.responsible} />
-                    </Dropdown>
+                {hasUserActionsPermission && (
+                    <div className={styles.actionsBlock}>
+                        <Dropdown
+                            size="m"
+                            closeOnSelect
+                            placeholder={t('Common.Select')}
+                            value={action as unknown as string}
+                            onSelect={handleSelect}
+                            disabled={isLoading || isFetching}
+                            className={styles.actionsSelect}
+                        >
+                            <DropdownItem text="Добавить документы" value={EModalVariant.documents} />
+                            {hasUserSelectActionsPermission && (
+                                <DropdownItem text="Изменение утверждающего" value={EModalVariant.approver} />
+                            )}
 
-                    <RegularButton
-                        size="m"
-                        onClick={handleRunAction}
-                        disabled={isLoading || isFetching || selected.length === 0 || !action}
-                    >
-                        {t('Common.Run')}
-                    </RegularButton>
-                </div>
+                            {hasUserSelectActionsPermission && (
+                                <DropdownItem text="Изменение исполнителя" value={EModalVariant.responsible} />
+                            )}
+                        </Dropdown>
 
+                        <RegularButton
+                            size="m"
+                            onClick={handleRunAction}
+                            disabled={isLoading || isFetching || selected.length === 0 || !action}
+                        >
+                            {t('Common.Run')}
+                        </RegularButton>
+                    </div>
+                )}
                 <Table
                     onPageChange={handlePageChange}
                     tableData={data!}
