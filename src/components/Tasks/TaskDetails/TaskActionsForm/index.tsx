@@ -1,11 +1,13 @@
 import {Dropdown, DropdownItem, Grid, RegularButton} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import {ITaskDetails} from '../../../../common/types/taskDetails';
 import TaskUploadDocumentModal from '../TaskUploadDocumentModal';
 import TaskUpdateDocumentModal from '../TaskUpdateDocumentModal';
 
 import styles from './styles.module.css';
+import {EUserRole} from 'common/roles';
+import {useAppSelector} from 'store';
 
 export enum TaskActions {
     UploadDocument = 'UploadDocument',
@@ -20,6 +22,12 @@ const TaskActionsForm: React.FC<Props> = ({taskDetails}) => {
     const {t} = useTranslation('tasks');
     const [action, setAction] = useState<TaskActions | null>(null);
     const [submitedAction, setSubmitedAction] = useState<TaskActions | null>(null);
+
+    const roles = useAppSelector(store => store.userStore.userData!.roles);
+    const hasUserUpLoadPermission = useMemo(
+        () => roles.includes(EUserRole.Admin) || roles.includes(EUserRole.KeyUser) || roles.includes(EUserRole.QE),
+        [roles]
+    );
 
     const handleActionSelect = (action: string | null) => {
         const newAction = action as TaskActions;
@@ -58,10 +66,12 @@ const TaskActionsForm: React.FC<Props> = ({taskDetails}) => {
                         value={action || undefined}
                         onSelect={handleActionSelect}
                     >
-                        <DropdownItem
-                            text={t('TaskTabs.Actions.actions.uploadDocument')}
-                            value={TaskActions.UploadDocument}
-                        />
+                        {hasUserUpLoadPermission && (
+                            <DropdownItem
+                                text={t('TaskTabs.Actions.actions.uploadDocument')}
+                                value={TaskActions.UploadDocument}
+                            />
+                        )}
                         <DropdownItem
                             text={t('TaskTabs.Actions.actions.updateDocument')}
                             value={TaskActions.UpdateDocument}

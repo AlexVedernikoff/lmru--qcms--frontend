@@ -6,6 +6,8 @@ import TaskDetailsCommentsList from '../TaskDetailsCommentsList';
 import {notification} from 'antd';
 
 import s from './styles.module.css';
+import {EUserRole} from 'common/roles';
+import {useAppSelector} from 'store';
 
 interface Props {
     taskDetails: ITaskDetails;
@@ -15,6 +17,14 @@ const TaskDetailsAddCommentsForm: React.FC<Props> = ({taskDetails}) => {
     const [comment, setComment] = useState<string>('');
     const [updateTaskDetails] = taskDetailsApi.useUpdateTaskDetailsMutation();
     const [api, contextHolder] = notification.useNotification();
+    const roles = useAppSelector(store => store.userStore.userData!.roles);
+    const hasUserAddCommentsPermission =
+        roles.includes(EUserRole.Admin) ||
+        roles.includes(EUserRole.KeyUser) ||
+        roles.includes(EUserRole.QE) ||
+        roles.includes(EUserRole.SQM) ||
+        roles.includes(EUserRole.Supplier) ||
+        roles.includes(EUserRole.ServiceProvider);
 
     const {publicComments} = taskDetails;
 
@@ -63,7 +73,7 @@ const TaskDetailsAddCommentsForm: React.FC<Props> = ({taskDetails}) => {
                 </Grid>
                 <Textarea value={comment} placeholder="Добавить комментарий" onChange={handleTextAreaChange} />
                 <Grid columns="auto" justifyContent="end">
-                    <RegularButton disabled={!comment} onClick={handleSubmit}>
+                    <RegularButton disabled={!comment || !hasUserAddCommentsPermission} onClick={handleSubmit}>
                         Добавить
                     </RegularButton>
                 </Grid>

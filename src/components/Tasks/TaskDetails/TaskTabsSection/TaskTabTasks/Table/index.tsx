@@ -14,6 +14,8 @@ import {
 import {taskDetailsApi} from '../../../api';
 import {notification} from 'antd';
 import {useParams} from 'react-router-dom';
+import {EUserRole} from 'common/roles';
+import {useAppSelector} from 'store';
 
 interface Props {
     taskDetails: ITaskDetails;
@@ -32,6 +34,12 @@ const TasksTable: React.FC<Props> = ({taskDetails}) => {
     const {id} = useParams();
     const [selectedTaskProductsIds, setSelectedTaskProductsIds] = useState<ISelectTasks>([]);
     const [updateTaskDetails, updateTaskDetailsRequestState] = taskDetailsApi.useUpdateStatusDocumentMutation();
+
+    const roles = useAppSelector(store => store.userStore.userData!.roles);
+    const hasUserApproveDocumentsPermission = useMemo(
+        () => roles.includes(EUserRole.Admin) || roles.includes(EUserRole.KeyUser) || roles.includes(EUserRole.QE),
+        [roles]
+    );
 
     const handleSubmit = (approvingStatus: UpdateDocumentApprovingStatuses) => {
         if (updateTaskDetailsRequestState.isLoading) return;
@@ -146,26 +154,28 @@ const TasksTable: React.FC<Props> = ({taskDetails}) => {
                 bordered
             />
 
-            <Grid columnGap={16} columns="1fr 200px 200px">
-                <span />
-                <RegularButton
-                    onClick={() => handleSubmit(UpdateDocumentApprovingStatuses.REJECTED)}
-                    size="m"
-                    variant="outline"
-                    disabled={updateTaskDetailsRequestState.isLoading || !selectedTaskProductsIds.length}
-                >
-                    {t('TaskTabs.Buttons.Reject')}
-                </RegularButton>
+            {hasUserApproveDocumentsPermission && (
+                <Grid columnGap={16} columns="1fr 200px 200px">
+                    <span />
+                    <RegularButton
+                        onClick={() => handleSubmit(UpdateDocumentApprovingStatuses.REJECTED)}
+                        size="m"
+                        variant="outline"
+                        disabled={updateTaskDetailsRequestState.isLoading || !selectedTaskProductsIds.length}
+                    >
+                        {t('TaskTabs.Buttons.Reject')}
+                    </RegularButton>
 
-                <RegularButton
-                    onClick={() => handleSubmit(UpdateDocumentApprovingStatuses.APPROVED)}
-                    size="m"
-                    variant="primary"
-                    disabled={updateTaskDetailsRequestState.isLoading || !selectedTaskProductsIds.length}
-                >
-                    {t('TaskTabs.Buttons.Approve')}
-                </RegularButton>
-            </Grid>
+                    <RegularButton
+                        onClick={() => handleSubmit(UpdateDocumentApprovingStatuses.APPROVED)}
+                        size="m"
+                        variant="primary"
+                        disabled={updateTaskDetailsRequestState.isLoading || !selectedTaskProductsIds.length}
+                    >
+                        {t('TaskTabs.Buttons.Approve')}
+                    </RegularButton>
+                </Grid>
+            )}
         </>
     );
 };

@@ -43,7 +43,9 @@ const downloadDocument = (id: number) => {
 
 export const getTableColumns = (
     t: TFunction<'tasks', undefined, 'tasks'>,
-    deleteDocument: (document: ITaskUploadedDocument) => void
+    deleteDocument: (document: ITaskUploadedDocument) => void,
+    hasUserDownLoadPermission: boolean,
+    hasUserDeleteDocumentPermission: boolean
 ): ColumnsType<ITaskUploadedDocument> => [
     {
         title: t('TaskTabs.Documents.UploadedDocuments.Field.documentType'),
@@ -86,6 +88,7 @@ export const getTableColumns = (
                     onClick={() => {
                         downloadDocument(Number(text.id));
                     }}
+                    disabled={!hasUserDownLoadPermission}
                 />
             </div>
         ),
@@ -137,6 +140,7 @@ export const getTableColumns = (
                     aria-label=""
                     style={{verticalAlign: 'middle'}}
                     onClick={() => deleteDocument(id)}
+                    disabled={!hasUserDeleteDocumentPermission}
                 >
                     <BasketIcon />
                 </IconButton>

@@ -7,6 +7,8 @@ import {ITaskDetails, ITaskProductDetails, ITaskUploadedDocument} from '../../..
 import {notification} from 'antd';
 import {taskDetailsApi} from '../../../api';
 import {useParams} from 'react-router-dom';
+import {EUserRole} from 'common/roles';
+import {useAppSelector} from 'store';
 
 interface Props {
     taskDetails: ITaskDetails;
@@ -17,6 +19,26 @@ const UploadedDocumentsTable: React.FC<Props> = ({taskDetails}) => {
     const [api, contextHolder] = notification.useNotification();
     const [statusDocument] = taskDetailsApi.useUpdateStatusDocumentMutation();
     const {id} = useParams();
+    const roles = useAppSelector(store => store.userStore.userData!.roles);
+    const hasUserDownLoadPermission = useMemo(
+        () =>
+            roles.includes(EUserRole.Admin) ||
+            roles.includes(EUserRole.KeyUser) ||
+            roles.includes(EUserRole.QE) ||
+            roles.includes(EUserRole.Supplier) ||
+            roles.includes(EUserRole.SQM) ||
+            roles.includes(EUserRole.InternalUser),
+        [roles]
+    );
+
+    const hasUserDeleteDocumentPermission = useMemo(
+        () =>
+            roles.includes(EUserRole.Admin) ||
+            roles.includes(EUserRole.KeyUser) ||
+            roles.includes(EUserRole.QE) ||
+            roles.includes(EUserRole.Supplier),
+        [roles]
+    );
 
     const deleteDocument = useCallback(
         (document: ITaskUploadedDocument) => {
@@ -45,8 +67,8 @@ const UploadedDocumentsTable: React.FC<Props> = ({taskDetails}) => {
     );
 
     const columns = useMemo<ColumnsType<ITaskUploadedDocument>>(
-        () => getTableColumns(t, deleteDocument),
-        [deleteDocument, t]
+        () => getTableColumns(t, deleteDocument, hasUserDownLoadPermission, hasUserDeleteDocumentPermission),
+        [deleteDocument, hasUserDeleteDocumentPermission, hasUserDownLoadPermission, t]
     );
     const uploadedDocuments = taskDetails.documents.uploadedDocuments;
 
