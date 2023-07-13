@@ -180,7 +180,7 @@ export const appRoutes: AppRoute[] = [
     {
         path: RoutePath.Models,
         element: <Models />,
-        enabledRoles: [EUserRole.Admin, EUserRole.KeyUser, EUserRole.QE, EUserRole.SQM, EUserRole.InternalUser],
+        enabledRoles: [EUserRole.Admin, EUserRole.KeyUser, EUserRole.QE, EUserRole.InternalUser],
         childRoutes: [
             {
                 path: RoutePath.ModelsDetails,
