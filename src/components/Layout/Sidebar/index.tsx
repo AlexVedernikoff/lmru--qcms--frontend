@@ -163,13 +163,7 @@ const Sidebar: React.FC<IProps> = ({isOpened, onToggle}) => {
                             <ModelsIcon />
                         </Icon>
                     ),
-                    rolesThatHaveAccess: [
-                        EUserRole.Admin,
-                        EUserRole.KeyUser,
-                        EUserRole.QE,
-                        EUserRole.SQM,
-                        EUserRole.InternalUser,
-                    ],
+                    rolesThatHaveAccess: [EUserRole.Admin, EUserRole.KeyUser, EUserRole.QE, EUserRole.InternalUser],
                 },
             ].filter(isItemVisible),
         [t, isItemVisible]
