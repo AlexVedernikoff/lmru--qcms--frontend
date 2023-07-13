@@ -101,9 +101,7 @@ const Sidebar: React.FC<IProps> = ({isOpened, onToggle}) => {
                                 EUserRole.KeyUser,
                                 EUserRole.QE,
                                 EUserRole.Supplier,
-                                EUserRole.SQM,
                                 EUserRole.InternalUser,
-                                EUserRole.ServiceProvider,
                             ],
                         },
                         {

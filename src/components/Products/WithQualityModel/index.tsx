@@ -6,6 +6,8 @@ import withModelApi from './withModelApi';
 import {useState} from 'react';
 import ProductsActionsForm from './ProductsActionsForm';
 import {IProduct, IProductsRequest} from '../../../common/types/products';
+import {useAppSelector} from 'store';
+import {EUserRole} from 'common/roles';
 
 const ProductsWithQualityModel: React.FC = () => {
     const [selectedProducts, setSelectedProducts] = useState<IProduct[]>([]);
@@ -22,6 +24,14 @@ const ProductsWithQualityModel: React.FC = () => {
 
     const [searchBy, setSearchBy] = useState<IProductsRequest['body']['searchBy']>({});
 
+    const userData = useAppSelector(store => store.userStore.userData!);
+
+    const hasUserEditFiltersPermission =
+        userData.roles.includes(EUserRole.Admin) ||
+        userData.roles.includes(EUserRole.KeyUser) ||
+        userData.roles.includes(EUserRole.QE) ||
+        userData.roles.includes(EUserRole.InternalUser);
+
     const {data, isLoading} = withModelApi.useGetProductsQuery({
         header: {
             securityCode: 'security_code',
@@ -29,7 +39,9 @@ const ProductsWithQualityModel: React.FC = () => {
         body: {
             ...page,
             ...sort,
-            searchBy,
+            searchBy: !hasUserEditFiltersPermission
+                ? {...searchBy, supplierCode: userData.supplierCommercialIds}
+                : searchBy,
         },
     });
 
