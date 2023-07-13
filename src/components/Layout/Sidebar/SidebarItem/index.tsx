@@ -1,13 +1,13 @@
 import {useEffect, useMemo, useState} from 'react';
-import {ISidebarItem} from '.';
 import {RoutePath} from 'common/routes';
 import {useLocation} from 'react-router-dom';
 import {ListItem, ListItemProps} from 'fronton-react';
 import {ChevronDownIcon, ChevronRightIcon} from '@fronton/icons-react';
 import {CustomIcon} from 'fronton-react/list/list-item/types';
 import {useClickOutsideListener} from 'hooks/useClickOutsideListener';
+import {ISidebarItem} from '..';
 
-import styles from './Sidebar.module.css';
+import styles from './styles.module.css';
 
 interface Props {
     data: ISidebarItem;
@@ -26,16 +26,14 @@ export const SidebarItem: React.FC<Props> = ({data, isSidebarOpened, onClick}) =
         return location.pathname.startsWith(data.path);
     }, [location, data]);
 
-    const className = isActive ? styles.selected : styles.item;
-
     const iconRight = (): CustomIcon | undefined => {
         if (!data.children) return;
         return isChildrenListOpened ? <ChevronDownIcon /> : <ChevronRightIcon />;
     };
 
     const handleClick = () => {
-        if (data.children && !isChildrenListOpened) {
-            setChildrenListOpened(true);
+        if (data.children) {
+            setChildrenListOpened(value => !value);
         }
         onClick(data);
     };
@@ -53,7 +51,7 @@ export const SidebarItem: React.FC<Props> = ({data, isSidebarOpened, onClick}) =
         iconRight: iconRight(),
         onClick: handleClick,
         value: data.path,
-        className,
+        className: isActive ? styles.selected : styles.item,
     };
 
     // Когда открыт список дочерних вкладок и открыт сайдбар.
@@ -75,20 +73,22 @@ export const SidebarItem: React.FC<Props> = ({data, isSidebarOpened, onClick}) =
     // Когда открыт список дочерних вкладок, но закрыт сайдбар.
     if (data.children && isChildrenListOpened && !isSidebarOpened) {
         return (
-            <ListItem {...props}>
-                {
-                    <div ref={ref} className={styles.notification}>
-                        {data.children.map(childItem => (
-                            <SidebarItem
-                                key={childItem.path}
-                                data={childItem}
-                                isSidebarOpened={true}
-                                onClick={() => onClick(childItem)}
-                            />
-                        ))}
-                    </div>
-                }
-            </ListItem>
+            <div ref={ref}>
+                <ListItem {...props}>
+                    {
+                        <div className={styles.childrenItemsList}>
+                            {data.children.map(childItem => (
+                                <SidebarItem
+                                    key={childItem.path}
+                                    data={childItem}
+                                    isSidebarOpened={true}
+                                    onClick={() => onClick(childItem)}
+                                />
+                            ))}
+                        </div>
+                    }
+                </ListItem>
+            </div>
         );
     }
 

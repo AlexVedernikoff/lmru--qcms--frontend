@@ -2,14 +2,15 @@ import {useCallback, useMemo} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {Icon, IconButton, List, RegularButton} from 'fronton-react';
 import {HouseSimpleIcon, TruckIcon, CubeIcon, FileIcon, ChevronRightIcon, ChevronLeftIcon} from '@fronton/icons-react';
-import styles from './Sidebar.module.css';
 import ModelsIcon from '../../Icons/ModelsIcon';
 import {useTranslation} from 'react-i18next';
 import {useAppSelector} from 'store';
 import {EUserRole} from 'common/roles';
 import {RoutePath} from 'common/routes';
 import {Icon as IIcon} from 'fronton-react/list/list-item/types';
-import {SidebarItem} from './SidebarItem';
+import {SidebarItem} from './SidebarItem/index';
+
+import styles from './styles.module.css';
 
 export interface ISidebarItem {
     text: string;
