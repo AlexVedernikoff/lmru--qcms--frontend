@@ -118,15 +118,7 @@ export const appRoutes: AppRoute[] = [
             {
                 path: RoutePath.ProductsTransfer,
                 element: <Transfer />,
-                enabledRoles: [
-                    EUserRole.Admin,
-                    EUserRole.KeyUser,
-                    EUserRole.QE,
-                    EUserRole.Supplier,
-                    EUserRole.SQM,
-                    EUserRole.InternalUser,
-                    EUserRole.ServiceProvider,
-                ],
+                enabledRoles: [EUserRole.Admin, EUserRole.KeyUser, EUserRole.QE],
             },
             {
                 path: RoutePath.ProductsDocuments,
