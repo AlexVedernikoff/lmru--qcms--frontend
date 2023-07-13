@@ -5,15 +5,10 @@ import Logo from '../Logo';
 import styles from './Header.module.css';
 import TranslationSelect from './TranslationSelect';
 import {RoutePath} from 'common/routes';
-
-const user = {
-    name: 'Ivan Ivanov',
-    department: 'Сотрудник Леруа Мерлен Восток',
-    ldap: '60000000',
-    role: 'admin',
-};
+import {useAppSelector} from 'store';
 
 const Header: React.FC = () => {
+    const userData = useAppSelector(store => store.userStore.userData!);
     const navigate = useNavigate();
 
     const handleLogoClick = () => {
@@ -44,8 +39,7 @@ const Header: React.FC = () => {
                 )}
                 <div className={styles.row}>
                     <Avatar
-                        name={user.name}
-                        description={user.department}
+                        name={userData.userName}
                         color="green"
                         overflow="multiline"
                         variant="fill"
@@ -54,8 +48,8 @@ const Header: React.FC = () => {
                     />
 
                     <div className={styles.column}>
-                        <div className={styles.columnItemPrimary}>{user.ldap}</div>
-                        <div className={styles.columnItem}>{user.role}</div>
+                        <div className={styles.columnItemPrimary}>{userData.userName}</div>
+                        <div className={styles.columnItem}>{userData.roles[0]}</div>
                     </div>
                 </div>
                 <BaseButton onClick={handleSignOut}>
