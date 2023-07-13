@@ -23,7 +23,8 @@ const ModelDetailsMasterPlan: React.FC<IProps> = ({masterPlanId, tasks}) => {
     const {id = ''} = useParams();
 
     const {data: modelDetails, refetch} = modelsApi.endpoints.getModelDetails.useQuery({id});
-    const [updateModel] = modelsApi.endpoints.updateQualityModel.useMutation();
+    const [updateMasterPlanTasks, updateMasterPlanTasksResult] =
+        modelsApi.endpoints.updateMasterPlanTasks.useMutation();
     const [deleteTasks, deleteTasksResult] = modelsApi.endpoints.deleteMasterPlanTasks.useMutation();
 
     const [isEditMode, setIsEditMode] = useState(false);
@@ -31,15 +32,22 @@ const ModelDetailsMasterPlan: React.FC<IProps> = ({masterPlanId, tasks}) => {
     const [isRemoveTaskOpen, setIsRemoveTaskOpen] = useState(false);
 
     const [selectedTasks, setSelectedTasks] = useState<number[]>([]);
+    const [editedTasks, setEditedTasks] = useState<IMasterPlanTask[]>(tasks);
 
     useEffect(() => {
-        if (deleteTasksResult.isError) {
+        if (updateMasterPlanTasksResult.isSuccess) {
+            setEditedTasks(tasks);
+        }
+    }, [updateMasterPlanTasksResult.isSuccess, notificationApi, tasks]);
+
+    useEffect(() => {
+        if (updateMasterPlanTasksResult.isError || deleteTasksResult.isError) {
             notificationApi.error({
                 message: 'Ошибка!',
                 description: 'Во время выполнения запроса произошла ошибка.',
             });
         }
-    }, [deleteTasksResult.isError, notificationApi]);
+    }, [deleteTasksResult.isError, notificationApi, updateMasterPlanTasksResult.isError]);
 
     useEffect(() => {
         if (deleteTasksResult.data) {
@@ -51,6 +59,10 @@ const ModelDetailsMasterPlan: React.FC<IProps> = ({masterPlanId, tasks}) => {
         setSelectedTasks(value);
     }, []);
 
+    const handleTasksUpdate = useCallback((updatedTasks: IMasterPlanTask[]) => {
+        setEditedTasks(updatedTasks);
+    }, []);
+
     const handleCardClose = () => {};
 
     const handleEditClick = () => {
@@ -58,7 +70,24 @@ const ModelDetailsMasterPlan: React.FC<IProps> = ({masterPlanId, tasks}) => {
     };
 
     const handleSaveClick = async () => {
-        await updateModel({id, body: {updatedBy: 'currentUser'}});
+        await updateMasterPlanTasks({
+            id: masterPlanId,
+            body: {
+                updatedBy: 'currentUser',
+                tasks: editedTasks.map(t => ({
+                    id: t.id!,
+                    categoryTypeId: t.categoryType!.id!,
+                    regulatoryType: t.regulatoryType,
+                    linkedRegulations: (t.linkedRegulations || []).map(l => l.id),
+                    packagingMaterialDocumentTypes: (t.packagingMaterialDocumentTypes || []).map(p => p.id),
+                    manualProcessing: t.manualProcessing,
+                    taskRequired: t.taskRequired,
+                    responsible: t.responsible,
+                    approvers: t.approvers,
+                    documentTemplates: t.documentTemplates,
+                })),
+            },
+        });
         await refetch();
         setIsEditMode(false);
     };
@@ -122,9 +151,14 @@ const ModelDetailsMasterPlan: React.FC<IProps> = ({masterPlanId, tasks}) => {
                 ))}
             </Grid>
 
-            <MasterPlanTable isEditMode={isEditMode} data={tasks} updateTasks={updateTasks} />
+            <MasterPlanTable
+                isEditMode={isEditMode}
+                data={editedTasks}
+                updateTasks={updateTasks}
+                onChange={handleTasksUpdate}
+            />
 
-            <MasterPlanAddModal isOpen={isAddTaskOpen} onClose={handleAddModalClose} />
+            <MasterPlanAddModal masterPlanId={masterPlanId} isOpen={isAddTaskOpen} onClose={handleAddModalClose} />
             <MasterPlanRemoveTaskModal
                 isOpen={isRemoveTaskOpen}
                 onClose={handleRemoveModalClose}

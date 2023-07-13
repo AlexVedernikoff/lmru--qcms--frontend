@@ -92,6 +92,10 @@
                         "QE": "QE",
                         "SQM": "SQM",
                         "SERVICE_PROVIDER": "Подрядчик"
+                    },
+                    "Process": {
+                        "AUTO": "Автоматический",
+                        "MANUAL": "Ручной"
                     }
                 },
                 "Columns": {

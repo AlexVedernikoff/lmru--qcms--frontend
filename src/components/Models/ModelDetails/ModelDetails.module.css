@@ -36,6 +36,8 @@
 .treeSelect *[class='ant-select-selector'] {
     border-radius: 4px !important;
     height: auto !important;
+    min-width: 220px;
+    max-width: 300px;
     min-height: 40px;
 }
 

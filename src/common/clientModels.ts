@@ -1,4 +1,5 @@
 import {IconComponent} from '@fronton/icons-react';
+import {EUserRole} from './types/models';
 
 export enum ETranslation {
     RU = 'ru',
@@ -38,7 +39,7 @@ export interface IMasterPlanRequirementTableItem {
     };
 
     legal: {
-        id: string;
+        id: number;
         title: string;
     }[];
     documents: {
@@ -52,12 +53,12 @@ export interface IMasterPlanRequirementTableItem {
     process: boolean;
     responsible: {
         id: number;
-        type: string;
+        type: EUserRole;
         externalId?: string;
     };
     approvers: {
         id: number;
-        type: string;
+        type: EUserRole;
         externalId?: string;
     }[];
     documentTemplate: number[];
@@ -70,7 +71,7 @@ export interface IModelTableItem {
     qualityModel: string;
     QE: {
         fullName: string;
-        type: 'QE' | 'SCM';
+        type: EUserRole.QE | EUserRole.SQM;
     }[];
     nomenclature: {
         code: string;

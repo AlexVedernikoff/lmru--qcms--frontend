@@ -46,7 +46,7 @@
     width: 100px;
 }
 
-.containerFull {
+.containerWide {
     composes: container;
     margin-left: 52px;
 }
