@@ -104,6 +104,15 @@
         "DetailsComments": {
             "PublicComments": "Public comments",
             "Comments": "Comments"
+        },
+        "ActionStatus": {
+            "DRAFT": "DRAFT",
+            "СANCELLED": "СANCELLED",
+            "AWAITING_DOCUMENT_LOADING": "AWAITING_DOCUMENT_LOADING",
+            "AWAITING_RESOLUTION": "AWAITING_RESOLUTION",
+            "RETURNED_AWAITING_DOCUMENT_LOADING": "RETURNED_AWAITING_DOCUMENT_LOADING",
+            "RETURNED_AWAITING_RESOLUTION": "RETURNED_AWAITING_RESOLUTION",
+            "APPROVED": "APPROVED"
         }
     },
     "TaskTabs": {

@@ -104,6 +104,15 @@
         "DetailsComments": {
             "PublicComments": "Публичные комментарии",
             "Comments": "Комментарии"
+        },
+        "ActionStatus": {
+            "DRAFT": "Черновик",
+            "СANCELLED": "Отменена",
+            "AWAITING_DOCUMENT_LOADING": "Ожидание загрузки документов",
+            "AWAITING_RESOLUTION": "Ожидание валидации",
+            "RETURNED_AWAITING_DOCUMENT_LOADING": "Возвращено, ожидает загрузку документов",
+            "RETURNED_AWAITING_RESOLUTION": "Возвращено, ожидание валидации",
+            "APPROVED": "Задача выполнена"
         }
     },
     "TaskTabs": {

@@ -268,7 +268,11 @@ const TaskDetailsInfoEditForm: React.FC<Props> = ({taskDetails, onSubmit, isSubm
                         <br />
                         <Dropdown value={formState.actionStatus} onSelect={handleActionStatusSelect} closeOnSelect>
                             {Object.values(ActionStatus).map(actionStatus => (
-                                <DropdownItem key={actionStatus} text={actionStatus} value={actionStatus} />
+                                <DropdownItem
+                                    key={actionStatus}
+                                    text={t(`TaskDetails.ActionStatus.${actionStatus}`)}
+                                    value={actionStatus}
+                                />
                             ))}
                         </Dropdown>
                     </div>

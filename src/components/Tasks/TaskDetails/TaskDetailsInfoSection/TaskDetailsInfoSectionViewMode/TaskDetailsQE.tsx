@@ -85,7 +85,7 @@ const TaskDetailsQE: React.FC<Props> = ({taskDetails}) => {
                 </Typography>
                 <br />
                 <Typography className={s.contractor} variant="s" size="body_short">
-                    {taskDetails.actionStatus}
+                    {t(`TaskDetails.ActionStatus.${taskDetails.actionStatus}`)}
                 </Typography>
             </div>
         </Grid>
