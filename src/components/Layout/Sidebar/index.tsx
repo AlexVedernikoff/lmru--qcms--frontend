@@ -108,28 +108,12 @@ const Sidebar: React.FC<IProps> = ({isOpened, onToggle}) => {
                         {
                             text: t('Items.WithoutQualityModel'),
                             path: RoutePath.ProductsWithoutModels,
-                            rolesThatHaveAccess: [
-                                EUserRole.Admin,
-                                EUserRole.KeyUser,
-                                EUserRole.QE,
-                                EUserRole.Supplier,
-                                EUserRole.SQM,
-                                EUserRole.InternalUser,
-                                EUserRole.ServiceProvider,
-                            ],
+                            rolesThatHaveAccess: [EUserRole.Admin, EUserRole.KeyUser, EUserRole.QE],
                         },
                         {
                             text: t('Items.Transfer'),
                             path: RoutePath.ProductsTransfer,
-                            rolesThatHaveAccess: [
-                                EUserRole.Admin,
-                                EUserRole.KeyUser,
-                                EUserRole.QE,
-                                EUserRole.Supplier,
-                                EUserRole.SQM,
-                                EUserRole.InternalUser,
-                                EUserRole.ServiceProvider,
-                            ],
+                            rolesThatHaveAccess: [EUserRole.Admin, EUserRole.KeyUser, EUserRole.QE],
                         },
                         {
                             text: t('Items.Documents'),
