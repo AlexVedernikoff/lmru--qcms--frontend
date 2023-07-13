@@ -162,7 +162,7 @@
             "chooseActionPlaceholder": "Выберите",
             "applyAction": "Выполнить",
             "actions": {
-                "sendQualityStatusMessage": "Выполнить запрос в дефиницию",
+                "sendQualityStatusMessage": "Сформировать JMS сообщение",
                 "addComment": "Добавить комментарий",
                 "addTasks": "Добавить задачи",
                 "addDocument": "Добавление документа",
