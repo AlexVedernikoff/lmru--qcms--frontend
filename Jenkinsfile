@@ -23,7 +23,7 @@ def getEnvironmentParameters(name) {
                 dockerImageName        : GlobalVars.appName,
                 dockerImageTagsList    : [env.TAG_NAME],
                 dockerImagePromoteFlag : true,
-                vaultSecretPath        : "prod/front",
+                vaultSecretPath        : "prod/FE/datasource",
                 vaultApprole           : "approle-prod-ro"
             ]
             break
@@ -34,7 +34,7 @@ def getEnvironmentParameters(name) {
                 dockerImageName        : GlobalVars.appName,
                 dockerImageTagsList    : [env.GIT_COMMIT],
                 dockerImagePromoteFlag : false,
-                vaultSecretPath        : "preprod/front",
+                vaultSecretPath        : "preprod/FE/datasource",
                 vaultApprole           : "approle-preprod-ro"
             ]
             break
@@ -45,7 +45,7 @@ def getEnvironmentParameters(name) {
                 dockerImageName        : GlobalVars.appName,
                 dockerImageTagsList    : [BRANCH_NAME, env.GIT_COMMIT],
                 dockerImagePromoteFlag : false,
-                vaultSecretPath        : "test/front",
+                vaultSecretPath        : "test/FE/datasource",
                 vaultApprole           : "approle-test-ro"
             ]
             break
@@ -57,7 +57,7 @@ def getEnvironmentParameters(name) {
                 dockerImageTagsList    : [BRANCH_NAME, env.GIT_COMMIT],
                 dockerImagePromoteFlag : false,
                 // vaultSecretPath        : "develop/front",
-                vaultSecretPath        : "develop/front/datasource",
+                vaultSecretPath        : "develop/FE/datasource",
                 vaultApprole           : "approle-develop-ro",
                 deployment_env         : "dev"
             ]
