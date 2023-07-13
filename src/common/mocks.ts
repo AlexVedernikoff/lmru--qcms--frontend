@@ -13,6 +13,7 @@ import {
     ITaskTableTasks,
     ITaskListItem,
 } from './clientModels';
+import {EUserRole} from './types/models';
 import {IProvidersResponse} from './types/providers';
 import {ITaskAwaitingDocument} from './types/taskDetails';
 
@@ -25,7 +26,7 @@ export const MODEL_TABLE_ITEMS: TWithReactKey<IModelTableItem>[] = [
         QE: [
             {
                 fullName: 'Воронцов Алексей',
-                type: 'QE',
+                type: EUserRole.QE,
             },
         ],
         nomenclature: [

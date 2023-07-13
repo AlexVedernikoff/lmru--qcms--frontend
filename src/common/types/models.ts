@@ -147,7 +147,7 @@ export interface IMasterPlanTask {
     regulatoryType: ERegulatoryType; // required - тип плана ENUM: [DISTRIBUTOR, IMPORTER, MANUFACTURER] (поставщик, СТМ, дистрибьютор)
     // otional, законодательное требование для протоколов сертификационных испытаний (из отдельной таблички)
     linkedRegulations?: {
-        id: string; // required, идентификатор связанного законодательного требования
+        id: number; // required, идентификатор связанного законодательного требования
         title: string; // required, название связанного законодательного требования
         regionCodes: string[]; // requried, регион распространения законодательного требования
     }[];
@@ -160,12 +160,12 @@ export interface IMasterPlanTask {
     taskRequired: boolean; // required, флаг показывающий влияние задачи на статус сертификации товара
     responsible: {
         id: number;
-        type: string; // required, ENUM ['SUPPLIER','QE', 'SQM', 'SERVICE_PROVIDER'] - тип ответственного за выполнение задачи
+        type: EUserRole; // required, ENUM ['SUPPLIER','QE', 'SQM', 'SERVICE_PROVIDER'] - тип ответственного за выполнение задачи
         externalId?: string; // optional - ответственный за выполнение задачи, назначается только для Service Provider
     };
     approvers: {
         id: number;
-        type: string; // required, ENUM ['SUPPLIER', 'QE', 'SQM', 'SERVICE_PROVIDER'] - категория подтверждающего выполнение задачи
+        type: EUserRole; // required, ENUM ['SUPPLIER', 'QE', 'SQM', 'SERVICE_PROVIDER'] - категория подтверждающего выполнение задачи
         externalId?: string; // optional - подтверждающий выполнение задачи
     }[];
     documentTemplates?: number[]; // optional - id шаблона документа, запрашиваемого в рамках задачи
@@ -307,13 +307,32 @@ export interface IUpdateQualityModelParams {
 
 export interface IUpdateQualityModelResponse {}
 
-export type IUpdateMasterPlanTasksParams = {
-    securityCode?: string;
-    id: string;
-    body: object;
+export type IMasterPlanTasksParams = {
+    id: number;
+    body: {
+        updatedBy: string;
+        tasks: Array<{
+            id?: number;
+            categoryTypeId?: number;
+            regulatoryType?: string;
+            linkedRegulations?: number[];
+            packagingMaterialDocumentTypes?: number[];
+            manualProcessing: boolean;
+            taskRequired: boolean;
+            responsible?: {
+                type: string;
+                externalId?: string;
+            };
+            approvers?: Array<{
+                type: string;
+                externalId?: string;
+            }>;
+            documentTemplates?: number[];
+        }>;
+    };
 };
 
-export interface IUpdateMasterPlanTasksResponse {}
+export interface IMasterPlanTasksResponse {}
 
 export interface ITaskCategoryParams {
     securityCode?: string;

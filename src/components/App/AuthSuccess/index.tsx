@@ -60,7 +60,7 @@ const AuthSuccess: React.FC = () => {
                         <Sidebar isOpened={isSidebarOpened} onToggle={handleSidebarToggle} />
                     </div>
 
-                    <div className={isSidebarOpened ? styles.container : styles.containerFull}>
+                    <div className={isSidebarOpened ? styles.container : styles.containerWide}>
                         <Routes>
                             {renderRoutes(appRoutes)}
                             <Route path="*" element={<Navigate to={RoutePath.Dashboard} />} />

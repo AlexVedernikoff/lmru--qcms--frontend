@@ -6,8 +6,8 @@ import {
     TModelNomenclatureResponse,
     IModelDetailsResponse,
     IModelDetailsParams,
-    IUpdateMasterPlanTasksResponse,
-    IUpdateMasterPlanTasksParams,
+    IMasterPlanTasksResponse,
+    IMasterPlanTasksParams,
     IUpdateQualityModelResponse,
     IUpdateQualityModelParams,
     TTaskCategoryResponse,
@@ -59,14 +59,14 @@ const modelsApi = createApi({
                 body: queryArg.body,
             }),
         }),
-        updateMasterPlanTasks: builder.mutation<IUpdateMasterPlanTasksResponse, IUpdateMasterPlanTasksParams>({
+        updateMasterPlanTasks: builder.mutation<IMasterPlanTasksResponse, IMasterPlanTasksParams>({
             query: queryArg => ({
                 method: 'POST',
                 url: `v1/update-master-plan-tasks/${queryArg.id}`,
                 body: queryArg.body,
             }),
         }),
-        createMasterPlanTasks: builder.mutation<IUpdateMasterPlanTasksResponse, IUpdateMasterPlanTasksParams>({
+        createMasterPlanTasks: builder.mutation<IMasterPlanTasksResponse, IMasterPlanTasksParams>({
             query: queryArg => ({
                 method: 'POST',
                 url: `v1/create-master-plan-tasks/${queryArg.id}`,
@@ -90,6 +90,13 @@ const modelsApi = createApi({
             query: () => ({
                 method: 'GET',
                 url: 'v1/permissive-documents',
+            }),
+        }),
+        createDocument: builder.mutation<{}, {body: FormData}>({
+            query: queryArg => ({
+                method: 'POST',
+                url: '/v1/create-quality-document',
+                body: queryArg.body,
             }),
         }),
     }),
