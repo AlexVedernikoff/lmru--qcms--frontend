@@ -5,6 +5,7 @@ import Sidebar from '../../Layout/Sidebar';
 import SwitchUserRoles from 'components/Common/SwitchUserRoles';
 import {AppRoute, RoutePath, appRoutes} from 'common/routes';
 import {useAppSelector} from 'store';
+import AuthMissingRoleWarning from '../AuthMissingRoleWarning';
 
 import styles from './AuthSuccess.module.css';
 
@@ -45,6 +46,10 @@ const AuthSuccess: React.FC = () => {
         },
         [roles]
     );
+
+    if (!roles.length) {
+        return <AuthMissingRoleWarning />;
+    }
 
     return (
         <Context.Provider value={{name: 'Default'}}>

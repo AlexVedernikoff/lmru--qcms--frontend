@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {ISidebarItem} from '.';
 import {RoutePath} from 'common/routes';
 import {useLocation} from 'react-router-dom';
@@ -34,11 +34,18 @@ export const SidebarItem: React.FC<Props> = ({data, isSidebarOpened, onClick}) =
     };
 
     const handleClick = () => {
-        if (data.children) {
-            setChildrenListOpened(prevValue => !prevValue);
+        if (data.children && !isChildrenListOpened) {
+            setChildrenListOpened(true);
         }
         onClick(data);
     };
+
+    // Если изменился url, и при этом сайдбар не был открыт - закрываем список дочерних вкладок.
+    useEffect(() => {
+        if (!isSidebarOpened) {
+            setChildrenListOpened(false);
+        }
+    }, [location.pathname, isSidebarOpened]);
 
     const props: ListItemProps = {
         text: isSidebarOpened ? data.text : undefined,
@@ -49,6 +56,7 @@ export const SidebarItem: React.FC<Props> = ({data, isSidebarOpened, onClick}) =
         className,
     };
 
+    // Когда открыт список дочерних вкладок и открыт сайдбар.
     if (data.children && isChildrenListOpened && isSidebarOpened) {
         return (
             <ListItem {...props}>
@@ -64,6 +72,7 @@ export const SidebarItem: React.FC<Props> = ({data, isSidebarOpened, onClick}) =
         );
     }
 
+    // Когда открыт список дочерних вкладок, но закрыт сайдбар.
     if (data.children && isChildrenListOpened && !isSidebarOpened) {
         return (
             <ListItem {...props}>

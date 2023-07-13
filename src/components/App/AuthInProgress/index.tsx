@@ -7,6 +7,8 @@ import {userReducer, userStoreActions} from 'store/slices/authSlice';
 import {useQueryParams} from 'hooks/useQueryParams';
 import {AuthStatus} from 'common/types/user';
 
+import s from './styles.module.css';
+
 const isUnauthorizedError = (error: any): error is UnauthorizedError => {
     if (!error || typeof error !== 'object') return false;
     return error.status === 401 && typeof error.data?.redirect_uri === 'string';
@@ -92,7 +94,11 @@ const AuthInProgress = () => {
         return () => authRequestState.reset();
     }, [authRequestState, dispatch, handleAuthSuccess, auth, queryParams, userStore]);
 
-    return <Loader />;
+    return (
+        <div className={s.root}>
+            <Loader />
+        </div>
+    );
 };
 
 export default AuthInProgress;

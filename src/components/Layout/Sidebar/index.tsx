@@ -38,11 +38,11 @@ const Sidebar: React.FC<IProps> = ({isOpened, onToggle}) => {
 
     const handleItemClick = useCallback(
         (item: ISidebarItem) => {
-            if (item.path !== location.pathname) {
+            if (item.path !== location.pathname && !item.children) {
                 navigate(item.path);
             }
         },
-        [navigate, location]
+        [navigate, location.pathname]
     );
 
     const items: ISidebarItem[] = useMemo(
