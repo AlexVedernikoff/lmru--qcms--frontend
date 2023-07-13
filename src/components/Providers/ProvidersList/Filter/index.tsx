@@ -15,12 +15,17 @@ import {EUserRole} from 'common/roles';
 const ProvidersFilter: React.FC = () => {
     const {t} = useTranslation('providers');
     const dispatch = useDispatch();
-    const roles = useAppSelector(store => store.userStore.userData!.roles);
     const [isMoreFiltersActive, setIsMoreFiltersActive] = useState(false);
     const handleShowMoreFiltersClick = () => {
         setIsMoreFiltersActive(prevState => !prevState);
     };
-
+    const userData = useAppSelector(store => store.userStore.userData!);
+    const hasUserEditFiltersPermission =
+        userData.roles.includes(EUserRole.Admin) ||
+        userData.roles.includes(EUserRole.KeyUser) ||
+        userData.roles.includes(EUserRole.QE) ||
+        userData.roles.includes(EUserRole.SQM) ||
+        userData.roles.includes(EUserRole.InternalUser);
     const onHandleFilterChange = (e: ISuppliersFilter[keyof ISuppliersFilter], k: string) => {
         dispatch(setSuppliersFilter([e, k]));
     };
@@ -45,12 +50,13 @@ const ProvidersFilter: React.FC = () => {
     const receiveProviders = async () => {
         const requestBody = prepareBody(suppliersFilterState);
 
-        // TODO доделать, когда будем получать  supplierRMSCode
-        // const providersTableData = roles.includes(EUserRole.Supplier)
-        //     ? await getProviders({...requestBody, searchBy: {...requestBody.searchBy, supplierRMSCode: '1'}})
-        //     : await getProviders(requestBody);
+        const providersTableData = userData.roles.includes(EUserRole.Supplier)
+            ? await getProviders({
+                  ...requestBody,
+                  searchBy: {...requestBody.searchBy, supplierRMSCode: userData.supplierCommercialIds},
+              })
+            : await getProviders(requestBody);
 
-        const providersTableData = await getProviders(requestBody);
         dispatch(setSuppliersTableData({...providersTableData, isLoading}));
     };
 
@@ -70,7 +76,7 @@ const ProvidersFilter: React.FC = () => {
                             label={t('ProvidersList.Filters.filter')}
                             value={supplierKey}
                             onSelect={e => onHandleFilterChange(e!, 'supplierKey')}
-                            disabled={roles.includes(EUserRole.Supplier)}
+                            disabled={!hasUserEditFiltersPermission}
                         >
                             <DropdownItem text={t('ProvidersList.Filters.providerName')} value={'supplierName'} />
                             <DropdownItem text={t('ProvidersList.Filters.providerCode')} value={'supplierRMSCode'} />
@@ -86,7 +92,7 @@ const ProvidersFilter: React.FC = () => {
                             label=""
                             placeholder=""
                             value={supplierValue}
-                            disabled={!supplierKey || roles.includes(EUserRole.Supplier)}
+                            disabled={!supplierKey || !hasUserEditFiltersPermission}
                             onChange={e => {
                                 onHandleFilterChange(e.target.value, 'supplierValue');
                             }}
@@ -100,7 +106,7 @@ const ProvidersFilter: React.FC = () => {
                         label={t('ProvidersList.Filters.supplierRegistrationStatus')}
                         value={registrationStatus}
                         onSelect={e => onHandleFilterChange(e!, 'registrationStatus')}
-                        disabled={roles.includes(EUserRole.Supplier)}
+                        disabled={!hasUserEditFiltersPermission}
                     >
                         <DropdownItem text="Возможное значение 1" value={'Возможное значение 1'} />
                         <DropdownItem text="Возможное значение 2" value={'Возможное значение 2'} />
@@ -116,7 +122,7 @@ const ProvidersFilter: React.FC = () => {
                         label={t('ProvidersList.Filters.billingCountry')}
                         value={billingCountry}
                         onSelect={e => onHandleFilterChange(e!, 'billingCountry')}
-                        disabled={roles.includes(EUserRole.Supplier)}
+                        disabled={!hasUserEditFiltersPermission}
                     >
                         <DropdownItem text="Россия" value={'Russia'} />
                     </Dropdown>
@@ -130,7 +136,7 @@ const ProvidersFilter: React.FC = () => {
                         label={t('ProvidersList.Filters.countryLocationSupplier')}
                         value={supplierDepartmentCountry}
                         onSelect={e => onHandleFilterChange(e!, 'supplierDepartmentCountry')}
-                        disabled={roles.includes(EUserRole.Supplier)}
+                        disabled={!hasUserEditFiltersPermission}
                     >
                         <DropdownItem text="Россия" value={'Russia'} />
                     </Dropdown>
@@ -302,7 +308,7 @@ const ProvidersFilter: React.FC = () => {
                         }}
                         size="m"
                         variant="outline"
-                        disabled={roles.includes(EUserRole.Supplier)}
+                        disabled={!hasUserEditFiltersPermission}
                     >
                         {t('Buttons.Clear')}
                     </RegularButton>
@@ -313,7 +319,7 @@ const ProvidersFilter: React.FC = () => {
                         }}
                         size="m"
                         variant="primary"
-                        disabled={roles.includes(EUserRole.Supplier)}
+                        disabled={!hasUserEditFiltersPermission}
                     >
                         {t('Buttons.Search')}
                     </RegularButton>
