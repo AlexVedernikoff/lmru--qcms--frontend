@@ -67,7 +67,6 @@ export const appRoutes: AppRoute[] = [
             EUserRole.Supplier,
             EUserRole.SQM,
             EUserRole.InternalUser,
-            EUserRole.ServiceProvider,
         ],
         childRoutes: [
             {
