@@ -6,6 +6,8 @@ import ProductsAdditionalFilter, {EDateType} from './ProductsAdditionalFilter';
 import styles from '../../../Common.module.css';
 import {СustomTreeSelect, TNomenclatureValue} from '../../../Common/CustomTreeSelect';
 import {modNomKeys} from '../../../Common/CustomTreeSelect/consts';
+import {useAppSelector} from 'store';
+import {EUserRole} from 'common/roles';
 
 export interface IFilterFormState {
     code?: string; //  optional, поиск по ЛМ коду товара (логическое или }
@@ -99,6 +101,14 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
         onSubmit(formState);
     };
 
+    const userData = useAppSelector(store => store.userStore.userData!);
+
+    const hasUserEditFiltersPermission =
+        userData.roles.includes(EUserRole.Admin) ||
+        userData.roles.includes(EUserRole.KeyUser) ||
+        userData.roles.includes(EUserRole.QE) ||
+        userData.roles.includes(EUserRole.InternalUser);
+
     return (
         <Grid rowGap={16} alignItems="center" className={styles.panel}>
             <Grid columnGap={16} columns="repeat(3, 1fr)" alignItems="baseline" rowGap="48px">
@@ -109,10 +119,11 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
                             closeOnSelect
                             placeholder={t('Common.Select')}
                             label={t('WithModels.Filters.filter')}
-                            value={filterSupplier}
+                            value={hasUserEditFiltersPermission ? filterSupplier : 'supplierRMSCode'}
                             onSelect={function selectfilter(value) {
                                 value && setFilterSupplier(value);
                             }}
+                            disabled={!hasUserEditFiltersPermission}
                         >
                             <DropdownItem text={t('WithModels.Filters.providerName')} value={'supplierName'} />
                             <DropdownItem text={t('WithModels.Filters.supplierCode')} value={'supplierRMSCode'} />
@@ -120,10 +131,11 @@ const ProductsFilter: React.FC<IProps> = ({onSubmit}) => {
                         </Dropdown>
 
                         <Input
+                            disabled={!hasUserEditFiltersPermission}
                             inputSize="m"
                             autoComplete="off"
                             name={filterSupplier}
-                            value={inputFilterSupplier}
+                            value={hasUserEditFiltersPermission ? inputFilterSupplier : userData.supplierCommercialIds}
                             onChange={(e, value) => {
                                 setInputFilterSupplier(value);
                                 handleInputChange(e, value);
