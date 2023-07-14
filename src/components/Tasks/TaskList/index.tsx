@@ -115,13 +115,22 @@ const TaskList: React.FC = () => {
                             disabled={isLoading || isFetching}
                             className={styles.actionsSelect}
                         >
-                            <DropdownItem text="Добавить документы" value={EModalVariant.documents} />
+                            <DropdownItem
+                                text={t('TaskTabs.Actions.actions.addDocuments')}
+                                value={EModalVariant.documents}
+                            />
                             {hasUserSelectActionsPermission && (
-                                <DropdownItem text="Изменение утверждающего" value={EModalVariant.approver} />
+                                <DropdownItem
+                                    text={t('TaskTabs.Actions.actions.changeApprover')}
+                                    value={EModalVariant.approver}
+                                />
                             )}
 
                             {hasUserSelectActionsPermission && (
-                                <DropdownItem text="Изменение исполнителя" value={EModalVariant.responsible} />
+                                <DropdownItem
+                                    text={t('TaskTabs.Actions.actions.changePerformer')}
+                                    value={EModalVariant.responsible}
+                                />
                             )}
                         </Dropdown>
 

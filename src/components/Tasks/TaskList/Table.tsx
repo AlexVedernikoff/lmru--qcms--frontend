@@ -103,13 +103,13 @@ const Table: React.FC<IProps> = ({
 
                     switch (v) {
                         case 'APPROVED':
-                            status = 'Согласован';
+                            status = t('TaskList.Table.Columns.approved');
                             break;
                         case 'REJECTED':
-                            status = 'Отклонен';
+                            status = t('TaskList.Table.Columns.rejected');
                             break;
                         case 'DRAFT':
-                            status = 'Черновик';
+                            status = t('TaskList.Table.Columns.draft');
                             break;
                     }
 

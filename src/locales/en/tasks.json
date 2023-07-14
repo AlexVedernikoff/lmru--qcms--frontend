@@ -22,15 +22,15 @@
             "productCode": "Product code",
             "responsibleContractor": "Responsible type",
             "QE": "QE",
+            "SQM": "SQM",
             "taskStatus": "Action status",
             "providerName": "Supplier",
             "contractor": "Provider",
             "conclusion": "Conclusion",
-            "documentType": "Action №",
-            "taskNumber": "Задача №",
+            "documentType": "Document type",
+            "taskNumber": "Action №",
             "taskType": "Action type",
             "isUpdating": "Renewal",
-
             "qualityStatus": "Conformity status",
             "regularStatus": "Regulatory status",
             "qualityModel": "qualityModel",
@@ -45,7 +45,10 @@
             "withoutQualityManager": "Without QE",
             "searchByDate": "Search by date",
             "dates": "Dates",
-            "country": "BU"
+            "dateMask": "dd.mm.yy",
+            "country": "BU",
+            "supplier": "Supplier",
+            "serviceProvider": "Service Provider"
         },
         "Table": {
             "Columns": {
@@ -54,9 +57,9 @@
                 "documents": "Uploaded documents",
                 "productCode": "Product code",
                 "productName": "Product name",
+                "providerCode": "Supplier code",
                 "providerName": "Supplier name",
-                "providerCode": "Код поставщика",
-                "qualityStatus": "Supplier code",
+                "qualityStatus": "Quality status",
                 "QE": "QE",
                 "SQM": "SQM",
                 "taskNumber": "№",
@@ -64,7 +67,10 @@
                 "taskCategory": "Action category",
                 "creationDate": "Creation date",
                 "confirmationEndDate": "Confirmation end date",
-                "responsibleContractor": "Responsible provider"
+                "responsibleContractor": "Responsible provider",
+                "approved": "approved",
+                "rejected": "rejected",
+                "draft": "draft"
             }
         }
     },
@@ -126,7 +132,10 @@
             "applyAction": "Run",
             "actions": {
                 "updateDocument": "Edit document",
-                "uploadDocument": "Upload document"
+                "uploadDocument": "Upload document",
+                "addDocuments": "Add documents",
+                "changeApprover": "Сhange approver",
+                "changePerformer": "Change performer"
             }
         },
         "Documents": {

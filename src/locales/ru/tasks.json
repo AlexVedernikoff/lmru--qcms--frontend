@@ -22,6 +22,7 @@
             "productCode": "Код товара",
             "responsibleContractor": "Ответственный",
             "QE": "QE",
+            "SQM": "SQM",
             "taskStatus": "Статус задачи",
             "providerName": "Наименование поставщика",
             "contractor": "Подрядчик",
@@ -30,7 +31,6 @@
             "taskNumber": "Задача №",
             "taskType": "Тип задачи",
             "isUpdating": "На обновлении",
-
             "qualityStatus": "Статус соответствия",
             "regularStatus": "Регуляторный статус",
             "qualityModel": "Модель качества",
@@ -45,7 +45,10 @@
             "withoutQualityManager": "Без менеджера по качеству",
             "searchByDate": "Поиск по дате",
             "dates": "Даты",
-            "country": "Страна"
+            "dateMask": "дд.мм.гг",
+            "country": "Страна",
+            "supplier": "Поставщик",
+            "serviceProvider": "Подрядчик"
         },
         "Table": {
             "Columns": {
@@ -64,7 +67,10 @@
                 "taskCategory": "Категория задач",
                 "creationDate": "Дата создания",
                 "confirmationEndDate": "Дата окончания подтверждения",
-                "responsibleContractor": "Ответственный подрядчик"
+                "responsibleContractor": "Ответственный подрядчик",
+                "approved": "Согласован",
+                "rejected": "Отклонен",
+                "draft": "Черновик"
             }
         }
     },
@@ -126,7 +132,10 @@
             "applyAction": "Выполнить",
             "actions": {
                 "updateDocument": "Редактировать документ",
-                "uploadDocument": "Загрузить документ"
+                "uploadDocument": "Загрузить документ",
+                "addDocuments": "Добавить документы",
+                "changeApprover": "Изменение утверждающего",
+                "changePerformer": "Изменение исполнителя"
             }
         },
         "Documents": {

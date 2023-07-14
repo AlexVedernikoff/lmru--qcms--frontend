@@ -1,4 +1,4 @@
-import {DatePickerRange, Dropdown, DropdownItem, Grid} from 'fronton-react';
+import {DatePicker, Dropdown, DropdownItem, Grid} from 'fronton-react';
 import {useTranslation} from 'react-i18next';
 import {CustomSwitch} from '../../../Common/Switch/CustomSwitch';
 import CustomCheckbox from '../../../Common/CustomCheckbox/CustomCheckbox';
@@ -86,7 +86,12 @@ const AdditionalFilter: React.FC<IProps> = ({formState, setFormState}) => {
 
             <Grid gap={16} columns="1fr" alignItems="baseline">
                 {renderDropdown(t('TaskList.Filters.searchByDate'), 'searchByDate')}
-                <DatePickerRange onChange={() => {}} label={t('TaskList.Filters.dates')} size="s" />
+                <DatePicker
+                    onChange={() => {}}
+                    label={t('TaskList.Filters.dates')}
+                    size="s"
+                    datePlaceholder={t('TaskList.Filters.dateMask')}
+                />
             </Grid>
         </Grid>
     );

@@ -102,10 +102,10 @@ const Filter: React.FC<IProps> = ({onSubmit}) => {
                     value={formState.responsible?.[0]?.type}
                     onSelect={handleSelect('responsible')}
                 >
-                    <DropdownItem text="Поставщик" value={'SUPPLIER'} />
-                    <DropdownItem text="QE" value={'QE'} />
-                    <DropdownItem text="SQM" value={'SQM'} />
-                    <DropdownItem text="Подрядчик" value={'SERVICE_PROVIDER'} />
+                    <DropdownItem text={t('TaskList.Filters.supplier')} value={'SUPPLIER'} />
+                    <DropdownItem text={t('TaskList.Filters.QE')} value={'QE'} />
+                    <DropdownItem text={t('TaskList.Filters.SQM')} value={'SQM'} />
+                    <DropdownItem text={t('TaskList.Filters.serviceProvider')} value={'SERVICE_PROVIDER'} />
                 </Dropdown>
                 {/* <CustomSwitch checked={formState.fromAnother} handleChange={() => {}} name={'Actions from another platform'} /> */}
 
