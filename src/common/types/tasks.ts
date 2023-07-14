@@ -46,9 +46,19 @@ export interface ITaskListParams {
     body: ITaskListBody;
 }
 
+enum EActionStatus {
+    APPROVED = 'APPROVED',
+    CANCELLED = 'CANCELLED',
+    DRAFT = 'DRAFT',
+    AWAITING_RESOLUTION = 'AWAITING_RESOLUTION',
+    RETURNED_AWAITING_RESOLUTION = 'RETURNED_AWAITING_RESOLUTION',
+    AWAITING_DOCUMENT_LOADING = 'AWAITING_DOCUMENT_LOADING',
+    RETURNED_AWAITING_DOCUMENT_LOADING = 'RETURNED_AWAITING_DOCUMENT_LOADING',
+}
+
 export interface ITaskListItem {
     id: number;
-    actionStatus: string;
+    actionStatus: EActionStatus;
     version: number;
     targetBuCodes: number[];
     conclusion: string;

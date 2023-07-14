@@ -68,9 +68,15 @@
                 "creationDate": "Creation date",
                 "confirmationEndDate": "Confirmation end date",
                 "responsibleContractor": "Responsible provider",
-                "approved": "approved",
-                "rejected": "rejected",
-                "draft": "draft"
+                "taskStatusValues": {
+                    "APPROVED": "approved",
+                    "CANCELLED": "rejected",
+                    "DRAFT": "draft",
+                    "AWAITING_RESOLUTION": "awaiting resolution",
+                    "RETURNED_AWAITING_RESOLUTION": "returned awaiting resolution",
+                    "AWAITING_DOCUMENT_LOADING": "awaiting document loading",
+                    "RETURNED_AWAITING_DOCUMENT_LOADING": "returned awaiting document loading"
+                }
             }
         }
     },

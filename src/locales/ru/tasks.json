@@ -68,9 +68,15 @@
                 "creationDate": "Дата создания",
                 "confirmationEndDate": "Дата окончания подтверждения",
                 "responsibleContractor": "Ответственный подрядчик",
-                "approved": "Согласован",
-                "rejected": "Отклонен",
-                "draft": "Черновик"
+                "taskStatusValues": {
+                    "APPROVED": "Согласован",
+                    "CANCELLED": "Отклонен",
+                    "DRAFT": "Черновик",
+                    "AWAITING_RESOLUTION": "Ожидает разрешения",
+                    "RETURNED_AWAITING_RESOLUTION": "возвращено в ожидание разрешения",
+                    "AWAITING_DOCUMENT_LOADING": "Ожидает загрузку документа",
+                    "RETURNED_AWAITING_DOCUMENT_LOADING": "возвращено в загрузку документа"
+                }
             }
         }
     },

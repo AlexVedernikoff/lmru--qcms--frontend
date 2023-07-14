@@ -98,23 +98,7 @@ const Table: React.FC<IProps> = ({
                 title: t('TaskList.Table.Columns.taskStatus'),
                 dataIndex: 'actionStatus',
                 width: 240,
-                render: (v: TDataType['actionStatus']) => {
-                    let status = null;
-
-                    switch (v) {
-                        case 'APPROVED':
-                            status = t('TaskList.Table.Columns.approved');
-                            break;
-                        case 'REJECTED':
-                            status = t('TaskList.Table.Columns.rejected');
-                            break;
-                        case 'DRAFT':
-                            status = t('TaskList.Table.Columns.draft');
-                            break;
-                    }
-
-                    return status;
-                },
+                render: (v: TDataType['actionStatus']) => t(`TaskList.Table.Columns.taskStatusValues.${v}`),
             },
             {
                 title: t('TaskList.Table.Columns.documents'),
