@@ -119,12 +119,12 @@ const ProvidersFilter: React.FC = () => {
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
-                        label={t('ProvidersList.Filters.billingCountry')}
+                        label={t('ProvidersList.Filters.billingCountry.label')}
                         value={billingCountry}
                         onSelect={e => onHandleFilterChange(e!, 'billingCountry')}
                         disabled={!hasUserEditFiltersPermission}
                     >
-                        <DropdownItem text="Россия" value={'Russia'} />
+                        <DropdownItem text={t('ProvidersList.Filters.billingCountry.Russia')} value={'Russia'} />
                     </Dropdown>
 
                     {/***** Фильтр 04 Страна расположения отделения поставщика" *****************/}
@@ -133,12 +133,15 @@ const ProvidersFilter: React.FC = () => {
                         size="m"
                         closeOnSelect
                         placeholder={t('Common.Select')}
-                        label={t('ProvidersList.Filters.countryLocationSupplier')}
+                        label={t('ProvidersList.Filters.countryLocationSupplier.label')}
                         value={supplierDepartmentCountry}
                         onSelect={e => onHandleFilterChange(e!, 'supplierDepartmentCountry')}
                         disabled={!hasUserEditFiltersPermission}
                     >
-                        <DropdownItem text="Россия" value={'Russia'} />
+                        <DropdownItem
+                            text={t('ProvidersList.Filters.countryLocationSupplier.Russia')}
+                            value={'Russia'}
+                        />
                     </Dropdown>
                 </Grid>
 

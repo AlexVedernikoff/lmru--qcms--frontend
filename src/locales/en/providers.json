@@ -80,16 +80,22 @@
             "dates": "Dates",
             "providerName": "Supplier name",
             "providerCode": "Supplier code",
-            "INN": "INN",
-            "businessLicenseNumber": "Business license number",
+            "INN": "Tax identifier",
+            "businessLicenseNumber": "Business license",
             "platform": "Platform responsible for self-assessment",
             "qualityAssessment": "Quality self-assessment",
             "databasePotentialSuppliers": "Potential supplier database",
             "referenceDatabaseSuppliers": "Referenced supplier database",
             "supplierRegistrationStatus": "Registration status",
             "reference": "Link",
-            "billingCountry": "Invoicing country",
-            "countryLocationSupplier": "Supplier base country location",
+            "billingCountry": {
+                "label": "Invoicing country",
+                "Russia": "Russia"
+            },
+            "countryLocationSupplier": {
+                "label": "Supplier base country location",
+                "Russia": "Russia"
+            },
             "SQMResponsibleSelfAssessment": "SQM responsible for self-assessment",
             "qualityManager": "QE responsible for smart monitoring",
             "country": "BU",

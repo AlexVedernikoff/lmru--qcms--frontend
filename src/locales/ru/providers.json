@@ -88,8 +88,14 @@
             "referenceDatabaseSuppliers": "Ссылочная база данных поставщиков",
             "supplierRegistrationStatus": "Статус регистрации поставщика",
             "reference": "Ссылка",
-            "billingCountry": "Страна выставления счетов",
-            "countryLocationSupplier": "Страна расположения отделения поставщика",
+            "billingCountry": {
+                "label": "Страна выставления счетов",
+                "Russia": "Россия"
+            },
+            "countryLocationSupplier": {
+                "label": "Страна расположения отделения поставщика",
+                "Russia": "Россия"
+            },
             "SQMResponsibleSelfAssessment": "SQM, ответственный за самооценку",
             "qualityManager": "Менеджер по качеству, мониторинг производства",
             "country": "Страна",
